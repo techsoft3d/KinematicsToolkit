@@ -8,7 +8,9 @@ Install
     <script src="./js/kinematicsManager.min.js"></script>
 ```
 
-Code Sample:
+### Code Samples:
+
+Creating a new Kinematics Hierachy:
 
 ```
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
@@ -41,3 +43,17 @@ joint1.set(45);
 /* Update Joint Hierachy. Needs to be called when any joint value has changed*/
 hierachy.updateJoints();   
 ```
+
+
+
+Loading an existing Kinematics Hierachy Template and applying it to a model:
+
+```
+ let res = await fetch('data/microengine.json');
+data = await res.json();
+let templateId = KM.KinematicsManager.addTemplate(data);
+let hierachy = await KM.KinematicsManager.applyToModel(templateId);
+let joint = KM.KinematicsManager.getJointFromId(hierachy, 1);
+joint.set(45);
+hierachy.updateJoints();
+```                

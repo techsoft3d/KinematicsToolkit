@@ -108,7 +108,8 @@ export class KinematicsManager {
 
     static addTemplate(def)
     {
-        KinematicsManager._hierachyTemplates[def._templateId] = def;        
+        KinematicsManager._hierachyTemplates[def._templateId] = def;   
+        return def._templateId;     
     }
 
     static updateTemplate(def)

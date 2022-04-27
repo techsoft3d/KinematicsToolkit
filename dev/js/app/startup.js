@@ -319,7 +319,7 @@ function createUILayout() {
             }
         },   
         {
-            name: 'Simple Example with Microengines',
+            name: 'Simple Microengine Example',
             fun: function () {
                 let hierachy = KM.KinematicsManager.createHierachy();
                 let root = hierachy.getRootJoint();
@@ -336,6 +336,21 @@ function createUILayout() {
                 joint1.set(45);
                 hierachy.updateJoints();   
 
+                currentHierachy = hierachy;
+                drawIKDiv();
+            }
+        },   
+        {
+            name: 'Load Micronengine Def Sample',
+            fun: async function () {
+
+                let res = await fetch('data/microengine.json');
+                data = await res.json();
+                let templateId = KM.KinematicsManager.addTemplate(data);
+                let hierachy = await KM.KinematicsManager.applyToModel(templateId);
+                let joint = KM.KinematicsManager.getJointFromId(hierachy,1);
+               joint.set(45);
+               hierachy.updateJoints(); 
                 currentHierachy = hierachy;
                 drawIKDiv();
             }

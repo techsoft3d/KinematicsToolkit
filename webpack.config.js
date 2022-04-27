@@ -5,7 +5,7 @@ module.exports = {
   mode: "production",
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'kinematicsManager.bundle.js',
+    filename: 'kinematicsManager.min.js',
     library: 'KM', //add this line to enable re-use
   },
 };

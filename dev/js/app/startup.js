@@ -46,7 +46,7 @@ async function handleEvent(type, nodeids, mat1, mat2) {
     if (joint)
     {              
         await joint.calculateReferenceMatrixFromHandleMatrix(mat2[0]);
-        await joint.updateJointsFromReference();   
+        await joint.getHierachy().updateJoints();   
     }    
 
 }
@@ -332,7 +332,10 @@ function createUILayout() {
                 joint2.setAxis(new Communicator.Point3(-1,0,0));
                 joint2.setFixedAxis(new Communicator.Point3(0,0,-1));
                 joint2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
-                
+
+                joint1.set(45);
+                hierachy.updateJoints();   
+
                 currentHierachy = hierachy;
                 drawIKDiv();
             }

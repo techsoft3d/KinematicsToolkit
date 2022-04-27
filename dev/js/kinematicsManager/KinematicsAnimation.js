@@ -156,22 +156,15 @@ export class KinematicsAnimation {
                     acceleration = this.easeInQuad(elapsedTotal, this.previoustarget, this.target - this.previoustarget, this.easeInTime);
                 }
                 let newvalue = this.value + elapsed * acceleration;
-                if (this._joint.getType() == jointType.revolute)
-                     this._joint.rotate(newvalue);
-                else
-                    this._joint.translate(newvalue);
+                this._joint.set(newvalue);
 
                 this.lasttime = time;
                 this.value = newvalue;
 
             }
             else {
-                this.anime.tick(timestamp);
-                if (this._joint.getType() == jointType.revolute)
-                    this._joint.rotate(parseFloat(this.value));
-                else
-                    this._joint.translate(parseFloat(this.value));
-
+                this.anime.tick(timestamp);             
+                this._joint.set(parseFloat(this.value));
             }
             this._joint._touched = true;
         }

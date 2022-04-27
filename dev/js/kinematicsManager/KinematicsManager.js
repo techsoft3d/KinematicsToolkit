@@ -196,7 +196,7 @@ export class KinematicsManager {
             for (let i=0;i<KinematicsManager._hierachies.length;i++)
             {
                 if (KinematicsManager._hierachies[i].getDirty())                                                 
-                    KinematicsManager._hierachies[i]._rootJoint.updateJointsFromReference();
+                    KinematicsManager._hierachies[i].updateJoints();
             }
 
             window.requestAnimationFrame(KinematicsManager.doAnimation);

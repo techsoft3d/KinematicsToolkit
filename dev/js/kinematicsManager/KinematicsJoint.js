@@ -318,6 +318,13 @@ export class KinematicsJoint {
         return this._prismaticPlaneTip;
     }
 
+    set(value) {
+
+        if (this._type == jointType.revolute)
+            this._rotate(value);
+        else if (this._type == jointType.prismatic)
+            this._translate(value);
+    }
 
     toJson() {
 
@@ -607,7 +614,7 @@ export class KinematicsJoint {
     }
 
 
-     rotate(angle, ignoreLimits, add) {
+     _rotate(angle, ignoreLimits, add) {
 
         // if (ignoreLimits == undefined) {
         //     if (angle > this._maxangle)
@@ -647,7 +654,7 @@ export class KinematicsJoint {
 
     }
 
-    translate(delta) {
+    _translate(delta) {
         
         this._currentPosition = delta;
 
@@ -684,9 +691,6 @@ export class KinematicsJoint {
     }
 
    
-    async updateJointsFromReference() {
-        await this._updateJointsFromReferenceRecursive(this._hierachy._rootJoint);
-    }
 
     async calculateReferenceMatrixFromHandleMatrix(matrix) {
         let resmatrix;
@@ -738,7 +742,7 @@ export class KinematicsJoint {
             let secondaxis = Communicator.Point3.subtract(p2a, p1).normalize();
 
             let angle = KinematicsUtility.signedAngle(firstaxis, secondaxis, localaxis);
-            await this.rotate(angle,true,true);
+            await this._rotate(angle,true,true);
 
         }
         else
@@ -750,7 +754,7 @@ export class KinematicsJoint {
             let res1 = origmatrix.transform(this._center);
             let res2 = origmatrix2.transform(this._center);
             let delta = Communicator.Point3.subtract(res2,res1).length();
-            await this.translate(delta);
+            await this._translate(delta);
             
             let origmatrix3 = KinematicsManager.viewer.model.getNodeNetMatrix(this._nodeid);
             res1 = origmatrix3.transform(this._center);
@@ -761,7 +765,7 @@ export class KinematicsJoint {
             let delta2 = Communicator.Point3.subtract(res2,res1).length();
             if (delta2>0.0001)
             {
-                await this.translate(-delta);
+                await this._translate(-delta);
             }
 
         }
@@ -871,6 +875,9 @@ export class KinematicsJoint {
     }
 
 
+
+    
+
     async calculateGradient() {
         
         let angle = this._currentAngle;
@@ -881,24 +888,24 @@ export class KinematicsJoint {
         let gradient;
         if (this._type == jointType.revolute)
         {
-            await this.rotate(this._currentAngle + this._hierachy._ikSamplingDistance, true);
-   //         await this.updateJointsFromReference();
+            await this._rotate(this._currentAngle + this._hierachy._ikSamplingDistance, true);
+   //         await this.updateJoints();
             let targetDistanceAfter = this._hierachy.distanceFromTarget();
 
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistance;
         }
         else
         {
-            await this.translate(this._currentPosition + this._hierachy._ikSamplingDistanceTranslation);
-       //     await this.updateJointsFromReference();
+            await this._translate(this._currentPosition + this._hierachy._ikSamplingDistanceTranslation);
+       //     await this.updateJoints();
             let targetDistanceAfter = this._hierachy.distanceFromTarget();
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistanceTranslation;
         }
         
         if (this._type == jointType.revolute)
-            await this.rotate(angle);
+            await this._rotate(angle);
         else
-            await this.translate(delta);
+            await this._translate(delta);
 
         this._touched = true;
         return gradient;
@@ -907,17 +914,17 @@ export class KinematicsJoint {
     async update(gradient)
     {
         if (this._type == jointType.revolute)
-            await this.rotate(this._currentAngle - this._hierachy._ikLearningRate * gradient);
+            await this._rotate(this._currentAngle - this._hierachy._ikLearningRate * gradient);
         else
-            await this.translate(this._currentPosition - (this._hierachy._ikLearningRate) * gradient);
+            await this._translate(this._currentPosition - (this._hierachy._ikLearningRate) * gradient);
     }
 
     reset()
     {
         if (this._type == jointType.revolute)
-            this.rotate(0);
+            this._rotate(0);
         else
-            this.translate(0);
+            this._translate(0);
     }
 
     delete()
@@ -971,7 +978,7 @@ export class KinematicsJoint {
             let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
             let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
             let angle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-            await joint.rotate(angle);
+            await joint._rotate(angle);
 
             let r = joint.transformlocalPointToWorldSpace(joint._extraPivot1);
             let pray = new Communicator.Point3(centertrans.x + v2.x * 10000, centertrans.y + v2.y * 10000, centertrans.z + v2.z * 10000);
@@ -981,7 +988,7 @@ export class KinematicsJoint {
 
 
              if (ldist > 0.0001)
-                await joint.rotate(-angle);
+                await joint._rotate(-angle);
 
         }
         if (joint._type == jointType.mate) {
@@ -1050,7 +1057,7 @@ export class KinematicsJoint {
                     res1 = res2;
                 }
 
-                //rotate mate joint
+                //_rotate mate joint
               
                 let pivot1trans_2 = triggerjoint.j.transformlocalPointToWorldSpace(reactjoint.pivot);
                 
@@ -1076,7 +1083,7 @@ export class KinematicsJoint {
     
                 }
                 
-                //rotate react joint
+                //_rotate react joint
 
                 pivot1trans_2 = reactjoint.j._parent.transformlocalPointToWorldSpace(reactjoint.pivot);
                 
@@ -1084,11 +1091,11 @@ export class KinematicsJoint {
                 v2 = Communicator.Point3.subtract(res1, center2trans).normalize();
                 
                 angle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-                await reactjoint.j.rotate(angle);
+                await reactjoint.j._rotate(angle);
                 let tm = this._hierachy.getReferenceNodeNetMatrix(reactjoint.j);
                 r = tm.transform(reactjoint.pivot);
 
-                await reactjoint.j.rotate(-angle);
+                await reactjoint.j._rotate(-angle);
                 tm = this._hierachy.getReferenceNodeNetMatrix(reactjoint.j);
                 let r2 = tm.transform(reactjoint.pivot);
 
@@ -1096,10 +1103,10 @@ export class KinematicsJoint {
                 dist2 = Communicator.Point3.subtract(r2,res1).length();
                 if (dist1 < dist2)
                 {
-                    await reactjoint.j.rotate(angle);
+                    await reactjoint.j._rotate(angle);
                 }
 
-                await this.updateJointsFromReference();
+                await this.getHierachy().updateJoints();
 
             }
 
@@ -1168,23 +1175,23 @@ export class KinematicsJoint {
             let v2 = Communicator.Point3.subtract(pol2,p1).normalize();
 
             let fangle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-            await joint.rotate(-fangle);
+            await joint._rotate(-fangle);
 
             p22 =  joint.transformlocalPointToWorldSpace(joint._extraJoint1._center);    
             let diff = Communicator.Point3.subtract(p22,pol2).length();
-            await joint.rotate(fangle);
+            await joint._rotate(fangle);
             p22 =  joint.transformlocalPointToWorldSpace(joint._extraJoint1._center);    
             let diff2 = Communicator.Point3.subtract(p22,pol2).length();
             if (diff2>diff)
-                await joint.rotate(-fangle);
+                await joint._rotate(-fangle);
 
             let deltafj = Communicator.Point3.subtract(joint._extraJoint1._center,joint.transformlocalPointToWorldSpace(joint._extraJoint1._center)).length();
-             await joint._extraJoint1.translate(-deltafj);
+             await joint._extraJoint1._translate(-deltafj);
              let dx = Communicator.Point3.subtract(joint._extraJoint1.transformlocalPointToWorldSpace(joint._extraJoint1._center),joint.transformlocalPointToWorldSpace(joint._extraJoint1._center)).length();
-             await joint._extraJoint1.translate(deltafj);
+             await joint._extraJoint1._translate(deltafj);
              let dx2 = Communicator.Point3.subtract(joint._extraJoint1.transformlocalPointToWorldSpace(joint._extraJoint1._center),joint.transformlocalPointToWorldSpace(joint._extraJoint1._center)).length();
             if (dx2>dx)
-                await joint._extraJoint1.translate(-deltafj);
+                await joint._extraJoint1._translate(-deltafj);
 
 
 
@@ -1216,40 +1223,40 @@ export class KinematicsJoint {
 
             let p22 =  joint._extraJoint2.transformlocalPointToWorldSpace(joint._center);     
 
-            await joint._extraJoint2.rotate(-angle, true);
+            await joint._extraJoint2._rotate(-angle, true);
             let p1x = joint._extraJoint2.transformlocalPointToWorldSpace(joint._center);
            
             let delta3 = Communicator.Point3.subtract(p1x,p1);
             let ld3 = delta3.length();
 
-            await joint._extraJoint2.rotate(angle, true);
+            await joint._extraJoint2._rotate(angle, true);
             p1x = joint._extraJoint2.transformlocalPointToWorldSpace(joint._center);
             let delta4 = Communicator.Point3.subtract(p1x,p1);
             let ld4 = delta4.length();
 
             if (ld4>ld3)
-                await joint._extraJoint2.rotate(-angle, true);
+                await joint._extraJoint2._rotate(-angle, true);
 
             await this._updateReferenceNodeMatrices(joint._extraJoint2);
 
-             await joint.translate(ld1 - ld2);
+             await joint._translate(ld1 - ld2);
         }
         else if (joint._type == jointType.helical)
         {
             let p1 = joint._parent.transformlocalPointToWorldSpace(joint._center);
             let p2 = joint.transformlocalPointToWorldSpace(joint._center);
             let length = Communicator.Point3.subtract(p2,p1).length();
-            joint.translate(length);
+            joint._translate(length);
             let p3 = joint.transformlocalPointToWorldSpace(joint._center);
-            joint.translate(-length);
+            joint._translate(-length);
             let p4 = joint.transformlocalPointToWorldSpace(joint._center);
             if (Communicator.Point3.subtract(p3,p2).length() < Communicator.Point3.subtract(p4,p2).length())
             {
-                joint.translate(length);
+                joint._translate(length);
                 length = -length;
             }
 
-            joint.rotate(length * joint._helicalFactor, true, true);
+            joint._rotate(length * joint._helicalFactor, true, true);
         }
         else if (joint._type == jointType.mapped) {
             if (joint._mappedType == jointType.prismaticPlane) {
@@ -1257,9 +1264,9 @@ export class KinematicsJoint {
                 let pp = matrix.transform(joint._prismaticPlaneTip);
                 let dist = joint._prismaticPlanePlane.distanceToPoint(pp);
                 if (dist < 0)
-                    await joint.translate(dist * joint._helicalFactor);
+                    await joint._translate(dist * joint._helicalFactor);
                 else
-                    await joint.translate(0);
+                    await joint._translate(0);
             }
             else if (joint._mappedTargetJoint._type == jointType.prismatic || (joint._mappedTargetJoint._type == jointType.mapped && joint._mappedTargetJoint._mappedType == jointType.prismatic)) {
                 let savdelta = joint._mappedTargetJoint._currentPosition;
@@ -1267,9 +1274,9 @@ export class KinematicsJoint {
                 let p1 = joint._mappedTargetJoint._parent.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
                 let p2 = joint._mappedTargetJoint.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
                 let length = Communicator.Point3.subtract(p2, p1).length();
-                joint._mappedTargetJoint.translate(length);
+                joint._mappedTargetJoint._translate(length);
                 let p3 = joint._mappedTargetJoint.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
-                joint._mappedTargetJoint.translate(-length);
+                joint._mappedTargetJoint._translate(-length);
                 let p4 = joint._mappedTargetJoint.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
                 if (Communicator.Point3.subtract(p3, p2).length() < Communicator.Point3.subtract(p4, p2).length())
                     length = -length;
@@ -1277,11 +1284,11 @@ export class KinematicsJoint {
 
                 if (joint._mappedType == jointType.revolute) 
                 {
-                    await joint.rotate(length * joint._helicalFactor, true);
+                    await joint._rotate(length * joint._helicalFactor, true);
                     joint._currentAngle = length * joint._helicalFactor;
                 }
                 else if (joint._mappedType == jointType.prismatic)
-                    await joint.translate(length * joint._helicalFactor, true);
+                    await joint._translate(length * joint._helicalFactor, true);
                 else if (joint._mappedType == jointType.belt)
                     await joint.belt.move(length * joint._helicalFactor);                    
 
@@ -1291,11 +1298,11 @@ export class KinematicsJoint {
              
                 if (joint._mappedType == jointType.revolute) 
                 {
-                    await joint.rotate(joint._mappedTargetJoint._currentAngle * joint._helicalFactor, true);
+                    await joint._rotate(joint._mappedTargetJoint._currentAngle * joint._helicalFactor, true);
                     joint._currentAngle = joint._mappedTargetJoint._currentAngle * joint._helicalFactor;
                 }
                 else if (joint._mappedType == jointType.prismatic)
-                    await joint.translate(joint._mappedTargetJoint._currentAngle * joint._helicalFactor, true);
+                    await joint._translate(joint._mappedTargetJoint._currentAngle * joint._helicalFactor, true);
                 else if (joint._mappedType == jointType.belt)
                     await joint.belt.move(joint._mappedTargetJoint._currentAngle * joint._helicalFactor);
 
@@ -1320,7 +1327,7 @@ export class KinematicsJoint {
             let res = KinematicsUtility.closestPointOnPlane(plane, new Communicator.Point3.add(centerworld, axis2));
             axis2 = new Communicator.Point3.subtract(res,centerworld).normalize();
             let angle = Communicator.Util.computeAngleBetweenVector(axis1, axis2);
-            await joint.rotate(angle,true, true);
+            await joint._rotate(angle,true, true);
 
 
             centerworld = joint.transformlocalPointToWorldSpace(joint._center);
@@ -1329,7 +1336,7 @@ export class KinematicsJoint {
 
             let delta = Communicator.Point3.subtract(axis1x,axis2).length();
             if (delta>0.001)
-                await joint.rotate(-angle*2,true,true);
+                await joint._rotate(-angle*2,true,true);
             
         }
                     

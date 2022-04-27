@@ -54,6 +54,10 @@ export class KinematicsHierachy {
         return this._dirty;
     }
 
+    async updateJoints()
+    {
+        await this._rootJoint._updateJointsFromReferenceRecursive(this._rootJoint);
+    }
     setNodeId(nodeid)
     {
         this._nodeid = nodeid;        

@@ -1,0 +1,10 @@
+{
+    "source": {
+        "include": [ "dev/js/kinematicsManager" ],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "destination": "./docs"
+    }
+}

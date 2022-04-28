@@ -1,4 +1,4 @@
-class HandlePlacementOperator  {
+export class HandlePlacementOperator  {
 
     constructor(viewer) {
         this._viewer = viewer;

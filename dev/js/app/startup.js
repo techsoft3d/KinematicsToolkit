@@ -348,9 +348,9 @@ function createUILayout() {
                 data = await res.json();
                 let templateId = KM.KinematicsManager.addTemplate(data);
                 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
-                let joint = KM.KinematicsManager.getJointFromId(hierachy,1);
-               joint.set(45);
-               hierachy.updateJoints(); 
+                let joint = KM.KinematicsManager.getJointFromId(hierachy, 1);
+                joint.set(45);
+                hierachy.updateJoints();
                 currentHierachy = hierachy;
                 drawIKDiv();
             }

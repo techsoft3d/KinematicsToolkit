@@ -39,7 +39,6 @@ joint2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 /* Rotate first joint by 45 degrees */
 joint1.set(45);
 
-
 /* Update Joint Hierachy. Needs to be called when any joint value has changed*/
 hierachy.updateJoints();   
 ```
@@ -49,11 +48,26 @@ hierachy.updateJoints();
 Loading an existing Kinematics Hierachy Template and applying it to a model:
 
 ```
- let res = await fetch('data/microengine.json');
+/* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
+KM.KinematicsManager.initialize(hwv);   
+
+/* Fetch Kinematics Hierachy Definition */
+let res = await fetch('data/microengine.json');
 data = await res.json();
+
+/* Create Kinematics Template */
 let templateId = KM.KinematicsManager.addTemplate(data);
+
+/* Apply template to model (microengine) */
 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
-let joint = KM.KinematicsManager.getJointFromId(hierachy, 1);
-joint.set(45);
+
+/* get Joint with id one */
+let joint = KM.KinematicsManager.getJointFromId(hierachy, "1");
+
+
+/* Rotate first joint by 45 degrees */
+joint.set(45);  
+
+/* Update Joint Hierachy. Needs to be called when any joint value has changed*/
 hierachy.updateJoints();
 ```                

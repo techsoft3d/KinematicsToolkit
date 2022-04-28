@@ -39,6 +39,17 @@ export class KinematicsHierachy {
         this._dirty = false;
     }
 
+
+    getJointFromId(id)
+    {
+        let res = this._jointHash[id];
+        if (res != undefined)
+            return  res;
+        else
+            return null;
+    }
+
+
     getTemplateId()
     {
         return this._templateId;

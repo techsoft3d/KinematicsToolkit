@@ -11,6 +11,8 @@
 
 ### Code Samples:
 
+Assumes microengine model is already loaded
+
 
 **Creating a new Kinematics Hierachy:**
 
@@ -40,7 +42,7 @@ joint2.setFixedAxis(new Communicator.Point3(0,0,-1));
 /* Specify a target axis for the above specified fixed axis*/
 joint2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 
-/* Rotate first joint by 45 degrees */
+/* Rotate first joint to 45 degrees from default position*/
 joint1.set(45);
 
 /* Update Joint Hierachy. Needs to be called when any joint value has changed*/
@@ -71,7 +73,7 @@ var jsontext = JSON.stringify(KM.KinematicsManager.getTemplate(hierachy.getTempl
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
 KM.KinematicsManager.initialize(hwv);   
 
-/* Fetch Kinematics Hierachy Definition */
+/* Fetch Kinematics Hierachy Definition from server*/
 let res = await fetch('data/microengine.json');
 data = await res.json();
 
@@ -81,10 +83,10 @@ let templateId = KM.KinematicsManager.addTemplate(data);
 /* Apply template to model (microengine) */
 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
 
-/* get Joint with id "1" */
-let joint = KM.KinematicsManager.getJointFromId(hierachy, "1");
+/* get Joint with id 1 */
+let joint = hierachy.getJointFromId(1);
 
-/* Rotate first joint by 45 degrees */
+/* Rotate first joint to 45 degrees from its default position*/
 joint.set(45);  
 
 /* Update Joint Hierachy. Needs to be called when any joint value has changed*/

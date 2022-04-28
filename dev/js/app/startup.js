@@ -349,7 +349,7 @@ function createUILayout() {
                 data = await res.json();
                 let templateId = KM.KinematicsManager.addTemplate(data);
                 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
-                let joint = KM.KinematicsManager.getJointFromId(hierachy, 1);
+                let joint = hierachy.getJointFromId(1);
                 joint.set(45);
                 hierachy.updateJoints();
                 currentHierachy = hierachy;
@@ -412,7 +412,7 @@ function microanim()
 {
     for (let i=0; i<KM.KinematicsManager.getHierachies().length; i++)
     {
-        let joint = KM.KinematicsManager.getJointFromId(KM.KinematicsManager.getHierachyByIndex(i),1);
+        let joint = KM.KinematicsManager.getHierachyByIndex(i).getJointFromId(1);
         let animationTemplate;
         var r = getRandomInt(3);
         if (r == 0)

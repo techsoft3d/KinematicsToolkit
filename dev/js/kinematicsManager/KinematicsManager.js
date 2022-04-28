@@ -109,15 +109,6 @@ export class KinematicsManager {
 
     }
 
-    static getJointFromId(hierachy, id)
-    {
-        let res = hierachy.getJointHash()[id];
-        if (res != undefined)
-            return  res;
-        else
-            return null;
-    }
-
     static addTemplate(def)
     {
         KinematicsManager._hierachyTemplates[def._templateId] = def;   

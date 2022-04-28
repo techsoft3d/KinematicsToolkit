@@ -265,7 +265,7 @@ function generateKinematicsTreeData() {
 
 function generateJointPropertiesData(id)
 {
-    joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    joint = currentHierachy.getJointFromId(id);
     $("#KinematicsJointPropertiesDiv").empty();
     
     let html = "";
@@ -503,7 +503,7 @@ function generateJointPropertiesData(id)
         wheeltable.on("cellEdited", function (e) {
             let data = e.getRow().getData();
             if (data.joint != "") {
-                joint.getBelt().getWheelByIndex(data.id).joint = KM.KinematicsManager.getJointFromId(currentHierachy, data.joint.split(":")[0]);
+                joint.getBelt().getWheelByIndex(data.id).joint = currentHierachy.getJointFromId( data.joint.split(":")[0]);
             }
             joint.getBelt().getWheelByIndex(data.id).radius = parseFloat(data.radius);
             joint.getBelt().getWheelByIndex(data.id).inner = data.inner;
@@ -517,41 +517,41 @@ function generateJointPropertiesData(id)
 
 function updateBeltWidth(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().setWidth(parseFloat($("#beltwidth").val()));
 }
 
 
 function updateBeltThickness(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().setThickness(parseFloat($("#beltthickness").val()));
 }
 
 
 function updateBeltGap(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().setGap(parseFloat($("#beltgap").val()));
 }
 
 
 function updateBeltTracks(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().setTracks(parseFloat($("#belttracks").val()));
 }
 
 
 function updateBeltOrientation(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().setTrackOrientation($("#belttrackorientation").is(":checked"));
 }
 
 function updateBeltColor(id, col)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     if (col == 0)
     {
         joint.getBelt().setColor1(hexToRGB($("#beltcolor1").val()));
@@ -564,7 +564,7 @@ function updateBeltColor(id, col)
 
 function updateAlignVector(id, col)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     let ischecked = $("#alignvectorcheckbox").is(":checked");
     if (!ischecked)
     {
@@ -583,7 +583,7 @@ function updateAlignVector(id, col)
 
 function updateBeltSegmentCount(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().setSegmentNum(parseFloat($("#beltsegments").val()));
 }
 
@@ -610,7 +610,7 @@ function refreshWheelTable(joint)
 
 function addBeltWheel(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     joint.getBelt().addWheel();
     refreshWheelTable(joint);
 }
@@ -619,7 +619,7 @@ function addBeltWheel(id)
 
 function insertBeltWheelBefore(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
     {
@@ -631,7 +631,7 @@ function insertBeltWheelBefore(id)
 
 function insertBeltWheelAfter(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
     {
@@ -642,7 +642,7 @@ function insertBeltWheelAfter(id)
 
 function deleteBeltWheel(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
         joint.getBelt().deleteWheel(data[0].id);
@@ -651,7 +651,7 @@ function deleteBeltWheel(id)
 
 function rebuildBelt(id)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id); 
+    let joint = currentHierachy.getJointFromId(id); 
     joint.getBelt().initialize();       
 }
 
@@ -659,7 +659,7 @@ function rebuildBelt(id)
 let tempnode = null;
 function showFixedAxis(id,show)
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+    let joint = currentHierachy.getJointFromId(id);
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     handleOperator.removeHandles();        
     tempnode = hwv.model.createNode(hwv.model.getRootNode());  
@@ -746,7 +746,7 @@ function updateKinematicsManager() {
 
 async function showJoint(j,adjustToCenter) {
     
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy, j);
+    let joint = currentHierachy.getJointFromId( j);
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     handleOperator.removeHandles();
 
@@ -770,7 +770,7 @@ async function showJoint(j,adjustToCenter) {
 }
 
 function updateReferences(j){
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,j);
+    let joint = currentHierachy.getJointFromId(j);
     var nodeids = [];
     var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
@@ -780,7 +780,7 @@ function updateReferences(j){
 
 }
 function removeFromReferences(j){
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,j);
+    let joint = currentHierachy.getJointFromId(j);
     var nodeids = [];
     var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
@@ -791,7 +791,7 @@ function removeFromReferences(j){
 }
 
 function updateJoint(j){
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,j);
+    let joint = currentHierachy.getJointFromId(j);
     joint.setParametersFromHandle();
     let text = $("#jointtype")[0].value;
     joint.setType(KM.jointType[text]);
@@ -800,23 +800,23 @@ function updateJoint(j){
     if ((joint.getType() == KM.jointType.prismaticTriangle || joint.getType() == KM.jointType.prismaticAggregate || joint.getType() == KM.jointType.mate) && $("#fixedjointselect")[0] != undefined)
     {
         let id = parseInt($("#fixedjointselect")[0].value.split(":")[0]);
-        let fixedjoint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+        let fixedjoint = currentHierachy.getJointFromId(id);
         joint.setExtraJoint1(fixedjoint);
         id = parseInt($("#variablejointselect")[0].value.split(":")[0]);
-        let variablejoint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+        let variablejoint = currentHierachy.getJointFromId(id);
         joint.setExtraJoint2(variablejoint);
     }
     if (joint.getType() == KM.jointType.revoluteSlide && $("#fixedjointselect")[0] != undefined)
     {
         let id = parseInt($("#fixedjointselect")[0].value.split(":")[0]);
-        let fixedjoint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+        let fixedjoint = currentHierachy.getJointFromId(id);
         joint.setExtraJoint1(fixedjoint);
     }
 
     if (joint.getType() == KM.jointType.pistonController && $("#fixedjointselect")[0] != undefined)
     {
         let id = parseInt($("#fixedjointselect")[0].value.split(":")[0]);
-        let fixedjoint = KM.KinematicsManager.getJointFromId(currentHierachy,id);
+        let fixedjoint = currentHierachy.getJointFromId(id);
         joint.setExtraJoint1(fixedjoint); 
         joint.adjustExtraJointToPistonController();
     }
@@ -835,7 +835,7 @@ function updateJoint(j){
 
 
         let id = parseInt($("#mappedjointselect")[0].value.split(":")[0]);               
-        joint.setMappedTargetJoint(KM.KinematicsManager.getJointFromId(currentHierachy,id));
+        joint.setMappedTargetJoint(currentHierachy.getJointFromId(id));
     }
     else if (joint.getType() == KM.jointType.revolute)
     {
@@ -878,7 +878,7 @@ function addJointFromUI(fromRoot)
     else
          selid = parseInt(selectednode[0]);
 
-    let newjoint = currentHierachy.createJointFromSelection(KM.KinematicsManager.getJointFromId(currentHierachy,selid),true, shiftPressed); 
+    let newjoint = currentHierachy.createJointFromSelection(currentHierachy.getJointFromId(selid),true, shiftPressed); 
  
     drawIKDiv();
     let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(newjoint.getId());
@@ -886,25 +886,6 @@ function addJointFromUI(fromRoot)
 
 }
 
-
-
-function addJointFromUISpecial(fromRoot)
-{
-   let selid = 0;
-
-    let newjoint = currentHierachy.createJointFromSelection(KM.KinematicsManager.getJointFromId(currentHierachy,selid),true, shiftPressed); 
-
-    let copyjoint = KM.KinematicsManager.getJointFromId(currentHierachy,103);
-    newjoint.setPrismaticPlanePlane(copyjoint.getPrismaticPlanePlane().copy());
-    newjoint.setType(copyjoint.getType());
-    newjoint.setMappedType(copyjoint.getMappedType());
-    newjoint.setMappedTargetJoint(copyjoint.getMappedTargetJoint());
-
-    drawIKDiv();
-    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(newjoint.getId());
-    $('#KinematicsTreeDiv').jstree().select_node(jstreenode);
-
-}
 
 function insertJointFromUI()
 {
@@ -914,7 +895,7 @@ function insertJointFromUI()
         selid = 0;
     else
          selid = parseInt(selectednode[0]);
-    let newjoint = currentHierachy.createJointFromSelection(KM.KinematicsManager.getJointFromId(currentHierachy,selid),true); 
+    let newjoint = currentHierachy.createJointFromSelection(currentHierachy.getJointFromId(selid),true); 
     for (var i=0;i<newjoint.getParent().getChildren().length-1;i++)
     {
         newjoint.getParent().getChildren()[i].setParent(newjoint);
@@ -934,7 +915,7 @@ function insertJointFromUI()
 function deleteJointFromUI()
 {
     let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
-    KM.KinematicsManager.getJointFromId(currentHierachy,selid).delete();
+    currentHierachy.getJointFromId(selid).delete();
     drawIKDiv();
 
 }
@@ -942,7 +923,7 @@ function deleteJointFromUI()
 function moveupJointFromUI()
 {
     let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy, currentJoint);
+    let joint = currentHierachy.getJointFromId( currentJoint);
     joint.moveup();
     drawIKDiv();
 
@@ -1020,7 +1001,7 @@ function updateTemplate()
 
 function updatePrismaticPlane(type, j) {
 
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy, j);
+    let joint = currentHierachy.getJointFromId( j);
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
@@ -1043,7 +1024,7 @@ function updatePrismaticPlane(type, j) {
 
 function updateMatePivot(type, j) {
 
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy, j);
+    let joint = currentHierachy.getJointFromId( j);
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
@@ -1068,19 +1049,19 @@ function updateMatePivot(type, j) {
 
 function animateJoint(j){
     let animationtemplate = KM.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,j);
+    let joint = currentHierachy.getJointFromId(j);
 
     KM.KinematicsManager.startAnimation(joint,animationtemplate.anime);
 }
 
 function changeSpeed(j){
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,j);   
+    let joint = currentHierachy.getJointFromId(j);   
 
     KM.KinematicsManager.changeSpeed(joint,-500 + Math.floor(Math.random() * 1000));
 }
 
 function stopAnimation(j){
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,j);   
+    let joint = currentHierachy.getJointFromId(j);   
 
     KM.KinematicsManager.stopAnimation(joint);
 }
@@ -1111,7 +1092,7 @@ function addNewAnimationTemplate() {
             infinite: $("#animationinfinite")[0].checked,
         };
         let animationid = KM.KinematicsManager.addAnimationTemplate($("#animationname")[0].value, animedef);
-        let joint = KM.KinematicsManager.getJointFromId(currentHierachy, currentJoint);
+        let joint = currentHierachy.getJointFromId( currentJoint);
         joint.addAnimation(animationid);
         generateJointPropertiesData(currentJoint);
     }
@@ -1253,14 +1234,14 @@ function assignanimationDialog()
 
 function assignAnimation()
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,currentJoint);
+    let joint = currentHierachy.getJointFromId(currentJoint);
     joint.addAnimation($("#assignanimtationselect").val());
     generateJointPropertiesData(currentJoint);
 }   
 
 function removeAnimationFromJoint()
 {
-    let joint = KM.KinematicsManager.getJointFromId(currentHierachy,currentJoint);
+    let joint = currentHierachy.getJointFromId(currentJoint);
     joint.removeAnimation($("#animationtemplateselect").val());
     generateJointPropertiesData(currentJoint);
 

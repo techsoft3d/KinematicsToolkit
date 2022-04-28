@@ -10,6 +10,7 @@ async function msready() {
     $(document).on('keyup keydown', function(e){shiftPressed = e.shiftKey;} );
 
     KM.KinematicsManager.initialize(hwv);
+    KM.KinematicsManager.setupHandleOperator();
 
     drawIKDiv();
 

@@ -49,6 +49,22 @@ hierachy.updateJoints();
 
 
 
+**Generate a Template from an existing Kinematics Hierachy:**
+
+```
+
+/* Create new or update existing template from joint hierachy*/
+hierachy.generateTemplate();
+
+/* Retrieve stringified JSON template*/
+var jsontext = JSON.stringify(KM.KinematicsManager.getTemplate(hierachy.getTemplateId()));
+
+/* Serialize JSON string*/
+...
+
+```                
+
+
 **Loading an existing Kinematics Hierachy Template and applying it to a model:**
 
 ```
@@ -68,28 +84,9 @@ let hierachy = await KM.KinematicsManager.applyToModel(templateId);
 /* get Joint with id "1" */
 let joint = KM.KinematicsManager.getJointFromId(hierachy, "1");
 
-
 /* Rotate first joint by 45 degrees */
 joint.set(45);  
 
 /* Update Joint Hierachy. Needs to be called when any joint value has changed*/
 hierachy.updateJoints();
-```                
-
-
-
-
-**Generate a Template from an existing Kinematics Hierachy:**
-
-```
-
-/* Create new or update existing template from joint hierachy*/
-hierachy.generateTemplate();
-
-/* Retrieve stringified JSON template*/
-var jsontext = JSON.stringify(KM.KinematicsManager.getTemplate(hierachy.getTemplateId()));
-
-/* Serialize JSON string*/
-...
-
 ```                

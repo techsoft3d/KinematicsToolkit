@@ -15,15 +15,16 @@ export class KinematicsManager {
         KinematicsManager._animationTemplates = [];
         KinematicsManager._animations = [];
         KinematicsManager._animationGroups = [];
+        KinematicsManager.handlePlacementOperator = null;
+    }
 
+    static setupHandleOperator()
+    {
+        KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(KinematicsManager.viewer);
+        let myOperatorHandle = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
+        KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
 
-
-        KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(viewer);
-        let myOperatorHandle = viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
-        viewer.operatorManager.push(myOperatorHandle);
-
-        KinematicsManager.handleNode = viewer.model.createNode(viewer.model.getRootNode(), "handlenode");
-
+        KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "handlenode");
     }
 
    

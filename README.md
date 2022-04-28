@@ -1,8 +1,9 @@
 # Kinematics Manager
 
-## Simple Kinematics Engine
+## Simple Kinematics Engine for HOOPS Communicator
 
-Install
+
+### Install
 * add dist/kinematicsManager.min.js to your project
 ```
     <script src="./js/kinematicsManager.min.js"></script>
@@ -10,7 +11,8 @@ Install
 
 ### Code Samples:
 
-Creating a new Kinematics Hierachy:
+
+**Creating a new Kinematics Hierachy:**
 
 ```
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
@@ -19,7 +21,7 @@ KM.KinematicsManager.initialize(hwv);
 /* Create a new Kinematics Hierachy */
 let hierachy = KM.KinematicsManager.createHierachy();
 
-/* Add a new joint to the root joint (default is revoluteJoint) */
+/* Add a new joint to the root joint (default joint type is revoluteJoint) */
 let root = hierachy.getRootJoint();
 let joint1 = hierachy.createJoint(root,[34]);                 
 
@@ -32,8 +34,10 @@ let joint2 = hierachy.createJoint(joint1,[30,29]);
 joint2.setCenter(new Communicator.Point3(18.07,28.59,-11));
 joint2.setAxis(new Communicator.Point3(-1,0,0));
 
-/* Specify a fixed axis */
+/* Specify a fixed axis for second joint*/
 joint2.setFixedAxis(new Communicator.Point3(0,0,-1));
+
+/* Specify a target axis for the above specified fixed axis*/
 joint2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 
 /* Rotate first joint by 45 degrees */
@@ -45,7 +49,7 @@ hierachy.updateJoints();
 
 
 
-Loading an existing Kinematics Hierachy Template and applying it to a model:
+**Loading an existing Kinematics Hierachy Template and applying it to a model:**
 
 ```
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
@@ -61,7 +65,7 @@ let templateId = KM.KinematicsManager.addTemplate(data);
 /* Apply template to model (microengine) */
 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
 
-/* get Joint with id one */
+/* get Joint with id "1" */
 let joint = KM.KinematicsManager.getJointFromId(hierachy, "1");
 
 
@@ -70,4 +74,22 @@ joint.set(45);
 
 /* Update Joint Hierachy. Needs to be called when any joint value has changed*/
 hierachy.updateJoints();
+```                
+
+
+
+
+**Generate a Template from an existing Kinematics Hierachy:**
+
+```
+
+/* Create new or update existing template from joint hierachy*/
+hierachy.generateTemplate();
+
+/* Retrieve stringified JSON template*/
+var jsontext = JSON.stringify(KM.KinematicsManager.getTemplate(hierachy.getTemplateId()));
+
+/* Serialize JSON string*/
+...
+
 ```                

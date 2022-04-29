@@ -1,4 +1,32 @@
-import { KinematicsAnimationGroup } from './KinematicsAnimation.js';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: KinematicsHierachy.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: KinematicsHierachy.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { KinematicsAnimationGroup } from './KinematicsAnimation.js';
 import { KinematicsJoint } from './KinematicsJoint.js';
 import { jointType } from './KinematicsJoint.js';
 import { KinematicsManager } from './KinematicsManager.js';
@@ -192,7 +220,7 @@ export class KinematicsHierachy {
                         let m = KinematicsManager.viewer.model.getNodeMatrix(KinematicsManager.handleNode);
                         _this._targetPoint = m.transform(new Communicator.Point3(0, 0, 0));
                     }
-                    for (let i = 0; i < _this._ikSpeed; i++) {
+                    for (let i = 0; i &lt; _this._ikSpeed; i++) {
                         let dis = _this.distanceFromTarget();
                         if (dis > _this._ikThreshold) {
                             await _this._inverseKinematics();
@@ -293,7 +321,7 @@ export class KinematicsHierachy {
 
 
         def.animationGroups = [];
-        for (let i=0;i<KinematicsManager._animationGroups.length;i++)
+        for (let i=0;i&lt;KinematicsManager._animationGroups.length;i++)
         {
             let group = KinematicsManager._animationGroups[i];
             if (group.hierachy == this)
@@ -355,14 +383,14 @@ export class KinematicsHierachy {
         }
 
         if (def.animations != undefined) {
-            for (let i = 0; i < def.animations.length; i++) {
+            for (let i = 0; i &lt; def.animations.length; i++) {
                 KinematicsManager.addAnimationTemplateFromJson(def.animations[i]._templateId, def.animations[i]);
 
             }
         }
 
         if (def.animationGroups != undefined) {
-            for (let i = 0; i < def.animationGroups.length; i++) {
+            for (let i = 0; i &lt; def.animationGroups.length; i++) {
                 let group = new KinematicsAnimationGroup(this);
                 group.fromJson(def.animationGroups[i]);
                 KinematicsManager.addAnimationGroup(group);
@@ -400,7 +428,7 @@ export class KinematicsHierachy {
     createJoint(parentjoint, nodeids, isReferenceIn, infront) {
 
         let isReference = true;
-        if (isReferenceIn != undefined && isReferenceIn == false)
+        if (isReferenceIn != undefined &amp;&amp; isReferenceIn == false)
             isReference = false;
 
         let joint = new KinematicsJoint(parentjoint, this);
@@ -416,7 +444,7 @@ export class KinematicsHierachy {
         }
 
         this._tipJoint = this._findTipJoint();
-        for (let i = 0; i < nodeids.length; i++)
+        for (let i = 0; i &lt; nodeids.length; i++)
             this._jointNodeidHash[nodeids[i]] = joint;
 
         return joint;
@@ -426,7 +454,7 @@ export class KinematicsHierachy {
     {          
         let nodeids = [];
         let selections = KinematicsManager.viewer.selectionManager.getResults();
-        for (let i=0;i<selections.length;i++)
+        for (let i=0;i&lt;selections.length;i++)
             nodeids.push(selections[i].getNodeId());
          
         let newjoint = this.createJoint(parentjoint,nodeids, isReference, infront);
@@ -478,7 +506,7 @@ export class KinematicsHierachy {
             joint.fixedAxis = startmatrix.transform(joint.fixedAxis);
          
         let referenceNodes = joint.getReferenceNodes();
-        for (let i=0;i<referenceNodes.length;i++)
+        for (let i=0;i&lt;referenceNodes.length;i++)
         {
 
             referenceNodes[i].nodeid = offset + referenceNodes[i].nodeid;            
@@ -490,7 +518,7 @@ export class KinematicsHierachy {
       
         if (joint.getChildren().length > 0)
         {
-            for (let j=0;j<joint.getChildren().length;j++)
+            for (let j=0;j&lt;joint.getChildren().length;j++)
                 this._applyToModelRecursive(joint.getChildren()[j], offset, startmatrix);
         }
         
@@ -518,7 +546,7 @@ export class KinematicsHierachy {
             joint.setNodeId(KinematicsManager.viewer.model.createNode(joint.getParent().getNodeId(), "joint"));
         if (joint.getChildren().length > 0)
         {
-            for (let j=0;j<joint.getChildren().length;j++)
+            for (let j=0;j&lt;joint.getChildren().length;j++)
                 this._rebuildJointTreeRecursive(joint.getChildren()[j]);
         }
         
@@ -529,7 +557,7 @@ export class KinematicsHierachy {
         let joint = this._rootJoint;
         while (true)
         {
-            if (joint.getType() != jointType.fixed && joint.fixedAxis == null && joint.getType() != jointType.pistonController && joint.getType() != jointType.prismaticAggregate)
+            if (joint.getType() != jointType.fixed &amp;&amp; joint.fixedAxis == null &amp;&amp; joint.getType() != jointType.pistonController &amp;&amp; joint.getType() != jointType.prismaticAggregate)
             {
                 let gradient = await joint.calculateGradient();
                 await joint.update(gradient);       
@@ -541,7 +569,7 @@ export class KinematicsHierachy {
                 gradient = await joint.getExtraJoint2().calculateGradient();
                 await joint.getExtraJoint2().update(gradient);                       
             }
-            if (joint.getChildren().length==0 || (joint.getType() == jointType.fixed && joint != this._rootJoint))
+            if (joint.getChildren().length==0 || (joint.getType() == jointType.fixed &amp;&amp; joint != this._rootJoint))
                 break;                
             joint = joint.getChildren()[0];
         } 
@@ -550,3 +578,26 @@ export class KinematicsHierachy {
     }
 }
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsHierachy.html">KinematicsHierachy</a></li><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 09:52:39 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

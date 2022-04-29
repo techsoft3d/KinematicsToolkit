@@ -58,7 +58,7 @@ export class KinematicsAnimationGroup {
 
             let animationtemplate = KinematicsManager.getAnimationTemplate(anim.animation);
             let joint = this._hierachy.getJointHash()[anim.joint];              
-            KinematicsManager.startAnimation(joint,animationtemplate.anime);
+            KinematicsManager.startAnimation(joint,animationtemplate);
 
         }
     }
@@ -170,7 +170,7 @@ export class KinematicsAnimation {
         }
     }
 
-    changeSpeed(newtarget)
+    changeAnimationSpeed(newtarget)
     {
         this.previoustarget = this.target;
         this.target = newtarget;

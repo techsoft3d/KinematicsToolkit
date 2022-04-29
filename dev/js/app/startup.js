@@ -422,6 +422,6 @@ function microanim()
         else
             animationTemplate = KM.KinematicsManager.getAnimationTemplate('f71ea555-5c90-47b4-aa94-c6129b731ee0');
 
-        KM.KinematicsManager.startAnimation(joint,animationTemplate.anime);
+        KM.KinematicsManager.startAnimation(joint,animationTemplate);
     }
 }

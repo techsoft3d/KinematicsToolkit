@@ -3,13 +3,18 @@ import { KinematicsHierachy } from './KinematicsHierachy.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 import { HandlePlacementOperator } from './HandlePlacementOperator.js';
 
-/** Blablakinamasasa as asa sas a */
+/** This static class provides the main entry point to all Kinematics Related Functionality. */
 export class KinematicsManager {
 
-     
+
+    /**
+    * Initializes the KinematicsManager  
+    * Should only be called once.
+    * @param  {object} viewer - WebViewer Object
+    */
     static initialize(viewer) {
         KinematicsManager.viewer = viewer;
-           
+
         KinematicsManager._hierachies = [];
         KinematicsManager._hierachyTemplates = [];
         KinematicsManager._animationTemplates = [];
@@ -18,8 +23,10 @@ export class KinematicsManager {
         KinematicsManager.handlePlacementOperator = null;
     }
 
-    static setupHandleOperator()
-    {
+    /**
+     * Initializes Handle Placement Operator
+     */
+    static setupHandleOperator() {
         KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(KinematicsManager.viewer);
         let myOperatorHandle = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
         KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
@@ -27,40 +34,61 @@ export class KinematicsManager {
         KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "handlenode");
     }
 
-   
+    /**
+    * Retrieves Hierachy Template Hash
+    * @return {hash} Hierachy Template Array
+    */
     static getHierachyTemplates() {
-        return KinematicsManager._hierachyTemplates;        
-    }
-
-    static getHierachies() {
-        return KinematicsManager._hierachies;        
-    }
-
-    static getAnimationTemplates() {
-        return KinematicsManager._animationTemplates;        
+        return KinematicsManager._hierachyTemplates;
     }
 
     /**
-     * Returns an animationtemplate by its id
-     * @param  {string} animationtemplateid - UUID of animation template
-     * @returns {number} Sum of a and b
+      * Retrieves Hierachy Array
+      * @return {array} Hierachy Array
+      */
+    static getHierachies() {
+        return KinematicsManager._hierachies;
+    }
+
+    /**
+       * Retrieves Animation Template Hash
+       * @return {hash} Animation Template Hash
+       */
+    static getAnimationTemplates() {
+        return KinematicsManager._animationTemplates;
+    }
+
+    /**
+     * Retrieves an animationtemplate by its id
+     * @param  {string} animationtemplateid - id of animation template
+     * @return {object} Animation Template
      */
     static getAnimationTemplate(animationtemplateid) {
-        return KinematicsManager._animationTemplates[animationtemplateid];        
+        return KinematicsManager._animationTemplates[animationtemplateid];
     }
- /**
-     * Returns all animation groups  
-     * @returns {number} Sum of a and b
-     */
+
+    /**
+        * Retrieves Animation Group Array
+        * @return {array} Animation Group Array
+        */
     static getAnimationGroups() {
-        return KinematicsManager._animationGroups;        
+        return KinematicsManager._animationGroups;
     }
 
-
+    /**
+         * Retrieves a Hierachy by its index
+        * @param  {number} i - Hierachy Index
+        * @return {KinematicsHierachy} Hierachy
+         */
     static getHierachyByIndex(i) {
-        return KinematicsManager._hierachies[i];        
+        return KinematicsManager._hierachies[i];
     }
 
+    /**
+    * Retrieves a joint assicated to a nodeid
+    * @param  {number} nodeid - nodeid
+    * @return {KinematicsJoint} Joint
+    */
     static getJointFromNodeId(nodeid) {
         for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
 
@@ -72,11 +100,14 @@ export class KinematicsManager {
     }
 
 
-    static findHierachyByNodeid(nodeid) {
-        if (nodeid != undefined && nodeid != KinematicsManager.viewer.model.getRootNode())
-        {
-            while (1)
-            {
+    /**
+    * Retrieves a hierachy assicated to a nodeid
+    * @param  {number} nodeid - nodeid
+    * @return {KinematicsHierachy} Hierachy
+    */
+    static getHierachyFromNodeId(nodeid) {
+        if (nodeid != undefined && nodeid != KinematicsManager.viewer.model.getRootNode()) {
+            while (1) {
                 if (KinematicsManager.viewer.model.getNodeParent(nodeid) == KinematicsManager.viewer.model.getRootNode())
                     break;
                 else
@@ -84,24 +115,33 @@ export class KinematicsManager {
 
             }
         }
-        for (let i=0;i<KinematicsManager._hierachies.length;i++) {
+        for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
             if (KinematicsManager._hierachies[i].nodeid == nodeid)
                 return i;
         }
         return undefined;
     }
 
-    static applyToModel(_templateId, nodeid) {
+    /**
+    * Applies a hierachy template to a node and creates a new hierachy
+    * @param  {uuid} templateid - Template Id
+    * @param  {number} nodeid - nodeid
+    * @return {KinematicsHierachy} Hierachy
+    */    
+    static applyToModel(templateId, nodeid) {
         let hierachy = new KinematicsHierachy();
-        hierachy.fromJson(KinematicsManager._hierachyTemplates[_templateId]);
+        hierachy.fromJson(KinematicsManager._hierachyTemplates[templateId]);
         hierachy.applyToModel(nodeid);
         hierachy.setNodeId(nodeid);
         KinematicsManager._hierachies.push(hierachy);
         return hierachy;
     }
 
-
-    static createHierachy(def) {
+   /**
+    * Creates a new Hierachy
+    * @return {KinematicsHierachy} Hierachy
+    */    
+    static createHierachy() {
 
         let hierachy = new KinematicsHierachy();
         this._hierachies.push(hierachy);
@@ -109,35 +149,58 @@ export class KinematicsManager {
 
     }
 
-    static addTemplate(def)
-    {
-        KinematicsManager._hierachyTemplates[def._templateId] = def;   
-        return def._templateId;     
+  /**
+    * Adds a new hierachy template from a JSON definition
+    * @param  {object} def - JSON definition
+    * @return {uuid} Template ID
+    */        
+    static addTemplate(def) {
+        KinematicsManager._hierachyTemplates[def._templateId] = def;
+        return def._templateId;
     }
 
-    static updateTemplate(def)
-    {
-        KinematicsManager._hierachyTemplates[def._templateId] = def;        
+ /**
+    * Updates an existing hierachy template from a JSON definition
+    * @param  {object} def - JSON definition
+    */        
+    static updateTemplate(def) {
+        KinematicsManager._hierachyTemplates[def._templateId] = def;
     }
-
-    static getTemplate(_templateId)
-    {
-        return KinematicsManager._hierachyTemplates[_templateId];
-    }
-
-
-    static updateAnimationTemplate(animationtemplateid, name, anime) {
-        let def = KinematicsManager._animationTemplates[animationtemplateid];
-        def.name = name;        
-        def.anime = anime;        
-        KinematicsManager._animationTemplates[animationtemplateid] = JSON.parse(JSON.stringify(def));
-    }
-  
 
     
-    static addAnimationTemplate(name,anime,easeintime,_ikSpeed)
-    {
-        let def = {name:name,anime:anime};
+ /**
+    * Retrieves a hierachy template from its id
+    * @param  {uuid} templateId - Template ID
+    * @return {object} Hierachy Template
+    */    
+    static getTemplate(templateId) {
+        return KinematicsManager._hierachyTemplates[templateId];
+    }
+
+   
+ /**
+    * Update Animation Template 
+    * @param  {uuid} animationtemplateid - Template ID
+    * @param  {string} name - Template Name
+    * @param  {object} anime - Animation Definition
+    */    
+    static updateAnimationTemplate(animationtemplateid, name, anime) {
+        let def = KinematicsManager._animationTemplates[animationtemplateid];
+        def.name = name;
+        def.anime = anime;
+        KinematicsManager._animationTemplates[animationtemplateid] = JSON.parse(JSON.stringify(def));
+    }
+
+
+ 
+ /**
+    * Create new Animation Template 
+    * @param  {string} name - Template Name
+    * @param  {object} anime - Animation Definition
+    * @return {uuid} ID of Animation Template
+    */    
+    static addAnimationTemplate(name, anime) {
+        let def = { name: name, anime: anime };
         def = JSON.parse(JSON.stringify(def));
         let animationId = KinematicsUtility.generateGUID();
         KinematicsManager._animationTemplates[animationId] = def;
@@ -145,49 +208,102 @@ export class KinematicsManager {
 
     }
 
-    static addAnimationTemplateFromJson(_templateId,def)
-    {
-        let def2 = JSON.parse(JSON.stringify(def));       
-        KinematicsManager._animationTemplates[_templateId] = def2;
-
-    }
-
-    static startAnimation(joint,anime)
-    {
-        let animation = new KinematicsAnimation("test",joint,JSON.parse(JSON.stringify(anime)));
-
-        KinematicsManager._animations.push(animation);
-        if (KinematicsManager._animations.length == 1)
-            window.requestAnimationFrame(KinematicsManager.doAnimation);
+    
+ 
+ /**
+    * Create new Animation Template from JSON definition
+    * @param  {uuid} templateId - ID of animation template
+    * @param  {object} def - Animation Definition
+    */    
+    static addAnimationTemplateFromJson(templateId, def) {
+        let def2 = JSON.parse(JSON.stringify(def));
+        KinematicsManager._animationTemplates[templateId] = def2;
     }
 
     
-    static stopAnimation(joint)
-    {
-        for (let i=0;i<KinematicsManager._animations.length;i++)
-        {
+ /**
+    * Create new Animation from given animation template
+    * @param  {KinematicsJoint} joint - Joint to animate
+    * @param  {object} animationTemplate - Animation Template
+    */    
+    static startAnimation(joint, animationTemplate) {
+        let animation = new KinematicsAnimation("test", joint, JSON.parse(JSON.stringify(animationTemplate.anime)));
+
+        KinematicsManager._animations.push(animation);
+        if (KinematicsManager._animations.length == 1)
+            window.requestAnimationFrame(KinematicsManager._doAnimation);
+    }
+
+
+      
+ /**
+    * Stop animation at given joint
+    * @param  {KinematicsJoint} joint - Joint to animate
+    */    
+    static stopAnimation(joint) {
+        for (let i = 0; i < KinematicsManager._animations.length; i++) {
             if (joint == undefined || KinematicsManager._animations[i].getJoint() == joint)
                 KinematicsManager._animations[i].setDone(true);
         }
 
     }
-    static changeSpeed(joint,newspeed)
-    {
-        for (let i=0;i<KinematicsManager._animations.length;i++)
-        {
+
+     
+ /**
+    * Change animation speed at given joint
+    * @param  {KinematicsJoint} joint - Joint
+    * @param  {number} newspeed - new speed
+    */      
+    static changeAnimationSpeed(joint, newspeed) {
+        for (let i = 0; i < KinematicsManager._animations.length; i++) {
             if (KinematicsManager._animations[i].joint == joint)
-                KinematicsManager._animations[i].changeSpeed(newspeed);
+                KinematicsManager._animations[i].changeAnimationSpeed(newspeed);
         }
     }
 
-    static doAnimation(timestamp) {
+       
+ /**
+    * Delete animation template with given template id 
+    * @param  {uuid} templateId - Template ID
+    */ 
+    static deleteAnimationTemplate(templateId) {
+        delete KinematicsManager._animationTemplates[templateId];
+        for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
+            KinematicsManager._hierachies[i].removeAnimationFromJoints(templateId);
+        }
+
+    }
+
+      
+ /**
+    * Add new animation group from animation group definition
+    * @param  {object} animationGroup - Animation Group Definition
+    * @return {number} ID of Animation Group 
+    */     
+    static addAnimationGroup(animationGroup) {
+        KinematicsManager._animationGroups.push(animationGroup);
+        return KinematicsManager._animationGroups.length - 1;
+    }
+
+
+    
+ /**
+    * Start animation group with given id
+    * @param  {object} id - Animation Group ID
+    */        
+
+    static startAnimationGroup(id) {
+        KinematicsManager._animationGroups[id].play();
+    }
+
+    
+    static _doAnimation(timestamp) {
 
         if (KinematicsManager._animations.length > 0) {
-            for (let i=0;i<KinematicsManager._hierachies.length;i++)
-            {
+            for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
                 KinematicsManager._hierachies[i].setDirty(false);
             }
-            
+
             for (let i = 0; i < KinematicsManager._animations.length; i++) {
                 KinematicsManager._animations[i].getJoint().getHierachy().setDirty(true);
                 KinematicsManager._animations[i].update(timestamp);
@@ -197,35 +313,15 @@ export class KinematicsManager {
                 }
             }
 
-            for (let i=0;i<KinematicsManager._hierachies.length;i++)
-            {
-                if (KinematicsManager._hierachies[i].getDirty())                                                 
+            for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
+                if (KinematicsManager._hierachies[i].getDirty())
                     KinematicsManager._hierachies[i].updateJoints();
             }
 
-            window.requestAnimationFrame(KinematicsManager.doAnimation);
+            window.requestAnimationFrame(KinematicsManager._doAnimation);
         }
     }
 
-    static deleteAnimationTemplate(_templateId)
-    {
-        delete KinematicsManager._animationTemplates[_templateId];
-        for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
-            KinematicsManager._hierachies[i].removeAnimationFromJoints(_templateId);
-        }
-
-    }
-
-    static addAnimationGroup(animagroup)
-    {
-        KinematicsManager._animationGroups.push(animagroup);
-        return KinematicsManager._animationGroups.length-1;
-    }
-
-    static playAnimationGroup(groupid)
-    {
-        KinematicsManager._animationGroups[groupid].play();    
-    }
 }
 
 

@@ -1,4 +1,5 @@
 {
+    "sort": false,
     "source": {
         "include": [ "dev/js/kinematicsManager" ],
         "includePattern": ".+\\.js(doc|x)?$",
@@ -6,5 +7,13 @@
     },
     "opts": {
         "destination": "./docs"
-    }
+    },
+    "templates": {
+        "default": {
+            "outputSourceFiles" : false
+        }
+      },
+    "plugins": [
+        "plugins/markdown"
+    ]
 }

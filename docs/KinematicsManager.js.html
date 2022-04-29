@@ -29,11 +29,17 @@
             <pre class="prettyprint source linenums"><code>import { KinematicsAnimation } from './KinematicsAnimation.js';
 import { KinematicsHierachy } from './KinematicsHierachy.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
+import { HandlePlacementOperator } from './HandlePlacementOperator.js';
 
-/** Blablakinamasasa as asa sas a */
+/** This static class provides access to all Kinematics Related Functionality. */
 export class KinematicsManager {
 
      
+     /**
+     * Initializes the KinematicsManager  
+     * Should only be called once.
+     * @param  {object} viewer - WebViewer Object
+     */
     static initialize(viewer) {
         KinematicsManager.viewer = viewer;
            
@@ -42,18 +48,25 @@ export class KinematicsManager {
         KinematicsManager._animationTemplates = [];
         KinematicsManager._animations = [];
         KinematicsManager._animationGroups = [];
-
-
-
-        KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(viewer);
-        let myOperatorHandle = viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
-        viewer.operatorManager.push(myOperatorHandle);
-
-        KinematicsManager.handleNode = viewer.model.createNode(viewer.model.getRootNode(), "handlenode");
-
+        KinematicsManager.handlePlacementOperator = null;
     }
 
-   
+    /**
+     * Initializes Handle Placement Operator
+     */
+    static setupHandleOperator()
+    {
+        KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(KinematicsManager.viewer);
+        let myOperatorHandle = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
+        KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
+
+        KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "handlenode");
+    }
+
+     /**
+     * Retrieves Hierachy Template Array
+     * @return {number} Hierachy Template Object
+     */   
     static getHierachyTemplates() {
         return KinematicsManager._hierachyTemplates;        
     }
@@ -69,14 +82,14 @@ export class KinematicsManager {
     /**
      * Returns an animationtemplate by its id
      * @param  {string} animationtemplateid - UUID of animation template
-     * @returns {number} Sum of a and b
+     * @return {number} Sum of a and b
      */
     static getAnimationTemplate(animationtemplateid) {
         return KinematicsManager._animationTemplates[animationtemplateid];        
     }
  /**
      * Returns all animation groups  
-     * @returns {number} Sum of a and b
+     * @return {number} Sum of a and b
      */
     static getAnimationGroups() {
         return KinematicsManager._animationGroups;        
@@ -98,7 +111,7 @@ export class KinematicsManager {
     }
 
 
-    static findHierachyByNodeid(nodeid) {
+    static getHierachyFromNodeId(nodeid) {
         if (nodeid != undefined &amp;&amp; nodeid != KinematicsManager.viewer.model.getRootNode())
         {
             while (1)
@@ -133,15 +146,6 @@ export class KinematicsManager {
         this._hierachies.push(hierachy);
         return hierachy;
 
-    }
-
-    static getJointFromId(hierachy, id)
-    {
-        let res = hierachy.getJointHash()[id];
-        if (res != undefined)
-            return  res;
-        else
-            return null;
     }
 
     static addTemplate(def)
@@ -193,7 +197,7 @@ export class KinematicsManager {
 
         KinematicsManager._animations.push(animation);
         if (KinematicsManager._animations.length == 1)
-            window.requestAnimationFrame(KinematicsManager.doAnimation);
+            window.requestAnimationFrame(KinematicsManager._doAnimation);
     }
 
     
@@ -206,16 +210,16 @@ export class KinematicsManager {
         }
 
     }
-    static changeSpeed(joint,newspeed)
+    static changeAnimationSpeed(joint,newspeed)
     {
         for (let i=0;i&lt;KinematicsManager._animations.length;i++)
         {
             if (KinematicsManager._animations[i].joint == joint)
-                KinematicsManager._animations[i].changeSpeed(newspeed);
+                KinematicsManager._animations[i].changeAnimationSpeed(newspeed);
         }
     }
 
-    static doAnimation(timestamp) {
+    static _doAnimation(timestamp) {
 
         if (KinematicsManager._animations.length > 0) {
             for (let i=0;i&lt;KinematicsManager._hierachies.length;i++)
@@ -238,7 +242,7 @@ export class KinematicsManager {
                     KinematicsManager._hierachies[i].updateJoints();
             }
 
-            window.requestAnimationFrame(KinematicsManager.doAnimation);
+            window.requestAnimationFrame(KinematicsManager._doAnimation);
         }
     }
 
@@ -257,7 +261,7 @@ export class KinematicsManager {
         return KinematicsManager._animationGroups.length-1;
     }
 
-    static playAnimationGroup(groupid)
+    static startAnimationGroup(groupid)
     {
         KinematicsManager._animationGroups[groupid].play();    
     }
@@ -274,13 +278,13 @@ export class KinematicsManager {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsHierachy.html">KinematicsHierachy</a></li><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Apr 27 2022 17:17:51 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 09:52:39 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -444,7 +444,7 @@ function generateJointPropertiesData(id)
     html += generateAnimationTemplateSelect(joint);
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="animateJoint(' + id + ')">Play</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="stopAnimation(' + id + ')">Stop</button>';
-    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="changeSpeed(' + id + ')">Change Speed</button><br>';
+    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="changeAnimationSpeed(' + id + ')">Change Speed</button><br>';
     html += '<button type="button" style="font-size:11px" onclick="assignanimationDialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#AssignAnimation">Assign</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="removeAnimationFromJoint()">Remove</button>';
     html += '<button type="button" style="font-size:11px" onclick="updateanimationdialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#DefineAnimation">Update</button>';
@@ -695,7 +695,7 @@ function drawIKDiv() {
     html += '<br>';
     html += '<h2 style="margin-top:20px;"><span>Animation Group</span></h2>';
     html +=  generateAnimationGroupSelect();
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="playAnimationGroup();">Play</button>';    
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="startAnimationGroup();">Play</button>';    
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="stopAllAnimations();">Stop</button>';    
     html += '<br><button type="button" style="font-size:11px" onclick="newAnimationGroupDialog()" class="btn btn-secondary btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#newupdateanimationgroup">New</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addJointFromUI(true);">Edit</button>';
@@ -957,10 +957,10 @@ function adjustToPlane() {
 
 function setFromModel() {
     if (hwv.selectionManager.getLast())
-        currentHierachy = KM.KinematicsManager.findHierachyByNodeid(hwv.selectionManager.getLast().getNodeId());
+        currentHierachy = KM.KinematicsManager.getHierachyFromNodeId(hwv.selectionManager.getLast().getNodeId());
 
     else
-        currentHierachy = KM.KinematicsManager.findHierachyByNodeid();
+        currentHierachy = KM.KinematicsManager.getHierachyFromNodeId();
     currentTemplate = currentHierachy._templateId;
     drawIKDiv();
 
@@ -1051,13 +1051,13 @@ function animateJoint(j){
     let animationtemplate = KM.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
     let joint = currentHierachy.getJointFromId(j);
 
-    KM.KinematicsManager.startAnimation(joint,animationtemplate.anime);
+    KM.KinematicsManager.startAnimation(joint,animationtemplate);
 }
 
-function changeSpeed(j){
+function changeAnimationSpeed(j){
     let joint = currentHierachy.getJointFromId(j);   
 
-    KM.KinematicsManager.changeSpeed(joint,-500 + Math.floor(Math.random() * 1000));
+    KM.KinematicsManager.changeAnimationSpeed(joint,-500 + Math.floor(Math.random() * 1000));
 }
 
 function stopAnimation(j){
@@ -1172,9 +1172,9 @@ function stopAllAnimations()
     KM.KinematicsManager.stopAnimation();
 }
 
-function playAnimationGroup()
+function startAnimationGroup()
 {
-    KM.KinematicsManager.playAnimationGroup(currentAnimationGroupId);
+    KM.KinematicsManager.startAnimationGroup(currentAnimationGroupId);
 }
 
 function newAnimationGroupDialog() {

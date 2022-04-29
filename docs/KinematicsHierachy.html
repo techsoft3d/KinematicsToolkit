@@ -155,6 +155,561 @@
     
 
     
+    <h4 class="name" id="applyToModel"><span class="type-signature"></span>applyToModel<span class="signature">(nodeid)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Apply current hierachy to node</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>nodeid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Nodeid</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createJoint"><span class="type-signature"></span>createJoint<span class="signature">(parentjoint, nodeids, isReferenceIn, infront)</span><span class="type-signature"> &rarr; {<a href="KinematicsJoint.html">KinematicsJoint</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Create a new joint</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>parentjoint</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Parent Joint</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nodeids</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array of Nodeids associated with new joint</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isReferenceIn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Optional, if true, this joint is a reference joint (Default:True)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>infront</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Joint</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createJointFromSelection"><span class="type-signature"></span>createJointFromSelection<span class="signature">(parentjoint, isReferenceIn, infront)</span><span class="type-signature"> &rarr; {<a href="KinematicsJoint.html">KinematicsJoint</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Create a new joint from the current selection and handle parameters</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>parentjoint</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Parent Joint</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isReferenceIn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Optional, if true, this joint is a reference joint (Default:True)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>infront</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Joint</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="fromJson"><span class="type-signature"></span>fromJson<span class="signature">(def)</span><span class="type-signature"></span></h4>
     
 
@@ -1541,6 +2096,89 @@
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="rebuildJointTree"><span class="type-signature">(async) </span>rebuildJointTree<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Rebuild internal node hierachy</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3012,7 +3650,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 14:05:27 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 14:27:24 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

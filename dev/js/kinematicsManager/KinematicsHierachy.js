@@ -487,6 +487,16 @@ export class KinematicsHierachy {
         }
     }
 
+
+    
+   /**
+     * Create a new joint
+     * @param  {KinematicsJoint} parentjoint - Parent Joint
+     * @param  {number} nodeids - Array of Nodeids associated with new joint
+     * @param  {bool} isReferenceIn - Optional, if true, this joint is a reference joint (Default:True)
+     * @param  {bool} infront - Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)
+     * @return {KinematicsJoint} Joint
+     */
     createJoint(parentjoint, nodeids, isReferenceIn, infront) {
 
         let isReference = true;
@@ -512,6 +522,14 @@ export class KinematicsHierachy {
         return joint;
     }
 
+     
+   /**
+     * Create a new joint from the current selection and handle parameters
+     * @param  {KinematicsJoint} parentjoint - Parent Joint
+     * @param  {bool} isReferenceIn - Optional, if true, this joint is a reference joint (Default:True)
+     * @param  {bool} infront - Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)
+     * @return {KinematicsJoint} Joint
+     */
     createJointFromSelection(parentjoint,isReference, infront)
     {          
         let nodeids = [];
@@ -525,6 +543,10 @@ export class KinematicsHierachy {
         return newjoint;      
     }
 
+       
+   /**
+     * Rebuild internal node hierachy
+     */
     async rebuildJointTree()
     {
         KinematicsManager.viewer.model.deleteNode(this._rootJoint.getNodeId());
@@ -532,7 +554,12 @@ export class KinematicsHierachy {
     }
 
 
-
+     
+     
+   /**
+     * Apply current hierachy to node
+     * @param  {number} nodeid - Nodeid
+     */
     applyToModel(nodeid)
     {
         this._jointNodeidHash = [];

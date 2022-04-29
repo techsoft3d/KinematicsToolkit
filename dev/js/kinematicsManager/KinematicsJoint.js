@@ -20,6 +20,7 @@ export const jointType = {
 };
 
  
+/** This class represents an individual Kinematics Joint*/
 export class KinematicsJoint {
 
     constructor(parent, hierachy) {
@@ -883,14 +884,14 @@ export class KinematicsJoint {
         let angle = this._currentAngle;
         let delta = this._currentPosition;
 
-        let targetDistanceBefore = this._hierachy.distanceFromTarget();
+        let targetDistanceBefore = this._hierachy.distanceFromIKTarget();
 
         let gradient;
         if (this._type == jointType.revolute)
         {
             await this._rotate(this._currentAngle + this._hierachy._ikSamplingDistance, true);
    //         await this.updateJoints();
-            let targetDistanceAfter = this._hierachy.distanceFromTarget();
+            let targetDistanceAfter = this._hierachy.distanceFromIKTarget();
 
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistance;
         }
@@ -898,7 +899,7 @@ export class KinematicsJoint {
         {
             await this._translate(this._currentPosition + this._hierachy._ikSamplingDistanceTranslation);
        //     await this.updateJoints();
-            let targetDistanceAfter = this._hierachy.distanceFromTarget();
+            let targetDistanceAfter = this._hierachy.distanceFromIKTarget();
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistanceTranslation;
         }
         

@@ -1,6 +1,8 @@
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
+
+/** This class contains functionality related to a Belt joint for animating belts of various types*/
 export class KinematicsBelt {
 
 

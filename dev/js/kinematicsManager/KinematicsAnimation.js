@@ -8,6 +8,7 @@ export const animationType = {
     
 };
 
+/** This class provides functionality related to controlling a group fo animations*/
 export class KinematicsAnimationGroup {
     constructor(hierachy) {
 
@@ -65,6 +66,7 @@ export class KinematicsAnimationGroup {
 
 }
 
+/** This class provides functionality related to animating a joint*/
 export class KinematicsAnimation {
 
     static fromJson(json, joint) {

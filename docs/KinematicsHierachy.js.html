@@ -72,7 +72,7 @@ export class KinematicsHierachy {
     }
 
 
-    getJointFromId(id)
+    getJointById(id)
     {
         let res = this._jointHash[id];
         if (res != undefined)
@@ -221,7 +221,7 @@ export class KinematicsHierachy {
                         _this._targetPoint = m.transform(new Communicator.Point3(0, 0, 0));
                     }
                     for (let i = 0; i &lt; _this._ikSpeed; i++) {
-                        let dis = _this.distanceFromTarget();
+                        let dis = _this.distanceFromIKTarget();
                         if (dis > _this._ikThreshold) {
                             await _this._inverseKinematics();
                         }                       
@@ -402,7 +402,7 @@ export class KinematicsHierachy {
 
 
 
-    distanceFromTarget() {
+    distanceFromIKTarget() {
         let matrix = this.getReferenceNodeNetMatrix(this._tipJoint);      
         let temp = matrix.transform(this._ikTip);
         let res = Communicator.Point3.subtract(this._targetPoint, temp);

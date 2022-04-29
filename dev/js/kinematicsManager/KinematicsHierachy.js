@@ -4,14 +4,12 @@ import { jointType } from './KinematicsJoint.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** Hierachy class for Kinematics  
-* Kinematics Manager
-*
-* Simple Kinematics Engine for HOOPS Communicator
- 
-*/
+/** This class represents a Hierachy of Kinematics Joints*/
 export class KinematicsHierachy {
 
+     /**
+     * Create a Kinematics Hierachy Object.    
+     */
     constructor() {
 
         this._templateId = null;
@@ -42,9 +40,33 @@ export class KinematicsHierachy {
         
         this._dirty = false;
     }
+     
+ /**
+    * Retrieve Joint Hash
+    * @return {hash} Joint Hash
+     */      
+  getJointHash()
+  {
+      return this._jointHash;
+  }
+
+ 
+/**
+  * Retrieve Root Joint
+  * @return {KinematicsJoint} Joint 
+   */  
+  getRootJoint()
+  {
+      return this._rootJoint;
+  }
 
 
-    getJointFromId(id)
+   /**
+     * Retrieves joint associated with this hierachy from its id
+     * @param  {number} id - Joint ID
+     * @return {KinematicsJoint} Joint
+     */
+    getJointById(id)
     {
         let res = this._jointHash[id];
         if (res != undefined)
@@ -53,68 +75,116 @@ export class KinematicsHierachy {
             return null;
     }
 
-
+   /**
+     * Retrieves ID of template associated with this hierachy     
+     * @return {uuid} Template ID
+     */
     getTemplateId()
     {
         return this._templateId;
     }
 
-    setDirty(isDirty)
+    
+   /**
+     * Generate or Update Template for this Hierachy
+     */
+    generateTemplate()
     {
-        this._dirty = true;
+        if (!this._templateId)
+        {
+            this._templateId = KinematicsUtility.generateGUID();
+            let template = this.toJson();
+            KM.KinematicsManager.addTemplate(template);           
+        }
+        else
+        {
+            let template = KM.KinematicsManager.toJson(this);
+            KM.KinematicsManager.updateTemplate(template);
+        }        
     }
+    
 
-    getDirty()
-    {
-        return this._dirty;
-    }
 
+   /**
+     * Update all joints 
+     */   
     async updateJoints()
     {
         await this._rootJoint._updateJointsFromReferenceRecursive(this._rootJoint);
     }
-    setNodeId(nodeid)
-    {
-        this._nodeid = nodeid;        
-    }
 
+
+
+   /**
+     * Set Tip Position for Inverse Kinematics
+     * @param  {Point3} tip - IK Tip Location
+     */    
     setIkTip(tip)
     {
         this._ikTip = tip;
     }
 
+  /**
+     *Retrieve Tip Location for Inverse Kinematics
+    * @return {Point3} IK Tip Location
+     */        
     getIkTip()
     {
         return this._ikTip;
     }
 
+    
+   /**
+     * Set Threshold for Inverse Kinematics
+     * @param  {number} ikThreshold - IK Threshold
+     */    
     setIkThreshold(ikThreshold)
     {
         this._ikThreshold = ikThreshold;
     }
 
+    /**
+    * Retrieve Threshold for Inverse Kinematics
+    * @return {number} IK Threshold
+     */    
     getIkThreshold()
     {
         return this._ikThreshold;
     }
 
+    
+   /**
+     * Set Speed for Inverse Kinematics
+     * @param  {number} ikSpeed - IK Speed
+     */        
     setIkSpeed(ikSpeed)
     {
         this._ikSpeed = ikSpeed;
     }
     
+    /**
+    * Retrieve Speed for Inverse Kinematics
+    * @return {number} IK Speed
+     */    
     getIkSpeed()
     {
         return this._ikSpeed;
     }
 
-    
+
+     /**
+     * Set Minimum Sampling Distance for Inverse Kinematics
+     * @param  {number} ikSamplingDistance - IK Sampling Distance
+     */            
     setIkSamplingDistance(ikSamplingDistance)
     {
         this._ikSamplingDistance = ikSamplingDistance;
     }
     
-    
+    /**
+    * Retrieve Sampling Distance for Inverse Kinematics
+    * @return {number} IK Sampling Distance
+     */        
     getIkSamplingDistance()
     {
         return this._ikSamplingDistance;
@@ -132,33 +202,29 @@ export class KinematicsHierachy {
     }
 
        
+ /**
+     * Set Learning Rate for Inverse Kinematics
+     * @param  {number} ikLearningRate - IK Learning Rate
+     */    
     setIkLearningRate(ikLearningRate)
     {
         this._ikLearningRate = ikLearningRate;
     }
 
-
+  /**
+    * Retrieve Learning Rate for Inverse Kinematics
+    * @return {number} IK Learning Rate
+     */        
     getIkLearningRate()
     {
         return this._ikLearningRate;
     }
+   
     
-
-    getJointHash()
-    {
-        return this._jointHash;
-    }
-
-
-    getRootJoint()
-    {
-        return this._rootJoint;
-    }
-    getJointById(id)
-    {
-        return this._jointHash[id];
-    }
-
+  /**
+    * Retrieves if Inverse Kinematics is currently activer
+    * @return {bool} IK Active
+     */       
     isIKActive()
     {
         if (this._interval)
@@ -167,6 +233,10 @@ export class KinematicsHierachy {
             return false;
     }
 
+    
+  /**
+    * Stop any Inverse Kinematics calculation
+     */       
 
     stopIK()
     {
@@ -176,6 +246,10 @@ export class KinematicsHierachy {
         }
     }
 
+       
+  /**
+    * Activate Inverse Kinematics and set Kinematics Tip to currently active handle position
+     */      
     startIKFromHandle() {
 
         if (!this._interval) {
@@ -193,7 +267,7 @@ export class KinematicsHierachy {
                         _this._targetPoint = m.transform(new Communicator.Point3(0, 0, 0));
                     }
                     for (let i = 0; i < _this._ikSpeed; i++) {
-                        let dis = _this.distanceFromTarget();
+                        let dis = _this.distanceFromIKTarget();
                         if (dis > _this._ikThreshold) {
                             await _this._inverseKinematics();
                         }                       
@@ -204,22 +278,11 @@ export class KinematicsHierachy {
         }
     }
 
-    generateTemplate()
-    {
-        if (!this._templateId)
-        {
-            this._templateId = KinematicsUtility.generateGUID();
-            let template = this.toJson();
-            KM.KinematicsManager.addTemplate(template);           
-        }
-        else
-        {
-            let template = KM.KinematicsManager.toJson(this);
-            KM.KinematicsManager.updateTemplate(template);
-        }        
-    }
     
-
+         
+  /**
+    * Insert Handle from Inverse Kinematics Target Point
+     */  
     insertIKHandle() {
         let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
         handleOperator.removeHandles();            
@@ -228,6 +291,11 @@ export class KinematicsHierachy {
         handleOperator.showHandles();
     }
 
+       
+  /**
+    * Set Handle to Inverse Kinematics Tip
+    * @param  {bool} insertHandle - Insert Handle
+     */  
     setIKHandleToTip(insertHandle)
     {
         let mat = this.getReferenceNodeNetMatrix(this._tipJoint);
@@ -241,6 +309,11 @@ export class KinematicsHierachy {
             this.insertIKHandle();
     }
 
+
+      
+  /**
+    * Set Inverse Kinematics Tip to Handle Position
+     */      
     setTipToHandlePosition()
     {
        
@@ -249,6 +322,8 @@ export class KinematicsHierachy {
      
         this._ikTip = this._tipJoint.transformPointToJointSpace(pos);
     }
+
+
 
     setTargetAnchorToHandlePosition()
     {
@@ -264,12 +339,27 @@ export class KinematicsHierachy {
     }
 
     
-    removeAnimationFromJoints(_templateId)
+    distanceFromIKTarget() {
+        let matrix = this.getReferenceNodeNetMatrix(this._tipJoint);      
+        let temp = matrix.transform(this._ikTip);
+        let res = Communicator.Point3.subtract(this._targetPoint, temp);
+        return res.length();
+    }
+    
+    /**
+    * Remove Animations from All Joints
+    * @param  {uuid} animationTemplateId - Animation Template ID
+     */  
+    removeAnimationFromJoints(animationTemplateId)
     {
-        this._rootJoint.removeAnimationRecursive(_templateId);
+        this._rootJoint.removeAnimationRecursive(animationTemplateId);
     }
 
 
+  /**
+    * Generate JSON object for this Hierarchy
+    * @return {object} JSON object
+     */      
     toJson() {
         let def = { version: 1.0,_ikTip: this._ikTip.toJson(),_templateId: this._templateId,_ikSamplingDistance: this._ikSamplingDistance, _ikSamplingDistanceTranslation: this._ikSamplingDistanceTranslation, _ikLearningRate: this._ikLearningRate, _ikThreshold: this._ikThreshold, _ikSpeed: this._ikSpeed, 
             _targetAnchorNode:this._targetAnchorNode };
@@ -305,6 +395,11 @@ export class KinematicsHierachy {
         return def;
     }
 
+         
+  /**
+    * Populate Hierachy from provided JSON object 
+    * @param  {object} def - JSON Object
+     */  
     fromJson(def) {
         this._highestId = 0;
         this._ikTip = Communicator.Point3.fromJson(def._ikTip);
@@ -372,15 +467,10 @@ export class KinematicsHierachy {
         return def;
     }
 
-
-
-    distanceFromTarget() {
-        let matrix = this.getReferenceNodeNetMatrix(this._tipJoint);      
-        let temp = matrix.transform(this._ikTip);
-        let res = Communicator.Point3.subtract(this._targetPoint, temp);
-        return res.length();
-    }
-
+           
+  /**
+    * Reset All Joints in Hierachy
+     */  
     resetJoints() {
 
         let joint = this._rootJoint;
@@ -496,6 +586,22 @@ export class KinematicsHierachy {
         
     }
 
+    setDirty(isDirty)
+    {
+        this._dirty = true;
+    }
+
+    getDirty()
+    {
+        return this._dirty;
+    }
+
+    
+    
+    setNodeId(nodeid)
+    {
+        this._nodeid = nodeid;        
+    }
     
     _findTipJoint()
     {

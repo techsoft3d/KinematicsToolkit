@@ -84,7 +84,7 @@ let templateId = KM.KinematicsManager.addTemplate(data);
 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
 
 /* get Joint with id 1 */
-let joint = hierachy.getJointFromId(1);
+let joint = hierachy.getJointById(1);
 
 /* Rotate first joint to 45 degrees from its default position*/
 joint.set(45);  

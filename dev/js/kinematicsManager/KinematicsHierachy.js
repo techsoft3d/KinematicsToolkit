@@ -1,10 +1,10 @@
 import { KinematicsAnimationGroup } from './KinematicsAnimation.js';
-import { KinematicsJoint } from './KinematicsJoint.js';
-import { jointType } from './KinematicsJoint.js';
+import { KinematicsComponent } from './KinematicsComponent.js';
+import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Joints*/
+/** This class represents a Hierachy of Kinematics Components*/
 export class KinematicsHierachy {
 
      /**
@@ -16,8 +16,8 @@ export class KinematicsHierachy {
         this._highestId = 0;
         this._nodeid = undefined;
 
-        this._jointNodeidHash = [];
-        this._jointHash = [];
+        this._componentNodeidHash = [];
+        this._componentHash = [];
 
         this._ikTip = new Communicator.Point3(0, 0, 0);   
         this._ikThreshold = 1;
@@ -30,10 +30,10 @@ export class KinematicsHierachy {
         this._targetPoint = new Communicator.Point3(0, 0, 0);
        
         
-        this._rootJoint = this.createJoint(null,[],true);
-        this._rootJoint.setType(jointType.fixed);
+        this._rootComponent = this.createComponent(null,[],true);
+        this._rootComponent.setType(componentType.fixed);
         
-        this._tipJoint = null;
+        this._tipComponent = null;
 
         this._targetAnchorPosition = null;
         this._targetAnchorNode = null;       
@@ -42,33 +42,33 @@ export class KinematicsHierachy {
     }
      
  /**
-    * Retrieve Joint Hash
-    * @return {hash} Joint Hash
+    * Retrieve Component Hash
+    * @return {hash} Component Hash
      */      
-  getJointHash()
+  getComponentHash()
   {
-      return this._jointHash;
+      return this._componentHash;
   }
 
  
 /**
-  * Retrieve Root Joint
-  * @return {KinematicsJoint} Joint 
+  * Retrieve Root Component
+  * @return {KinematicsComponent} Component 
    */  
-  getRootJoint()
+  getRootComponent()
   {
-      return this._rootJoint;
+      return this._rootComponent;
   }
 
 
    /**
-     * Retrieves joint associated with this hierachy from its id
-     * @param  {number} id - Joint ID
-     * @return {KinematicsJoint} Joint
+     * Retrieves component associated with this hierachy from its id
+     * @param  {number} id - Component ID
+     * @return {KinematicsComponent} Component
      */
-    getJointById(id)
+    getComponentById(id)
     {
-        let res = this._jointHash[id];
+        let res = this._componentHash[id];
         if (res != undefined)
             return  res;
         else
@@ -106,11 +106,11 @@ export class KinematicsHierachy {
 
 
    /**
-     * Update all joints 
+     * Update all components 
      */   
-    async updateJoints()
+    async updateComponents()
     {
-        await this._rootJoint._updateJointsFromReferenceRecursive(this._rootJoint);
+        await this._rootComponent._updateComponentsFromReferenceRecursive(this._rootComponent);
     }
 
 
@@ -298,7 +298,7 @@ export class KinematicsHierachy {
      */  
     setIKHandleToTip(insertHandle)
     {
-        let mat = this.getReferenceNodeNetMatrix(this._tipJoint);
+        let mat = this.getReferenceNodeNetMatrix(this._tipComponent);
         let _ikTip = mat.transform(this._ikTip);
 
         mat = new Communicator.Matrix();
@@ -320,7 +320,7 @@ export class KinematicsHierachy {
         let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
         let pos = handleOperator.getPosition();
      
-        this._ikTip = this._tipJoint.transformPointToJointSpace(pos);
+        this._ikTip = this._tipComponent.transformPointToComponentSpace(pos);
     }
 
 
@@ -340,19 +340,19 @@ export class KinematicsHierachy {
 
     
     distanceFromIKTarget() {
-        let matrix = this.getReferenceNodeNetMatrix(this._tipJoint);      
+        let matrix = this.getReferenceNodeNetMatrix(this._tipComponent);      
         let temp = matrix.transform(this._ikTip);
         let res = Communicator.Point3.subtract(this._targetPoint, temp);
         return res.length();
     }
     
     /**
-    * Remove Animations from All Joints
+    * Remove Animations from All Components
     * @param  {uuid} animationTemplateId - Animation Template ID
      */  
-    removeAnimationFromJoints(animationTemplateId)
+    removeAnimationFromComponents(animationTemplateId)
     {
-        this._rootJoint.removeAnimationRecursive(animationTemplateId);
+        this._rootComponent.removeAnimationRecursive(animationTemplateId);
     }
 
 
@@ -365,11 +365,11 @@ export class KinematicsHierachy {
             _targetAnchorNode:this._targetAnchorNode };
         if (this._targetAnchorPosition)            
             def._targetAnchorPosition = this._targetAnchorPosition.toJson();
-        def.joints = this._rootJoint.toJson();
+        def.components = this._rootComponent.toJson();
 
         let animhash = [];
         let anims = [];
-        this._rootJoint.animToJson(animhash);
+        this._rootComponent.animToJson(animhash);
         for (let i in animhash)
         {
             let atemplate = KinematicsManager.getAnimationTemplate(i);
@@ -413,39 +413,39 @@ export class KinematicsHierachy {
         if (def._targetAnchorPosition)
             this._targetAnchorPosition = Communicator.Point3.fromJson(def._targetAnchorPosition);
 
-        let joint = new KinematicsJoint(null,this);
-        joint.fromJson(def.joints, def.version);
-        this._rootJoint = joint;
+        let component = new KinematicsComponent(null,this);
+        component.fromJson(def.components, def.version);
+        this._rootComponent = component;
 
         while (true)
         {        
-            if (joint.getChildren().length==0) 
+            if (component.getChildren().length==0) 
             {
-                this._tipJoint = joint;
+                this._tipComponent = component;
                 break;
             }                
-            joint = joint.getChildren()[0];
+            component = component.getChildren()[0];
         }      
         
-        for (let i in this._jointHash)
+        for (let i in this._componentHash)
         {
-            let joint = this._jointHash[i];
-            if (joint.getType() == jointType.prismaticTriangle || joint.getType() == jointType.prismaticAggregate || joint.getType() == jointType.mate)
+            let component = this._componentHash[i];
+            if (component.getType() == componentType.prismaticTriangle || component.getType() == componentType.prismaticAggregate || component.getType() == componentType.mate)
             {
-                joint.setExtraJoint1(this._jointHash[joint.getExtraJoint1()]);
-                joint.setExtraJoint2(this._jointHash[joint.getExtraJoint2()]);
+                component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
+                component.setExtraComponent2(this._componentHash[component.getExtraComponent2()]);
             }
-            if (joint.getType() == jointType.revoluteSlide)
+            if (component.getType() == componentType.revoluteSlide)
             {
-                joint.setExtraJoint1(this._jointHash[joint.getExtraJoint1()]);
+                component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
             }
-            else if (joint.getType() == jointType.pistonController)
+            else if (component.getType() == componentType.pistonController)
             {
-                joint.setExtraJoint1(this._jointHash[joint.getExtraJoint1()]);
+                component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
             }
-            else if (joint.getType() == jointType.mapped)
+            else if (component.getType() == componentType.mapped)
             {
-                joint._mappedTargetJoint = this._jointHash[joint.getMappedTargetJoint()];
+                component._mappedTargetComponent = this._componentHash[component.getMappedTargetComponent()];
             }
         }
 
@@ -469,17 +469,17 @@ export class KinematicsHierachy {
 
            
   /**
-    * Reset All Joints in Hierachy
+    * Reset All Components in Hierachy
      */  
-    resetJoints() {
+    resetComponents() {
 
-        let joint = this._rootJoint;
+        let component = this._rootComponent;
         while (true) {
      
-            joint.reset();
-            if (joint.getChildren().length == 0)
+            component.reset();
+            if (component.getChildren().length == 0)
                 break;
-            joint = joint.getChildren()[0];                
+            component = component.getChildren()[0];                
         }
         if (this._interval) {
             clear_interval(this._interval);
@@ -490,67 +490,67 @@ export class KinematicsHierachy {
 
     
    /**
-     * Create a new joint
-     * @param  {KinematicsJoint} parentjoint - Parent Joint
-     * @param  {number} nodeids - Array of Nodeids associated with new joint
-     * @param  {bool} isReferenceIn - Optional, if true, this joint is a reference joint (Default:True)
-     * @param  {bool} infront - Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)
-     * @return {KinematicsJoint} Joint
+     * Create a new component
+     * @param  {KinematicsComponent} parentcomponent - Parent Component
+     * @param  {number} nodeids - Array of Nodeids associated with new component
+     * @param  {bool} isReferenceIn - Optional, if true, this component is a reference component (Default:True)
+     * @param  {bool} infront - Optional, if true, the new component will be inserted as a parent of the provided parentcomponent (Default:false)
+     * @return {KinematicsComponent} Component
      */
-    createJoint(parentjoint, nodeids, isReferenceIn, infront) {
+    createComponent(parentcomponent, nodeids, isReferenceIn, infront) {
 
         let isReference = true;
         if (isReferenceIn != undefined && isReferenceIn == false)
             isReference = false;
 
-        let joint = new KinematicsJoint(parentjoint, this);
-        this._jointHash[joint.getId()] = joint;
-        joint.initialize(nodeids, isReference);
-        if (parentjoint == null)
-            this._rootJoint = joint;
+        let component = new KinematicsComponent(parentcomponent, this);
+        this._componentHash[component.getId()] = component;
+        component.initialize(nodeids, isReference);
+        if (parentcomponent == null)
+            this._rootComponent = component;
         else {
             if (!infront)
-                parentjoint.getChildren().push(joint);
+                parentcomponent.getChildren().push(component);
             else
-                parentjoint.getChildren().unshift(joint);
+                parentcomponent.getChildren().unshift(component);
         }
 
-        this._tipJoint = this._findTipJoint();
+        this._tipComponent = this._findTipComponent();
         for (let i = 0; i < nodeids.length; i++)
-            this._jointNodeidHash[nodeids[i]] = joint;
+            this._componentNodeidHash[nodeids[i]] = component;
 
-        return joint;
+        return component;
     }
 
      
    /**
-     * Create a new joint from the current selection and handle parameters
-     * @param  {KinematicsJoint} parentjoint - Parent Joint
-     * @param  {bool} isReferenceIn - Optional, if true, this joint is a reference joint (Default:True)
-     * @param  {bool} infront - Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)
-     * @return {KinematicsJoint} Joint
+     * Create a new component from the current selection and handle parameters
+     * @param  {KinematicsComponent} parentcomponent - Parent Component
+     * @param  {bool} isReferenceIn - Optional, if true, this component is a reference component (Default:True)
+     * @param  {bool} infront - Optional, if true, the new component will be inserted as a parent of the provided parentcomponent (Default:false)
+     * @return {KinematicsComponent} Component
      */
-    createJointFromSelection(parentjoint,isReference, infront)
+    createComponentFromSelection(parentcomponent,isReference, infront)
     {          
         let nodeids = [];
         let selections = KinematicsManager.viewer.selectionManager.getResults();
         for (let i=0;i<selections.length;i++)
             nodeids.push(selections[i].getNodeId());
          
-        let newjoint = this.createJoint(parentjoint,nodeids, isReference, infront);
+        let newcomponent = this.createComponent(parentcomponent,nodeids, isReference, infront);
       
-        newjoint.setParametersFromHandle();
-        return newjoint;      
+        newcomponent.setParametersFromHandle();
+        return newcomponent;      
     }
 
        
    /**
      * Rebuild internal node hierachy
      */
-    async rebuildJointTree()
+    async rebuildComponentTree()
     {
-        KinematicsManager.viewer.model.deleteNode(this._rootJoint.getNodeId());
-        this._rebuildJointTreeRecursive(this._rootJoint);        
+        KinematicsManager.viewer.model.deleteNode(this._rootComponent.getNodeId());
+        this._rebuildComponentTreeRecursive(this._rootComponent);        
     }
 
 
@@ -562,7 +562,7 @@ export class KinematicsHierachy {
      */
     applyToModel(nodeid)
     {
-        this._jointNodeidHash = [];
+        this._componentNodeidHash = [];
         let childnode = KinematicsManager.viewer.model.getNodeChildren(nodeid)[0];
         let startmatrix;
         if (nodeid == KinematicsManager.viewer.model.getRootNode() || nodeid == undefined)
@@ -570,45 +570,45 @@ export class KinematicsHierachy {
         else
             startmatrix = KinematicsManager.viewer.model.getNodeMatrix(nodeid);
 
-        this._applyToModelRecursive(this._rootJoint, KinematicsManager.viewer.model.getNodeIdOffset(childnode), startmatrix);
+        this._applyToModelRecursive(this._rootComponent, KinematicsManager.viewer.model.getNodeIdOffset(childnode), startmatrix);
     }
 
     
 
-    getReferenceNodeNetMatrix(injoint) 
+    getReferenceNodeNetMatrix(incomponent) 
     { 
-        return KinematicsManager.viewer.model.getNodeNetMatrix(injoint.getNodeId());
+        return KinematicsManager.viewer.model.getNodeNetMatrix(incomponent.getNodeId());
     }
 
 
-    _applyToModelRecursive(joint, offset, startmatrix)
+    _applyToModelRecursive(component, offset, startmatrix)
     {
      
-        this._jointNodeidHash[joint.getNodeId()] = joint;
+        this._componentNodeidHash[component.getNodeId()] = component;
 
-        let temp = startmatrix.transform(Communicator.Point3.add(joint.getCenter(),joint.getAxis()));
-        joint.setCenter(startmatrix.transform(joint.getCenter()));
-        joint.setAxis(Communicator.Point3.subtract(temp,joint.getCenter()).normalize());
+        let temp = startmatrix.transform(Communicator.Point3.add(component.getCenter(),component.getAxis()));
+        component.setCenter(startmatrix.transform(component.getCenter()));
+        component.setAxis(Communicator.Point3.subtract(temp,component.getCenter()).normalize());
         
-        joint._parentMatrix = Communicator.Matrix.multiply(joint.getParentMatrix(), startmatrix);
-        if (joint.fixedAxis)
-            joint.fixedAxis = startmatrix.transform(joint.fixedAxis);
+        component._parentMatrix = Communicator.Matrix.multiply(component.getParentMatrix(), startmatrix);
+        if (component.fixedAxis)
+            component.fixedAxis = startmatrix.transform(component.fixedAxis);
          
-        let referenceNodes = joint.getReferenceNodes();
+        let referenceNodes = component.getReferenceNodes();
         for (let i=0;i<referenceNodes.length;i++)
         {
 
             referenceNodes[i].nodeid = offset + referenceNodes[i].nodeid;            
             referenceNodes[i].matrix = Communicator.Matrix.multiply(referenceNodes[i].matrix,startmatrix);
 
-            this._jointNodeidHash[referenceNodes[i].nodeid] = joint;
+            this._componentNodeidHash[referenceNodes[i].nodeid] = component;
 
         }
       
-        if (joint.getChildren().length > 0)
+        if (component.getChildren().length > 0)
         {
-            for (let j=0;j<joint.getChildren().length;j++)
-                this._applyToModelRecursive(joint.getChildren()[j], offset, startmatrix);
+            for (let j=0;j<component.getChildren().length;j++)
+                this._applyToModelRecursive(component.getChildren()[j], offset, startmatrix);
         }
         
     }
@@ -630,55 +630,55 @@ export class KinematicsHierachy {
         this._nodeid = nodeid;        
     }
     
-    _findTipJoint()
+    _findTipComponent()
     {
-        let joint = this._rootJoint;
+        let component = this._rootComponent;
         while (true) {
               
-            if (joint.getChildren().length == 0)
+            if (component.getChildren().length == 0)
                 break;
-            joint = joint.getChildren()[0];                
+            component = component.getChildren()[0];                
         }
-        return joint;
+        return component;
     
     }
 
-    _rebuildJointTreeRecursive(joint)
+    _rebuildComponentTreeRecursive(component)
     {
-        if (!joint.getParent())
-            joint.setNodeId(KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "_rootJoint"));
+        if (!component.getParent())
+            component.setNodeId(KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "_rootComponent"));
          else
-            joint.setNodeId(KinematicsManager.viewer.model.createNode(joint.getParent().getNodeId(), "joint"));
-        if (joint.getChildren().length > 0)
+            component.setNodeId(KinematicsManager.viewer.model.createNode(component.getParent().getNodeId(), "component"));
+        if (component.getChildren().length > 0)
         {
-            for (let j=0;j<joint.getChildren().length;j++)
-                this._rebuildJointTreeRecursive(joint.getChildren()[j]);
+            for (let j=0;j<component.getChildren().length;j++)
+                this._rebuildComponentTreeRecursive(component.getChildren()[j]);
         }
         
     }
 
     async _inverseKinematics() {
 
-        let joint = this._rootJoint;
+        let component = this._rootComponent;
         while (true)
         {
-            if (joint.getType() != jointType.fixed && joint.fixedAxis == null && joint.getType() != jointType.pistonController && joint.getType() != jointType.prismaticAggregate)
+            if (component.getType() != componentType.fixed && component.fixedAxis == null && component.getType() != componentType.pistonController && component.getType() != componentType.prismaticAggregate)
             {
-                let gradient = await joint.calculateGradient();
-                await joint.update(gradient);       
+                let gradient = await component.calculateGradient();
+                await component.update(gradient);       
             }
-            if (joint.getType() == jointType.prismaticAggregate)
+            if (component.getType() == componentType.prismaticAggregate)
             {
-                let gradient = await joint.getExtraJoint1().calculateGradient();
-                await joint.getExtraJoint1().update(gradient);       
-                gradient = await joint.getExtraJoint2().calculateGradient();
-                await joint.getExtraJoint2().update(gradient);                       
+                let gradient = await component.getExtraComponent1().calculateGradient();
+                await component.getExtraComponent1().update(gradient);       
+                gradient = await component.getExtraComponent2().calculateGradient();
+                await component.getExtraComponent2().update(gradient);                       
             }
-            if (joint.getChildren().length==0 || (joint.getType() == jointType.fixed && joint != this._rootJoint))
+            if (component.getChildren().length==0 || (component.getType() == componentType.fixed && component != this._rootComponent))
                 break;                
-            joint = joint.getChildren()[0];
+            component = component.getChildren()[0];
         } 
-        await this._rootJoint.updateJointsFromReference();
+        await this._rootComponent.updateComponentsFromReference();
 
     }
 }

@@ -42,12 +42,12 @@ async function handleEvent(type, nodeids, mat1, mat2) {
     
 
     var nodeid = nodeids[0];
-    var joint = KM.KinematicsManager.getJointFromNodeId(nodeid);    
+    var component = KM.KinematicsManager.getComponentFromNodeId(nodeid);    
 
-    if (joint)
+    if (component)
     {              
-        await joint.calculateReferenceMatrixFromHandleMatrix(mat2[0]);
-        await joint.getHierachy().updateJoints();   
+        await component.calculateReferenceMatrixFromHandleMatrix(mat2[0]);
+        await component.getHierachy().updateComponents();   
     }    
 
 }
@@ -323,19 +323,19 @@ function createUILayout() {
             name: 'Simple Microengine Example',
             fun: function () {
                 let hierachy = KM.KinematicsManager.createHierachy();
-                let root = hierachy.getRootJoint();
-                let joint1 = hierachy.createJoint(root,[34]);                 
-                joint1.setCenter(new Communicator.Point3(84.67,28.49,-20));
-                joint1.setAxis(new Communicator.Point3(1,0,0));
+                let root = hierachy.getRootComponent();
+                let component1 = hierachy.createComponent(root,[34]);                 
+                component1.setCenter(new Communicator.Point3(84.67,28.49,-20));
+                component1.setAxis(new Communicator.Point3(1,0,0));
 
-                let joint2 = hierachy.createJoint(joint1,[30,29]);                 
-                joint2.setCenter(new Communicator.Point3(18.07,28.59,-11));
-                joint2.setAxis(new Communicator.Point3(-1,0,0));
-                joint2.setFixedAxis(new Communicator.Point3(0,0,-1));
-                joint2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
+                let component2 = hierachy.createComponent(component1,[30,29]);                 
+                component2.setCenter(new Communicator.Point3(18.07,28.59,-11));
+                component2.setAxis(new Communicator.Point3(-1,0,0));
+                component2.setFixedAxis(new Communicator.Point3(0,0,-1));
+                component2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 
-                joint1.set(45);
-                hierachy.updateJoints();   
+                component1.set(45);
+                hierachy.updateComponents();   
 
                 currentHierachy = hierachy;
                 drawIKDiv();
@@ -349,9 +349,9 @@ function createUILayout() {
                 data = await res.json();
                 let templateId = KM.KinematicsManager.addTemplate(data);
                 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
-                let joint = hierachy.getJointById(1);
-                joint.set(45);
-                hierachy.updateJoints();
+                let component = hierachy.getComponentById(1);
+                component.set(45);
+                hierachy.updateComponents();
                 currentHierachy = hierachy;
                 drawIKDiv();
             }
@@ -412,7 +412,7 @@ function microanim()
 {
     for (let i=0; i<KM.KinematicsManager.getHierachies().length; i++)
     {
-        let joint = KM.KinematicsManager.getHierachyByIndex(i).getJointById(1);
+        let component = KM.KinematicsManager.getHierachyByIndex(i).getComponentById(1);
         let animationTemplate;
         var r = getRandomInt(3);
         if (r == 0)
@@ -422,6 +422,6 @@ function microanim()
         else
             animationTemplate = KM.KinematicsManager.getAnimationTemplate('f71ea555-5c90-47b4-aa94-c6129b731ee0');
 
-        KM.KinematicsManager.startAnimation(joint,animationTemplate);
+        KM.KinematicsManager.startAnimation(component,animationTemplate);
     }
 }

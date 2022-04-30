@@ -2,7 +2,7 @@ import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
 
-/** This class contains functionality related to a Belt joint for animating belts of various types*/
+/** This class contains functionality related to a Belt component for animating belts of various types*/
 export class KinematicsBelt {
 
 
@@ -137,7 +137,7 @@ export class KinematicsBelt {
         this.calcuateAlignMatrix();
         for (let i = 0; i < this._wheels.length; i++) {
             let wheel = this._wheels[i];
-            let center = this.alignmatrix.transform(wheel.joint.getCenter());
+            let center = this.alignmatrix.transform(wheel.component.getCenter());
             wheel.pos = new Communicator.Point3(center.x, center.y, 0);
         }
 
@@ -145,7 +145,7 @@ export class KinematicsBelt {
     }
 
     addWheel() {
-        this._wheels.push({ pos: null, radius: 0, joint: null, inner:false,other:false });
+        this._wheels.push({ pos: null, radius: 0, component: null, inner:false,other:false });
     }
 
 
@@ -153,7 +153,7 @@ export class KinematicsBelt {
     insertWheel(i)
     {
        
-        this_wheels.splice(i,0,{ pos: null, radius: 0, joint: null, inner:false,other:false });    
+        this_wheels.splice(i,0,{ pos: null, radius: 0, component: null, inner:false,other:false });    
     }
     
     deleteWheel(i)
@@ -168,13 +168,13 @@ export class KinematicsBelt {
 
         for (let i=0;i<this._wheels.length;i++)
         {
-            def.wheels.push({radius: this._wheels[i].radius, joint: this._wheels[i].joint.getId(), inner: this._wheels[i].inner,other: this._wheels[i].other});
+            def.wheels.push({radius: this._wheels[i].radius, component: this._wheels[i].component.getId(), inner: this._wheels[i].inner,other: this._wheels[i].other});
         }
 
         return def;        
     }
 
-    fromJson(def, joint) {
+    fromJson(def, component) {
 
         this._segmentnum = def.segmentnum;
         if (def.width)
@@ -195,7 +195,7 @@ export class KinematicsBelt {
             this._trackorientation = def.trackorientation;
 
         for (let i = 0; i < def.wheels.length; i++) {
-            this._wheels.push({ pos: null, radius: def.wheels[i].radius, joint: joint.getHierachy().getJointHash()[def.wheels[i].joint], inner: def.wheels[i].inner, other: def.wheels[i].other });
+            this._wheels.push({ pos: null, radius: def.wheels[i].radius, component: component.getHierachy().getComponentHash()[def.wheels[i].component], inner: def.wheels[i].inner, other: def.wheels[i].other });
         }
 
         return def;
@@ -207,7 +207,7 @@ export class KinematicsBelt {
         let plane;
         if (this._wheels.length > 2 && !this._alignvector)
         {
-            plane = Communicator.Plane.createFromPoints(this._wheels[0].joint.getCenter(),this._wheels[1].joint.getCenter(),this._wheels[2].joint.getCenter());
+            plane = Communicator.Plane.createFromPoints(this._wheels[0].component.getCenter(),this._wheels[1].component.getCenter(),this._wheels[2].component.getCenter());
             this.alignmatrix = KinematicsUtility.ComputeVectorToVectorRotationMatrix(plane.normal,new Communicator.Point3(0, 0, 1));
         }
         else
@@ -217,7 +217,7 @@ export class KinematicsBelt {
             else
                 this.alignmatrix = KinematicsUtility.ComputeVectorToVectorRotationMatrix(this._alignvector,new Communicator.Point3(0, 0, 1));
         }
-        let res = this.alignmatrix.transform(this._wheels[0].joint.getCenter());
+        let res = this.alignmatrix.transform(this._wheels[0].component.getCenter());
         let transmatrix = new Communicator.Matrix();
         transmatrix.setTranslationComponent(0, 0, -res.z);
         this.alignmatrix = Communicator.Matrix.multiply(this.alignmatrix, transmatrix);

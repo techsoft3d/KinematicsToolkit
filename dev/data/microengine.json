@@ -11,7 +11,7 @@
   "_ikThreshold": 1,
   "_ikSpeed": 100,
   "_targetAnchorNode": null,
-  "joints": {
+  "components": {
     "nodeid": -66,
     "id": 0,
     "reference": true,
@@ -148,7 +148,7 @@
               -48.94095597824595,
               1
             ],
-            "extraJoint1": 3,
+            "extraComponent1": 3,
             "animations": []
           }
         ],

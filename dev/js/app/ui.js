@@ -1,4 +1,4 @@
-var uijoint = [];
+var uicomponent = [];
 var wheeltable;
 var animationgrouptable;
 var currentAnimationList;
@@ -7,7 +7,7 @@ var currentAnimationGroupId = 0;
 
 var currentHierachy = null;
 var currentTemplate = "";
-var currentJoint = null;
+var currentComponent = null;
 
 let editMode = false;
 
@@ -75,15 +75,15 @@ function generateAnimationGroupSelect() {
     return html;
 }
 
-function generateAnimationTemplateSelect(joint) {
+function generateAnimationTemplateSelect(component) {
     var html = '<select id="animationtemplateselect" class="form-select" style="font-size:11px;margin-top:10px;width:30%;display:initial" value="">\n';
 
    
     let animationTemplates = KM.KinematicsManager.getAnimationTemplates();
     for (var i in animationTemplates) {
-        for (let j=0;j<joint.getAnimations().length;j++)
+        for (let j=0;j<component.getAnimations().length;j++)
         {
-            if (joint.getAnimations()[j] == i)
+            if (component.getAnimations()[j] == i)
             {
                 html += '<option value="' + i + '">' + animationTemplates[i].name + '</option>\n';
             }
@@ -95,27 +95,27 @@ function generateAnimationTemplateSelect(joint) {
 }   
 
 
-function generateJointTypeSelect(joint) {
-    var html = '<select id="jointtype" class="form-select" style="font-size:11px" value="">\n';
+function generateComponentTypeSelect(component) {
+    var html = '<select id="componenttype" class="form-select" style="font-size:11px" value="">\n';
 
     for (let i = 0; i < 8; i++) {
-        if (i == joint.getType())
-            html += '<option selected value="' + string_of_enum(KM.jointType,i) + '">' + string_of_enum(KM.jointType,i) + '</option>\n';
+        if (i == component.getType())
+            html += '<option selected value="' + string_of_enum(KM.componentType,i) + '">' + string_of_enum(KM.componentType,i) + '</option>\n';
         else
-            html += '<option value="' + string_of_enum(KM.jointType,i) + '">' + string_of_enum(KM.jointType,i) + '</option>\n';
+            html += '<option value="' + string_of_enum(KM.componentType,i) + '">' + string_of_enum(KM.componentType,i) + '</option>\n';
     }
 
     let i = 11;
-    if (i == joint.getType())
-        html += '<option selected value="' + string_of_enum(KM.jointType, i) + '">' + string_of_enum(KM.jointType, i) + '</option>\n';
+    if (i == component.getType())
+        html += '<option selected value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType, i) + '">' + string_of_enum(KM.jointType, i) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
 
     i = 12;
-    if (i == joint.getType())
-        html += '<option selected value="' + string_of_enum(KM.jointType, i) + '">' + string_of_enum(KM.jointType, i) + '</option>\n';
+    if (i == component.getType())
+        html += '<option selected value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType, i) + '">' + string_of_enum(KM.jointType, i) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
     
         
     html += '</select>';
@@ -123,50 +123,50 @@ function generateJointTypeSelect(joint) {
 }   
 
 
-function generateMapJointTypeSelect(joint) {
-    var html = '<select id="mappedjointtype" class="form-select" style="font-size:11px" value="">\n';
+function generateMapComponentTypeSelect(component) {
+    var html = '<select id="mappedcomponenttype" class="form-select" style="font-size:11px" value="">\n';
 
-    if (joint.getMappedType() == 0)
-        html += '<option selected value="' + string_of_enum(KM.jointType,0) + '">' + string_of_enum(KM.jointType,0) + '</option>\n';
+    if (component.getMappedType() == 0)
+        html += '<option selected value="' + string_of_enum(KM.componentType,0) + '">' + string_of_enum(KM.componentType,0) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType,0) + '">' + string_of_enum(KM.jointType,0) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType,0) + '">' + string_of_enum(KM.componentType,0) + '</option>\n';
 
-    if (joint.getMappedType() == 1)
-        html += '<option selected value="' + string_of_enum(KM.jointType,1) + '">' + string_of_enum(KM.jointType,1) + '</option>\n';
+    if (component.getMappedType() == 1)
+        html += '<option selected value="' + string_of_enum(KM.componentType,1) + '">' + string_of_enum(KM.componentType,1) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType,1) + '">' + string_of_enum(KM.jointType,1) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType,1) + '">' + string_of_enum(KM.componentType,1) + '</option>\n';
 
-    if (joint.getMappedType() == 8)
-        html += '<option selected value="' + string_of_enum(KM.jointType,8) + '">' + string_of_enum(KM.jointType,8) + '</option>\n';
+    if (component.getMappedType() == 8)
+        html += '<option selected value="' + string_of_enum(KM.componentType,8) + '">' + string_of_enum(KM.componentType,8) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType,8) + '">' + string_of_enum(KM.jointType,8) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType,8) + '">' + string_of_enum(KM.componentType,8) + '</option>\n';
 
-    if (joint.getMappedType() == 9)
-        html += '<option selected value="' + string_of_enum(KM.jointType, 9) + '">' + string_of_enum(KM.jointType, 9) + '</option>\n';
+    if (component.getMappedType() == 9)
+        html += '<option selected value="' + string_of_enum(KM.componentType, 9) + '">' + string_of_enum(KM.componentType, 9) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType, 9) + '">' + string_of_enum(KM.jointType, 9) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType, 9) + '">' + string_of_enum(KM.componentType, 9) + '</option>\n';
 
 
-    if (joint.getMappedType() == 10)
-        html += '<option selected value="' + string_of_enum(KM.jointType, 10) + '">' + string_of_enum(KM.jointType, 10) + '</option>\n';
+    if (component.getMappedType() == 10)
+        html += '<option selected value="' + string_of_enum(KM.componentType, 10) + '">' + string_of_enum(KM.componentType, 10) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.jointType, 10) + '">' + string_of_enum(KM.jointType, 10) + '</option>\n';
+        html += '<option value="' + string_of_enum(KM.componentType, 10) + '">' + string_of_enum(KM.componentType, 10) + '</option>\n';
 
 
     html += '</select>';
     return html;
 }   
 
-function generateExtraJoint1Select(joint) {
-    var html = '<select id="fixedjointselect" class="form-select" style="font-size:11px" value="">\n';
+function generateExtraComponent1Select(component) {
+    var html = '<select id="fixedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
 
-    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getJointHash()) {
-        if (KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getJointById(i)!=joint) {
-            let jointname = KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getId() + ":" + string_of_enum(KM.jointType, KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getType());
-            if (KM.KinematicsManager.getHierachyByIndex(0).getJointById(i) == joint.extraJoint1)
-                html += '<option selected value="' + jointname + '">' + jointname + '</option>\n';
+    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KM.componentType, KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.extraComponent1)
+                html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
-                html += '<option value="' + jointname + '">' + jointname + '</option>\n';
+                html += '<option value="' + componentname + '">' + componentname + '</option>\n';
 
         }
     }
@@ -175,35 +175,16 @@ function generateExtraJoint1Select(joint) {
     return html;
 }   
 
-function generateMappedJointSelect(joint) {
-    var html = '<select id="mappedjointselect" class="form-select" style="font-size:11px" value="">\n';
+function generateMappedComponentSelect(component) {
+    var html = '<select id="mappedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
 
-    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getJointHash()) {
-        if (KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getJointById(i)!=joint) {
-            let jointname = KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getId() + ":" + string_of_enum(KM.jointType, KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getType());
-            if (KM.KinematicsManager.getHierachyByIndex(0).getJointById(i) == joint.getMappedTargetJoint())
-                html += '<option selected value="' + jointname + '">' + jointname + '</option>\n';
+    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KM.componentType, KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getMappedTargetComponent())
+                html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
-                html += '<option value="' + jointname + '">' + jointname + '</option>\n';
-
-        }
-    }
-   
-    html += '</select>';
-    return html;
-}   
-
-
-function generateExtraJoint2Select(joint) {
-    var html = '<select id="variablejointselect" class="form-select" style="font-size:11px" value="">\n';
-
-    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getJointHash()) {
-        if (KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getJointById(i)!=joint) {
-            let jointname = KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getId() + ":" + string_of_enum(KM.jointType, KM.KinematicsManager.getHierachyByIndex(0).getJointById(i).getType());
-            if (KM.KinematicsManager.getHierachyByIndex(0).getJointById(i) == joint.getExtraJoint2())
-                html += '<option selected value="' + jointname + '">' + jointname + '</option>\n';
-            else
-                html += '<option value="' + jointname + '">' + jointname + '</option>\n';
+                html += '<option value="' + componentname + '">' + componentname + '</option>\n';
 
         }
     }
@@ -213,21 +194,40 @@ function generateExtraJoint2Select(joint) {
 }   
 
 
-var jointidcounter = 0;
+function generateExtraComponent2Select(component) {
+    var html = '<select id="variablecomponentselect" class="form-select" style="font-size:11px" value="">\n';
 
-function generateKinematicsTreeDataRecursive(joint, parentid)
+    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KM.componentType, KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getExtraComponent2())
+                html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
+            else
+                html += '<option value="' + componentname + '">' + componentname + '</option>\n';
+
+        }
+    }
+   
+    html += '</select>';
+    return html;
+}   
+
+
+var componentidcounter = 0;
+
+function generateKinematicsTreeDataRecursive(component, parentid)
 {
 
     $('#KinematicsTreeDiv').jstree().create_node(parentid, {
-        "id": joint.getId().toString(),
-        "text": parentid=="#" ? joint.getId() + ":root": joint.getType() != KM.jointType.mapped ? 
-            joint.getId() + ":" + string_of_enum(KM.jointType,joint.getType()) : joint.getId() + ":" + string_of_enum(KM.jointType,joint.getType()) + ":" + string_of_enum(KM.jointType,joint.getMappedType()) + ":" + joint.getMappedTargetJoint().getId(),
+        "id": component.getId().toString(),
+        "text": parentid=="#" ? component.getId() + ":root": component.getType() != KM.componentType.mapped ? 
+            component.getId() + ":" + string_of_enum(KM.componentType,component.getType()) : component.getId() + ":" + string_of_enum(KM.componentType,component.getType()) + ":" + string_of_enum(KM.componentType,component.getMappedType()) + ":" + component.getMappedTargetComponent().getId(),
         });
 
 
-    for (let i=0;i<joint.getChildren().length;i++)        
+    for (let i=0;i<component.getChildren().length;i++)        
     {
-        generateKinematicsTreeDataRecursive(joint.getChildByIndex(i), joint.getId());
+        generateKinematicsTreeDataRecursive(component.getChildByIndex(i), component.getId());
     }
 }
 
@@ -240,7 +240,7 @@ function generateKinematicsTreeData() {
 
     if (!currentHierachy)
         return;
-    var joint = currentHierachy.getRootJoint();
+    var component = currentHierachy.getRootComponent();
 
     $('#KinematicsTreeDiv').jstree({
         "core": {
@@ -252,40 +252,40 @@ function generateKinematicsTreeData() {
 
     $('#KinematicsTreeDiv').on("select_node.jstree", function (e, data) {
         let id = parseInt(data.node.id);
-        showJoint(id);
-        currentJoint = id;
-        generateJointPropertiesData(id);
+        showComponent(id);
+        currentComponent = id;
+        generateComponentPropertiesData(id);
 
     });
-    generateKinematicsTreeDataRecursive(joint, "#");
+    generateKinematicsTreeDataRecursive(component, "#");
     $("#KinematicsTreeDiv").jstree("open_all");
 
 
 }
 
-function generateJointPropertiesData(id)
+function generateComponentPropertiesData(id)
 {
-    joint = currentHierachy.getJointById(id);
-    $("#KinematicsJointPropertiesDiv").empty();
+    component = currentHierachy.getComponentById(id);
+    $("#KinematicsComponentPropertiesDiv").empty();
     
     let html = "";
     html+='<div class="container">';    
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Type:</label></div>';
-    html += '<div class="col">' + generateJointTypeSelect(joint) + '</div></div>';
+    html += '<div class="col">' + generateComponentTypeSelect(component) + '</div></div>';
    
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Reference</label></div><div class="col">';
-    if (joint.getIsReference())
+    if (component.getIsReference())
         html += '<input type="checkbox"  id="isreference" checked>';
     else
         html += '<input type="checkbox" id="isreference">';
     html += '</div></div>';
 
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits:</label></div>';
-    html += '<div class="col"><input id="jointmin" type="number" value="' + joint.getMinAngle() + '" class="form-control" style="font-size:11px"><input id="jointmax" type="number" value="' + joint.getMaxAngle() + '" class="form-control" style="font-size:11px"></div></div>';
+    html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinAngle() + '" class="form-control" style="font-size:11px"><input id="componentmax" type="number" value="' + component.getMaxAngle() + '" class="form-control" style="font-size:11px"></div></div>';
     
-    if (joint.getType() == KM.jointType.revolute) {
+    if (component.getType() == KM.componentType.revolute) {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Axis</label></div><div class="col">';
-        if (joint.getFixedAxis())
+        if (component.getFixedAxis())
             html += '<input type="checkbox" onclick="showFixedAxis(' + id + ')" id="hasfixedaxis" checked>';
         else
             html += '<input type="checkbox" onclick="showFixedAxis(' + id + ')" id="hasfixedaxis">';
@@ -293,68 +293,68 @@ function generateJointPropertiesData(id)
     }
   
 
-    if (joint.getType() == KM.jointType.prismaticTriangle)
+    if (component.getType() == KM.componentType.prismaticTriangle)
     {
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Joint:</label></div>';
-        html += '<div class="col">' + generateExtraJoint1Select(joint) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Variable Joint:</label></div>';
-        html += '<div class="col">' + generateExtraJoint2Select(joint) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Component:</label></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Variable Component:</label></div>';
+        html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
 
     }    
-    if (joint.getType() == KM.jointType.mate)
+    if (component.getType() == KM.componentType.mate)
     {
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Joint 1:</label></div>';
-        html += '<div class="col">' + generateExtraJoint1Select(joint) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Joint 2</label></div>';
-        html += '<div class="col">' + generateExtraJoint2Select(joint) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2</label></div>';
+        html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
 
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
         html += '<div class="col">';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(0,' + id + ')">Joint 1 Pivot</button>';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(1,' + id + ')">Joint 2 Pivot</button>';
+        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(0,' + id + ')">Component 1 Pivot</button>';
+        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(1,' + id + ')">Component 2 Pivot</button>';
         html += '</div></div>';
     }    
-    if (joint.getType() == KM.jointType.revoluteSlide)
+    if (component.getType() == KM.componentType.revoluteSlide)
     {
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Joint 1:</label></div>';
-        html += '<div class="col">' + generateExtraJoint1Select(joint) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
 
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
         html += '<div class="col">';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(0,' + id + ')">Joint 1 Pivot</button>';
+        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(0,' + id + ')">Component 1 Pivot</button>';
         html += '</div></div>';
 
 
     }    
 
-    else if (joint.getType() == KM.jointType.prismaticAggregate)
+    else if (component.getType() == KM.componentType.prismaticAggregate)
     {
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Joint 1:</label></div>';
-        html += '<div class="col">' + generateExtraJoint1Select(joint) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Joint 2:</label></div>';
-        html += '<div class="col">' + generateExtraJoint2Select(joint) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
+        html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
 
     }    
 
-    else if (joint.getType() == KM.jointType.pistonController)
+    else if (component.getType() == KM.componentType.pistonController)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Prismatic Target:</label></div>';
-        html += '<div class="col">' + generateExtraJoint1Select(joint) + '</div></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
     }      
-    else if (joint.getType() == KM.jointType.helical)
+    else if (component.getType() == KM.componentType.helical)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
-        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  joint.getHelicalFactor() + '"></div></div>';
+        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getHelicalFactor() + '"></div></div>';
     }
-    else if (joint.getType() == KM.jointType.mapped)
+    else if (component.getType() == KM.componentType.mapped)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Type:</label></div>';
 
     
 
-        html += '<div class="col">' + generateMapJointTypeSelect(joint) + '</div></div>';
+        html += '<div class="col">' + generateMapComponentTypeSelect(component) + '</div></div>';
 
-        if (joint.getMappedType() == KM.jointType.prismaticPlane)
+        if (component.getMappedType() == KM.componentType.prismaticPlane)
         {
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
             html += '<div class="col">';
@@ -365,38 +365,38 @@ function generateJointPropertiesData(id)
                 
         }
 
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Joint:</label></div>';
-        html += '<div class="col">' + generateMappedJointSelect(joint) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Component:</label></div>';
+        html += '<div class="col">' + generateMappedComponentSelect(component) + '</div></div>';
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
-        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  joint.getHelicalFactor() + '"></div></div>';
-        if (joint.getMappedType() == KM.jointType.belt)
+        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getHelicalFactor() + '"></div></div>';
+        if (component.getMappedType() == KM.componentType.belt)
         {     
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Width:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltWidth(' + id + ')" id="beltwidth" type="number" value="' + joint.getBelt().getWidth() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltWidth(' + id + ')" id="beltwidth" type="number" value="' + component.getBelt().getWidth() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Segments:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltSegmentCount(' + id + ')" id="beltsegments" type="number" value="' + joint.getBelt().getSegmentNum() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltSegmentCount(' + id + ')" id="beltsegments" type="number" value="' + component.getBelt().getSegmentNum() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Thickness:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltThickness(' + id + ')" id="beltthickness" type="number" value="' + joint.getBelt().getThickness() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltThickness(' + id + ')" id="beltthickness" type="number" value="' + component.getBelt().getThickness() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Gap:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltGap(' + id + ')" id="beltgap" type="number" value="' + joint.getBelt().getGap() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltGap(' + id + ')" id="beltgap" type="number" value="' + component.getBelt().getGap() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Tracks:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltTracks(' + id + ')" id="belttracks" type="number" value="' + joint.getBelt().getTracks() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltTracks(' + id + ')" id="belttracks" type="number" value="' + component.getBelt().getTracks() + '" class="form-control" style="font-size:11px"></div></div>';
 
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Invert Track Orientation</label></div><div class="col">';
-            if (joint.getBelt().getTrackOrientation())
+            if (component.getBelt().getTrackOrientation())
                 html += '<input type="checkbox" onclick="updateBeltOrientation(' + id + ')" id="belttrackorientation" checked>';
             else
                 html += '<input type="checkbox" onclick="updateBeltOrientation(' + id + ')" id="belttrackorientation">';
             html += '</div></div>';            
 
             let dis;
-            if (joint.getBelt().getAlignVector())
+            if (component.getBelt().getAlignVector())
                 dis = '';
             else
                 dis = 'disabled';
@@ -404,14 +404,14 @@ function generateJointPropertiesData(id)
 
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Align Vector:</label></div>';
-            if (joint.getBelt().getAlignVector()) {
-                let alignVector = joint.getBelt().getAlignVector();
+            if (component.getBelt().getAlignVector()) {
+                let alignVector = component.getBelt().getAlignVector();
                 html += '<div class="col"><input ' + dis + ' onchange="updateAlignVector(' + id + ')" id="alignvector" type="text" value="' + alignVector.x + ' ' + alignVector.y + ' ' + alignVector.z + '" class="form-control" style="display:inline;width:50%;font-size:11px">';
             }
             else
                 html += '<div class="col"><input ' + dis + ' onchange="updateAlignVector(' + id + ')" id="alignvector" type="text" value="" class="form-control" style="display:inline;width:50%;font-size:11px">';
 
-            if (joint.getBelt().getAlignVector())
+            if (component.getBelt().getAlignVector())
                 html += '<input style="margin-bottom:5px;margin-left:5px" type="checkbox" onclick="updateAlignVector(' + id + ')" id="alignvectorcheckbox" checked>';
             else
 
@@ -419,8 +419,8 @@ function generateJointPropertiesData(id)
             html += '</div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Colors:</label></div>';
-            let hexcolor1 = rgbToHex(joint.getBelt().GetColor1());
-            let hexcolor2 = rgbToHex(joint.getBelt().getColor2());
+            let hexcolor1 = rgbToHex(component.getBelt().GetColor1());
+            let hexcolor2 = rgbToHex(component.getBelt().getColor2());
             html += '<div class="col"><input style="height:20px;width:20px;padding:0;border:none" onchange="updateBeltColor(' + id + ',0)" type="color" onclick="" id="beltcolor1" name="favcolor" value="' + hexcolor1 + '"></input>';
             html += '<input style="height:20px;width:20px;padding:0;border:none;margin-left:5px" onchange="updateBeltColor(' + id + ',1)" type="color" onclick="" id="beltcolor2" name="favcolor" value="' + hexcolor2 + '"></input></div></div>';
 
@@ -435,33 +435,33 @@ function generateJointPropertiesData(id)
     }
     html += '</div>';
 
-    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="updateJoint(' + id + ')">Update</button>';
+    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="updateComponent(' + id + ')">Update</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="updateReferences(' + id + ')">Upd. Refs</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="removeFromReferences(' + id + ')">Remove Refs</button>';
-    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="showJoint(' + id + ',true)">Adjust</button>';
+    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="showComponent(' + id + ',true)">Adjust</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="adjustToPlane()">Plane Adj.</button>';
-    html += '<h2 style="margin-top:20px;"><span>Joint Animation</span></h2>';
-    html += generateAnimationTemplateSelect(joint);
-    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="animateJoint(' + id + ')">Play</button>';
+    html += '<h2 style="margin-top:20px;"><span>Component Animation</span></h2>';
+    html += generateAnimationTemplateSelect(component);
+    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="animateComponent(' + id + ')">Play</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="stopAnimation(' + id + ')">Stop</button>';
     html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="changeAnimationSpeed(' + id + ')">Change Speed</button><br>';
     html += '<button type="button" style="font-size:11px" onclick="assignanimationDialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#AssignAnimation">Assign</button>';
-    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="removeAnimationFromJoint()">Remove</button>';
+    html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px" onclick="removeAnimationFromComponent()">Remove</button>';
     html += '<button type="button" style="font-size:11px" onclick="updateanimationdialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#DefineAnimation">Update</button>';
     html += '<button type="button" style="font-size:11px" onclick="newanimationdialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#DefineAnimation">New</button>';
-    $("#KinematicsJointPropertiesDiv").append(html);
+    $("#KinematicsComponentPropertiesDiv").append(html);
 
 
 
 
-    if (joint.getMappedType() == KM.jointType.belt) {
+    if (component.getMappedType() == KM.componentType.belt) {
 
-        let jointlist = [];
-        for (let i in KM.KinematicsManager.getHierachyByIndex(0).getJointHash()) {
-            let thisjoint = KM.KinematicsManager.getHierachyByIndex(0).getJointById(i);
-            if (thisjoint.getParent() && thisjoint!=joint) {
-                let jointname =thisjoint.getId() + ":" + string_of_enum(KM.jointType, thisjoint.getType());
-                jointlist.push(jointname);
+        let componentlist = [];
+        for (let i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+            let thiscomponent = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i);
+            if (thiscomponent.getParent() && thiscomponent!=component) {
+                let componentname =thiscomponent.getId() + ":" + string_of_enum(KM.componentType, thiscomponent.getType());
+                componentlist.push(componentname);
     
             }
         }
@@ -474,7 +474,7 @@ function generateJointPropertiesData(id)
                 {
                     title: "ID", field: "id", width: 60,
                 },
-                {title:"Joint", field:"joint",  width: 100,editor:"select", editorParams:{values:jointlist}},
+                {title:"Component", field:"component",  width: 100,editor:"select", editorParams:{values:componentlist}},
                 { title: "Radius", field: "radius", formatter: "plaintext",editor: "input", width: 60},
                 {title:"In", field:"inner", hozAlign:"center", editor:true, formatter:"tickCross",editorParams:{
                     tristate:false}, formatterParams:{
@@ -487,27 +487,27 @@ function generateJointPropertiesData(id)
             ],
         });
         wheeltable.on("tableBuilt", function (e, row) {
-            refreshWheelTable(joint);
-            // let prop = {radius:5, joint: "red", id:0};
+            refreshWheelTable(component);
+            // let prop = {radius:5, component: "red", id:0};
             // wheeltable.addData([prop], false);
-            // prop = { joint: "Joint 1",radius:7,id:1};
+            // prop = { component: "Component 1",radius:7,id:1};
             // wheeltable.addData([prop], false);
 
         });
 
         wheeltable.on("rowClick", function (e, row) {
             let data = row.getData();
-            joint.getBelt().getWheelByIndex(data.id).joint.selectReferenceNodes();
+            component.getBelt().getWheelByIndex(data.id).component.selectReferenceNodes();
         });
 
         wheeltable.on("cellEdited", function (e) {
             let data = e.getRow().getData();
-            if (data.joint != "") {
-                joint.getBelt().getWheelByIndex(data.id).joint = currentHierachy.getJointById( data.joint.split(":")[0]);
+            if (data.component != "") {
+                component.getBelt().getWheelByIndex(data.id).component = currentHierachy.getComponentById( data.component.split(":")[0]);
             }
-            joint.getBelt().getWheelByIndex(data.id).radius = parseFloat(data.radius);
-            joint.getBelt().getWheelByIndex(data.id).inner = data.inner;
-            joint.getBelt().getWheelByIndex(data.id).other = data.other;
+            component.getBelt().getWheelByIndex(data.id).radius = parseFloat(data.radius);
+            component.getBelt().getWheelByIndex(data.id).inner = data.inner;
+            component.getBelt().getWheelByIndex(data.id).other = data.other;
         });
 
     }
@@ -517,58 +517,58 @@ function generateJointPropertiesData(id)
 
 function updateBeltWidth(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().setWidth(parseFloat($("#beltwidth").val()));
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().setWidth(parseFloat($("#beltwidth").val()));
 }
 
 
 function updateBeltThickness(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().setThickness(parseFloat($("#beltthickness").val()));
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().setThickness(parseFloat($("#beltthickness").val()));
 }
 
 
 function updateBeltGap(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().setGap(parseFloat($("#beltgap").val()));
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().setGap(parseFloat($("#beltgap").val()));
 }
 
 
 function updateBeltTracks(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().setTracks(parseFloat($("#belttracks").val()));
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().setTracks(parseFloat($("#belttracks").val()));
 }
 
 
 function updateBeltOrientation(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().setTrackOrientation($("#belttrackorientation").is(":checked"));
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().setTrackOrientation($("#belttrackorientation").is(":checked"));
 }
 
 function updateBeltColor(id, col)
 {
-    let joint = currentHierachy.getJointById(id);
+    let component = currentHierachy.getComponentById(id);
     if (col == 0)
     {
-        joint.getBelt().setColor1(hexToRGB($("#beltcolor1").val()));
+        component.getBelt().setColor1(hexToRGB($("#beltcolor1").val()));
     }
     else
-        joint.getBelt().setColor2(hexToRGB($("#beltcolor2").val()));
+        component.getBelt().setColor2(hexToRGB($("#beltcolor2").val()));
 
 }
 
 
 function updateAlignVector(id, col)
 {
-    let joint = currentHierachy.getJointById(id);
+    let component = currentHierachy.getComponentById(id);
     let ischecked = $("#alignvectorcheckbox").is(":checked");
     if (!ischecked)
     {
-        joint.getBelt().setAlignVector(null);
+        component.getBelt().setAlignVector(null);
         $( "#alignvector" ).prop( "disabled", true );
 
     }
@@ -576,33 +576,33 @@ function updateAlignVector(id, col)
     {
         $( "#alignvector" ).prop( "disabled", false );
         var av =   $( "#alignvector" ).val().split(" ");
-        joint.getBelt().setAlignVector(new Communicator.Point3(parseFloat(av[0]),parseFloat(av[1]),parseFloat(av[2])));
+        component.getBelt().setAlignVector(new Communicator.Point3(parseFloat(av[0]),parseFloat(av[1]),parseFloat(av[2])));
     }
 
 }
 
 function updateBeltSegmentCount(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().setSegmentNum(parseFloat($("#beltsegments").val()));
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().setSegmentNum(parseFloat($("#beltsegments").val()));
 }
 
-function refreshWheelTable(joint)
+function refreshWheelTable(component)
 {
     wheeltable.clearData();
-    for (let i=0;i<joint.getBelt().getWheels().length;i++)
+    for (let i=0;i<component.getBelt().getWheels().length;i++)
     {
-        let wheel = joint.getBelt().getWheelByIndex(i);
-        let jointname;
-        if (wheel.joint)
+        let wheel = component.getBelt().getWheelByIndex(i);
+        let componentname;
+        if (wheel.component)
         {
-            jointname = wheel.joint.getId() + ":" + string_of_enum(KM.jointType, wheel.joint.getType());
+            componentname = wheel.component.getId() + ":" + string_of_enum(KM.componentType, wheel.component.getType());
         }
         else 
         {
-            jointname = "";
+            componentname = "";
         }
-        let prop = {id:i, joint:jointname, radius:wheel.radius, inner:wheel.inner, other:wheel.other};
+        let prop = {id:i, component:componentname, radius:wheel.radius, inner:wheel.inner, other:wheel.other};
         wheeltable.addData([prop], false);
     }
     
@@ -610,60 +610,60 @@ function refreshWheelTable(joint)
 
 function addBeltWheel(id)
 {
-    let joint = currentHierachy.getJointById(id);
-    joint.getBelt().addWheel();
-    refreshWheelTable(joint);
+    let component = currentHierachy.getComponentById(id);
+    component.getBelt().addWheel();
+    refreshWheelTable(component);
 }
 
 
 
 function insertBeltWheelBefore(id)
 {
-    let joint = currentHierachy.getJointById(id);
+    let component = currentHierachy.getComponentById(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
     {
-        joint.getBelt().insertWheel(data[0].id);
-        refreshWheelTable(joint);
+        component.getBelt().insertWheel(data[0].id);
+        refreshWheelTable(component);
     }
 }
 
 
 function insertBeltWheelAfter(id)
 {
-    let joint = currentHierachy.getJointById(id);
+    let component = currentHierachy.getComponentById(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
     {
-        joint.getBelt().insertWheel(data[0].id+1);
-        refreshWheelTable(joint);
+        component.getBelt().insertWheel(data[0].id+1);
+        refreshWheelTable(component);
     }
 }
 
 function deleteBeltWheel(id)
 {
-    let joint = currentHierachy.getJointById(id);
+    let component = currentHierachy.getComponentById(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
-        joint.getBelt().deleteWheel(data[0].id);
-    refreshWheelTable(joint);
+        component.getBelt().deleteWheel(data[0].id);
+    refreshWheelTable(component);
 }
 
 function rebuildBelt(id)
 {
-    let joint = currentHierachy.getJointById(id); 
-    joint.getBelt().initialize();       
+    let component = currentHierachy.getComponentById(id); 
+    component.getBelt().initialize();       
 }
 
 
 let tempnode = null;
 function showFixedAxis(id,show)
 {
-    let joint = currentHierachy.getJointById(id);
+    let component = currentHierachy.getComponentById(id);
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     handleOperator.removeHandles();        
     tempnode = hwv.model.createNode(hwv.model.getRootNode());  
-    joint.showHandles(KM.KinematicsManager.handlePlacementOperator, $("#hasfixedaxis").is(":checked"), tempnode);
+    component.showHandles(KM.KinematicsManager.handlePlacementOperator, $("#hasfixedaxis").is(":checked"), tempnode);
 
 }
 
@@ -698,14 +698,14 @@ function drawIKDiv() {
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="startAnimationGroup();">Play</button>';    
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="stopAllAnimations();">Stop</button>';    
     html += '<br><button type="button" style="font-size:11px" onclick="newAnimationGroupDialog()" class="btn btn-secondary btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#newupdateanimationgroup">New</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addJointFromUI(true);">Edit</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addJointFromUI(true);">Delete</button>';
-    html += '<h2 style="margin-top:20px;"><span>Joint Hierachy</span></h2>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addJointFromUI(false);">Add</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addJointFromUI(true);">Add to Root</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="insertJointFromUI();">Insert</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="moveupJointFromUI();">Move Up</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="deleteJointFromUI();">Delete</button>';    
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Edit</button>';
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Delete</button>';
+    html += '<h2 style="margin-top:20px;"><span>Component Hierachy</span></h2>';
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(false);">Add</button>';
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Add to Root</button>';
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="insertComponentFromUI();">Insert</button>';
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="moveupComponentFromUI();">Move Up</button>';
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="deleteComponentFromUI();">Delete</button>';    
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="hwv.model.resetNodesTransform()";">Reset</button>';    
     html +='<label class="form-label" style="font-size:11px">Edit:</label>';
     if (editMode)
@@ -744,9 +744,9 @@ function updateKinematicsManager() {
 
 
 
-async function showJoint(j,adjustToCenter) {
+async function showComponent(j,adjustToCenter) {
     
-    let joint = currentHierachy.getJointById( j);
+    let component = currentHierachy.getComponentById( j);
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     handleOperator.removeHandles();
 
@@ -756,120 +756,120 @@ async function showJoint(j,adjustToCenter) {
         center = bounds.center();        
     }
 
-    if (joint.getType() != KM.jointType.fixed) {
+    if (component.getType() != KM.componentType.fixed) {
         if (editMode) {
             tempnode = hwv.model.createNode(hwv.model.getRootNode());
-            joint.showHandles(KM.KinematicsManager.handlePlacementOperator, false, tempnode, center);
+            component.showHandles(KM.KinematicsManager.handlePlacementOperator, false, tempnode, center);
 
         }
         else
-            joint.showHandles(KM.KinematicsManager.handlePlacementOperator, false, undefined, center);
+            component.showHandles(KM.KinematicsManager.handlePlacementOperator, false, undefined, center);
     }
 
 
 }
 
 function updateReferences(j){
-    let joint = currentHierachy.getJointById(j);
+    let component = currentHierachy.getComponentById(j);
     var nodeids = [];
     var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
         nodeids.push(selections[i].getNodeId());
 
-    joint.updateReferenceNodes(nodeids);
+    component.updateReferenceNodes(nodeids);
 
 }
 function removeFromReferences(j){
-    let joint = currentHierachy.getJointById(j);
+    let component = currentHierachy.getComponentById(j);
     var nodeids = [];
     var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
         nodeids.push(selections[i].getNodeId());
 
-    joint.removeReferenceNodes(nodeids);
+    component.removeReferenceNodes(nodeids);
 
 }
 
-function updateJoint(j){
-    let joint = currentHierachy.getJointById(j);
-    joint.setParametersFromHandle();
-    let text = $("#jointtype")[0].value;
-    joint.setType(KM.jointType[text]);
-    joint.setType(KM.jointType[text]);
+function updateComponent(j){
+    let component = currentHierachy.getComponentById(j);
+    component.setParametersFromHandle();
+    let text = $("#componenttype")[0].value;
+    component.setType(KM.componentType[text]);
+    component.setType(KM.componentType[text]);
 
-    if ((joint.getType() == KM.jointType.prismaticTriangle || joint.getType() == KM.jointType.prismaticAggregate || joint.getType() == KM.jointType.mate) && $("#fixedjointselect")[0] != undefined)
+    if ((component.getType() == KM.componentType.prismaticTriangle || component.getType() == KM.componentType.prismaticAggregate || component.getType() == KM.componentType.mate) && $("#fixedcomponentselect")[0] != undefined)
     {
-        let id = parseInt($("#fixedjointselect")[0].value.split(":")[0]);
-        let fixedjoint = currentHierachy.getJointById(id);
-        joint.setExtraJoint1(fixedjoint);
-        id = parseInt($("#variablejointselect")[0].value.split(":")[0]);
-        let variablejoint = currentHierachy.getJointById(id);
-        joint.setExtraJoint2(variablejoint);
+        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+        let fixedcomponent = currentHierachy.getComponentById(id);
+        component.setExtraComponent1(fixedcomponent);
+        id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
+        let variablecomponent = currentHierachy.getComponentById(id);
+        component.setExtraComponent2(variablecomponent);
     }
-    if (joint.getType() == KM.jointType.revoluteSlide && $("#fixedjointselect")[0] != undefined)
+    if (component.getType() == KM.componentType.revoluteSlide && $("#fixedcomponentselect")[0] != undefined)
     {
-        let id = parseInt($("#fixedjointselect")[0].value.split(":")[0]);
-        let fixedjoint = currentHierachy.getJointById(id);
-        joint.setExtraJoint1(fixedjoint);
+        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+        let fixedcomponent = currentHierachy.getComponentById(id);
+        component.setExtraComponent1(fixedcomponent);
     }
 
-    if (joint.getType() == KM.jointType.pistonController && $("#fixedjointselect")[0] != undefined)
+    if (component.getType() == KM.componentType.pistonController && $("#fixedcomponentselect")[0] != undefined)
     {
-        let id = parseInt($("#fixedjointselect")[0].value.split(":")[0]);
-        let fixedjoint = currentHierachy.getJointById(id);
-        joint.setExtraJoint1(fixedjoint); 
-        joint.adjustExtraJointToPistonController();
+        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+        let fixedcomponent = currentHierachy.getComponentById(id);
+        component.setExtraComponent1(fixedcomponent); 
+        component.adjustExtraComponentToPistonController();
     }
-    else if (joint.getType() == KM.jointType.helical && $("#helicalfactor")[0] != undefined)
+    else if (component.getType() == KM.componentType.helical && $("#helicalfactor")[0] != undefined)
     {
-        joint.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
     }
-    else if (joint.getType() == KM.jointType.mapped && $("#helicalfactor")[0] != undefined)
+    else if (component.getType() == KM.componentType.mapped && $("#helicalfactor")[0] != undefined)
     {
-        joint.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
 
-        joint.getMappedType() =  KM.jointType[$("#mappedjointtype")[0].value];
+        component.getMappedType() =  KM.componentType[$("#mappedcomponenttype")[0].value];
 
-        if (joint.getMappedType() == KM.jointType.belt && !joint.getBelt())
-            joint.belt = new Belt();               
+        if (component.getMappedType() == KM.componentType.belt && !component.getBelt())
+            component.belt = new Belt();               
 
 
-        let id = parseInt($("#mappedjointselect")[0].value.split(":")[0]);               
-        joint.setMappedTargetJoint(currentHierachy.getJointById(id));
+        let id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
+        component.setMappedTargetComponent(currentHierachy.getComponentById(id));
     }
-    else if (joint.getType() == KM.jointType.revolute)
+    else if (component.getType() == KM.componentType.revolute)
     {
         if (!$("#hasfixedaxis").is(":checked"))
         {
-            joint.setFixedAxis(null);
+            component.setFixedAxis(null);
         }
         else
         {
-            joint.setFixedAxisFromHandle(tempnode);
+            component.setFixedAxisFromHandle(tempnode);
 
         }
               
     }
 
     if ($("#isreference").is(":checked"))
-        joint.setIsReference(true);
+        component.setIsReference(true);
     else
-        joint.setIsReference(false);
+        component.setIsReference(false);
 
     var nodeids = [];
     var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
         nodeids.push(selections[i].getNodeId());
 
-    joint.updateReferenceNodes(nodeids);
+    component.updateReferenceNodes(nodeids);
 
-    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(joint.getId());
-    $('#KinematicsTreeDiv').jstree().set_text(jstreenode, !joint.getParent() ? joint.getId() + ":root": joint.getId() + ":" + string_of_enum(KM.jointType,joint.getType()));
-    generateJointPropertiesData(j);
+    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(component.getId());
+    $('#KinematicsTreeDiv').jstree().set_text(jstreenode, !component.getParent() ? component.getId() + ":root": component.getId() + ":" + string_of_enum(KM.componentType,component.getType()));
+    generateComponentPropertiesData(j);
 }
 
 
-function addJointFromUI(fromRoot)
+function addComponentFromUI(fromRoot)
 {
     let selectednode = $('#KinematicsTreeDiv').jstree().get_selected();
     let selid;
@@ -878,16 +878,16 @@ function addJointFromUI(fromRoot)
     else
          selid = parseInt(selectednode[0]);
 
-    let newjoint = currentHierachy.createJointFromSelection(currentHierachy.getJointById(selid),true, shiftPressed); 
+    let newcomponent = currentHierachy.createComponentFromSelection(currentHierachy.getComponentById(selid),true, shiftPressed); 
  
     drawIKDiv();
-    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(newjoint.getId());
+    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(newcomponent.getId());
     $('#KinematicsTreeDiv').jstree().select_node(jstreenode);
 
 }
 
 
-function insertJointFromUI()
+function insertComponentFromUI()
 {
     let selectednode = $('#KinematicsTreeDiv').jstree().get_selected();
     let selid;
@@ -895,36 +895,36 @@ function insertJointFromUI()
         selid = 0;
     else
          selid = parseInt(selectednode[0]);
-    let newjoint = currentHierachy.createJointFromSelection(currentHierachy.getJointById(selid),true); 
-    for (var i=0;i<newjoint.getParent().getChildren().length-1;i++)
+    let newcomponent = currentHierachy.createComponentFromSelection(currentHierachy.getComponentById(selid),true); 
+    for (var i=0;i<newcomponent.getParent().getChildren().length-1;i++)
     {
-        newjoint.getParent().getChildren()[i].setParent(newjoint);
-        newjoint.getChildren().push(newjoint.getParent().getChildByIndex(i));        
+        newcomponent.getParent().getChildren()[i].setParent(newcomponent);
+        newcomponent.getChildren().push(newcomponent.getParent().getChildByIndex(i));        
     }
-    newjoint.getParent()._children = [];
-    newjoint.getParent().getChildren().push(newjoint);
-    currentHierachy.rebuildJointTree();
+    newcomponent.getParent()._children = [];
+    newcomponent.getParent().getChildren().push(newcomponent);
+    currentHierachy.rebuildComponentTree();
 
     drawIKDiv();
-    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(newjoint.getId());
+    let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(newcomponent.getId());
     $('#KinematicsTreeDiv').jstree().select_node(jstreenode);
 
 }
 
 
-function deleteJointFromUI()
+function deleteComponentFromUI()
 {
     let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
-    currentHierachy.getJointById(selid).delete();
+    currentHierachy.getComponentById(selid).delete();
     drawIKDiv();
 
 }
 
-function moveupJointFromUI()
+function moveupComponentFromUI()
 {
     let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
-    let joint = currentHierachy.getJointById( currentJoint);
-    joint.moveup();
+    let component = currentHierachy.getComponentById( currentComponent);
+    component.moveup();
     drawIKDiv();
 
 }
@@ -936,20 +936,20 @@ function adjustToPlane() {
     let plane = new Communicator.Plane();
     for (let i = 0; i < r.length; i++) {
         let nodeid = r[i].getNodeId();
-        let joint = KM.KinematicsManager.getJointFromNodeId(nodeid);
+        let component = KM.KinematicsManager.getComponentFromNodeId(nodeid);
 
         if (i==0)
-            plane.setFromPointAndNormal(joint.getCenter(), joint.getAxis());
+            plane.setFromPointAndNormal(component.getCenter(), component.getAxis());
         
-        let newcenter = ViewerUtility.closestPointOnPlane(plane, joint.getCenter());
-        let delta = Communicator.Point3.subtract(joint.getCenter(), newcenter);
-        joint.setCenter(newcenter);        
-        if (joint.getExtraPivot1()) {
-            joint.setExtraPivot1(ViewerUtility.closestPointOnPlane(plane, joint.getExtraPivot1()));
+        let newcenter = ViewerUtility.closestPointOnPlane(plane, component.getCenter());
+        let delta = Communicator.Point3.subtract(component.getCenter(), newcenter);
+        component.setCenter(newcenter);        
+        if (component.getExtraPivot1()) {
+            component.setExtraPivot1(ViewerUtility.closestPointOnPlane(plane, component.getExtraPivot1()));
 
         }
-        if (joint.getExtraPivot2()) {
-            joint.setExtraPivot2(ViewerUtility.closestPointOnPlane(plane, joint.getExtraPivot2()));
+        if (component.getExtraPivot2()) {
+            component.setExtraPivot2(ViewerUtility.closestPointOnPlane(plane, component.getExtraPivot2()));
 
         }
     }
@@ -1001,21 +1001,21 @@ function updateTemplate()
 
 function updatePrismaticPlane(type, j) {
 
-    let joint = currentHierachy.getJointById( j);
+    let component = currentHierachy.getComponentById( j);
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
     let axis = KM.KinematicsManager.handlePlacementOperator.lastAxis;
     if (type === 0) {
         if (pos) {
-            joint.setPrismaticPlanePlane(new Communicator.Plane());
-            joint.getPrismaticPlanePlane().setFromPointAndNormal(pos,axis);
+            component.setPrismaticPlanePlane(new Communicator.Plane());
+            component.getPrismaticPlanePlane().setFromPointAndNormal(pos,axis);
 
         }
     }
     if (type === 1) {
         if (pos) {
-            joint.setPrismaticPlaneTip(pos.copy());
+            component.setPrismaticPlaneTip(pos.copy());
         }
     }
 }
@@ -1024,18 +1024,18 @@ function updatePrismaticPlane(type, j) {
 
 function updateMatePivot(type, j) {
 
-    let joint = currentHierachy.getJointById( j);
+    let component = currentHierachy.getComponentById( j);
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
     let axis = KM.KinematicsManager.handlePlacementOperator.lastAxis;
     if (pos) {
         if (type === 0) {
-            joint.setExtraPivot1(pos.copy());
+            component.setExtraPivot1(pos.copy());
         }
         else
         {
-            joint.setExtraPivot2(pos.copy());
+            component.setExtraPivot2(pos.copy());
         }
     }
 }
@@ -1047,23 +1047,23 @@ function updateMatePivot(type, j) {
 
 
 
-function animateJoint(j){
+function animateComponent(j){
     let animationtemplate = KM.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
-    let joint = currentHierachy.getJointById(j);
+    let component = currentHierachy.getComponentById(j);
 
-    KM.KinematicsManager.startAnimation(joint,animationtemplate);
+    KM.KinematicsManager.startAnimation(component,animationtemplate);
 }
 
 function changeAnimationSpeed(j){
-    let joint = currentHierachy.getJointById(j);   
+    let component = currentHierachy.getComponentById(j);   
 
-    KM.KinematicsManager.changeAnimationSpeed(joint,-500 + Math.floor(Math.random() * 1000));
+    KM.KinematicsManager.changeAnimationSpeed(component,-500 + Math.floor(Math.random() * 1000));
 }
 
 function stopAnimation(j){
-    let joint = currentHierachy.getJointById(j);   
+    let component = currentHierachy.getComponentById(j);   
 
-    KM.KinematicsManager.stopAnimation(joint);
+    KM.KinematicsManager.stopAnimation(component);
 }
 
 
@@ -1092,9 +1092,9 @@ function addNewAnimationTemplate() {
             infinite: $("#animationinfinite")[0].checked,
         };
         let animationid = KM.KinematicsManager.addAnimationTemplate($("#animationname")[0].value, animedef);
-        let joint = currentHierachy.getJointById( currentJoint);
-        joint.addAnimation(animationid);
-        generateJointPropertiesData(currentJoint);
+        let component = currentHierachy.getComponentById( currentComponent);
+        component.addAnimation(animationid);
+        generateComponentPropertiesData(currentComponent);
     }
 
 }
@@ -1115,7 +1115,7 @@ function refreshAnimationGroupTable()
         else
         {
             let animationname = KM.KinematicsManager.getAnimationTemplate(animationReference.animation).name;
-            prop = {id:i, animation: "Joint: " + animationReference.joint + ":" +  animationname};            
+            prop = {id:i, animation: "Component: " + animationReference.component + ":" +  animationname};            
         }
 
         animationgrouptable.addData([prop], false);
@@ -1136,12 +1136,12 @@ function gatherAllAnimations()
     let animations = [];
     let hierachy = currentHierachy;
 
-    for (let i in hierachy.getJointHash())
+    for (let i in hierachy.getComponentHash())
     {
-        let joint = hierachy.getJointById(i);
-        for (let j=0;j<joint.getAnimations().length;j++)
+        let component = hierachy.getComponentById(i);
+        for (let j=0;j<component.getAnimations().length;j++)
         {
-            animations.push({text: animations.length + ":Joint " + joint.getId() + ":" + KM.KinematicsManager.getAnimationTemplate(joint.getAnimationByIndex(j)).name, animation: joint.getAnimationByIndex(j), joint:joint.getId()});
+            animations.push({text: animations.length + ":Component " + component.getId() + ":" + KM.KinematicsManager.getAnimationTemplate(component.getAnimationByIndex(j)).name, animation: component.getAnimationByIndex(j), component:component.getId()});
             
         }
     }
@@ -1205,7 +1205,7 @@ function newAnimationGroupDialog() {
         let data = cell.getRow().getData();
         let i = data.animation.split(":")[0];
         currentAnimationGroup.getAnimations()[data.id].animation = currentAnimationList[i].animation;
-        currentAnimationGroup.getAnimations()[data.id].joint = currentAnimationList[i].joint;
+        currentAnimationGroup.getAnimations()[data.id].component = currentAnimationList[i].component;
 
     });
 }
@@ -1234,16 +1234,16 @@ function assignanimationDialog()
 
 function assignAnimation()
 {
-    let joint = currentHierachy.getJointById(currentJoint);
-    joint.addAnimation($("#assignanimtationselect").val());
-    generateJointPropertiesData(currentJoint);
+    let component = currentHierachy.getComponentById(currentComponent);
+    component.addAnimation($("#assignanimtationselect").val());
+    generateComponentPropertiesData(currentComponent);
 }   
 
-function removeAnimationFromJoint()
+function removeAnimationFromComponent()
 {
-    let joint = currentHierachy.getJointById(currentJoint);
-    joint.removeAnimation($("#animationtemplateselect").val());
-    generateJointPropertiesData(currentJoint);
+    let component = currentHierachy.getComponentById(currentComponent);
+    component.removeAnimation($("#animationtemplateselect").val());
+    generateComponentPropertiesData(currentComponent);
 
 }
 
@@ -1252,7 +1252,7 @@ function removeAnimationFromJoint()
 function deleteAnimationDefinition()
 {
     KM.KinematicsManager.deleteAnimationTemplate($("#animationtemplateselect").val());
-    generateJointPropertiesData(currentJoint);
+    generateComponentPropertiesData(currentComponent);
 }   
 
 

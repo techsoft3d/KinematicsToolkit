@@ -23,30 +23,30 @@ KM.KinematicsManager.initialize(hwv);
 /* Create a new Kinematics Hierachy */
 let hierachy = KM.KinematicsManager.createHierachy();
 
-/* Add a new joint to the root joint (default joint type is revoluteJoint) */
-let root = hierachy.getRootJoint();
-let joint1 = hierachy.createJoint(root,[34]);                 
+/* Add a new component to the root component (default component type is revoluteComponent) */
+let root = hierachy.getRootComponent();
+let component1 = hierachy.createComponent(root,[34]);                 
 
-/* Define Center & Axis for revolute joint */
-joint1.setCenter(new Communicator.Point3(84.67,28.49,-20));
-joint1.setAxis(new Communicator.Point3(1,0,0));
+/* Define Center & Axis for revolute component */
+component1.setCenter(new Communicator.Point3(84.67,28.49,-20));
+component1.setAxis(new Communicator.Point3(1,0,0));
 
-/* Add a new revolute child joint under the first joint */
-let joint2 = hierachy.createJoint(joint1,[30,29]);                 
-joint2.setCenter(new Communicator.Point3(18.07,28.59,-11));
-joint2.setAxis(new Communicator.Point3(-1,0,0));
+/* Add a new revolute child component under the first component */
+let component2 = hierachy.createComponent(component1,[30,29]);                 
+component2.setCenter(new Communicator.Point3(18.07,28.59,-11));
+component2.setAxis(new Communicator.Point3(-1,0,0));
 
-/* Specify a fixed axis for second joint*/
-joint2.setFixedAxis(new Communicator.Point3(0,0,-1));
+/* Specify a fixed axis for second component*/
+component2.setFixedAxis(new Communicator.Point3(0,0,-1));
 
 /* Specify a target axis for the above specified fixed axis*/
-joint2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
+component2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 
-/* Rotate first joint to 45 degrees from default position*/
-joint1.set(45);
+/* Rotate first component to 45 degrees from default position*/
+component1.set(45);
 
-/* Update Joint Hierachy. Needs to be called when any joint value has changed*/
-hierachy.updateJoints();   
+/* Update Component Hierachy. Needs to be called when any component value has changed*/
+hierachy.updateComponents();   
 ```
 
 
@@ -55,7 +55,7 @@ hierachy.updateJoints();
 
 ```
 
-/* Create new or update existing template from joint hierachy*/
+/* Create new or update existing template from component hierachy*/
 hierachy.generateTemplate();
 
 /* Retrieve stringified JSON template*/
@@ -83,12 +83,12 @@ let templateId = KM.KinematicsManager.addTemplate(data);
 /* Apply template to model (microengine) */
 let hierachy = await KM.KinematicsManager.applyToModel(templateId);
 
-/* get Joint with id 1 */
-let joint = hierachy.getJointById(1);
+/* get Component with id 1 */
+let component = hierachy.getComponentById(1);
 
-/* Rotate first joint to 45 degrees from its default position*/
-joint.set(45);  
+/* Rotate first component to 45 degrees from its default position*/
+component.set(45);  
 
-/* Update Joint Hierachy. Needs to be called when any joint value has changed*/
-hierachy.updateJoints();
+/* Update Component Hierachy. Needs to be called when any component value has changed*/
+hierachy.updateComponents();
 ```                

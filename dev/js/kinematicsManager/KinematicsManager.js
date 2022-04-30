@@ -85,14 +85,14 @@ export class KinematicsManager {
     }
 
     /**
-    * Retrieves a joint assicated to a nodeid
+    * Retrieves a component assicated to a nodeid
     * @param  {number} nodeid - nodeid
-    * @return {KinematicsJoint} Joint
+    * @return {KinematicsComponent} Component
     */
-    static getJointFromNodeId(nodeid) {
+    static getComponentFromNodeId(nodeid) {
         for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
 
-            let res = KinematicsManager._hierachies[i]._jointNodeidHash[nodeid];
+            let res = KinematicsManager._hierachies[i]._componentNodeidHash[nodeid];
             if (res != undefined)
                 return res;
         }
@@ -223,11 +223,11 @@ export class KinematicsManager {
     
  /**
     * Create new Animation from given animation template
-    * @param  {KinematicsJoint} joint - Joint to animate
+    * @param  {KinematicsComponent} component - Component to animate
     * @param  {object} animationTemplate - Animation Template
     */    
-    static startAnimation(joint, animationTemplate) {
-        let animation = new KinematicsAnimation("test", joint, JSON.parse(JSON.stringify(animationTemplate.anime)));
+    static startAnimation(component, animationTemplate) {
+        let animation = new KinematicsAnimation("test", component, JSON.parse(JSON.stringify(animationTemplate.anime)));
 
         KinematicsManager._animations.push(animation);
         if (KinematicsManager._animations.length == 1)
@@ -237,12 +237,12 @@ export class KinematicsManager {
 
       
  /**
-    * Stop animation at given joint
-    * @param  {KinematicsJoint} joint - Joint to animate
+    * Stop animation at given component
+    * @param  {KinematicsComponent} component - Component to animate
     */    
-    static stopAnimation(joint) {
+    static stopAnimation(component) {
         for (let i = 0; i < KinematicsManager._animations.length; i++) {
-            if (joint == undefined || KinematicsManager._animations[i].getJoint() == joint)
+            if (component == undefined || KinematicsManager._animations[i].getComponent() == component)
                 KinematicsManager._animations[i].setDone(true);
         }
 
@@ -250,13 +250,13 @@ export class KinematicsManager {
 
      
  /**
-    * Change animation speed at given joint
-    * @param  {KinematicsJoint} joint - Joint
+    * Change animation speed at given component
+    * @param  {KinematicsComponent} component - Component
     * @param  {number} newspeed - new speed
     */      
-    static changeAnimationSpeed(joint, newspeed) {
+    static changeAnimationSpeed(component, newspeed) {
         for (let i = 0; i < KinematicsManager._animations.length; i++) {
-            if (KinematicsManager._animations[i].joint == joint)
+            if (KinematicsManager._animations[i].component == component)
                 KinematicsManager._animations[i].changeAnimationSpeed(newspeed);
         }
     }
@@ -269,7 +269,7 @@ export class KinematicsManager {
     static deleteAnimationTemplate(templateId) {
         delete KinematicsManager._animationTemplates[templateId];
         for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
-            KinematicsManager._hierachies[i].removeAnimationFromJoints(templateId);
+            KinematicsManager._hierachies[i].removeAnimationFromComponents(templateId);
         }
 
     }
@@ -305,7 +305,7 @@ export class KinematicsManager {
             }
 
             for (let i = 0; i < KinematicsManager._animations.length; i++) {
-                KinematicsManager._animations[i].getJoint().getHierachy().setDirty(true);
+                KinematicsManager._animations[i].getComponent().getHierachy().setDirty(true);
                 KinematicsManager._animations[i].update(timestamp);
                 if (KinematicsManager._animations[i].getDone()) {
                     KinematicsManager._animations.splice(i, 1);
@@ -315,7 +315,7 @@ export class KinematicsManager {
 
             for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
                 if (KinematicsManager._hierachies[i].getDirty())
-                    KinematicsManager._hierachies[i].updateJoints();
+                    KinematicsManager._hierachies[i].updateComponents();
             }
 
             window.requestAnimationFrame(KinematicsManager._doAnimation);

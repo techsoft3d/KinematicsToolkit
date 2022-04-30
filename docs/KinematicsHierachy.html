@@ -30,7 +30,7 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>KinematicsHierachy<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><p>This class represents a Hierachy of Kinematics Joints</p></div>
+            <div class="class-description"><p>This class represents a Hierachy of Kinematics Components</p></div>
         
     
 </header>
@@ -287,7 +287,7 @@
     
 
     
-    <h4 class="name" id="createJoint"><span class="type-signature"></span>createJoint<span class="signature">(parentjoint, nodeids, isReferenceIn, infront)</span><span class="type-signature"> &rarr; {<a href="KinematicsJoint.html">KinematicsJoint</a>}</span></h4>
+    <h4 class="name" id="createComponent"><span class="type-signature"></span>createComponent<span class="signature">(parentcomponent, nodeids, isReferenceIn, infront)</span><span class="type-signature"> &rarr; {<a href="KinematicsComponent.html">KinematicsComponent</a>}</span></h4>
     
 
     
@@ -295,7 +295,7 @@
 
 
 <div class="description">
-    <p>Create a new joint</p>
+    <p>Create a new component</p>
 </div>
 
 
@@ -331,13 +331,13 @@
 
         <tr>
             
-                <td class="name"><code>parentjoint</code></td>
+                <td class="name"><code>parentcomponent</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
 
 
             
@@ -347,7 +347,7 @@
 
             
 
-            <td class="description last"><p>Parent Joint</p></td>
+            <td class="description last"><p>Parent Component</p></td>
         </tr>
 
     
@@ -370,7 +370,7 @@
 
             
 
-            <td class="description last"><p>Array of Nodeids associated with new joint</p></td>
+            <td class="description last"><p>Array of Nodeids associated with new component</p></td>
         </tr>
 
     
@@ -393,7 +393,7 @@
 
             
 
-            <td class="description last"><p>Optional, if true, this joint is a reference joint (Default:True)</p></td>
+            <td class="description last"><p>Optional, if true, this component is a reference component (Default:True)</p></td>
         </tr>
 
     
@@ -416,7 +416,7 @@
 
             
 
-            <td class="description last"><p>Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)</p></td>
+            <td class="description last"><p>Optional, if true, the new component will be inserted as a parent of the provided parentcomponent (Default:false)</p></td>
         </tr>
 
     
@@ -481,7 +481,7 @@
 
         
 <div class="param-desc">
-    <p>Joint</p>
+    <p>Component</p>
 </div>
 
 
@@ -492,7 +492,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
 
 
     </dd>
@@ -510,7 +510,7 @@
     
 
     
-    <h4 class="name" id="createJointFromSelection"><span class="type-signature"></span>createJointFromSelection<span class="signature">(parentjoint, isReferenceIn, infront)</span><span class="type-signature"> &rarr; {<a href="KinematicsJoint.html">KinematicsJoint</a>}</span></h4>
+    <h4 class="name" id="createComponentFromSelection"><span class="type-signature"></span>createComponentFromSelection<span class="signature">(parentcomponent, isReferenceIn, infront)</span><span class="type-signature"> &rarr; {<a href="KinematicsComponent.html">KinematicsComponent</a>}</span></h4>
     
 
     
@@ -518,7 +518,7 @@
 
 
 <div class="description">
-    <p>Create a new joint from the current selection and handle parameters</p>
+    <p>Create a new component from the current selection and handle parameters</p>
 </div>
 
 
@@ -554,13 +554,13 @@
 
         <tr>
             
-                <td class="name"><code>parentjoint</code></td>
+                <td class="name"><code>parentcomponent</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
 
 
             
@@ -570,7 +570,7 @@
 
             
 
-            <td class="description last"><p>Parent Joint</p></td>
+            <td class="description last"><p>Parent Component</p></td>
         </tr>
 
     
@@ -593,7 +593,7 @@
 
             
 
-            <td class="description last"><p>Optional, if true, this joint is a reference joint (Default:True)</p></td>
+            <td class="description last"><p>Optional, if true, this component is a reference component (Default:True)</p></td>
         </tr>
 
     
@@ -616,7 +616,7 @@
 
             
 
-            <td class="description last"><p>Optional, if true, the new joint will be inserted as a parent of the provided parentjoint (Default:false)</p></td>
+            <td class="description last"><p>Optional, if true, the new component will be inserted as a parent of the provided parentcomponent (Default:false)</p></td>
         </tr>
 
     
@@ -681,7 +681,7 @@
 
         
 <div class="param-desc">
-    <p>Joint</p>
+    <p>Component</p>
 </div>
 
 
@@ -692,7 +692,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
 
 
     </dd>
@@ -914,6 +914,265 @@
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getComponentById"><span class="type-signature"></span>getComponentById<span class="signature">(id)</span><span class="type-signature"> &rarr; {<a href="KinematicsComponent.html">KinematicsComponent</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Retrieves component associated with this hierachy from its id</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Component ID</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Component</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getComponentHash"><span class="type-signature"></span>getComponentHash<span class="signature">()</span><span class="type-signature"> &rarr; {hash}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Retrieve Component Hash</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Component Hash</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">hash</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1450,7 +1709,7 @@
     
 
     
-    <h4 class="name" id="getJointById"><span class="type-signature"></span>getJointById<span class="signature">(id)</span><span class="type-signature"> &rarr; {<a href="KinematicsJoint.html">KinematicsJoint</a>}</span></h4>
+    <h4 class="name" id="getRootComponent"><span class="type-signature"></span>getRootComponent<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="KinematicsComponent.html">KinematicsComponent</a>}</span></h4>
     
 
     
@@ -1458,161 +1717,7 @@
 
 
 <div class="description">
-    <p>Retrieves joint associated with this hierachy from its id</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Joint ID</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Joint</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getJointHash"><span class="type-signature"></span>getJointHash<span class="signature">()</span><span class="type-signature"> &rarr; {hash}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Retrieve Joint Hash</p>
+    <p>Retrieve Root Component</p>
 </div>
 
 
@@ -1680,7 +1785,7 @@
 
         
 <div class="param-desc">
-    <p>Joint Hash</p>
+    <p>Component</p>
 </div>
 
 
@@ -1691,112 +1796,7 @@
     </dt>
     <dd>
         
-<span class="param-type">hash</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getRootJoint"><span class="type-signature"></span>getRootJoint<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="KinematicsJoint.html">KinematicsJoint</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Retrieve Root Joint</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Joint</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="KinematicsJoint.html">KinematicsJoint</a></span>
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
 
 
     </dd>
@@ -2107,7 +2107,7 @@
     
 
     
-    <h4 class="name" id="rebuildJointTree"><span class="type-signature">(async) </span>rebuildJointTree<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="rebuildComponentTree"><span class="type-signature">(async) </span>rebuildComponentTree<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -2190,7 +2190,7 @@
     
 
     
-    <h4 class="name" id="removeAnimationFromJoints"><span class="type-signature"></span>removeAnimationFromJoints<span class="signature">(animationTemplateId)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeAnimationFromComponents"><span class="type-signature"></span>removeAnimationFromComponents<span class="signature">(animationTemplateId)</span><span class="type-signature"></span></h4>
     
 
     
@@ -2198,7 +2198,7 @@
 
 
 <div class="description">
-    <p>Remove Animations from All Joints</p>
+    <p>Remove Animations from All Components</p>
 </div>
 
 
@@ -2322,7 +2322,7 @@
     
 
     
-    <h4 class="name" id="resetJoints"><span class="type-signature"></span>resetJoints<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="resetComponents"><span class="type-signature"></span>resetComponents<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -2330,7 +2330,7 @@
 
 
 <div class="description">
-    <p>Reset All Joints in Hierachy</p>
+    <p>Reset All Components in Hierachy</p>
 </div>
 
 
@@ -3551,7 +3551,7 @@
     
 
     
-    <h4 class="name" id="updateJoints"><span class="type-signature">(async) </span>updateJoints<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateComponents"><span class="type-signature">(async) </span>updateComponents<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -3559,7 +3559,7 @@
 
 
 <div class="description">
-    <p>Update all joints</p>
+    <p>Update all components</p>
 </div>
 
 
@@ -3644,13 +3644,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsAnimation.html">KinematicsAnimation</a></li><li><a href="KinematicsAnimationGroup.html">KinematicsAnimationGroup</a></li><li><a href="KinematicsBelt.html">KinematicsBelt</a></li><li><a href="KinematicsHierachy.html">KinematicsHierachy</a></li><li><a href="KinematicsJoint.html">KinematicsJoint</a></li><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsAnimation.html">KinematicsAnimation</a></li><li><a href="KinematicsAnimationGroup.html">KinematicsAnimationGroup</a></li><li><a href="KinematicsBelt.html">KinematicsBelt</a></li><li><a href="KinematicsComponent.html">KinematicsComponent</a></li><li><a href="KinematicsHierachy.html">KinematicsHierachy</a></li><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sat Apr 30 2022 06:38:30 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sat Apr 30 2022 09:38:38 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

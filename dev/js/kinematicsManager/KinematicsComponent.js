@@ -3,7 +3,7 @@ import { KinematicsBelt } from './KinematicsBelt.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
 
-export const jointType = {
+export const componentType = {
     revolute: 0,
     prismatic: 1,
     fixed:2,
@@ -20,18 +20,18 @@ export const jointType = {
 };
 
  
-/** This class represents an individual Kinematics Joint*/
-export class KinematicsJoint {
+/** This class represents an individual Kinematics Component*/
+export class KinematicsComponent {
  /**
-     * Creates a Kinematic Joint Object
-     * @param  {KinematicsJoint} parent - Parent Joint
-     * @param  {KinematicsHierachy} hierachy - Hierachy this joint belongs to 
+     * Creates a Kinematic Component Object
+     * @param  {KinematicsComponent} parent - Parent Component
+     * @param  {KinematicsHierachy} hierachy - Hierachy this component belongs to 
      */
     constructor(parent, hierachy) {
         this._hierachy = hierachy;
         this._id = hierachy._highestId++;
 
-        this._type = jointType.revolute;
+        this._type = componentType.revolute;
         this._mappedType = null;
 
         this._children = [];
@@ -55,10 +55,10 @@ export class KinematicsJoint {
         this._referenceNodes = [];
         this._parentMatrix = new Communicator.Matrix();
 
-        this._extraJoint1 = null;
-        this._extraJoint2 = null;
+        this._extraComponent1 = null;
+        this._extraComponent2 = null;
 
-        this._mappedTargetJoint = null;
+        this._mappedTargetComponent = null;
 
         this._helicalFactor = 1.0;
         this._reference = true;
@@ -71,9 +71,9 @@ export class KinematicsJoint {
     initialize(nodeids, isReference) {
         this._reference = isReference;
         if (!this._parent)
-            this._nodeid = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "rootJoint");
+            this._nodeid = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "rootComponent");
         else
-            this._nodeid = KinematicsManager.viewer.model.createNode(this._parent._nodeid, "joint");
+            this._nodeid = KinematicsManager.viewer.model.createNode(this._parent._nodeid, "component");
 
         this._parentMatrix = KinematicsManager.viewer.model.getNodeNetMatrix(KinematicsManager.viewer.model.getNodeParent(nodeids[0]));
 
@@ -83,8 +83,8 @@ export class KinematicsJoint {
     }
 
      /**
-    * Retrieve Joint Id
-    * @return {number} Joint ID
+    * Retrieve Component Id
+    * @return {number} Component ID
      */      
     getId()
     {
@@ -93,8 +93,8 @@ export class KinematicsJoint {
 
 
    /**
-     * Sets type of joint
-     * @param  {jointType} type - Joint Type
+     * Sets type of component
+     * @param  {componentType} type - Component Type
      */
     setType(type)
     {
@@ -102,8 +102,8 @@ export class KinematicsJoint {
     }
 
    /**
-     * Retrieves type of joint
-     * @return {jointType} Joint Type
+     * Retrieves type of component
+     * @return {componentType} Component Type
      */
     getType()
     {
@@ -111,8 +111,8 @@ export class KinematicsJoint {
     }
 
      /**
-     * Sets joint parent
-     * @param  {KinematicsJoint} parent - Parent Joint
+     * Sets component parent
+     * @param  {KinematicsComponent} parent - Parent Component
      */
     setParent(parent)
     {
@@ -120,8 +120,8 @@ export class KinematicsJoint {
     }
 
  /**
-     * Retrieves parent of joint
-     * @return {KinematicsJoint} Joint Parent
+     * Retrieves parent of component
+     * @return {KinematicsComponent} Component Parent
      */
     getParent()
     {
@@ -129,8 +129,8 @@ export class KinematicsJoint {
     }
 
      /**
-     * Retrieves all children of joint
-     * @return {array} Array of children joints
+     * Retrieves all children of component
+     * @return {array} Array of children components
      */
     getChildren()
     {
@@ -138,9 +138,9 @@ export class KinematicsJoint {
     }
 
      /**
-     * Retrieves a child joint by its index
-     * @param  {number} i - Index of child joint
-     * @return {KinematicsJoint} Child Joint
+     * Retrieves a child component by its index
+     * @param  {number} i - Index of child component
+     * @return {KinematicsComponent} Child Component
      */
     getChildByIndex(i)
     {
@@ -148,8 +148,8 @@ export class KinematicsJoint {
     }
 
     /**
-     * Sets the mapped type of a joint (applicable to jointType.mapped)
-     * @param  {jointType} mappedType - Mapped Type
+     * Sets the mapped type of a component (applicable to componentType.mapped)
+     * @param  {componentType} mappedType - Mapped Type
      */
     setMappedType(mappedType)
     {
@@ -157,8 +157,8 @@ export class KinematicsJoint {
     }
 
      /**
-     * Retrieves the mapped type of a joint (applicable to jointType.mapped)
-     * @return {jointType} Mapped Type
+     * Retrieves the mapped type of a component (applicable to componentType.mapped)
+     * @return {componentType} Mapped Type
      */
     getMappedType()
     {
@@ -177,7 +177,7 @@ export class KinematicsJoint {
 
 
      /**
-     * Retrieves the hierachy associated with a joint
+     * Retrieves the hierachy associated with a component
      * @return {KinematicsHierachy} Hierachy
      */    
     getHierachy()
@@ -186,8 +186,8 @@ export class KinematicsJoint {
     }
 
     /**
-     * Sets the joint center
-     * @param  {Point3} center - Joint Center
+     * Sets the component center
+     * @param  {Point3} center - Component Center
      */    
     setCenter(center)
     {
@@ -196,8 +196,8 @@ export class KinematicsJoint {
 
 
      /**
-     * Retrieves the joint center
-     * @return {Point3} Joint Center
+     * Retrieves the component center
+     * @return {Point3} Component Center
      */        
     getCenter()
     {
@@ -205,8 +205,8 @@ export class KinematicsJoint {
     }
 
    /**
-     * Sets the joint axis
-     * @param  {Point3} axis - Joint Axis
+     * Sets the component axis
+     * @param  {Point3} axis - Component Axis
      */    
     setAxis(axis)
     {
@@ -214,8 +214,8 @@ export class KinematicsJoint {
     }
 
  /**
-     * Retrieves the joint axis
-     * @return {Point3} Joint Axis
+     * Retrieves the component axis
+     * @return {Point3} Component Axis
      */           
     getAxis()
     {
@@ -224,14 +224,14 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves the value of the current joint (angle or relative position)
+     * Retrieves the value of the current component (angle or relative position)
      * @return {number} Current Value
      */             
     getCurrentValue()
     {
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
             return this._currentAngle;
-        else if (this._type == jointType.prismatic)
+        else if (this._type == componentType.prismatic)
             return this._currentPosition;
     }
 
@@ -249,44 +249,44 @@ export class KinematicsJoint {
 
     
  /**
-     * Retrieves the Extra Joint 1 (not applicable to all joint types)
-     * @return {KinematicsJoint} Joint
+     * Retrieves the Extra Component 1 (not applicable to all component types)
+     * @return {KinematicsComponent} Component
      */       
-    getExtraJoint1()
+    getExtraComponent1()
     {
-        return this._extraJoint1;
+        return this._extraComponent1;
     }
 
 
    /**
-     * Sets the extra joint 1
-     * @param  {KinematicsJoint} joint - Joint
+     * Sets the extra component 1
+     * @param  {KinematicsComponent} component - Component
      */     
-    setExtraJoint1(joint)
+    setExtraComponent1(component)
     {
-        this._extraJoint1 = joint;
+        this._extraComponent1 = component;
     }
 
  /**
-     * Retrieves the Extra Joint 2 (not applicable to all joint types)
-     * @return {KinematicsJoint} Joint
+     * Retrieves the Extra Component 2 (not applicable to all component types)
+     * @return {KinematicsComponent} Component
      */       
-    getExtraJoint2()
+    getExtraComponent2()
     {
-        return this._extraJoint2;
+        return this._extraComponent2;
     }
 
    /**
-     * Sets the extra joint 2
-     * @param  {KinematicsJoint} joint - Joint
+     * Sets the extra component 2
+     * @param  {KinematicsComponent} component - Component
      */     
-    setExtraJoint2(joint)
+    setExtraComponent2(component)
     {
-        this._extraJoint2 = joint;
+        this._extraComponent2 = component;
     }
 
  /**
-     * Sets the extra pivot 1 (applicable to jointType.revoluteSlide and jointType.mate)
+     * Sets the extra pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
      * @param  {Point3} pivot - Pivot Point
      */         
     setExtraPivot1(pivot)
@@ -296,7 +296,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves the Extra Pivot 1 (applicable to jointType.revoluteSlide and jointType.mate)
+     * Retrieves the Extra Pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
      * @return {Point3} Pivot
      */     
     getExtraPivot1()
@@ -306,7 +306,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Sets the extra pivot 2 (applicable to jointType.mate)
+     * Sets the extra pivot 2 (applicable to componentType.mate)
      * @param  {Point3} pivot - Pivot Point
      */     
     setExtraPivot2(pivot)
@@ -316,7 +316,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves the Extra Pivot 2 (applicable to jointType.mate)
+     * Retrieves the Extra Pivot 2 (applicable to componentType.mate)
      * @return {Point3} Pivot
      */         
     getExtraPivot2()
@@ -326,27 +326,27 @@ export class KinematicsJoint {
 
 
  /**
-     * Sets the mapped target joint (applicable to jointType.mapped)
-     * @param  {KinematicsJoint} joint - Joint
+     * Sets the mapped target component (applicable to componentType.mapped)
+     * @param  {KinematicsComponent} component - Component
      */         
-    setMappedTargetJoint(joint)
+    setMappedTargetComponent(component)
     {
-        this._mappedTargetJoint = joint;
+        this._mappedTargetComponent = component;
     }
 
 
  /**
-     * Retrieves the mapped target joint (applicable to jointType.mapped)
-     * @return {KinematicsJoint} Joint
+     * Retrieves the mapped target component (applicable to componentType.mapped)
+     * @return {KinematicsComponent} Component
      */       
-    getMappedTargetJoint()
+    getMappedTargetComponent()
     {
-        return this._mappedTargetJoint;
+        return this._mappedTargetComponent;
     }
 
 
  /**
-     * Sets the helical factor (applicable to jointType.mapped and jointType.helical)
+     * Sets the helical factor (applicable to componentType.mapped and componentType.helical)
      * @param  {number} helicalFactor - Helical Factor
      */       
     setHelicalFactor(helicalFactor)
@@ -356,7 +356,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves the helical factor (applicable to jointType.mapped and jointType.helical)
+     * Retrieves the helical factor (applicable to componentType.mapped and componentType.helical)
      * @return {number}  Helical Factor
      */    
     getHelicalFactor()
@@ -367,9 +367,9 @@ export class KinematicsJoint {
 
 
  /**
-     * Sets if joint is a reference joint  
-     * Reference Joints are joints that are NOT children of their parent joint in the HC node hierachy
-     * @param  {bool} isReference - Is Joint a Reference Joint
+     * Sets if component is a reference component  
+     * Reference Components are components that are NOT children of their parent component in the HC node hierachy
+     * @param  {bool} isReference - Is Component a Reference Component
      */ 
     setIsReference(isReference) {
         this._reference = isReference;
@@ -377,9 +377,9 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves if joint is a reference joint  
-     * Reference Joints are joints that are NOT children of their parent joint in the HC node hierachy
-     * @return {bool} Is Joint a Reference Joint
+     * Retrieves if component is a reference component  
+     * Reference Components are components that are NOT children of their parent component in the HC node hierachy
+     * @return {bool} Is Component a Reference Component
      */ 
     getIsReference() {
         return this._reference;
@@ -387,7 +387,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves all animations associated with a joint   
+     * Retrieves all animations associated with a component   
      * @return {array} Array of Animation Template Ids
      */     
     getAnimations() {
@@ -396,7 +396,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Retrieves an animation associated with a joint by its index
+     * Retrieves an animation associated with a component by its index
      * @param  {number} i - Index of animation
      * @return {uuid} Animation Template Id
      */         
@@ -416,8 +416,8 @@ export class KinematicsJoint {
     }
 
  /**
-     * Sets the fixed axis for this joint (applicable to jointType.revolute)  
-     * This defines the axis that is fixed in the joint
+     * Sets the fixed axis for this component (applicable to componentType.revolute)  
+     * This defines the axis that is fixed in the component
      * @param  {Point3} axis - Fixed Axis
      */ 
     setFixedAxis(axis)
@@ -426,7 +426,7 @@ export class KinematicsJoint {
     }
 
  /**
-     * Sets the fixed axis target for this joint (applicable to jointType.revolute)  
+     * Sets the fixed axis target for this component (applicable to componentType.revolute)  
      * This defines the axis that the fixed axis will be rotated to.
      * @param  {Point3} axis - Fixed Axis Target
      */ 
@@ -436,7 +436,7 @@ export class KinematicsJoint {
     }
 
  /**
-     * Retrieves the fixed axis for this joint (applicable to jointType.revolute)  
+     * Retrieves the fixed axis for this component (applicable to componentType.revolute)  
      * @return {Poin3} Fixed Axis
      */      
     getFixedAxis()
@@ -446,7 +446,7 @@ export class KinematicsJoint {
 
     
  /**
-     * Retrieves the belt object for this joint (applicable to jointType.mapped with mapped type set to jointType.belt)
+     * Retrieves the belt object for this component (applicable to componentType.mapped with mapped type set to componentType.belt)
      * @return {KinematicsBelt} Belt Object
      */      
     getBelt()
@@ -456,7 +456,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Sets the plane for the prismatic plane joint  (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * Sets the plane for the prismatic plane component  (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
      * @param  {Plane} plane - Plane
      */     
     setPrismaticPlanePlane(plane)
@@ -466,7 +466,7 @@ export class KinematicsJoint {
 
   
  /**
-     * Retrieves the plane for the prismatic plane joint (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * Retrieves the plane for the prismatic plane component (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
      * @return {Plane} Plane
      */          
     getPrismaticPlanePlane()
@@ -476,7 +476,7 @@ export class KinematicsJoint {
 
 
  /**
-     * Sets the tip for the prismatic plane joint  (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * Sets the tip for the prismatic plane component  (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
      * @param  {Point3} tip - Tip
      */         
     setPrismaticPlaneTip(tip)
@@ -486,7 +486,7 @@ export class KinematicsJoint {
 
  
  /**
-     * Retrieves the tip for the prismatic plane joint (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * Retrieves the tip for the prismatic plane component (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
      * @return {Point3} Tip
      */             
     getPrismaticPlaneTip()
@@ -496,14 +496,14 @@ export class KinematicsJoint {
 
     
  /**
-     * Sets the value (rotation or translation) for the joint (applicable to jointType.prismatic or jointType.revolute)
+     * Sets the value (rotation or translation) for the component (applicable to componentType.prismatic or componentType.revolute)
      * @param  {number} value - Value
      */ 
     set(value) {
 
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
             this._rotate(value);
-        else if (this._type == jointType.prismatic)
+        else if (this._type == componentType.prismatic)
             this._translate(value);
     }
 
@@ -514,7 +514,7 @@ export class KinematicsJoint {
             children.push(this._children[i].toJson());
         }
         let refnodes = [];
-        if (this._type == jointType.mapped && (this._mappedType == jointType.belt)) {
+        if (this._type == componentType.mapped && (this._mappedType == componentType.belt)) {
             for (let i = 0; i < this._referenceNodes.length; i++) {
                 if (this._referenceNodes[i].nodeid != this.belt.getBaseNode())
                     refnodes.push({ nodeid: this._referenceNodes[i].nodeid, matrix: this._referenceNodes[i].matrix.toJson() });
@@ -530,51 +530,51 @@ export class KinematicsJoint {
         let def = { nodeid: this._nodeid, id: this._id, mappedType: this._mappedType,reference: this._reference, type: this._type,center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minangle, maxangle: this._maxangle, children: children, referenceNodes:refnodes,
             parentMatrix: this._parentMatrix.toJson() };
 
-        if (this._mappedType == jointType.belt) {
+        if (this._mappedType == componentType.belt) {
             def.parentMatrix = new Communicator.Matrix().toJson();
         }
 
-        if (this._type == jointType.prismaticTriangle || this._type == jointType.prismaticAggregate || this._type == jointType.mate)            
+        if (this._type == componentType.prismaticTriangle || this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
         {
-            def.extraJoint1 = this._extraJoint1._id;
-            def.extraJoint2 = this._extraJoint2._id;
+            def.extraComponent1 = this._extraComponent1._id;
+            def.extraComponent2 = this._extraComponent2._id;
 
-            if (this._type == jointType.mate)            
+            if (this._type == componentType.mate)            
             {
                 def.extraPivot1 = this._extraPivot1.toJson();
                 def.extraPivot2 = this._extraPivot2.toJson();
             }
         }
-        else if (this._type == jointType.revoluteSlide)            
+        else if (this._type == componentType.revoluteSlide)            
         {
-            def.extraJoint1 = this._extraJoint1._id;
+            def.extraComponent1 = this._extraComponent1._id;
             def.extraPivot1 = this._extraPivot1.toJson();
 
         }
-        else if (this._type == jointType.pistonController)            
+        else if (this._type == componentType.pistonController)            
         {
-            def._extraJoint1 = this._extraJoint1._id;
+            def._extraComponent1 = this._extraComponent1._id;
         }
-        else if (this._type == jointType.helical)            
+        else if (this._type == componentType.helical)            
         {
             def.helicalFactor = this._helicalFactor;
         }
-        else if (this._type == jointType.mapped)            
+        else if (this._type == componentType.mapped)            
         {
             def.helicalFactor = this._helicalFactor;
-            def.mappedTargetJoint = this._mappedTargetJoint._id;
-            if (this._mappedType == jointType.belt)
+            def.mappedTargetComponent = this._mappedTargetComponent._id;
+            if (this._mappedType == componentType.belt)
             {
                 def.belt = this.belt.toJson();
             }
 
-            if (this._mappedType == jointType.prismaticPlane)
+            if (this._mappedType == componentType.prismaticPlane)
             {
                 def._prismaticPlanePlane = {d: this._prismaticPlanePlane.d, normal: this._prismaticPlanePlane.normal.toJson()};
                 def._prismaticPlaneTip = this._prismaticPlaneTip.toJson();
             }
         }
-        else if (this._type == jointType.revolute)            
+        else if (this._type == componentType.revolute)            
         {
             if (this._fixedAxis)
             {
@@ -622,46 +622,46 @@ export class KinematicsJoint {
         this._type = def.type;
         this._mappedType = def.mappedType;
         this._parentMatrix = Communicator.Matrix.fromJson(def.parentMatrix);
-        this._hierachy.getJointHash()[this._id] = this;
+        this._hierachy.getComponentHash()[this._id] = this;
     
         if (!this._parent)
-            this._nodeid = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "rootJoint");
+            this._nodeid = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "rootComponent");
         else
-            this._nodeid = KinematicsManager.viewer.model.createNode(this._parent._nodeid, "joint");
+            this._nodeid = KinematicsManager.viewer.model.createNode(this._parent._nodeid, "component");
         for (let i=0;i<def.referenceNodes.length;i++)
         {
             this._referenceNodes.push({nodeid:def.referenceNodes[i].nodeid, matrix: Communicator.Matrix.fromJson(def.referenceNodes[i].matrix)});
-            this._hierachy._jointNodeidHash[def.referenceNodes[i].nodeid] = this;
+            this._hierachy._componentNodeidHash[def.referenceNodes[i].nodeid] = this;
         }
         
-        if (this._type == jointType.prismaticTriangle || this._type == jointType.prismaticAggregate || this._type == jointType.mate)            
+        if (this._type == componentType.prismaticTriangle || this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
         {
-            this._extraJoint1 = def.extraJoint1;
-            this._extraJoint2 = def.extraJoint2;
-            if (this._type == jointType.mate)
+            this._extraComponent1 = def.extraComponent1;
+            this._extraComponent2 = def.extraComponent2;
+            if (this._type == componentType.mate)
             {
                 this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
                 this._extraPivot2 = Communicator.Point3.fromJson(def.extraPivot2);
             }
         }
-        else if (this._type == jointType.revoluteSlide)
+        else if (this._type == componentType.revoluteSlide)
         {
-            this._extraJoint1 = def.extraJoint1;
+            this._extraComponent1 = def.extraComponent1;
             this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
         }         
-        else if (this._type == jointType.pistonController)            
+        else if (this._type == componentType.pistonController)            
         {
-            this._extraJoint1 = def.extraJoint1;
+            this._extraComponent1 = def.extraComponent1;
         }
-        else if (this._type == jointType.helical)            
+        else if (this._type == componentType.helical)            
         {
             this._helicalFactor = def.helicalFactor;
         }
-        else if (this._type == jointType.mapped)            
+        else if (this._type == componentType.mapped)            
         {
             this._helicalFactor = def.helicalFactor;
-            this._mappedTargetJoint = def.mappedTargetJoint;
-            if (this._mappedType == jointType.belt)
+            this._mappedTargetComponent = def.mappedTargetComponent;
+            if (this._mappedType == componentType.belt)
             {
                 this.belt = new KinematicsBelt();
                 this.belt.fromJson(def.belt, this);
@@ -674,7 +674,7 @@ export class KinematicsJoint {
 
             }
 
-            if (this._mappedType == jointType.prismaticPlane)
+            if (this._mappedType == componentType.prismaticPlane)
             {
                 let normal = Communicator.Point3.fromJson(def._prismaticPlanePlane.normal);
                 this._prismaticPlanePlane = new Communicator.Plane();
@@ -684,7 +684,7 @@ export class KinematicsJoint {
             }
             
         }
-        else if (this._type == jointType.revolute)            
+        else if (this._type == componentType.revolute)            
         {
             if (def.fixedAxis)
             {
@@ -701,10 +701,10 @@ export class KinematicsJoint {
 
 
         for (let i = 0; i < def.children.length; i++) {
-            let joint = new KinematicsJoint(this, this._hierachy);
+            let component = new KinematicsComponent(this, this._hierachy);
 
-            joint.fromJson(def.children[i], version);
-            this._children.push(joint);
+            component.fromJson(def.children[i], version);
+            this._children.push(component);
         }
 
         if (def.animations) {
@@ -717,7 +717,7 @@ export class KinematicsJoint {
 
     
  /**
-     * Add an animation template id to the joint.
+     * Add an animation template id to the component.
      * @param  {uuid} animationid - Animation ID
      */ 
     addAnimation(animationid)
@@ -727,7 +727,7 @@ export class KinematicsJoint {
 
   
  /**
-     * Remove an animation from the joint based on its template id.
+     * Remove an animation from the component based on its template id.
      * @param  {uuid} animationid - Animation ID
      */     
     removeAnimation(animationid)
@@ -764,18 +764,18 @@ export class KinematicsJoint {
 
   
  /**
-     * Update all HOOPS Communicator nodes associated with this joint
-     * @param  {array} nodeids - Array of nodeids to associate with this joint
+     * Update all HOOPS Communicator nodes associated with this component
+     * @param  {array} nodeids - Array of nodeids to associate with this component
      */     
     updateReferenceNodes(nodeids)
     {
         for (let i = 0; i < this._referenceNodes.length; i++) {            
-            delete this._hierachy._jointNodeidHash[this._referenceNodes[i].nodeid];
+            delete this._hierachy._componentNodeidHash[this._referenceNodes[i].nodeid];
         }        
         this._referenceNodes = [];
         for (let i = 0; i < nodeids.length; i++) {
             this._referenceNodes.push({ nodeid: nodeids[i], matrix: KinematicsManager.viewer.model.getNodeNetMatrix(nodeids[i]).copy()});
-            this._hierachy._jointNodeidHash[this._referenceNodes[i].nodeid] = this;
+            this._hierachy._componentNodeidHash[this._referenceNodes[i].nodeid] = this;
         }
 
     }
@@ -783,14 +783,14 @@ export class KinematicsJoint {
 
   
  /**
-     * Remove all nodes specified in the supplied array from the joint
-     * @param  {array} nodeids - Array of nodeids to remove from the joint
+     * Remove all nodes specified in the supplied array from the component
+     * @param  {array} nodeids - Array of nodeids to remove from the component
      */         
     removeReferenceNodes(nodeids) {
         for (let i = 0; i < this._referenceNodes.length; i++) {
             for (let j = 0; j < nodeids.length; j++) {
                 if (this._referenceNodes[i].nodeid == nodeids[j]) {
-                    delete this._hierachy._jointNodeidHash[this._referenceNodes[i].nodeid];
+                    delete this._hierachy._componentNodeidHash[this._referenceNodes[i].nodeid];
                     this._referenceNodes.splice(i, 1);
                     i--;
                     break;
@@ -799,7 +799,7 @@ export class KinematicsJoint {
         }
     }
 
-    transformPointToJointSpace(pos)
+    transformPointToComponentSpace(pos)
     {
        
         let netmatrix = this._hierachy.getReferenceNodeNetMatrix(this);
@@ -882,15 +882,15 @@ export class KinematicsJoint {
 
    
 
-    adjustExtraJointToPistonController()
+    adjustExtraComponentToPistonController()
     {
 
-        let naxis = joint._axis;
-        let plane = Communicator.Plane.createFromPointAndNormal(joint._center, naxis);
-        let pol = KinematicsUtility.closestPointOnPlane(plane, joint._extraJoint1._center);
+        let naxis = component._axis;
+        let plane = Communicator.Plane.createFromPointAndNormal(component._center, naxis);
+        let pol = KinematicsUtility.closestPointOnPlane(plane, component._extraComponent1._center);
         
-        joint._extraJoint1._axis = joint._extraJoint1._axis.copy();
-        joint._extraJoint1._center = pol;
+        component._extraComponent1._axis = component._extraComponent1._axis.copy();
+        component._extraComponent1._center = pol;
     }
 
    
@@ -922,7 +922,7 @@ export class KinematicsJoint {
         }
 
 
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
         {
             let origmatrix = KinematicsManager.viewer.model.getNodeMatrix(this._nodeid);
 
@@ -935,7 +935,7 @@ export class KinematicsJoint {
 
             let axis2 = Communicator.Point3.add(axis2t, this._center);
 
-            let p1 = origmatrix.transform(joint._center);
+            let p1 = origmatrix.transform(component._center);
             let p1a = origmatrix.transform(axis2);
 
             let p2 = resmatrix.transform(this._center);
@@ -1051,7 +1051,7 @@ export class KinematicsJoint {
         handlesop._addAxisTranslationHandle(pos, axis, nodeids);
         handlesop._addAxisTranslationHandle(pos, axis.copy().scale(-1), nodeids);
 
-        if (this._type != jointType.prismatic && this._type != jointType.prismaticTriangle)
+        if (this._type != componentType.prismatic && this._type != componentType.prismaticTriangle)
             handlesop._addAxisRotationHandle(pos, axis, nodeids);
 
         
@@ -1089,10 +1089,10 @@ export class KinematicsJoint {
         let targetDistanceBefore = this._hierachy.distanceFromIKTarget();
 
         let gradient;
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
         {
             await this._rotate(this._currentAngle + this._hierachy._ikSamplingDistance, true);
-   //         await this.updateJoints();
+   //         await this.updateComponents();
             let targetDistanceAfter = this._hierachy.distanceFromIKTarget();
 
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistance;
@@ -1100,12 +1100,12 @@ export class KinematicsJoint {
         else
         {
             await this._translate(this._currentPosition + this._hierachy._ikSamplingDistanceTranslation);
-       //     await this.updateJoints();
+       //     await this.updateComponents();
             let targetDistanceAfter = this._hierachy.distanceFromIKTarget();
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistanceTranslation;
         }
         
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
             await this._rotate(angle);
         else
             await this._translate(delta);
@@ -1116,7 +1116,7 @@ export class KinematicsJoint {
 
     async update(gradient)
     {
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
             await this._rotate(this._currentAngle - this._hierachy._ikLearningRate * gradient);
         else
             await this._translate(this._currentPosition - (this._hierachy._ikLearningRate) * gradient);
@@ -1124,7 +1124,7 @@ export class KinematicsJoint {
 
     reset()
     {
-        if (this._type == jointType.revolute)
+        if (this._type == componentType.revolute)
             this._rotate(0);
         else
             this._translate(0);
@@ -1134,7 +1134,7 @@ export class KinematicsJoint {
     {
         if (this._parent)
         {
-            delete this._hierachy.getJointHash()[this._id];
+            delete this._hierachy.getComponentHash()[this._id];
             for (let i=0;i<this._children.length;i++)
             {
                 this._children[i]._parent = this._parent;
@@ -1168,22 +1168,22 @@ export class KinematicsJoint {
     }
 
    
-    async _updateJointsFromReferenceRecursive(joint) {
-        if (!joint)
+    async _updateComponentsFromReferenceRecursive(component) {
+        if (!component)
             return;
 
-        if (joint._type == jointType.revoluteSlide) {
+        if (component._type == componentType.revoluteSlide) {
 
-            let pivot1trans = joint._extraJoint1.transformlocalPointToWorldSpace(joint._extraPivot1);
-            let centertrans = joint._parent.transformlocalPointToWorldSpace(joint._center);
-            let pivotorigtrans = joint._parent.transformlocalPointToWorldSpace(joint._extraPivot1);
+            let pivot1trans = component._extraComponent1.transformlocalPointToWorldSpace(component._extraPivot1);
+            let centertrans = component._parent.transformlocalPointToWorldSpace(component._center);
+            let pivotorigtrans = component._parent.transformlocalPointToWorldSpace(component._extraPivot1);
 
             let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
             let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
             let angle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-            await joint._rotate(angle);
+            await component._rotate(angle);
 
-            let r = joint.transformlocalPointToWorldSpace(joint._extraPivot1);
+            let r = component.transformlocalPointToWorldSpace(component._extraPivot1);
             let pray = new Communicator.Point3(centertrans.x + v2.x * 10000, centertrans.y + v2.y * 10000, centertrans.z + v2.z * 10000);
 
             let outpoint = new Communicator.Point3(0,0,0);
@@ -1191,14 +1191,14 @@ export class KinematicsJoint {
 
 
              if (ldist > 0.0001)
-                await joint._rotate(-angle);
+                await component._rotate(-angle);
 
         }
-        if (joint._type == jointType.mate) {
+        if (component._type == componentType.mate) {
 
-            let originallength = Communicator.Point3.subtract(joint._extraPivot1, joint._extraPivot2).length();
-            let pivot1trans = joint._extraJoint1.transformlocalPointToWorldSpace(joint._extraPivot1);
-            let pivot2trans = joint._extraJoint2.transformlocalPointToWorldSpace(joint._extraPivot2);
+            let originallength = Communicator.Point3.subtract(component._extraPivot1, component._extraPivot2).length();
+            let pivot1trans = component._extraComponent1.transformlocalPointToWorldSpace(component._extraPivot1);
+            let pivot2trans = component._extraComponent2.transformlocalPointToWorldSpace(component._extraPivot2);
 
             let newlength = Communicator.Point3.subtract(pivot1trans, pivot2trans).length();
 
@@ -1206,32 +1206,32 @@ export class KinematicsJoint {
 
 
             if (Math.abs(originallength - newlength) > 0.001) {
-                let reactjoint;
-                let triggerjoint;
-                if (!joint._extraJoint2._touched)
+                let reactcomponent;
+                let triggercomponent;
+                if (!component._extraComponent2._touched)
                 {
-                    triggerjoint = { j: joint._extraJoint1, pivot: joint._extraPivot1};
-                    reactjoint = { j: joint._extraJoint2, pivot: joint._extraPivot2};
+                    triggercomponent = { j: component._extraComponent1, pivot: component._extraPivot1};
+                    reactcomponent = { j: component._extraComponent2, pivot: component._extraPivot2};
                 }
                 else
                 {
-                    reactjoint = { j: joint._extraJoint1, pivot: joint._extraPivot1};
-                    triggerjoint = { j: joint._extraJoint2, pivot: joint._extraPivot2};
+                    reactcomponent = { j: component._extraComponent1, pivot: component._extraPivot1};
+                    triggercomponent = { j: component._extraComponent2, pivot: component._extraPivot2};
 
                 }
-                joint._extraJoint1._touched = false;
-                joint._extraJoint2._touched = false;
+                component._extraComponent1._touched = false;
+                component._extraComponent2._touched = false;
     
-                let pivot1trans = triggerjoint.j.transformlocalPointToWorldSpace(triggerjoint.pivot);
-                let pivot2trans = reactjoint.j.transformlocalPointToWorldSpace(reactjoint.pivot);
-                let center2trans = reactjoint.j.transformlocalPointToWorldSpace(reactjoint.j._center);
+                let pivot1trans = triggercomponent.j.transformlocalPointToWorldSpace(triggercomponent.pivot);
+                let pivot2trans = reactcomponent.j.transformlocalPointToWorldSpace(reactcomponent.pivot);
+                let center2trans = reactcomponent.j.transformlocalPointToWorldSpace(reactcomponent.j._center);
     
 
                 //Calculate Plane Matrix and transform to XY Plane
-                let transformedCenter = triggerjoint.j.transformlocalPointToWorldSpace(joint._center);
-                let transformedAxis = triggerjoint.j.transformlocalPointToWorldSpace(Communicator.Point3.add(joint._center,joint._axis));
+                let transformedCenter = triggercomponent.j.transformlocalPointToWorldSpace(component._center);
+                let transformedAxis = triggercomponent.j.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._axis));
                 let planenormal = Communicator.Point3.subtract(transformedAxis, transformedCenter).normalize();
-                let planenormal2 = joint._axis;
+                let planenormal2 = component._axis;
 
                 let xymatrix = KinematicsUtility.ComputeVectorToVectorRotationMatrix(planenormal, new Communicator.Point3(0, 0, 1));
                 let xyinverse = Communicator.Matrix.inverse(xymatrix);
@@ -1241,7 +1241,7 @@ export class KinematicsJoint {
                 let radius1 = originallength;
 
                 let center2_2d = xymatrix.transform(center2trans);
-                let radius2 = Communicator.Point3.subtract(reactjoint.j._center, reactjoint.pivot).length();
+                let radius2 = Communicator.Point3.subtract(reactcomponent.j._center, reactcomponent.pivot).length();
 
                 //calculate circle/circle intersections
                 let res = KinematicsUtility.circleIntersection(center1_2d.x, center1_2d.y, radius1, center2_2d.x, center2_2d.y, radius2);
@@ -1260,74 +1260,74 @@ export class KinematicsJoint {
                     res1 = res2;
                 }
 
-                //_rotate mate joint
+                //_rotate mate component
               
-                let pivot1trans_2 = triggerjoint.j.transformlocalPointToWorldSpace(reactjoint.pivot);
+                let pivot1trans_2 = triggercomponent.j.transformlocalPointToWorldSpace(reactcomponent.pivot);
                 
                 let v1 = Communicator.Point3.subtract(pivot1trans_2, pivot1trans).normalize();
                 let v2 = Communicator.Point3.subtract(res1, pivot1trans).normalize();
                 
                 let angle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-                let mat = KinematicsUtility.computeOffaxisRotationMatrix(triggerjoint.pivot,planenormal2, angle);
+                let mat = KinematicsUtility.computeOffaxisRotationMatrix(triggercomponent.pivot,planenormal2, angle);
 
-                let invmatrix = Communicator.Matrix.inverse(KinematicsManager.viewer.model.getNodeNetMatrix( KinematicsManager.viewer.model.getNodeParent(joint._nodeid)));
+                let invmatrix = Communicator.Matrix.inverse(KinematicsManager.viewer.model.getNodeNetMatrix( KinematicsManager.viewer.model.getNodeParent(component._nodeid)));
 
-                let resmatrix = Communicator.Matrix.multiply(mat, KinematicsManager.viewer.model.getNodeNetMatrix(triggerjoint.j._nodeid));
+                let resmatrix = Communicator.Matrix.multiply(mat, KinematicsManager.viewer.model.getNodeNetMatrix(triggercomponent.j._nodeid));
                 let resmatrix2 = Communicator.Matrix.multiply(resmatrix,invmatrix);
-                await KinematicsManager.viewer.model.setNodeMatrix(joint._nodeid, resmatrix2);
+                await KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, resmatrix2);
                 
-                let r = joint.transformlocalPointToWorldSpace(reactjoint.pivot);
+                let r = component.transformlocalPointToWorldSpace(reactcomponent.pivot);
                 if (Communicator.Point3.subtract(r,res1).length() > 0.0001)
                 {
-                    mat = KinematicsUtility.computeOffaxisRotationMatrix(triggerjoint.pivot,planenormal2, -angle);
-                    resmatrix = Communicator.Matrix.multiply(mat, KinematicsManager.viewer.model.getNodeNetMatrix(triggerjoint.j._nodeid));
+                    mat = KinematicsUtility.computeOffaxisRotationMatrix(triggercomponent.pivot,planenormal2, -angle);
+                    resmatrix = Communicator.Matrix.multiply(mat, KinematicsManager.viewer.model.getNodeNetMatrix(triggercomponent.j._nodeid));
                     let resmatrix2 = Communicator.Matrix.multiply(resmatrix,invmatrix);
-                    await KinematicsManager.viewer.model.setNodeMatrix(joint._nodeid, resmatrix2);
+                    await KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, resmatrix2);
     
                 }
                 
-                //_rotate react joint
+                //_rotate react component
 
-                pivot1trans_2 = reactjoint.j._parent.transformlocalPointToWorldSpace(reactjoint.pivot);
+                pivot1trans_2 = reactcomponent.j._parent.transformlocalPointToWorldSpace(reactcomponent.pivot);
                 
                 v1 = Communicator.Point3.subtract(pivot1trans_2, center2trans).normalize();
                 v2 = Communicator.Point3.subtract(res1, center2trans).normalize();
                 
                 angle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-                await reactjoint.j._rotate(angle);
-                let tm = this._hierachy.getReferenceNodeNetMatrix(reactjoint.j);
-                r = tm.transform(reactjoint.pivot);
+                await reactcomponent.j._rotate(angle);
+                let tm = this._hierachy.getReferenceNodeNetMatrix(reactcomponent.j);
+                r = tm.transform(reactcomponent.pivot);
 
-                await reactjoint.j._rotate(-angle);
-                tm = this._hierachy.getReferenceNodeNetMatrix(reactjoint.j);
-                let r2 = tm.transform(reactjoint.pivot);
+                await reactcomponent.j._rotate(-angle);
+                tm = this._hierachy.getReferenceNodeNetMatrix(reactcomponent.j);
+                let r2 = tm.transform(reactcomponent.pivot);
 
                 dist1 = Communicator.Point3.subtract(r,res1).length();
                 dist2 = Communicator.Point3.subtract(r2,res1).length();
                 if (dist1 < dist2)
                 {
-                    await reactjoint.j._rotate(angle);
+                    await reactcomponent.j._rotate(angle);
                 }
 
-                await this.getHierachy().updateJoints();
+                await this.getHierachy().updateComponents();
 
             }
 
         }            
-        else if (joint._type == jointType.pistonController)
+        else if (component._type == componentType.pistonController)
         {
-            let p1 = joint._parent.transformlocalPointToWorldSpace(joint._center);
-            let p1a = joint._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(joint._center,joint._axis));
+            let p1 = component._parent.transformlocalPointToWorldSpace(component._center);
+            let p1a = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._axis));
 
-            let p2 =  joint._extraJoint1._parent.transformlocalPointToWorldSpace(joint._extraJoint1._center);            
-            let p3 =  joint._extraJoint1._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(joint._extraJoint1._center,joint._extraJoint1._axis));            
+            let p2 =  component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);            
+            let p3 =  component._extraComponent1._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._extraComponent1._center,component._extraComponent1._axis));            
 
             let naxis = Communicator.Point3.subtract(p3,p2).normalize();
             let pol = KinematicsUtility.nearestPointOnLine(p2, naxis, p1);
             let delta = Communicator.Point3.subtract(pol,p1);
             let a =  delta.length();
 
-            let c = Communicator.Point3.subtract(joint._extraJoint1._center,joint._center).length();          
+            let c = Communicator.Point3.subtract(component._extraComponent1._center,component._center).length();          
 
             let b = Math.sqrt(c*c - a*a);            
             let angle = Math.asin(b/c) * (180/Math.PI);
@@ -1365,53 +1365,53 @@ export class KinematicsJoint {
             let pol3 = result2.transform(pointonline);
 
 
-            let ttt =  joint._extraJoint1._parent.transformlocalPointToWorldSpace(joint._extraJoint1._center);    
+            let ttt =  component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);    
             let ttt1 = Communicator.Point3.subtract(pol2,ttt).length();
             let ttt2 = Communicator.Point3.subtract(pol3,ttt).length();
 
             if (ttt2 < ttt1)
                 pol2 = pol3;
                 
-            let p22 =  joint._parent.transformlocalPointToWorldSpace(joint._extraJoint1._center);    
+            let p22 =  component._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);    
 
             let v1 = Communicator.Point3.subtract(p22,p1).normalize();
             let v2 = Communicator.Point3.subtract(pol2,p1).normalize();
 
             let fangle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-            await joint._rotate(-fangle);
+            await component._rotate(-fangle);
 
-            p22 =  joint.transformlocalPointToWorldSpace(joint._extraJoint1._center);    
+            p22 =  component.transformlocalPointToWorldSpace(component._extraComponent1._center);    
             let diff = Communicator.Point3.subtract(p22,pol2).length();
-            await joint._rotate(fangle);
-            p22 =  joint.transformlocalPointToWorldSpace(joint._extraJoint1._center);    
+            await component._rotate(fangle);
+            p22 =  component.transformlocalPointToWorldSpace(component._extraComponent1._center);    
             let diff2 = Communicator.Point3.subtract(p22,pol2).length();
             if (diff2>diff)
-                await joint._rotate(-fangle);
+                await component._rotate(-fangle);
 
-            let deltafj = Communicator.Point3.subtract(joint._extraJoint1._center,joint.transformlocalPointToWorldSpace(joint._extraJoint1._center)).length();
-             await joint._extraJoint1._translate(-deltafj);
-             let dx = Communicator.Point3.subtract(joint._extraJoint1.transformlocalPointToWorldSpace(joint._extraJoint1._center),joint.transformlocalPointToWorldSpace(joint._extraJoint1._center)).length();
-             await joint._extraJoint1._translate(deltafj);
-             let dx2 = Communicator.Point3.subtract(joint._extraJoint1.transformlocalPointToWorldSpace(joint._extraJoint1._center),joint.transformlocalPointToWorldSpace(joint._extraJoint1._center)).length();
+            let deltafj = Communicator.Point3.subtract(component._extraComponent1._center,component.transformlocalPointToWorldSpace(component._extraComponent1._center)).length();
+             await component._extraComponent1._translate(-deltafj);
+             let dx = Communicator.Point3.subtract(component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._center),component.transformlocalPointToWorldSpace(component._extraComponent1._center)).length();
+             await component._extraComponent1._translate(deltafj);
+             let dx2 = Communicator.Point3.subtract(component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._center),component.transformlocalPointToWorldSpace(component._extraComponent1._center)).length();
             if (dx2>dx)
-                await joint._extraJoint1._translate(-deltafj);
+                await component._extraComponent1._translate(-deltafj);
 
 
 
         }
-        else if (joint._type == jointType.prismaticAggregate)
+        else if (component._type == componentType.prismaticAggregate)
         {
-            let matrix1 = KinematicsManager.viewer.model.getNodeMatrix(joint._extraJoint1._nodeid);
-            let matrix2 = KinematicsManager.viewer.model.getNodeMatrix(joint._extraJoint2._nodeid);
+            let matrix1 = KinematicsManager.viewer.model.getNodeMatrix(component._extraComponent1._nodeid);
+            let matrix2 = KinematicsManager.viewer.model.getNodeMatrix(component._extraComponent2._nodeid);
             let resmatrix = Communicator.Matrix.multiply(matrix1, matrix2);
-            await KinematicsManager.viewer.model.setNodeMatrix(joint._nodeid, resmatrix);
+            await KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, resmatrix);
 
         }
-        else if (joint._type == jointType.prismaticTriangle)
+        else if (component._type == componentType.prismaticTriangle)
         {
-            let p1 = joint._extraJoint1.transformlocalPointToWorldSpace(joint._center);
-            let p2 =  joint._extraJoint2.transformlocalPointToWorldSpace(joint._extraJoint2._center);            
-            let p3 = joint._extraJoint2._parent.transformlocalPointToWorldSpace(joint._center);     
+            let p1 = component._extraComponent1.transformlocalPointToWorldSpace(component._center);
+            let p2 =  component._extraComponent2.transformlocalPointToWorldSpace(component._extraComponent2._center);            
+            let p3 = component._extraComponent2._parent.transformlocalPointToWorldSpace(component._center);     
 
 
             let delta = Communicator.Point3.subtract(p2,p1);
@@ -1424,105 +1424,105 @@ export class KinematicsJoint {
 
             let angle = Communicator.Util.computeAngleBetweenVector(delta, delta2);
 
-            let p22 =  joint._extraJoint2.transformlocalPointToWorldSpace(joint._center);     
+            let p22 =  component._extraComponent2.transformlocalPointToWorldSpace(component._center);     
 
-            await joint._extraJoint2._rotate(-angle, true);
-            let p1x = joint._extraJoint2.transformlocalPointToWorldSpace(joint._center);
+            await component._extraComponent2._rotate(-angle, true);
+            let p1x = component._extraComponent2.transformlocalPointToWorldSpace(component._center);
            
             let delta3 = Communicator.Point3.subtract(p1x,p1);
             let ld3 = delta3.length();
 
-            await joint._extraJoint2._rotate(angle, true);
-            p1x = joint._extraJoint2.transformlocalPointToWorldSpace(joint._center);
+            await component._extraComponent2._rotate(angle, true);
+            p1x = component._extraComponent2.transformlocalPointToWorldSpace(component._center);
             let delta4 = Communicator.Point3.subtract(p1x,p1);
             let ld4 = delta4.length();
 
             if (ld4>ld3)
-                await joint._extraJoint2._rotate(-angle, true);
+                await component._extraComponent2._rotate(-angle, true);
 
-            await this._updateReferenceNodeMatrices(joint._extraJoint2);
+            await this._updateReferenceNodeMatrices(component._extraComponent2);
 
-             await joint._translate(ld1 - ld2);
+             await component._translate(ld1 - ld2);
         }
-        else if (joint._type == jointType.helical)
+        else if (component._type == componentType.helical)
         {
-            let p1 = joint._parent.transformlocalPointToWorldSpace(joint._center);
-            let p2 = joint.transformlocalPointToWorldSpace(joint._center);
+            let p1 = component._parent.transformlocalPointToWorldSpace(component._center);
+            let p2 = component.transformlocalPointToWorldSpace(component._center);
             let length = Communicator.Point3.subtract(p2,p1).length();
-            joint._translate(length);
-            let p3 = joint.transformlocalPointToWorldSpace(joint._center);
-            joint._translate(-length);
-            let p4 = joint.transformlocalPointToWorldSpace(joint._center);
+            component._translate(length);
+            let p3 = component.transformlocalPointToWorldSpace(component._center);
+            component._translate(-length);
+            let p4 = component.transformlocalPointToWorldSpace(component._center);
             if (Communicator.Point3.subtract(p3,p2).length() < Communicator.Point3.subtract(p4,p2).length())
             {
-                joint._translate(length);
+                component._translate(length);
                 length = -length;
             }
 
-            joint._rotate(length * joint._helicalFactor, true, true);
+            component._rotate(length * component._helicalFactor, true, true);
         }
-        else if (joint._type == jointType.mapped) {
-            if (joint._mappedType == jointType.prismaticPlane) {
-                let matrix = KinematicsManager.viewer.model.getNodeNetMatrix(joint._mappedTargetJoint._nodeid);
-                let pp = matrix.transform(joint._prismaticPlaneTip);
-                let dist = joint._prismaticPlanePlane.distanceToPoint(pp);
+        else if (component._type == componentType.mapped) {
+            if (component._mappedType == componentType.prismaticPlane) {
+                let matrix = KinematicsManager.viewer.model.getNodeNetMatrix(component._mappedTargetComponent._nodeid);
+                let pp = matrix.transform(component._prismaticPlaneTip);
+                let dist = component._prismaticPlanePlane.distanceToPoint(pp);
                 if (dist < 0)
-                    await joint._translate(dist * joint._helicalFactor);
+                    await component._translate(dist * component._helicalFactor);
                 else
-                    await joint._translate(0);
+                    await component._translate(0);
             }
-            else if (joint._mappedTargetJoint._type == jointType.prismatic || (joint._mappedTargetJoint._type == jointType.mapped && joint._mappedTargetJoint._mappedType == jointType.prismatic)) {
-                let savdelta = joint._mappedTargetJoint._currentPosition;
-                let savmatrix = KinematicsManager.viewer.model.getNodeMatrix(joint._mappedTargetJoint._nodeid);
-                let p1 = joint._mappedTargetJoint._parent.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
-                let p2 = joint._mappedTargetJoint.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
+            else if (component._mappedTargetComponent._type == componentType.prismatic || (component._mappedTargetComponent._type == componentType.mapped && component._mappedTargetComponent._mappedType == componentType.prismatic)) {
+                let savdelta = component._mappedTargetComponent._currentPosition;
+                let savmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._mappedTargetComponent._nodeid);
+                let p1 = component._mappedTargetComponent._parent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
+                let p2 = component._mappedTargetComponent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
                 let length = Communicator.Point3.subtract(p2, p1).length();
-                joint._mappedTargetJoint._translate(length);
-                let p3 = joint._mappedTargetJoint.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
-                joint._mappedTargetJoint._translate(-length);
-                let p4 = joint._mappedTargetJoint.transformlocalPointToWorldSpace(joint._mappedTargetJoint._center);
+                component._mappedTargetComponent._translate(length);
+                let p3 = component._mappedTargetComponent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
+                component._mappedTargetComponent._translate(-length);
+                let p4 = component._mappedTargetComponent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
                 if (Communicator.Point3.subtract(p3, p2).length() < Communicator.Point3.subtract(p4, p2).length())
                     length = -length;
-                KinematicsManager.viewer.model.setNodeMatrix(joint._mappedTargetJoint._nodeid, savmatrix);
+                KinematicsManager.viewer.model.setNodeMatrix(component._mappedTargetComponent._nodeid, savmatrix);
 
-                if (joint._mappedType == jointType.revolute) 
+                if (component._mappedType == componentType.revolute) 
                 {
-                    await joint._rotate(length * joint._helicalFactor, true);
-                    joint._currentAngle = length * joint._helicalFactor;
+                    await component._rotate(length * component._helicalFactor, true);
+                    component._currentAngle = length * component._helicalFactor;
                 }
-                else if (joint._mappedType == jointType.prismatic)
-                    await joint._translate(length * joint._helicalFactor, true);
-                else if (joint._mappedType == jointType.belt)
-                    await joint.belt.move(length * joint._helicalFactor);                    
+                else if (component._mappedType == componentType.prismatic)
+                    await component._translate(length * component._helicalFactor, true);
+                else if (component._mappedType == componentType.belt)
+                    await component.belt.move(length * component._helicalFactor);                    
 
-                joint._mappedTargetJoint._currentPosition = savdelta;
+                component._mappedTargetComponent._currentPosition = savdelta;
             }
-            else if (joint._mappedTargetJoint._type == jointType.revolute || joint._mappedTargetJoint._type == jointType.mapped) {
+            else if (component._mappedTargetComponent._type == componentType.revolute || component._mappedTargetComponent._type == componentType.mapped) {
              
-                if (joint._mappedType == jointType.revolute) 
+                if (component._mappedType == componentType.revolute) 
                 {
-                    await joint._rotate(joint._mappedTargetJoint._currentAngle * joint._helicalFactor, true);
-                    joint._currentAngle = joint._mappedTargetJoint._currentAngle * joint._helicalFactor;
+                    await component._rotate(component._mappedTargetComponent._currentAngle * component._helicalFactor, true);
+                    component._currentAngle = component._mappedTargetComponent._currentAngle * component._helicalFactor;
                 }
-                else if (joint._mappedType == jointType.prismatic)
-                    await joint._translate(joint._mappedTargetJoint._currentAngle * joint._helicalFactor, true);
-                else if (joint._mappedType == jointType.belt)
-                    await joint.belt.move(joint._mappedTargetJoint._currentAngle * joint._helicalFactor);
+                else if (component._mappedType == componentType.prismatic)
+                    await component._translate(component._mappedTargetComponent._currentAngle * component._helicalFactor, true);
+                else if (component._mappedType == componentType.belt)
+                    await component.belt.move(component._mappedTargetComponent._currentAngle * component._helicalFactor);
 
                 
             }
         }
-        else if (joint._type == jointType.revolute && joint._fixedAxis)
+        else if (component._type == componentType.revolute && component._fixedAxis)
         {          
-            let centerworld = joint.transformlocalPointToWorldSpace(joint._center);
-            let fixedworld = joint.transformlocalPointToWorldSpace(Communicator.Point3.add(joint._center,joint._fixedAxis));
+            let centerworld = component.transformlocalPointToWorldSpace(component._center);
+            let fixedworld = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._fixedAxis));
 
             let axis1 = Communicator.Point3.subtract(fixedworld,centerworld).normalize();
 
        
-            let axis2 = joint._fixedAxisTarget;
+            let axis2 = component._fixedAxisTarget;
 
-            let rotaxis = joint.transformlocalPointToWorldSpace(Communicator.Point3.add(joint._center,joint._axis));
+            let rotaxis = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._axis));
             let rotaxis2 = Communicator.Point3.subtract(rotaxis,centerworld).normalize();
 
             let plane = Communicator.Plane.createFromPointAndNormal(centerworld, rotaxis2);
@@ -1530,57 +1530,57 @@ export class KinematicsJoint {
             let res = KinematicsUtility.closestPointOnPlane(plane, new Communicator.Point3.add(centerworld, axis2));
             axis2 = new Communicator.Point3.subtract(res,centerworld).normalize();
             let angle = Communicator.Util.computeAngleBetweenVector(axis1, axis2);
-            await joint._rotate(angle,true, true);
+            await component._rotate(angle,true, true);
 
 
-            centerworld = joint.transformlocalPointToWorldSpace(joint._center);
-            fixedworld = joint.transformlocalPointToWorldSpace(Communicator.Point3.add(joint._center,joint._fixedAxis));
+            centerworld = component.transformlocalPointToWorldSpace(component._center);
+            fixedworld = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._fixedAxis));
             let axis1x = Communicator.Point3.subtract(fixedworld,centerworld).normalize();
 
             let delta = Communicator.Point3.subtract(axis1x,axis2).length();
             if (delta>0.001)
-                await joint._rotate(-angle*2,true,true);
+                await component._rotate(-angle*2,true,true);
             
         }
                     
-        await this._updateReferenceNodeMatrices(joint);
-        if (joint._children.length > 0)
+        await this._updateReferenceNodeMatrices(component);
+        if (component._children.length > 0)
         {
-            for (let j=0;j<joint._children.length;j++)
-                await this._updateJointsFromReferenceRecursive(joint._children[j]);
+            for (let j=0;j<component._children.length;j++)
+                await this._updateComponentsFromReferenceRecursive(component._children[j]);
         }
 
     }
 
 
-    async _updateReferenceNodeMatrices(joint) {
-        if (joint._reference) {
+    async _updateReferenceNodeMatrices(component) {
+        if (component._reference) {
 
-            if (joint._parent && joint._parent._reference == false) {
-                for (let i = 0; i < joint._referenceNodes.length; i++) {
-                    let resmatrix = Communicator.Matrix.multiply(joint._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(joint._nodeid));
-                    let resmatrix3 = Communicator.Matrix.multiply(resmatrix, KinematicsManager.viewer.model.getNodeMatrix(joint._parent._nodeid));
-                    let r2 = Communicator.Matrix.inverse(joint._parent._parentMatrix);
+            if (component._parent && component._parent._reference == false) {
+                for (let i = 0; i < component._referenceNodes.length; i++) {
+                    let resmatrix = Communicator.Matrix.multiply(component._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(component._nodeid));
+                    let resmatrix3 = Communicator.Matrix.multiply(resmatrix, KinematicsManager.viewer.model.getNodeMatrix(component._parent._nodeid));
+                    let r2 = Communicator.Matrix.inverse(component._parent._parentMatrix);
                     let resmatrix2 = Communicator.Matrix.multiply(resmatrix3, r2);
-                    KinematicsManager.viewer.model.setNodeMatrix(joint._referenceNodes[i].nodeid, resmatrix2);
+                    KinematicsManager.viewer.model.setNodeMatrix(component._referenceNodes[i].nodeid, resmatrix2);
                 }
 
             }
             else {
-                for (let i = 0; i < joint._referenceNodes.length; i++) {
-                    let resmatrix = Communicator.Matrix.multiply(joint._referenceNodes[i].matrix, this._hierachy.getReferenceNodeNetMatrix(joint));
-                    let r2 = Communicator.Matrix.inverse(joint._parentMatrix);
+                for (let i = 0; i < component._referenceNodes.length; i++) {
+                    let resmatrix = Communicator.Matrix.multiply(component._referenceNodes[i].matrix, this._hierachy.getReferenceNodeNetMatrix(component));
+                    let r2 = Communicator.Matrix.inverse(component._parentMatrix);
                     let resmatrix2 = Communicator.Matrix.multiply(resmatrix, r2);
-                    KinematicsManager.viewer.model.setNodeMatrix(joint._referenceNodes[i].nodeid, resmatrix2);
+                    KinematicsManager.viewer.model.setNodeMatrix(component._referenceNodes[i].nodeid, resmatrix2);
                 }
             }
         }
         else {
-            for (let i = 0; i < joint._referenceNodes.length; i++) {
-                let resmatrix = Communicator.Matrix.multiply(joint._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(joint._nodeid));
-                let r2 = Communicator.Matrix.inverse(joint._parentMatrix);
+            for (let i = 0; i < component._referenceNodes.length; i++) {
+                let resmatrix = Communicator.Matrix.multiply(component._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(component._nodeid));
+                let r2 = Communicator.Matrix.inverse(component._parentMatrix);
                 let resmatrix2 = Communicator.Matrix.multiply(resmatrix, r2);
-                KinematicsManager.viewer.model.setNodeMatrix(joint._referenceNodes[i].nodeid, resmatrix2);
+                KinematicsManager.viewer.model.setNodeMatrix(component._referenceNodes[i].nodeid, resmatrix2);
             }
         }
     }

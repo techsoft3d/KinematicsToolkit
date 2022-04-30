@@ -22,7 +22,11 @@ export const jointType = {
  
 /** This class represents an individual Kinematics Joint*/
 export class KinematicsJoint {
-
+ /**
+     * Creates a Kinematic Joint Object
+     * @param  {KinematicsJoint} parent - Parent Joint
+     * @param  {KinematicsHierachy} hierachy - Hierachy this joint belongs to 
+     */
     constructor(parent, hierachy) {
         this._hierachy = hierachy;
         this._id = hierachy._highestId++;
@@ -63,6 +67,7 @@ export class KinematicsJoint {
         this._animations = [];
     }
 
+ 
     initialize(nodeids, isReference) {
         this._reference = isReference;
         if (!this._parent)
@@ -77,48 +82,84 @@ export class KinematicsJoint {
         }
     }
 
-    
+     /**
+    * Retrieve Joint Id
+    * @return {number} Joint ID
+     */      
     getId()
     {
         return this._id;
     }
 
+
+   /**
+     * Sets type of joint
+     * @param  {jointType} type - Joint Type
+     */
     setType(type)
     {
         this._type = type;
     }
 
+   /**
+     * Retrieves type of joint
+     * @return {jointType} Joint Type
+     */
     getType()
     {
         return this._type;
     }
 
+     /**
+     * Sets joint parent
+     * @param  {KinematicsJoint} parent - Parent Joint
+     */
     setParent(parent)
     {
         this._parent = parent;
     }
 
+ /**
+     * Retrieves parent of joint
+     * @return {KinematicsJoint} Joint Parent
+     */
     getParent()
     {
         return this._currentPosition;
     }
 
+     /**
+     * Retrieves all children of joint
+     * @return {array} Array of children joints
+     */
     getChildren()
     {
         return this._children;
     }
 
+     /**
+     * Retrieves a child joint by its index
+     * @param  {number} i - Index of child joint
+     * @return {KinematicsJoint} Child Joint
+     */
     getChildByIndex(i)
     {
         return this._children[i];
     }
 
-
+    /**
+     * Sets the mapped type of a joint (applicable to jointType.mapped)
+     * @param  {jointType} mappedType - Mapped Type
+     */
     setMappedType(mappedType)
     {
         this._mappedType = mappedType;
     }
 
+     /**
+     * Retrieves the mapped type of a joint (applicable to jointType.mapped)
+     * @return {jointType} Mapped Type
+     */
     getMappedType()
     {
         return this._mappedType;
@@ -134,132 +175,231 @@ export class KinematicsJoint {
         return this._nodeid;
     }
 
+
+     /**
+     * Retrieves the hierachy associated with a joint
+     * @return {KinematicsHierachy} Hierachy
+     */    
     getHierachy()
     {
         return this._hierachy;
     }
 
+    /**
+     * Sets the joint center
+     * @param  {Point3} center - Joint Center
+     */    
     setCenter(center)
     {
         this._center = center;
     }
 
+
+     /**
+     * Retrieves the joint center
+     * @return {Point3} Joint Center
+     */        
     getCenter()
     {
         return this._center;
     }
 
+   /**
+     * Sets the joint axis
+     * @param  {Point3} axis - Joint Axis
+     */    
     setAxis(axis)
     {
         this._axis = axis;
     }
 
+ /**
+     * Retrieves the joint axis
+     * @return {Point3} Joint Axis
+     */           
     getAxis()
     {
         return this._axis;
     }
 
-    getCurrentAngle()
+
+ /**
+     * Retrieves the value of the current joint (angle or relative position)
+     * @return {number} Current Value
+     */             
+    getCurrentValue()
     {
-        return this._currentAngle;
+        if (this._type == jointType.revolute)
+            return this._currentAngle;
+        else if (this._type == jointType.prismatic)
+            return this._currentPosition;
     }
 
-    getCurrentPosition()
-    {
-        return this._currentPosition;
-    }
 
     getReferenceNodes()
     {
         return this._referenceNodes;
     }
 
+
     getParentMatrix()
     {
         return this._parentMatrix;
     }
 
+    
+ /**
+     * Retrieves the Extra Joint 1 (not applicable to all joint types)
+     * @return {KinematicsJoint} Joint
+     */       
     getExtraJoint1()
     {
         return this._extraJoint1;
     }
 
-    setExtraJoint1(extraJoint1)
+
+   /**
+     * Sets the extra joint 1
+     * @param  {KinematicsJoint} joint - Joint
+     */     
+    setExtraJoint1(joint)
     {
-        this._extraJoint1 = extraJoint1;
+        this._extraJoint1 = joint;
     }
 
-    setExtraJoint2(extraJoint2)
-    {
-        this._extraJoint2 = extraJoint2;
-    }
-
-
+ /**
+     * Retrieves the Extra Joint 2 (not applicable to all joint types)
+     * @return {KinematicsJoint} Joint
+     */       
     getExtraJoint2()
     {
         return this._extraJoint2;
     }
 
-
-    setExtraPivot1(extraPivot1)
+   /**
+     * Sets the extra joint 2
+     * @param  {KinematicsJoint} joint - Joint
+     */     
+    setExtraJoint2(joint)
     {
-        this._extraPivot1 = extraPivot1;
+        this._extraJoint2 = joint;
+    }
+
+ /**
+     * Sets the extra pivot 1 (applicable to jointType.revoluteSlide and jointType.mate)
+     * @param  {Point3} pivot - Pivot Point
+     */         
+    setExtraPivot1(pivot)
+    {
+        this._extraPivot1 = pivot;
     }
 
 
+ /**
+     * Retrieves the Extra Pivot 1 (applicable to jointType.revoluteSlide and jointType.mate)
+     * @return {Point3} Pivot
+     */     
     getExtraPivot1()
     {
         return this._extraPivot1;
     }
 
 
-    setExtraPivot2(extraPivot2)
+ /**
+     * Sets the extra pivot 2 (applicable to jointType.mate)
+     * @param  {Point3} pivot - Pivot Point
+     */     
+    setExtraPivot2(pivot)
     {
-        this._extraPivot2 = extraPivot2;
+        this._extraPivot2 = pivot;
     }
 
+
+ /**
+     * Retrieves the Extra Pivot 2 (applicable to jointType.mate)
+     * @return {Point3} Pivot
+     */         
     getExtraPivot2()
     {
         return this._extraPivot2;
     }
 
-    setMappedTargetJoint(mappedTargetJoint)
+
+ /**
+     * Sets the mapped target joint (applicable to jointType.mapped)
+     * @param  {KinematicsJoint} joint - Joint
+     */         
+    setMappedTargetJoint(joint)
     {
-        this._mappedTargetJoint = mappedTargetJoint;
+        this._mappedTargetJoint = joint;
     }
 
 
+ /**
+     * Retrieves the mapped target joint (applicable to jointType.mapped)
+     * @return {KinematicsJoint} Joint
+     */       
     getMappedTargetJoint()
     {
         return this._mappedTargetJoint;
     }
 
 
+ /**
+     * Sets the helical factor (applicable to jointType.mapped and jointType.helical)
+     * @param  {number} helicalFactor - Helical Factor
+     */       
     setHelicalFactor(helicalFactor)
     {
         this._helicalFactor = helicalFactor;
     }
 
 
+ /**
+     * Retrieves the helical factor (applicable to jointType.mapped and jointType.helical)
+     * @return {number}  Helical Factor
+     */    
     getHelicalFactor()
     {
         return this._helicalFactor;
     }
 
+
+
+ /**
+     * Sets if joint is a reference joint  
+     * Reference Joints are joints that are NOT children of their parent joint in the HC node hierachy
+     * @param  {bool} isReference - Is Joint a Reference Joint
+     */ 
     setIsReference(isReference) {
         this._reference = isReference;
     }
 
 
+ /**
+     * Retrieves if joint is a reference joint  
+     * Reference Joints are joints that are NOT children of their parent joint in the HC node hierachy
+     * @return {bool} Is Joint a Reference Joint
+     */ 
     getIsReference() {
         return this._reference;
     }
 
+
+ /**
+     * Retrieves all animations associated with a joint   
+     * @return {array} Array of Animation Template Ids
+     */     
     getAnimations() {
         return this._animations;
     }
 
-    
+
+ /**
+     * Retrieves an animation associated with a joint by its index
+     * @param  {number} i - Index of animation
+     * @return {uuid} Animation Template Id
+     */         
     getAnimationByIndex(i) {
         return this._animations[i];
     }
@@ -275,50 +415,90 @@ export class KinematicsJoint {
         return this._maxAngle;
     }
 
-
-    setFixedAxis(fixedAxis)
+ /**
+     * Sets the fixed axis for this joint (applicable to jointType.revolute)  
+     * This defines the axis that is fixed in the joint
+     * @param  {Point3} axis - Fixed Axis
+     */ 
+    setFixedAxis(axis)
     {
-        this._fixedAxis = fixedAxis;
+        this._fixedAxis = axis;
     }
 
-    setFixedAxisTarget(fixedAxisTarget)
+ /**
+     * Sets the fixed axis target for this joint (applicable to jointType.revolute)  
+     * This defines the axis that the fixed axis will be rotated to.
+     * @param  {Point3} axis - Fixed Axis Target
+     */ 
+    setFixedAxisTarget(axis)
     {
-        this._fixedAxisTarget = fixedAxisTarget;
+        this._fixedAxisTarget = axis;
     }
 
-
+ /**
+     * Retrieves the fixed axis for this joint (applicable to jointType.revolute)  
+     * @return {Poin3} Fixed Axis
+     */      
     getFixedAxis()
     {
         return this._fixedAxis;
     }
 
+    
+ /**
+     * Retrieves the belt object for this joint (applicable to jointType.mapped with mapped type set to jointType.belt)
+     * @return {KinematicsBelt} Belt Object
+     */      
     getBelt()
     {
         return this.belt;
     }
 
+
+ /**
+     * Sets the plane for the prismatic plane joint  (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * @param  {Plane} plane - Plane
+     */     
     setPrismaticPlanePlane(plane)
     {
         this._prismaticPlanePlane = plane;
     }
 
-    
+  
+ /**
+     * Retrieves the plane for the prismatic plane joint (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * @return {Plane} Plane
+     */          
     getPrismaticPlanePlane()
     {
         return this._prismaticPlanePlane;
     }
 
+
+ /**
+     * Sets the tip for the prismatic plane joint  (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * @param  {Point3} tip - Tip
+     */         
     setPrismaticPlaneTip(tip)
     {
         this._prismaticPlaneTip = tip;
     }
 
-    
+ 
+ /**
+     * Retrieves the tip for the prismatic plane joint (applicable to jointType.mapped with mapped type set to jointType.prismaticPlane)
+     * @return {Point3} Tip
+     */             
     getPrismaticPlaneTip()
     {
         return this._prismaticPlaneTip;
     }
 
+    
+ /**
+     * Sets the value (rotation or translation) for the joint (applicable to jointType.prismatic or jointType.revolute)
+     * @param  {number} value - Value
+     */ 
     set(value) {
 
         if (this._type == jointType.revolute)
@@ -535,11 +715,21 @@ export class KinematicsJoint {
     }
 
 
+    
+ /**
+     * Add an animation template id to the joint.
+     * @param  {uuid} animationid - Animation ID
+     */ 
     addAnimation(animationid)
     {
         this._animations.push(animationid);
     }
 
+  
+ /**
+     * Remove an animation from the joint based on its template id.
+     * @param  {uuid} animationid - Animation ID
+     */     
     removeAnimation(animationid)
     {
         for (let i=0;i<this._animations.length;i++)
@@ -560,6 +750,7 @@ export class KinematicsJoint {
       this.removeAnimation(_templateId);
     }
     
+
     animToJson(animhash) {
 
         for (let i = 0; i < this._children.length; i++) {
@@ -571,6 +762,11 @@ export class KinematicsJoint {
         }
     }
 
+  
+ /**
+     * Update all HOOPS Communicator nodes associated with this joint
+     * @param  {array} nodeids - Array of nodeids to associate with this joint
+     */     
     updateReferenceNodes(nodeids)
     {
         for (let i = 0; i < this._referenceNodes.length; i++) {            
@@ -584,6 +780,12 @@ export class KinematicsJoint {
 
     }
 
+
+  
+ /**
+     * Remove all nodes specified in the supplied array from the joint
+     * @param  {array} nodeids - Array of nodeids to remove from the joint
+     */         
     removeReferenceNodes(nodeids) {
         for (let i = 0; i < this._referenceNodes.length; i++) {
             for (let j = 0; j < nodeids.length; j++) {

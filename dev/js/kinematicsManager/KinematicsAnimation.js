@@ -81,11 +81,7 @@ export class KinematicsAnimation {
         this._done = false;
         let _this = this;
 
-        if (this._joint.getType() == jointType.revolute)
-            this.value = this._joint.getCurrentAngle();
-        else
-            this.value = this._joint.getCurrentPosition();
-
+        this.value = this._joint.getCurrentValue();
         
         if (animedef.infinite == undefined || !animedef.infinite) {
 

@@ -125,7 +125,7 @@ export class KinematicsComponent {
      */
     getParent()
     {
-        return this._currentPosition;
+        return this._parent;
     }
 
      /**

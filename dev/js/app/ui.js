@@ -828,7 +828,7 @@ function updateComponent(j){
     {
         component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
 
-        component.getMappedType() =  KM.componentType[$("#mappedcomponenttype")[0].value];
+        component.setMappedType(KM.componentType[$("#mappedcomponenttype")[0].value]);
 
         if (component.getMappedType() == KM.componentType.belt && !component.getBelt())
             component.belt = new Belt();               

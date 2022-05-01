@@ -3,13 +3,23 @@ import { KinematicsBelt } from './KinematicsBelt.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
 
-export const componentType = {
+/**
+ * Type of Component.
+ * @readonly
+ * @enum {number}
+ */
+const componentType = {
+     /** Rotation around an axis*/
     revolute: 0,
-    prismatic: 1,
+     /** Translation along an axis */
+     prismatic: 1,
+     /** Fixed Component */
     fixed:2,
-    prismaticAggregate: 3,
-    prismaticTriangle: 4,
-    helical: 5,
+     /** Aggregates two prismatic component states. */
+     prismaticAggregate: 3,
+     /** Uses a triangle calculation to define translation. */
+     prismaticTriangle: 4,
+     helical: 5,
     mapped: 6,
     pistonController: 7,
     conveyor: 8,
@@ -19,6 +29,7 @@ export const componentType = {
     revoluteSlide:12,
 };
 
+export {componentType};
  
 /** This class represents an individual Kinematics Component*/
 export class KinematicsComponent {

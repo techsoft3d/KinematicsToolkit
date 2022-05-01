@@ -1,11 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './dev/js/kinematicsManager/km.js',
+  entry: './dev/js/kinematicsToolkit/kt.js',
   mode: "production",
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'kinematicsManager.min.js',
-    library: 'KM', //add this line to enable re-use
+    filename: 'kinematicsToolkit.min.js',
+    library: 'KT', //add this line to enable re-use
   },
 };

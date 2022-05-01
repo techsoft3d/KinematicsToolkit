@@ -28,7 +28,7 @@ function switchTemplate() {
 function generateTemplateSelect() {
     var html = '<select id="templateselect" onchange="switchTemplate()" class="form-select" style="font-size:11px;margin-top:10px;" value="">\n';
 
-    for (var i in KM.KinematicsManager.getHierachyTemplates()) {
+    for (var i in KT.KinematicsManager.getHierachyTemplates()) {
 
         if (i == currentTemplate)
             html += '<option selected value="' + i + '">' + i + '</option>\n';
@@ -47,7 +47,7 @@ function generateAssignAnimationSelect() {
     var html = "";
     html += '<select id = "assignanimtationselect" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">';
 
-    let animationTemplates = KM.KinematicsManager.getAnimationTemplates();
+    let animationTemplates = KT.KinematicsManager.getAnimationTemplates();
     for (var i in animationTemplates) {
         html += '<option value="' + i + '">' + animationTemplates[i].getName() + '</option>\n';
 
@@ -62,7 +62,7 @@ function generateAnimationGroupSelect() {
     var html = "";
     html += '<select onchange="switchAnimationGroup()" id = "animationgroupselect" style="margin-bottom:0.5rem!important;width:50%;display:inline" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">';
   
-    let animationGroups = KM.KinematicsManager.getAnimationGroups();
+    let animationGroups = KT.KinematicsManager.getAnimationGroups();
 
     for (var i=0;i<animationGroups.length;i++) {
         if (i == currentAnimationGroupId)
@@ -79,7 +79,7 @@ function generateAnimationTemplateSelect(component) {
     var html = '<select id="animationtemplateselect" class="form-select" style="font-size:11px;margin-top:10px;width:30%;display:initial" value="">\n';
 
    
-    let animationTemplates = KM.KinematicsManager.getAnimationTemplates();
+    let animationTemplates = KT.KinematicsManager.getAnimationTemplates();
     for (var i in animationTemplates) {
         for (let j=0;j<component.getAnimations().length;j++)
         {
@@ -100,22 +100,22 @@ function generateComponentTypeSelect(component) {
 
     for (let i = 0; i < 8; i++) {
         if (i == component.getType())
-            html += '<option selected value="' + string_of_enum(KM.componentType,i) + '">' + string_of_enum(KM.componentType,i) + '</option>\n';
+            html += '<option selected value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
         else
-            html += '<option value="' + string_of_enum(KM.componentType,i) + '">' + string_of_enum(KM.componentType,i) + '</option>\n';
+            html += '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
     }
 
     let i = 11;
     if (i == component.getType())
-        html += '<option selected value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
 
     i = 12;
     if (i == component.getType())
-        html += '<option selected value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType, i) + '">' + string_of_enum(KM.componentType, i) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
     
         
     html += '</select>';
@@ -127,30 +127,30 @@ function generateMapComponentTypeSelect(component) {
     var html = '<select id="mappedcomponenttype" class="form-select" style="font-size:11px" value="">\n';
 
     if (component.getMappedType() == 0)
-        html += '<option selected value="' + string_of_enum(KM.componentType,0) + '">' + string_of_enum(KM.componentType,0) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType,0) + '">' + string_of_enum(KT.componentType,0) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType,0) + '">' + string_of_enum(KM.componentType,0) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType,0) + '">' + string_of_enum(KT.componentType,0) + '</option>\n';
 
     if (component.getMappedType() == 1)
-        html += '<option selected value="' + string_of_enum(KM.componentType,1) + '">' + string_of_enum(KM.componentType,1) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType,1) + '">' + string_of_enum(KT.componentType,1) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType,1) + '">' + string_of_enum(KM.componentType,1) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType,1) + '">' + string_of_enum(KT.componentType,1) + '</option>\n';
 
     if (component.getMappedType() == 8)
-        html += '<option selected value="' + string_of_enum(KM.componentType,8) + '">' + string_of_enum(KM.componentType,8) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType,8) + '">' + string_of_enum(KT.componentType,8) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType,8) + '">' + string_of_enum(KM.componentType,8) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType,8) + '">' + string_of_enum(KT.componentType,8) + '</option>\n';
 
     if (component.getMappedType() == 9)
-        html += '<option selected value="' + string_of_enum(KM.componentType, 9) + '">' + string_of_enum(KM.componentType, 9) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType, 9) + '">' + string_of_enum(KT.componentType, 9) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType, 9) + '">' + string_of_enum(KM.componentType, 9) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType, 9) + '">' + string_of_enum(KT.componentType, 9) + '</option>\n';
 
 
     if (component.getMappedType() == 10)
-        html += '<option selected value="' + string_of_enum(KM.componentType, 10) + '">' + string_of_enum(KM.componentType, 10) + '</option>\n';
+        html += '<option selected value="' + string_of_enum(KT.componentType, 10) + '">' + string_of_enum(KT.componentType, 10) + '</option>\n';
     else
-        html += '<option value="' + string_of_enum(KM.componentType, 10) + '">' + string_of_enum(KM.componentType, 10) + '</option>\n';
+        html += '<option value="' + string_of_enum(KT.componentType, 10) + '">' + string_of_enum(KT.componentType, 10) + '</option>\n';
 
 
     html += '</select>';
@@ -160,10 +160,10 @@ function generateMapComponentTypeSelect(component) {
 function generateExtraComponent1Select(component) {
     var html = '<select id="fixedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
 
-    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
-        if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
-            let componentname = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KM.componentType, KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.extraComponent1)
+    for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.extraComponent1)
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';
@@ -178,10 +178,10 @@ function generateExtraComponent1Select(component) {
 function generateMappedComponentSelect(component) {
     var html = '<select id="mappedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
 
-    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
-        if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
-            let componentname = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KM.componentType, KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getMappedTargetComponent())
+    for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getMappedTargetComponent())
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';
@@ -197,10 +197,10 @@ function generateMappedComponentSelect(component) {
 function generateExtraComponent2Select(component) {
     var html = '<select id="variablecomponentselect" class="form-select" style="font-size:11px" value="">\n';
 
-    for (var i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
-        if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
-            let componentname = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KM.componentType, KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getExtraComponent2())
+    for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getExtraComponent2())
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';
@@ -220,8 +220,8 @@ function generateKinematicsTreeDataRecursive(component, parentid)
 
     $('#KinematicsTreeDiv').jstree().create_node(parentid, {
         "id": component.getId().toString(),
-        "text": parentid=="#" ? component.getId() + ":root": component.getType() != KM.componentType.mapped ? 
-            component.getId() + ":" + string_of_enum(KM.componentType,component.getType()) : component.getId() + ":" + string_of_enum(KM.componentType,component.getType()) + ":" + string_of_enum(KM.componentType,component.getMappedType()) + ":" + component.getMappedTargetComponent().getId(),
+        "text": parentid=="#" ? component.getId() + ":root": component.getType() != KT.componentType.mapped ? 
+            component.getId() + ":" + string_of_enum(KT.componentType,component.getType()) : component.getId() + ":" + string_of_enum(KT.componentType,component.getType()) + ":" + string_of_enum(KT.componentType,component.getMappedType()) + ":" + component.getMappedTargetComponent().getId(),
         });
 
 
@@ -283,7 +283,7 @@ function generateComponentPropertiesData(id)
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits:</label></div>';
     html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinAngle() + '" class="form-control" style="font-size:11px"><input id="componentmax" type="number" value="' + component.getMaxAngle() + '" class="form-control" style="font-size:11px"></div></div>';
     
-    if (component.getType() == KM.componentType.revolute) {
+    if (component.getType() == KT.componentType.revolute) {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Axis</label></div><div class="col">';
         if (component.getFixedAxis())
             html += '<input type="checkbox" onclick="showFixedAxis(' + id + ')" id="hasfixedaxis" checked>';
@@ -293,7 +293,7 @@ function generateComponentPropertiesData(id)
     }
   
 
-    if (component.getType() == KM.componentType.prismaticTriangle)
+    if (component.getType() == KT.componentType.prismaticTriangle)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Component:</label></div>';
         html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
@@ -301,7 +301,7 @@ function generateComponentPropertiesData(id)
         html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
 
     }    
-    if (component.getType() == KM.componentType.mate)
+    if (component.getType() == KT.componentType.mate)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
         html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
@@ -314,7 +314,7 @@ function generateComponentPropertiesData(id)
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(1,' + id + ')">Component 2 Pivot</button>';
         html += '</div></div>';
     }    
-    if (component.getType() == KM.componentType.revoluteSlide)
+    if (component.getType() == KT.componentType.revoluteSlide)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
         html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
@@ -327,7 +327,7 @@ function generateComponentPropertiesData(id)
 
     }    
 
-    else if (component.getType() == KM.componentType.prismaticAggregate)
+    else if (component.getType() == KT.componentType.prismaticAggregate)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
         html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
@@ -336,17 +336,17 @@ function generateComponentPropertiesData(id)
 
     }    
 
-    else if (component.getType() == KM.componentType.pistonController)
+    else if (component.getType() == KT.componentType.pistonController)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Prismatic Target:</label></div>';
         html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
     }      
-    else if (component.getType() == KM.componentType.helical)
+    else if (component.getType() == KT.componentType.helical)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
         html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getHelicalFactor() + '"></div></div>';
     }
-    else if (component.getType() == KM.componentType.mapped)
+    else if (component.getType() == KT.componentType.mapped)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Type:</label></div>';
 
@@ -354,7 +354,7 @@ function generateComponentPropertiesData(id)
 
         html += '<div class="col">' + generateMapComponentTypeSelect(component) + '</div></div>';
 
-        if (component.getMappedType() == KM.componentType.prismaticPlane)
+        if (component.getMappedType() == KT.componentType.prismaticPlane)
         {
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
             html += '<div class="col">';
@@ -369,7 +369,7 @@ function generateComponentPropertiesData(id)
         html += '<div class="col">' + generateMappedComponentSelect(component) + '</div></div>';
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
         html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getHelicalFactor() + '"></div></div>';
-        if (component.getMappedType() == KM.componentType.belt)
+        if (component.getMappedType() == KT.componentType.belt)
         {     
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Width:</label></div>';
@@ -454,13 +454,13 @@ function generateComponentPropertiesData(id)
 
 
 
-    if (component.getMappedType() == KM.componentType.belt) {
+    if (component.getMappedType() == KT.componentType.belt) {
 
         let componentlist = [];
-        for (let i in KM.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
-            let thiscomponent = KM.KinematicsManager.getHierachyByIndex(0).getComponentById(i);
+        for (let i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+            let thiscomponent = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i);
             if (thiscomponent.getParent() && thiscomponent!=component) {
-                let componentname =thiscomponent.getId() + ":" + string_of_enum(KM.componentType, thiscomponent.getType());
+                let componentname =thiscomponent.getId() + ":" + string_of_enum(KT.componentType, thiscomponent.getType());
                 componentlist.push(componentname);
     
             }
@@ -596,7 +596,7 @@ function refreshWheelTable(component)
         let componentname;
         if (wheel.component)
         {
-            componentname = wheel.component.getId() + ":" + string_of_enum(KM.componentType, wheel.component.getType());
+            componentname = wheel.component.getId() + ":" + string_of_enum(KT.componentType, wheel.component.getType());
         }
         else 
         {
@@ -663,7 +663,7 @@ function showFixedAxis(id,show)
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     handleOperator.removeHandles();        
     tempnode = hwv.model.createNode(hwv.model.getRootNode());  
-    component.showHandles(KM.KinematicsManager.handlePlacementOperator, $("#hasfixedaxis").is(":checked"), tempnode);
+    component.showHandles(KT.KinematicsManager.handlePlacementOperator, $("#hasfixedaxis").is(":checked"), tempnode);
 
 }
 
@@ -675,7 +675,7 @@ function updateEditMode()
 
 function newHierachy()
 {
-    currentHierachy = KM.KinematicsManager.createHierachy();
+    currentHierachy = KT.KinematicsManager.createHierachy();
     drawIKDiv();
 
 }
@@ -729,7 +729,7 @@ function setIkUIValues()
 
 function setShowTemplateValues()
 {
-    var x = JSON.stringify(KM.KinematicsManager.getTemplate(currentTemplate));
+    var x = JSON.stringify(KT.KinematicsManager.getTemplate(currentTemplate));
     document.getElementById("templatejson").value = x;
 }
 
@@ -756,14 +756,14 @@ async function showComponent(j,adjustToCenter) {
         center = bounds.center();        
     }
 
-    if (component.getType() != KM.componentType.fixed) {
+    if (component.getType() != KT.componentType.fixed) {
         if (editMode) {
             tempnode = hwv.model.createNode(hwv.model.getRootNode());
-            component.showHandles(KM.KinematicsManager.handlePlacementOperator, false, tempnode, center);
+            component.showHandles(KT.KinematicsManager.handlePlacementOperator, false, tempnode, center);
 
         }
         else
-            component.showHandles(KM.KinematicsManager.handlePlacementOperator, false, undefined, center);
+            component.showHandles(KT.KinematicsManager.handlePlacementOperator, false, undefined, center);
     }
 
 
@@ -772,7 +772,7 @@ async function showComponent(j,adjustToCenter) {
 function updateReferences(j){
     let component = currentHierachy.getComponentById(j);
     var nodeids = [];
-    var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
+    var selections = KT.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
         nodeids.push(selections[i].getNodeId());
 
@@ -782,7 +782,7 @@ function updateReferences(j){
 function removeFromReferences(j){
     let component = currentHierachy.getComponentById(j);
     var nodeids = [];
-    var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
+    var selections = KT.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
         nodeids.push(selections[i].getNodeId());
 
@@ -794,10 +794,10 @@ function updateComponent(j){
     let component = currentHierachy.getComponentById(j);
     component.setParametersFromHandle();
     let text = $("#componenttype")[0].value;
-    component.setType(KM.componentType[text]);
-    component.setType(KM.componentType[text]);
+    component.setType(KT.componentType[text]);
+    component.setType(KT.componentType[text]);
 
-    if ((component.getType() == KM.componentType.prismaticTriangle || component.getType() == KM.componentType.prismaticAggregate || component.getType() == KM.componentType.mate) && $("#fixedcomponentselect")[0] != undefined)
+    if ((component.getType() == KT.componentType.prismaticTriangle || component.getType() == KT.componentType.prismaticAggregate || component.getType() == KT.componentType.mate) && $("#fixedcomponentselect")[0] != undefined)
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);
@@ -806,38 +806,38 @@ function updateComponent(j){
         let variablecomponent = currentHierachy.getComponentById(id);
         component.setExtraComponent2(variablecomponent);
     }
-    if (component.getType() == KM.componentType.revoluteSlide && $("#fixedcomponentselect")[0] != undefined)
+    if (component.getType() == KT.componentType.revoluteSlide && $("#fixedcomponentselect")[0] != undefined)
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);
         component.setExtraComponent1(fixedcomponent);
     }
 
-    if (component.getType() == KM.componentType.pistonController && $("#fixedcomponentselect")[0] != undefined)
+    if (component.getType() == KT.componentType.pistonController && $("#fixedcomponentselect")[0] != undefined)
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);
         component.setExtraComponent1(fixedcomponent); 
         component.adjustExtraComponentToPistonController();
     }
-    else if (component.getType() == KM.componentType.helical && $("#helicalfactor")[0] != undefined)
+    else if (component.getType() == KT.componentType.helical && $("#helicalfactor")[0] != undefined)
     {
         component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
     }
-    else if (component.getType() == KM.componentType.mapped && $("#helicalfactor")[0] != undefined)
+    else if (component.getType() == KT.componentType.mapped && $("#helicalfactor")[0] != undefined)
     {
         component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
 
-        component.setMappedType(KM.componentType[$("#mappedcomponenttype")[0].value]);
+        component.setMappedType(KT.componentType[$("#mappedcomponenttype")[0].value]);
 
-        if (component.getMappedType() == KM.componentType.belt && !component.getBelt())
+        if (component.getMappedType() == KT.componentType.belt && !component.getBelt())
             component.belt = new Belt();               
 
 
         let id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
         component.setMappedTargetComponent(currentHierachy.getComponentById(id));
     }
-    else if (component.getType() == KM.componentType.revolute)
+    else if (component.getType() == KT.componentType.revolute)
     {
         if (!$("#hasfixedaxis").is(":checked"))
         {
@@ -857,14 +857,14 @@ function updateComponent(j){
         component.setIsReference(false);
 
     var nodeids = [];
-    var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
+    var selections = KT.KinematicsManager.viewer.selectionManager.getResults();
     for (let i=0;i<selections.length;i++)
         nodeids.push(selections[i].getNodeId());
 
     component.updateReferenceNodes(nodeids);
 
     let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(component.getId());
-    $('#KinematicsTreeDiv').jstree().set_text(jstreenode, !component.getParent() ? component.getId() + ":root": component.getId() + ":" + string_of_enum(KM.componentType,component.getType()));
+    $('#KinematicsTreeDiv').jstree().set_text(jstreenode, !component.getParent() ? component.getId() + ":root": component.getId() + ":" + string_of_enum(KT.componentType,component.getType()));
     generateComponentPropertiesData(j);
 }
 
@@ -930,13 +930,13 @@ function moveupComponentFromUI()
 }
 
 function adjustToPlane() {
-    let r = KM.KinematicsManager.viewer.selectionManager.getResults();
+    let r = KT.KinematicsManager.viewer.selectionManager.getResults();
     if (r.length == 0) return;
 
     let plane = new Communicator.Plane();
     for (let i = 0; i < r.length; i++) {
         let nodeid = r[i].getNodeId();
-        let component = KM.KinematicsManager.getComponentFromNodeId(nodeid);
+        let component = KT.KinematicsManager.getComponentFromNodeId(nodeid);
 
         if (i==0)
             plane.setFromPointAndNormal(component.getCenter(), component.getAxis());
@@ -957,10 +957,10 @@ function adjustToPlane() {
 
 function setFromModel() {
     if (hwv.selectionManager.getLast())
-        currentHierachy = KM.KinematicsManager.getHierachyFromNodeId(hwv.selectionManager.getLast().getNodeId());
+        currentHierachy = KT.KinematicsManager.getHierachyFromNodeId(hwv.selectionManager.getLast().getNodeId());
 
     else
-        currentHierachy = KM.KinematicsManager.getHierachyFromNodeId();
+        currentHierachy = KT.KinematicsManager.getHierachyFromNodeId();
     currentTemplate = currentHierachy._templateId;
     drawIKDiv();
 
@@ -969,22 +969,22 @@ function setFromModel() {
 function applyToModel() {
     let _templateId = currentTemplate;
     if (!hwv.selectionManager.getLast())
-        currentHierachy = KM.KinematicsManager.applyToModel(_templateId);
+        currentHierachy = KT.KinematicsManager.applyToModel(_templateId);
     else {
 
         if (shiftPressed) {
             let nodeid = hwv.selectionManager.getLast().getNodeId();
             let children = hwv.model.getNodeChildren(nodeid);
             for (let i = 0; i < children.length; i++) {             
-                currentHierachy = KM.KinematicsManager.applyToModel(_templateId, children[i]);
+                currentHierachy = KT.KinematicsManager.applyToModel(_templateId, children[i]);
             }
 
         }
         else {
-            var selections = KM.KinematicsManager.viewer.selectionManager.getResults();
+            var selections = KT.KinematicsManager.viewer.selectionManager.getResults();
             for (let i = 0; i < selections.length; i++) {
                 let nodeid = selections[i].getNodeId();
-                currentHierachy = KM.KinematicsManager.applyToModel(_templateId, nodeid);
+                currentHierachy = KT.KinematicsManager.applyToModel(_templateId, nodeid);
             }
         }
     }
@@ -1005,7 +1005,7 @@ function updatePrismaticPlane(type, j) {
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
-    let axis = KM.KinematicsManager.handlePlacementOperator.lastAxis;
+    let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
     if (type === 0) {
         if (pos) {
             component.setPrismaticPlanePlane(new Communicator.Plane());
@@ -1028,7 +1028,7 @@ function updateMatePivot(type, j) {
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
-    let axis = KM.KinematicsManager.handlePlacementOperator.lastAxis;
+    let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
     if (pos) {
         if (type === 0) {
             component.setExtraPivot1(pos.copy());
@@ -1048,28 +1048,28 @@ function updateMatePivot(type, j) {
 
 
 function animateComponent(j){
-    let animationtemplate = KM.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
+    let animationtemplate = KT.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
     let component = currentHierachy.getComponentById(j);
 
-    KM.KinematicsManager.startAnimation(component,animationtemplate);
+    KT.KinematicsManager.startAnimation(component,animationtemplate);
 }
 
 function changeAnimationSpeed(j){
     let component = currentHierachy.getComponentById(j);   
 
-    KM.KinematicsManager.changeAnimationSpeed(component,-500 + Math.floor(Math.random() * 1000));
+    KT.KinematicsManager.changeAnimationSpeed(component,-500 + Math.floor(Math.random() * 1000));
 }
 
 function stopAnimation(j){
     let component = currentHierachy.getComponentById(j);   
 
-    KM.KinematicsManager.stopAnimation(component);
+    KT.KinematicsManager.stopAnimation(component);
 }
 
 
 function addNewAnimationTemplate() {
     if ($("#newupdateanimationbutton").html() == "Update") {
-        let animationtemplate = KM.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
+        let animationtemplate = KT.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
         let anime = {};
         anime.value = $("#animationtarget")[0].value;
         anime.duration = $("#animationduration")[0].value;
@@ -1078,7 +1078,7 @@ function addNewAnimationTemplate() {
         anime.direction = $("#animationdirection")[0].value;
         anime.easeintime = $("#animationeaseintime")[0].value;
         anime.infinite = $("#animationinfinite")[0].checked;
-        KM.KinematicsManager.updateAnimationTemplate($("#animationtemplateselect").val(), $("#animationname")[0].value, anime);
+        KT.KinematicsManager.updateAnimationTemplate($("#animationtemplateselect").val(), $("#animationname")[0].value, anime);
     }
     else {
 
@@ -1091,7 +1091,7 @@ function addNewAnimationTemplate() {
             easeintime: $("#animationeaseintime")[0].value,
             infinite: $("#animationinfinite")[0].checked,
         };
-        let animationid = KM.KinematicsManager.addAnimationTemplate($("#animationname")[0].value, animedef);
+        let animationid = KT.KinematicsManager.addAnimationTemplate($("#animationname")[0].value, animedef);
         let component = currentHierachy.getComponentById( currentComponent);
         component.addAnimation(animationid);
         generateComponentPropertiesData(currentComponent);
@@ -1114,7 +1114,7 @@ function refreshAnimationGroupTable()
              prop = {id:i,animation: animationReference.animation == null ? "" : animationReference.animation.name};
         else
         {
-            let animationname = KM.KinematicsManager.getAnimationTemplate(animationReference.animation).name;
+            let animationname = KT.KinematicsManager.getAnimationTemplate(animationReference.animation).name;
             prop = {id:i, animation: "Component: " + animationReference.component + ":" +  animationname};            
         }
 
@@ -1141,7 +1141,7 @@ function gatherAllAnimations()
         let component = hierachy.getComponentById(i);
         for (let j=0;j<component.getAnimations().length;j++)
         {
-            animations.push({text: animations.length + ":Component " + component.getId() + ":" + KM.KinematicsManager.getAnimationTemplate(component.getAnimationByIndex(j)).name, animation: component.getAnimationByIndex(j), component:component.getId()});
+            animations.push({text: animations.length + ":Component " + component.getId() + ":" + KT.KinematicsManager.getAnimationTemplate(component.getAnimationByIndex(j)).name, animation: component.getAnimationByIndex(j), component:component.getId()});
             
         }
     }
@@ -1154,7 +1154,7 @@ function newAnimationGroup()
 {
    currentAnimationGroup.setName($("#animationgroupname").val());
 
-   let id = KM.KinematicsManager.addAnimationGroup(currentAnimationGroup);
+   let id = KT.KinematicsManager.addAnimationGroup(currentAnimationGroup);
    currentAnimationGroupId = id;
    drawIKDiv();
 }
@@ -1169,16 +1169,16 @@ function switchAnimationGroup()
 
 function stopAllAnimations()
 {
-    KM.KinematicsManager.stopAnimation();
+    KT.KinematicsManager.stopAnimation();
 }
 
 function startAnimationGroup()
 {
-    KM.KinematicsManager.startAnimationGroup(currentAnimationGroupId);
+    KT.KinematicsManager.startAnimationGroup(currentAnimationGroupId);
 }
 
 function newAnimationGroupDialog() {
-    currentAnimationGroup = new KM.KinematicsAnimationGroup(currentHierachy);
+    currentAnimationGroup = new KT.KinematicsAnimationGroup(currentHierachy);
     currentAnimationList = gatherAllAnimations();
     let animationlist = [];
     for (let i=0;i<currentAnimationList.length;i++)
@@ -1213,7 +1213,7 @@ function newAnimationGroupDialog() {
 function updateanimationdialog() {
     $("#newupdateanimationbutton").html("Update");
 
-    let animationtemplate = KM.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
+    let animationtemplate = KT.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());
     $("#animationname").val(animationtemplate.name);
     $("#animationtarget").val(animationtemplate.anime.value);
     $("#animationduration").val(animationtemplate.anime.duration);
@@ -1251,7 +1251,7 @@ function removeAnimationFromComponent()
 
 function deleteAnimationDefinition()
 {
-    KM.KinematicsManager.deleteAnimationTemplate($("#animationtemplateselect").val());
+    KT.KinematicsManager.deleteAnimationTemplate($("#animationtemplateselect").val());
     generateComponentPropertiesData(currentComponent);
 }   
 

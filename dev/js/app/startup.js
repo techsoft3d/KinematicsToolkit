@@ -9,8 +9,8 @@ async function msready() {
     hwv.view.setAmbientOcclusionRadius(0.025);
     $(document).on('keyup keydown', function(e){shiftPressed = e.shiftKey;} );
 
-    KM.KinematicsManager.initialize(hwv);
-    KM.KinematicsManager.setupHandleOperator();
+    KT.KinematicsManager.initialize(hwv);
+    KT.KinematicsManager.setupHandleOperator();
 
     drawIKDiv();
 
@@ -42,7 +42,7 @@ async function handleEvent(type, nodeids, mat1, mat2) {
     
 
     var nodeid = nodeids[0];
-    var component = KM.KinematicsManager.getComponentFromNodeId(nodeid);    
+    var component = KT.KinematicsManager.getComponentFromNodeId(nodeid);    
 
     if (component)
     {              
@@ -322,7 +322,7 @@ function createUILayout() {
         {
             name: 'Simple Microengine Example',
             fun: function () {
-                let hierachy = KM.KinematicsManager.createHierachy();
+                let hierachy = KT.KinematicsManager.createHierachy();
                 let root = hierachy.getRootComponent();
                 let component1 = hierachy.createComponent(root,[34]);                 
                 component1.setCenter(new Communicator.Point3(84.67,28.49,-20));
@@ -347,8 +347,8 @@ function createUILayout() {
 
                 let res = await fetch('data/microengine.json');
                 data = await res.json();
-                let templateId = KM.KinematicsManager.addTemplate(data);
-                let hierachy = await KM.KinematicsManager.applyToModel(templateId);
+                let templateId = KT.KinematicsManager.addTemplate(data);
+                let hierachy = await KT.KinematicsManager.applyToModel(templateId);
                 let component = hierachy.getComponentById(1);
                 component.set(45);
                 hierachy.updateComponents();
@@ -398,7 +398,7 @@ async function loadIKData(name){
 
     let res = await fetch('data/' + name);
     data = await res.json();
-    KM.KinematicsManager.addTemplate(data);
+    KT.KinematicsManager.addTemplate(data);
     currentTemplate = data._templateId;
     drawIKDiv();
 
@@ -410,18 +410,18 @@ function getRandomInt(max) {
 
 function microanim()
 {
-    for (let i=0; i<KM.KinematicsManager.getHierachies().length; i++)
+    for (let i=0; i<KT.KinematicsManager.getHierachies().length; i++)
     {
-        let component = KM.KinematicsManager.getHierachyByIndex(i).getComponentById(1);
+        let component = KT.KinematicsManager.getHierachyByIndex(i).getComponentById(1);
         let animationTemplate;
         var r = getRandomInt(3);
         if (r == 0)
-            animationTemplate = KM.KinematicsManager.getAnimationTemplate('a0d326e1-eed4-402e-ae9d-a720670c1049');
+            animationTemplate = KT.KinematicsManager.getAnimationTemplate('a0d326e1-eed4-402e-ae9d-a720670c1049');
         else if (r==1)
-            animationTemplate = KM.KinematicsManager.getAnimationTemplate('76b33aec-b0b2-4863-8dda-f1cd87956a23');
+            animationTemplate = KT.KinematicsManager.getAnimationTemplate('76b33aec-b0b2-4863-8dda-f1cd87956a23');
         else
-            animationTemplate = KM.KinematicsManager.getAnimationTemplate('f71ea555-5c90-47b4-aa94-c6129b731ee0');
+            animationTemplate = KT.KinematicsManager.getAnimationTemplate('f71ea555-5c90-47b4-aa94-c6129b731ee0');
 
-        KM.KinematicsManager.startAnimation(component,animationTemplate);
+        KT.KinematicsManager.startAnimation(component,animationTemplate);
     }
 }

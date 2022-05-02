@@ -94,12 +94,12 @@ export class KinematicsHierachy {
         {
             this._templateId = KinematicsUtility.generateGUID();
             let template = this.toJson();
-            KM.KinematicsManager.addTemplate(template);           
+            KinematicsManager.addTemplate(template);           
         }
         else
         {
-            let template = KM.KinematicsManager.toJson(this);
-            KM.KinematicsManager.updateTemplate(template);
+            let template = this.toJson(this);
+            KinematicsManager.updateTemplate(template);
         }        
     }
     

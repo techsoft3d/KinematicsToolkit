@@ -139,7 +139,31 @@ function createUILayout() {
                         // myMaterialTool.refresh();
 
                     },
-                }                           
+                },
+                {
+                    name: 'Sentry',
+                    fun: async function () {
+                        loadIKData("sentry.json");
+                        // myMaterialTool  = new MaterialTool(hwv);
+                        // let res = await fetch('data/material2.json');
+                        // let json = await res.json();
+                        // myMaterialTool.fromJson(json);
+                        // myMaterialTool.refresh();
+
+                    },
+                },
+                {
+                    name: 'Hoist',
+                    fun: async function () {
+                        loadIKData("hoist3.json");
+                        // myMaterialTool  = new MaterialTool(hwv);
+                        // let res = await fetch('data/material2.json');
+                        // let json = await res.json();
+                        // myMaterialTool.fromJson(json);
+                        // myMaterialTool.refresh();
+
+                    },
+                },                                         
             ]
         },      
         {
@@ -253,18 +277,25 @@ function createUILayout() {
                 drawIKDiv();
             }
         },   
-        // {
-        //     name: 'Restrict To Selection',
-        //     fun: function () {
-        //         mySelectionBasket.setRestrictToNode(hwv.selectionManager.getLast().getNodeId());
-        //     }
-        // },   
-        // {
-        //     name: 'Unset Restrict To Selection',
-        //     fun: function () {
-        //         mySelectionBasket.unsetRestrictToNode();
-        //     }
-        // },   
+                {
+            name: 'Toggle Allow Body Nodes',
+            fun: function () {
+                mySelectionBasket.setDisallowBodyNodes(!mySelectionBasket._disallowBodyNodes);
+            }
+        },   
+
+        {
+            name: 'Restrict To Selection',
+            fun: function () {
+                mySelectionBasket.setRestrictToNode(hwv.selectionManager.getLast().getNodeId());
+            }
+        },   
+        {
+            name: 'Unset Restrict To Selection',
+            fun: function () {
+                mySelectionBasket.unsetRestrictToNode();
+            }
+        },   
         // {
         //     name: 'Toggle Allow Body Nodes',
         //     fun: function () {

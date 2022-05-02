@@ -159,7 +159,7 @@ function generateExtraComponent1Select(component) {
     for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
         if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
             let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.extraComponent1)
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getExtraComponent1())
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';

@@ -2,11 +2,11 @@
 
 ## Simple Kinematics Engine for HOOPS Communicator
 The purpose of this set of classes is to make it easy to add kinematics-based animations to CAD Models, in particular in the context of Digital Twin workflows.
-In a typical CAD model the product structure is often flat or unrelated to the kinematics/joint relationships of the assembly which is why the Kinematics Manager allows the user to define its own component hierachy independent of the CAD hierachy. Based on this relationship graph a component it is then straightforward to animate a specific component by altering a single value. In addition to this basic functionality the Kinematics Manager also offers the ability to define indirect components that are driven by other components based on their mathematical relationships. For example a mapped Component will move or rotate depending on the movement or rotation of another component. Other components allow for the creation of hinges, pistons and other more complex mechanical systems. In addition the Kinematics Toolkit provides a simple Inverse Kinematics solver based on the gradient decent method.
+In a typical CAD model the product structure is often flat or unrelated to the kinematics/joint relationships of the assembly which is why the Kinematics Manager allows the user to define its own component hierachy independent of the CAD hierachy. Based on this relationship graph it is then straightforward to animate a specific component by setting a single value. In addition to this basic functionality the Kinematics Manager also offers the ability to define indirect components that are driven by other components based on their mathematical relationships. For example a mapped Component will move or rotate depending on the movement or rotation of another component. Other components allow for the creation of hinges, pistons and other more complex mechanical systems. In addition, the Kinematics Toolkit provides a simple Inverse Kinematics solver based on the gradient decent method.
 
-Once a Kinematics Hierachy is defined it can be easily exported to a JSON object and its template can then be applied to individual instances of a CAD model that might exist in the scene, each driven by their own kinematics state (e.g. a number of IoT enabled devices in a building).
+Once a Kinematics Hierachy is defined it can be easily exported to a JSON object and its template can then be applied to individual instances of a CAD model that exist in the scene, each driven by their own kinematics state (e.g. a number of IoT enabled devices in a building).
 
-The Kinematics Manager also comes with its own simple animation capabilities (powerd by anime.js) which makes it easy to define simple animations (like pressing a button or starting up a fan) and combining those into more complex animation groups.
+The Kinematics Manager also comes with its own animation system (powerd by anime.js) which makes it easy to define simple animations (like pressing a button or starting up a fan) and combining those into more complex animation groups.
 
 In addition to the core Kinematics Toolkit classes this repo contains an experimental Editor Environment for interactively creating Kinematics Hierachies, setting up animations and exporting those to JSON.
 
@@ -16,10 +16,10 @@ In addition to the core Kinematics Toolkit classes this repo contains an experim
 * The Inverse kinematics capabilites are currently in an experimental state.  
   
 **Future Direction:**
-* We are looking into adding support for the new Animation System provided in HOOPS Communicator 
 * We will be looking into adding additional joint types
 * We are looking into using the Mating information provided for some formats by HOOPS Exchange to help define the Kinematics Hierachy for a CAD Model.
 * We will be investigating if an Open Source Physics engine can be added to the Kinematics Toolkit to allow for more physics driven kinematics
+* We are looking into adding support for the new Keyframe-based Animation System provided in HOOPS Communicator 
 
 
 ### Install
@@ -27,6 +27,16 @@ In addition to the core Kinematics Toolkit classes this repo contains an experim
 ```
     <script src="./js/kinematicsManager.min.js"></script>
 ```
+
+
+### Using the Editor
+**The Editor is currently in an experimetal state. Work on docs is in pogress.**  
+
+Example URL (when running via Live Server)
+
+http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs
+
+
 
 ### Code Samples:
 

@@ -9,29 +9,55 @@ import { KinematicsUtility } from './KinematicsUtility.js';
  * @enum {number}
  */
 const componentType = {
-     /** Rotation around an axis*/
+     /** Rotation around an axis.  
+      * Use SetCenter() and SetAxis() to define the rotation axis
+     */
     revolute: 0,
-     /** Translation along an axis */
+     /** Translation along an axis.  
+      * Use SetCenter() and SetAxis() to define the translation axis
+      */
      prismatic: 1,
-     /** Fixed Component */
+     /** Fixed. No Movement */
     fixed:2,
-     /** Aggregates two prismatic component states. */
+     /** Aggregates the position of two components.  
+      * Use setExtraComponent1() and setExtraComponent2() to define the components
+      */
      prismaticAggregate: 3,
-     /** Uses a triangle calculation to define translation. */
+ /** Calculates hinge movement based on static and variable component.  
+      * Use setExtraComponent1() and setExtracComponent2() to define related component.
+      */    
      prismaticTriangle: 4,
+  /** Performs a rotation when the component is translated  
+      * Use setHelicalFactor() to set rotation factor.
+      */     
      helical: 5,
+       /** Moves Component based on component referenced by mapped target.  
+      * Use setMappedTargetComponent() to specify mapped component and specify mapped type with setMappedType().
+      */    
     mapped: 6,
+   /** Calculates piston movement.  
+      * Use setExtraComponent1()  to define related component (must be parent of this component).
+      */    
     pistonController: 7,
-    conveyor: 8,
-    prismaticPlane: 9,
-    belt:10,
-    mate:11,
-    revoluteSlide:12,
+ /**  Restricts movement by plane. Only valid as mapped type.  
+      * Use setPrismaticPlanePlane() and setPrismaticPlaneTip() to define plane
+      */        
+  prismaticPlane: 8,
+  /**  Creates a belt/conveyor. Only valid as mapped type.  
+      * Use getBelt() to set belt parameters.
+      */        
+    belt:9,
+ /** Experimental. WIP
+      */          
+    mate:10,
+/** Experimental. WIP
+      */          
+    revoluteSlide:11,
 };
 
 export {componentType};
  
-/** This class represents an individual Kinematics Component*/
+/** This class represents a single Kinematics Component*/
 export class KinematicsComponent {
  /**
      * Creates a Kinematic Component Object
@@ -242,7 +268,7 @@ export class KinematicsComponent {
     {
         if (this._type == componentType.revolute)
             return this._currentAngle;
-        else if (this._type == componentType.prismatic)
+        else if (this._type == componentType.prismatic || this._type == componentType.helical)
             return this._currentPosition;
     }
 
@@ -514,7 +540,7 @@ export class KinematicsComponent {
 
         if (this._type == componentType.revolute)
             this._rotate(value);
-        else if (this._type == componentType.prismatic)
+        else if (this._type == componentType.prismatic || this._type == componentType.helical)
             this._translate(value);
     }
 
@@ -810,6 +836,23 @@ export class KinematicsComponent {
         }
     }
 
+
+
+ /**
+     * Aligns the component related to the piston controller to its plane
+     */     
+    adjustExtraComponentToPistonController()
+    {
+
+        let naxis = component._axis;
+        let plane = Communicator.Plane.createFromPointAndNormal(component._center, naxis);
+        let pol = KinematicsUtility.closestPointOnPlane(plane, component._extraComponent1._center);
+        
+        component._extraComponent1._axis = component._extraComponent1._axis.copy();
+        component._extraComponent1._center = pol;
+    }
+
+
     transformPointToComponentSpace(pos)
     {
        
@@ -893,20 +936,13 @@ export class KinematicsComponent {
 
    
 
-    adjustExtraComponentToPistonController()
-    {
-
-        let naxis = component._axis;
-        let plane = Communicator.Plane.createFromPointAndNormal(component._center, naxis);
-        let pol = KinematicsUtility.closestPointOnPlane(plane, component._extraComponent1._center);
-        
-        component._extraComponent1._axis = component._extraComponent1._axis.copy();
-        component._extraComponent1._center = pol;
-    }
-
    
+ /**
+     * Derives component matrix from active handle matrix
+     * @param  {object} matrix - Handle Matrix
+     */ 
 
-    async calculateReferenceMatrixFromHandleMatrix(matrix) {
+    async calculateMatrixFromHandleMatrix(matrix) {
         let resmatrix;
         if (this._reference) {
             let matrixx = Communicator.Matrix.multiply(matrix, this._parentMatrix);
@@ -987,6 +1023,11 @@ export class KinematicsComponent {
 
     }
 
+
+   
+ /**
+     * Calculates Center and Axis of component from active handle 
+     */     
     setParametersFromHandle() {
         let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
         if (handleOperator.getPosition()) {
@@ -1006,7 +1047,12 @@ export class KinematicsComponent {
     }
 
     
-    setFixedAxisFromHandle(nodeid) {
+
+   
+ /**
+     * Calculates Fixed Axis and Fixed Axis Target from matrix
+     */        
+    setFixedAxisFromMatrix(matrix) {
         let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
         if (handleOperator.getPosition()) {
             if (!KinematicsManager.handlePlacementOperator.lastAxis2) 
@@ -1014,9 +1060,8 @@ export class KinematicsComponent {
 
 
             let pivotaxis = Communicator.Point3.add(handleOperator.getPosition(),KinematicsManager.handlePlacementOperator.lastAxis2);
-            let netmatrix = KinematicsManager.viewer.model.getNodeMatrix(nodeid);
-            let pivot = netmatrix.transform(handleOperator.getPosition());
-            pivotaxis = netmatrix.transform(pivotaxis);
+            let pivot = matrix.transform(handleOperator.getPosition());
+            pivotaxis = matrix.transform(pivotaxis);
 
             this._fixedAxis = Communicator.Point3.subtract(pivotaxis, this.center).normalize();
             this._fixedAxisTarget = new Communicator.Point3(0,-1,0);
@@ -1025,6 +1070,10 @@ export class KinematicsComponent {
         }
     }
 
+  
+ /**
+     * Select all nodes associated to this component
+     */       
     selectReferenceNodes() {
         KinematicsManager.viewer.selectionManager.clear();
         let selitems = [];
@@ -1034,7 +1083,15 @@ export class KinematicsComponent {
         KinematicsManager.viewer.selectionManager.add(selitems);
     }
 
-    showHandles(handlesop, showFixed, nodeid, center) {
+
+ /**
+     * Show Handles based on component parameters
+     * @param  {bool} showFixed - Show Fixed Axis
+     * @param  {number} nodeid - Add additional node to selection
+     * @param  {Point3} center - Center of Handles (optional)
+     */      
+    showHandles(showFixed, nodeid, center) {
+        let handlesop = KinematicsManager.handlePlacementOperator;
         let netmatrix = this._hierachy.getReferenceNodeNetMatrix(this);
         
         let pos = netmatrix.transform(this._center);
@@ -1141,6 +1198,11 @@ export class KinematicsComponent {
             this._translate(0);
     }
 
+
+    
+ /**
+     * Delete Component and remove from hierachy
+     */      
     delete()
     {
         if (this._parent)
@@ -1162,6 +1224,13 @@ export class KinematicsComponent {
         }
     }
 
+
+
+
+    
+ /**
+     * Make component child of parent component
+     */   
     moveup()
     {
         if (this._parent)
@@ -1434,8 +1503,6 @@ export class KinematicsComponent {
             delta2.normalize();
 
             let angle = Communicator.Util.computeAngleBetweenVector(delta, delta2);
-
-            let p22 =  component._extraComponent2.transformlocalPointToWorldSpace(component._center);     
 
             await component._extraComponent2._rotate(-angle, true);
             let p1x = component._extraComponent2.transformlocalPointToWorldSpace(component._center);

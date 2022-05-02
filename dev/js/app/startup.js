@@ -46,7 +46,7 @@ async function handleEvent(type, nodeids, mat1, mat2) {
 
     if (component)
     {              
-        await component.calculateReferenceMatrixFromHandleMatrix(mat2[0]);
+        await component.calculateMatrixFromHandleMatrix(mat2[0]);
         await component.getHierachy().updateComponents();   
     }    
 
@@ -139,110 +139,7 @@ function createUILayout() {
                         // myMaterialTool.refresh();
 
                     },
-                },
-              
-                {
-                    name: 'MR-1718',
-                    fun: async function () {
-                        loadIKData("mr1718-arm.json");
-                    },
-                },
-                // {
-                //     name: '3d Printer',
-                //     fun: async function () {
-                //         loadIKData("3dprinter.json");
-                //     },
-                // },     
-                // {
-                //     name: '3d Printer 2',
-                //     fun: async function () {
-                //         loadIKData("3dprinter2.json");
-                //     },
-                // },
-                // {
-                //     name: 'Hoist 1',
-                //     fun: async function () {
-                //         loadIKData("hoist1.json");
-                //     },
-                // },
-                // {
-                //     name: 'Hoist 2',
-                //     fun: async function () {
-                //         loadIKData("hoist2.json");
-                //     },
-                // },
-                {
-                    name: 'Hoist',
-                    fun: async function () {
-                        loadIKData("hoist3.json");
-                    },
-                },             
-                {
-                    name: 'Makerbot',
-                    fun: async function () {
-                        loadIKData("makerbot.json");
-                    },
-                },
-                // {
-                //     name: 'Clock',
-                //     fun: async function () {
-                //         loadIKData("clock.json");
-                //     },
-                // },                     
-                // {
-                //     name: 'Fan',
-                //     fun: async function () {
-                //         loadIKData("fan.json");
-                //     },
-                // },
-                {
-                    name: 'Engine',
-                    fun: async function () {
-                        loadIKData("engine.json");
-                        myMaterialTool  = new MaterialTool(hwv);
-                        let res = await fetch('data/material1.json');
-                        let json = await res.json();
-                        myMaterialTool.fromJson(json);
-                        myMaterialTool.refresh();
-
-                    },
-                },                                                                                
-                // {
-                //     name: 'Timing Belt',
-                //     fun: async function () {
-                //         loadIKData("timingbelt.json");
-                //     },
-                // },              
-                {
-                    name: 'Epoxy',
-                    fun: async function () {
-                        loadIKData("epoxy.json");
-                    },
-                },
-                // {
-                //     name: 'V8 Engine',
-                //     fun: async function () {
-                //         loadIKData("v8engine.json");
-                //         myMaterialTool  = new MaterialTool(hwv);
-                //         let res = await fetch('data/v8enginemat.json');
-                //         let json = await res.json();
-                //         myMaterialTool.fromJson(json);
-                //         myMaterialTool.refresh();
-
-                //     },
-                // },
-                {
-                    name: 'Buba Robot',
-                    fun: async function () {
-                        loadIKData("bubarobot.json");
-                        myMaterialTool  = new MaterialTool(hwv);
-                        let res = await fetch('data/bubbamat.json');
-                        let json = await res.json();
-                        myMaterialTool.fromJson(json);
-                        myMaterialTool.refresh();
-
-                    },
-                },
+                }                           
             ]
         },      
         {

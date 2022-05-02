@@ -105,13 +105,13 @@ function generateComponentTypeSelect(component) {
             html += '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
     }
 
-    let i = 11;
+    let i = 10;
     if (i == component.getType())
         html += '<option selected value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
     else
         html += '<option value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
 
-    i = 12;
+    i = 11;
     if (i == component.getType())
         html += '<option selected value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
     else
@@ -136,18 +136,14 @@ function generateMapComponentTypeSelect(component) {
     else
         html += '<option value="' + string_of_enum(KT.componentType,1) + '">' + string_of_enum(KT.componentType,1) + '</option>\n';
 
-    if (component.getMappedType() == 8)
-        html += '<option selected value="' + string_of_enum(KT.componentType,8) + '">' + string_of_enum(KT.componentType,8) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType,8) + '">' + string_of_enum(KT.componentType,8) + '</option>\n';
 
-    if (component.getMappedType() == 9)
+    if (component.getMappedType() == 8)
         html += '<option selected value="' + string_of_enum(KT.componentType, 9) + '">' + string_of_enum(KT.componentType, 9) + '</option>\n';
     else
         html += '<option value="' + string_of_enum(KT.componentType, 9) + '">' + string_of_enum(KT.componentType, 9) + '</option>\n';
 
 
-    if (component.getMappedType() == 10)
+    if (component.getMappedType() == 9)
         html += '<option selected value="' + string_of_enum(KT.componentType, 10) + '">' + string_of_enum(KT.componentType, 10) + '</option>\n';
     else
         html += '<option value="' + string_of_enum(KT.componentType, 10) + '">' + string_of_enum(KT.componentType, 10) + '</option>\n';
@@ -663,7 +659,7 @@ function showFixedAxis(id,show)
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     handleOperator.removeHandles();        
     tempnode = hwv.model.createNode(hwv.model.getRootNode());  
-    component.showHandles(KT.KinematicsManager.handlePlacementOperator, $("#hasfixedaxis").is(":checked"), tempnode);
+    component.showHandles($("#hasfixedaxis").is(":checked"), tempnode);
 
 }
 
@@ -759,11 +755,11 @@ async function showComponent(j,adjustToCenter) {
     if (component.getType() != KT.componentType.fixed) {
         if (editMode) {
             tempnode = hwv.model.createNode(hwv.model.getRootNode());
-            component.showHandles(KT.KinematicsManager.handlePlacementOperator, false, tempnode, center);
+            component.showHandles(false, tempnode, center);
 
         }
         else
-            component.showHandles(KT.KinematicsManager.handlePlacementOperator, false, undefined, center);
+            component.showHandles(false, undefined, center);
     }
 
 
@@ -845,7 +841,8 @@ function updateComponent(j){
         }
         else
         {
-            component.setFixedAxisFromHandle(tempnode);
+            let matrix = KinematicsManager.viewer.model.getNodeMatrix(tempnode);
+            component.setFixedAxisFromMatrix(matrix);
 
         }
               

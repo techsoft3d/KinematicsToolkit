@@ -23,6 +23,7 @@ export class ComponentMoveOperator {
         if (this._component) {
             this._mouseDown = true;
             this._startPosition = event.getPosition().copy();
+            this._currentcpos = this._component.getCurrentValue();
             event.setHandled(true);
         }
 
@@ -33,7 +34,7 @@ export class ComponentMoveOperator {
 
         if (this._mouseDown) {
             var p = event.getPosition();
-            this._component.set(p.x - this._startPosition.x);
+            this._component.set( this._currentcpos + p.x - this._startPosition.x);
             this._component.getHierachy().updateComponents();
 
         }

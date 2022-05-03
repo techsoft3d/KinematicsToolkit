@@ -102,6 +102,8 @@ export class KinematicsComponent {
         this._touched = false;
 
         this._animations = [];
+
+        this._activeAnimation = false;
     }
 
  
@@ -429,6 +431,17 @@ export class KinematicsComponent {
      */     
     getAnimations() {
         return this._animations;
+    }
+
+    getAnimationActive() {
+        return this._activeAnimation;
+
+    }
+
+
+    setAnimationActive(active) {
+        this._activeAnimation = active;
+        
     }
 
 

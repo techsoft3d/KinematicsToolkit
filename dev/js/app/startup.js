@@ -143,7 +143,7 @@ function createUILayout() {
                 {
                     name: 'Sentry',
                     fun: async function () {
-                        loadIKData("sentry.json");
+                        loadIKData("sentry2.json");
                         // myMaterialTool  = new MaterialTool(hwv);
                         // let res = await fetch('data/material2.json');
                         // let json = await res.json();
@@ -238,6 +238,12 @@ function createUILayout() {
             name: 'Animate Microengines',
             fun: function () {
                 microanim();
+            }
+        },   
+        {
+            name: 'Animate Sentry',
+            fun: function () {
+                sentryanim();
             }
         },   
         {
@@ -352,4 +358,43 @@ function microanim()
 
         KT.KinematicsManager.startAnimation(component,animationTemplate);
     }
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  
+
+async function sentryanim() {
+    await loadIKData("sentry2.json");
+    currentHierachy = KT.KinematicsManager.applyToModel("572ca79b-0573-4a10-b4f6-0f6f8c3b6ec0");
+    drawIKDiv();
+
+    let animcomponents = [1, 2, 16, 17, 28, 29, 41, 42, 53, 54, 65, 66,77,78];
+//    let animcomponents = [29];
+    let lastAnimHash = [];
+    for (let i = 0; i < animcomponents.length; i++) {
+        lastAnimHash[i] = 0;
+    }
+
+    setInterval(function () {
+        var hierachy = KT.KinematicsManager.getHierachyByIndex(0);
+
+        for (let i = 0; i < animcomponents.length; i++) {
+            let comp = hierachy.getComponentById(animcomponents[i]);
+            if (!comp.getAnimationActive() &&  getRandomInt(10) == 0) {
+                let animindex;
+                do {
+                    animindex = getRandomInt(3);
+                }while (animindex == lastAnimHash[i]);
+                lastAnimHash[i] = animindex;
+                let animationtemplate = KT.KinematicsManager.getAnimationTemplate(comp.getAnimationByIndex(animindex));
+                if (animcomponents[i] != 77 && animcomponents[i] != 78)
+                    animationtemplate.anime.duration = 500;
+                KT.KinematicsManager.startAnimation(comp, animationtemplate);
+            }
+        }
+    }, 50);
+
+
 }

@@ -82,7 +82,7 @@ export class KinematicsAnimation {
         let _this = this;
 
         this.value = this._component.getCurrentValue();
-        
+     
         if (animedef.infinite == undefined || !animedef.infinite) {
 
             this.type = animationType.single;
@@ -97,7 +97,7 @@ export class KinematicsAnimation {
             animedef.autoplay = false;
             animedef.complete = function () {
                 _this.anime.remove();
-                _this._done = true;
+                _this._done = true;                
             };
 
             this.anime = anime(animedef);

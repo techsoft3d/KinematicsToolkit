@@ -227,6 +227,7 @@ export class KinematicsManager {
     * @param  {object} animationTemplate - Animation Template
     */    
     static startAnimation(component, animationTemplate) {
+        component.setAnimationActive(true);
         let animation = new KinematicsAnimation("test", component, JSON.parse(JSON.stringify(animationTemplate.anime)));
 
         KinematicsManager._animations.push(animation);
@@ -308,6 +309,8 @@ export class KinematicsManager {
                 KinematicsManager._animations[i].getComponent().getHierachy().setDirty(true);
                 KinematicsManager._animations[i].update(timestamp);
                 if (KinematicsManager._animations[i].getDone()) {
+                    KinematicsManager._animations[i].getComponent().setAnimationActive(false);
+                    console.log("animdone");
                     KinematicsManager._animations.splice(i, 1);
                     i--;
                 }

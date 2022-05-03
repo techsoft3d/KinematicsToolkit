@@ -366,6 +366,14 @@ function getRandomInt(max) {
   
 
 async function sentryanim() {
+         myMaterialTool  = new MaterialTool(hwv);
+         let res = await fetch('data/sentrymaterial.json');
+                        let json = await res.json();
+        myMaterialTool.fromJson(json);
+          myMaterialTool.refresh();
+
+
+
     await loadIKData("sentry2.json");
     currentHierachy = KT.KinematicsManager.applyToModel("572ca79b-0573-4a10-b4f6-0f6f8c3b6ec0");
     drawIKDiv();

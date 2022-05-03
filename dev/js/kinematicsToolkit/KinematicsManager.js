@@ -2,6 +2,7 @@ import { KinematicsAnimation } from './KinematicsAnimation.js';
 import { KinematicsHierachy } from './KinematicsHierachy.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 import { HandlePlacementOperator } from './HandlePlacementOperator.js';
+import { ComponentMoveOperator } from './ComponentMoveOperator.js';
 
 /** This static class provides the main entry point to all Kinematics Related Functionality. */
 export class KinematicsManager {
@@ -32,6 +33,13 @@ export class KinematicsManager {
         KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
 
         KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "handlenode");
+    }
+
+    static setupComponentMoveOperator() {
+        let componentMoveOperator = new ComponentMoveOperator(KinematicsManager.viewer);
+        let myOperatorComponentMove = KinematicsManager.viewer.operatorManager.registerCustomOperator(componentMoveOperator);
+        KinematicsManager.viewer.operatorManager.push(myOperatorComponentMove);
+
     }
 
     /**

@@ -259,6 +259,40 @@ function generateKinematicsTreeData() {
 
 }
 
+function setMinLimit(id)
+{
+    component = currentHierachy.getComponentById(id);
+    if (shiftPressed)
+    {
+        $("#componentmin")[0].value  = undefined;
+        component.setMinLimit(undefined);
+    }
+    else
+    {
+        $("#componentmin")[0].value = component.getCurrentValue();
+        component.setMinLimit(component.getCurrentValue());
+
+    }
+
+}
+
+
+function setMaxLimit(id)
+{
+    component = currentHierachy.getComponentById(id);
+    if (shiftPressed)
+    {
+        $("#componentmax")[0].value  = undefined;
+        component.setMaxLimit(undefined);
+    }
+    else
+    {
+        $("#componentmax")[0].value = component.getCurrentValue();
+        component.setMaxLimit(component.getCurrentValue());
+    }
+    
+}
+
 function generateComponentPropertiesData(id)
 {
     component = currentHierachy.getComponentById(id);
@@ -277,7 +311,11 @@ function generateComponentPropertiesData(id)
     html += '</div></div>';
 
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits:</label></div>';
-    html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinAngle() + '" class="form-control" style="font-size:11px"><input id="componentmax" type="number" value="' + component.getMaxAngle() + '" class="form-control" style="font-size:11px"></div></div>';
+    html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinLimit() + '" class="form-control" style="font-size:11px;width:80px;display:inline">';
+    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:50px">Set</button>';
+    html +='<input id="componentmax" type="number" value="' + component.getMaxLimit() + '" class="form-control" style="font-size:11px;width:80px;display:inline">';
+    html += '<button onclick="setMaxLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:50px">Set</button>';    
+    html+='</div></div>';
     
     if (component.getType() == KT.componentType.revolute) {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Axis</label></div><div class="col">';
@@ -847,6 +885,18 @@ function updateComponent(j){
         }
               
     }
+    let minvalue = $("#componentmin")[0].value;
+    let maxvalue = $("#componentmax")[0].value;
+    if (minvalue != undefined)
+    {    
+        component.setMinLimit(parseFloat(minvalue));
+    }
+
+    if (maxvalue != undefined)
+    {    
+        component.setMaxLimit(parseFloat(maxvalue));
+    }
+
 
     if ($("#isreference").is(":checked"))
         component.setIsReference(true);

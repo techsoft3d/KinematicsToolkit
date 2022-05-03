@@ -219,6 +219,13 @@ function createUILayout() {
         }
     },   
     {
+        name: 'Component Move',
+        fun: function () {
+            KT.KinematicsManager.setupComponentMoveOperator();
+
+        }
+    },   
+    {
         name: 'Load Multiple Microengines',
          fun: async function () {
             myMaterialTool  = new MaterialTool(hwv);

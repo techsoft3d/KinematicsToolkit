@@ -74,8 +74,8 @@ export class KinematicsComponent {
         this._children = [];
         this._parent = parent;
 
-        this._minangle = 0;
-        this._maxangle = 0;
+        this._minLimit = undefined;
+        this._maxLimit = undefined;
 
         this._nodeid = -1;
 
@@ -455,14 +455,26 @@ export class KinematicsComponent {
     }
 
 
-    getMinAngle()
+    setMinLimit(minlimit)
     {
-        return this._minangle;
+        this._minLimit = minlimit;
     }
 
-    getMaxAngle()
+
+    getMinLimit()
     {
-        return this._maxAngle;
+        return this._minLimit;
+    }
+
+    
+    setMaxLimit(maxlimit)
+    {
+        this._maxLimit = maxlimit;
+    }
+
+    getMaxLimit()
+    {
+        return this._maxLimit;
     }
 
  /**
@@ -577,7 +589,7 @@ export class KinematicsComponent {
             }
         }
 
-        let def = { nodeid: this._nodeid, id: this._id, mappedType: this._mappedType,reference: this._reference, type: this._type,center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minangle, maxangle: this._maxangle, children: children, referenceNodes:refnodes,
+        let def = { nodeid: this._nodeid, id: this._id, mappedType: this._mappedType,reference: this._reference, type: this._type,center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
             parentMatrix: this._parentMatrix.toJson() };
 
         if (this._mappedType == componentType.belt) {
@@ -642,8 +654,8 @@ export class KinematicsComponent {
     }
 
     async fromJson(def, version) {
-        this._minangle = def.minangle;
-        this._maxangle = def._maxangle;
+        this._minLimit = def.minangle;
+        this._maxLimit = def.maxangle;
         this._reference = def.reference;
         this._center = Communicator.Point3.fromJson(def.center);
 
@@ -885,7 +897,7 @@ export class KinematicsComponent {
 
 
      _rotate(angle, ignoreLimits, add) {
-
+       
         // if (ignoreLimits == undefined) {
         //     if (angle > this._maxangle)
         //         angle = this._maxangle;
@@ -894,11 +906,47 @@ export class KinematicsComponent {
         // }
 
         if (add)
+        {       
+            if (this._minLimit != undefined)
+            {
+                if (this._currentAngle + angle < this._minLimit)
+                {
+                    angle = this._minLimit - this._currentAngle;
+                }
+            }
+    
+               
+            if (this._maxLimit != undefined)
+            {
+                if (this._currentAngle + angle > this._maxLimit)
+                {
+                    angle = this._maxLimit - this._currentAngle;
+    
+                }            
+            }            
+
             this._currentAngle += angle;
-        else
+        }
+        else {
             this._currentAngle = angle;
 
+            if (this._minLimit != undefined) {
+                if (this._currentAngle < this._minLimit) {
+                    this._currentAngle = this._minLimit;
+                    angle = this._currentAngle;
+                }
+            }
 
+
+            if (this._maxLimit != undefined) {
+                if (this._currentAngle > this._maxLimit) {
+                    this._currentAngle = this._maxLimit;
+                    angle = this._currentAngle;
+
+                }
+            }
+        }
+            
         let offaxismatrix = new Communicator.Matrix();
         let transmatrix = new Communicator.Matrix();
         let resaxis = this._axis;
@@ -925,6 +973,24 @@ export class KinematicsComponent {
     }
 
     _translate(delta) {
+
+        if (this._minLimit != undefined)
+        {
+            if (delta < this._minLimit)
+            {
+                delta = this._minLimit;
+            }
+        }
+
+           
+        if (this._maxLimit != undefined)
+        {
+            if (delta > this._maxLimit)
+            {
+                delta = this._maxLimit;
+            }
+        }
+
         
         this._currentPosition = delta;
 

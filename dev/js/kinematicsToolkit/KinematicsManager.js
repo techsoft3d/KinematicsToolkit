@@ -310,7 +310,6 @@ export class KinematicsManager {
                 KinematicsManager._animations[i].update(timestamp);
                 if (KinematicsManager._animations[i].getDone()) {
                     KinematicsManager._animations[i].getComponent().setAnimationActive(false);
-                    console.log("animdone");
                     KinematicsManager._animations.splice(i, 1);
                     i--;
                 }

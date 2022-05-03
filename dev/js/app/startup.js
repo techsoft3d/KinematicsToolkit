@@ -391,7 +391,7 @@ async function sentryanim() {
         drawIKDiv();
     }
 
-    let animcomponents = [1, 2, 16, 17, 28, 29, 41, 42, 53, 54, 65, 66,77,78];
+    let animcomponents = [1, 2, 16, 17, 28, 29, 41, 42, 53, 54, 65, 66,77,78,155,157,159];
 //    let animcomponents = [29];
     let lastAnimHash = [];
     for (let i = 0; i < animcomponents.length; i++) {

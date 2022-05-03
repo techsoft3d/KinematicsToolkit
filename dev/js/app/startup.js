@@ -207,6 +207,18 @@ function createUILayout() {
         }
     ]},
     {
+        name: 'Animate Sentry',
+        fun: function () {
+            sentryanim();
+        }
+    },   
+    {
+        name: 'Stop Sentry Animation',
+        fun: function () {
+            clearInterval(sentryinterval);
+        }
+    },   
+    {
         name: 'Load Multiple Microengines',
          fun: async function () {
             myMaterialTool  = new MaterialTool(hwv);
@@ -240,12 +252,7 @@ function createUILayout() {
                 microanim();
             }
         },   
-        {
-            name: 'Animate Sentry',
-            fun: function () {
-                sentryanim();
-            }
-        },   
+      
         {
             name: 'Simple Microengine Example',
             fun: function () {
@@ -362,21 +369,27 @@ function microanim()
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
-  
+}
+
+
+var sentryinterval;
+var firstSentryLoad = false;
 
 async function sentryanim() {
-         myMaterialTool  = new MaterialTool(hwv);
-         let res = await fetch('data/sentrymaterial.json');
-                        let json = await res.json();
+    if (!firstSentryLoad) {
+        firstSentryLoad = true;
+        myMaterialTool = new MaterialTool(hwv);
+        let res = await fetch('data/sentrymaterial.json');
+        let json = await res.json();
         myMaterialTool.fromJson(json);
-          myMaterialTool.refresh();
+        myMaterialTool.refresh();
 
 
 
-    await loadIKData("sentry2.json");
-    currentHierachy = KT.KinematicsManager.applyToModel("572ca79b-0573-4a10-b4f6-0f6f8c3b6ec0");
-    drawIKDiv();
+        await loadIKData("sentry2.json");
+        currentHierachy = KT.KinematicsManager.applyToModel("572ca79b-0573-4a10-b4f6-0f6f8c3b6ec0");
+        drawIKDiv();
+    }
 
     let animcomponents = [1, 2, 16, 17, 28, 29, 41, 42, 53, 54, 65, 66,77,78];
 //    let animcomponents = [29];
@@ -385,7 +398,7 @@ async function sentryanim() {
         lastAnimHash[i] = 0;
     }
 
-    setInterval(function () {
+    sentryinterval = setInterval(function () {
         var hierachy = KT.KinematicsManager.getHierachyByIndex(0);
 
         for (let i = 0; i < animcomponents.length; i++) {
@@ -406,3 +419,7 @@ async function sentryanim() {
 
 
 }
+
+
+
+

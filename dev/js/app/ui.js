@@ -49,7 +49,7 @@ function generateAssignAnimationSelect() {
 
     let animationTemplates = KT.KinematicsManager.getAnimationTemplates();
     for (var i in animationTemplates) {
-        html += '<option value="' + i + '">' + animationTemplates[i].getName() + '</option>\n';
+        html += '<option value="' + i + '">' + animationTemplates[i].name + '</option>\n';
 
     }
     html += '</select>';

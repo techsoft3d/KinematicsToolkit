@@ -22,6 +22,7 @@ export class KinematicsManager {
         KinematicsManager._animations = [];
         KinematicsManager._animationGroups = [];
         KinematicsManager.handlePlacementOperator = null;
+        KinematicsManager.componentMoveOperator = null;
     }
 
     /**
@@ -36,9 +37,18 @@ export class KinematicsManager {
     }
 
     static setupComponentMoveOperator() {
-        let componentMoveOperator = new ComponentMoveOperator(KinematicsManager.viewer);
-        let myOperatorComponentMove = KinematicsManager.viewer.operatorManager.registerCustomOperator(componentMoveOperator);
-        KinematicsManager.viewer.operatorManager.push(myOperatorComponentMove);
+        if (!KinematicsManager.componentMoveOperator) {
+            KinematicsManager.componentMoveOperator = new ComponentMoveOperator(KinematicsManager.viewer);
+            let myOperatorComponentMove = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.componentMoveOperator);
+            KinematicsManager.viewer.operatorManager.push(myOperatorComponentMove);
+        }
+        else
+            KinematicsManager.componentMoveOperator.enable();
+
+    }
+
+    static disableComponentMoveOperator() {
+        KinematicsManager.componentMoveOperator.disable();
 
     }
 

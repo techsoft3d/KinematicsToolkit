@@ -8,19 +8,23 @@ export class ComponentMoveOperator {
         this._viewer = viewer;
         this._mouseDown = false;
         this._component = null;
-
-        this._activeHighlight = null;
-        this._currentSelItem = null;
-        this.lastAxis = null;
-        this.lastAxis2 = null;
-
+        this._disabled = false;
     }
 
+    disable()
+    {
+        KinematicsManager.viewer.selectionManager.clear();
+        this._disabled = true;
+    }
 
+    enable()
+    {
+        this._disabled = false;
+    }
 
     onMouseDown(event) {
 
-        if (this._component) {
+        if (this._component && !this._disabled) {
             this._mouseDown = true;
             this._startPosition = event.getPosition().copy();
             this._currentcpos = this._component.getCurrentValue();
@@ -30,6 +34,8 @@ export class ComponentMoveOperator {
     }
 
     onMouseMove(event) {
+        if (this._disabled)
+            return;
         let position = event.getPosition();
 
         if (this._mouseDown) {
@@ -45,7 +51,6 @@ export class ComponentMoveOperator {
             this._component = null;
             KinematicsManager.viewer.selectionManager.clear();
             view.pickFromPoint(position, config).then((selectionItem) => {
-                this._currentSelItem = selectionItem;
 
                 let nodeId = selectionItem.getNodeId();
                 if (nodeId) {
@@ -76,7 +81,7 @@ export class ComponentMoveOperator {
 
     onMouseUp(event) {
 
-        if (this._mouseDown) {
+        if (this._mouseDown && !this._disabled) {
             this._mouseDown = false;
             this._component = null;
             event.setHandled(true);

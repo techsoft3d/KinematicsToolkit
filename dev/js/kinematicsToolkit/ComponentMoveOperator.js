@@ -61,7 +61,7 @@ export class ComponentMoveOperator {
 
 
                     if (component !== null) {
-                        if (component.getType() === componentType.revolute || component.getType() === componentType.prismatic) {
+                        if ((component.getType() === componentType.revolute || component.getType() === componentType.prismatic) && !component.getAnimationActive()) {
                             this._component = component;
                         }
 

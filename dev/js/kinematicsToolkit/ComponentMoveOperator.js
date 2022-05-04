@@ -43,6 +43,7 @@ export class ComponentMoveOperator {
             let view = this._viewer.view;
             let config = new Communicator.PickConfig(Communicator.SelectionMask.Line);
             this._component = null;
+            KinematicsManager.viewer.selectionManager.clear();
             view.pickFromPoint(position, config).then((selectionItem) => {
                 this._currentSelItem = selectionItem;
 
@@ -62,6 +63,7 @@ export class ComponentMoveOperator {
 
                     if (component !== null) {
                         if ((component.getType() === componentType.revolute || component.getType() === componentType.prismatic) && !component.getAnimationActive()) {
+                            component.selectReferenceNodes();
                             this._component = component;
                         }
 

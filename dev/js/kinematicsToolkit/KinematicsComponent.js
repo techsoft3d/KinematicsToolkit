@@ -638,7 +638,7 @@ export class KinematicsComponent {
         }
         else if (this._type == componentType.pistonController)            
         {
-            def._extraComponent1 = this._extraComponent1._id;
+            def.extraComponent1 = this._extraComponent1._id;
         }
         else if (this._type == componentType.helical)            
         {

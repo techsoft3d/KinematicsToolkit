@@ -95,28 +95,24 @@ function generateAnimationTemplateSelect(component) {
 }   
 
 
+
+function addComponentTypeToSelect(i,component)
+{
+    if (i == component.getType())
+    return  '<option selected value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
+else
+    return '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
+}
+
 function generateComponentTypeSelect(component) {
     var html = '<select id="componenttype" class="form-select" style="font-size:11px" value="">\n';
 
     for (let i = 0; i < 8; i++) {
-        if (i == component.getType())
-            html += '<option selected value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
-        else
-            html += '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
+        html+=addComponentTypeToSelect(i,component);
     }
-
-    let i = 10;
-    if (i == component.getType())
-        html += '<option selected value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
-
-    i = 11;
-    if (i == component.getType())
-        html += '<option selected value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType, i) + '">' + string_of_enum(KT.componentType, i) + '</option>\n';
-    
+    html+=addComponentTypeToSelect(10,component);
+    html+=addComponentTypeToSelect(11,component);
+    html+=addComponentTypeToSelect(12,component);
         
     html += '</select>';
     return html;
@@ -310,11 +306,11 @@ function generateComponentPropertiesData(id)
         html += '<input type="checkbox" id="isreference">';
     html += '</div></div>';
 
-    html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits:</label></div>';
-    html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinLimit() + '" class="form-control" style="font-size:11px;width:80px;display:inline">';
-    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:50px">Set</button>';
-    html +='<input id="componentmax" type="number" value="' + component.getMaxLimit() + '" class="form-control" style="font-size:11px;width:80px;display:inline">';
-    html += '<button onclick="setMaxLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:50px">Set</button>';    
+    html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits (Min/Max):</label></div>';
+    html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
+    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button>';
+    html +='<input id="componentmax" type="number" value="' + component.getMaxLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
+    html += '<button onclick="setMaxLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button>';    
     html+='</div></div>';
     
     if (component.getType() == KT.componentType.revolute) {

@@ -53,6 +53,9 @@ const componentType = {
 /** Experimental. WIP
       */          
     revoluteSlide:11,
+/** Component that is positioned based on other components  
+      */            
+    target:12,
 };
 
 export {componentType};
@@ -433,11 +436,15 @@ export class KinematicsComponent {
         return this._animations;
     }
 
+
+ /**
+     * Retrieves if an animation is currently active on a component
+     * @return {bool} Is Animation Active
+     */         
     getAnimationActive() {
         return this._activeAnimation;
 
     }
-
 
     setAnimationActive(active) {
         this._activeAnimation = active;
@@ -455,23 +462,39 @@ export class KinematicsComponent {
     }
 
 
+ /**
+     * Sets the minimum limit value for a component
+     * @param  {number} minlimit - minimum limit
+     */ 
     setMinLimit(minlimit)
     {
         this._minLimit = minlimit;
     }
 
 
+ /**
+     * Retrieves the minimum limit value for a component
+     * @return {number} minimum limit
+     */    
     getMinLimit()
     {
         return this._minLimit;
     }
 
-    
+
+ /**
+     * Sets the maximum limit value for a component
+     * @param  {number} minlimit - minimum limit
+     */     
     setMaxLimit(maxlimit)
     {
         this._maxLimit = maxlimit;
     }
 
+ /**
+     * Retrieves the maximum limit value for a component
+     * @return {number} maximum limit
+     */  
     getMaxLimit()
     {
         return this._maxLimit;

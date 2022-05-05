@@ -56,6 +56,7 @@ const componentType = {
 /** Component that is positioned based on other components  
       */            
     target:12,
+    mateConnector:13
 };
 
 export {componentType};

@@ -212,9 +212,27 @@ export class KinematicsManager {
 
  
  /**
-    * Create new Animation Template 
+    * Create new Animation Template  
+    * 
     * @param  {string} name - Template Name
-    * @param  {object} anime - Animation Definition
+    * @param  {object} anime - Animation Definition  
+    *  The provided object follows the animation definition for anime.js. See anime.js documentation for more info on supported parameters (https://animejs.com/documentation/).  
+    *  In addition to the anime.js parameters you also need to provide the target value itself as the value parameter.   
+    *   
+    *  You also need to specifiy if the animation is infinite (e.g an infinitely spinning fan). In that case only easeintime and value are supported parameters.  
+    *  See below for an example:  
+    *  ```
+    *     let animedef = {  
+    *       value: "300",  // Target for the animation  
+    *        duration: "1000",   
+    *        easing: "easeInQuad",  
+    *        loop: "1",  
+    *        direction: "normal",  
+    *        easeintime: "200",  //ease In Time for animation in milliseconds. Only applies to infinite animations  
+    *        infinite: false, //if animation is infinite only easeintime and value applies.  
+    *    };  
+    *    let animationid = KT.KinematicsManager.addAnimationTemplate("TestAnimation", animedef);  
+    * ```
     * @return {uuid} ID of Animation Template
     */    
     static addAnimationTemplate(name, anime) {

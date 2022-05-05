@@ -122,6 +122,7 @@ function generateComponentTypeSelect(component) {
     html+=addComponentTypeToSelect(10,component);
     html+=addComponentTypeToSelect(11,component);
     html+=addComponentTypeToSelect(12,component);
+    html+=addComponentTypeToSelect(13,component);
         
     html += '</select>';
     return html;

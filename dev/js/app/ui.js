@@ -720,7 +720,7 @@ function drawIKDiv() {
     html += '<button type="button" style="font-size:11px" class="btn btn-dark btn-sm ms-1"  onclick="setFromModel();">Get</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-dark btn-sm ms-1"  onclick="newHierachy();">New</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-dark btn-sm ms-1"  onclick="updateTemplate();">Update</button>';
-    html += '<button type="button" style="font-size:11px;" onclick="setShowTemplateValues()" class="btn btn-dark btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#showtemplate">Show</button>';
+    html += '<button type="button" style="font-size:11px;" onclick="exportToFile()" class="btn btn-dark btn-sm ms-1">Export</button>';
     html += '<button type="button" style="font-size:11px;position:absolute;right:0px" onclick="setIkUIValues()" class="btn btn-light btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#editIkSettingsModel">IK Settings</button>';
     html += '<br>';
     html += '<h2 style="margin-top:20px;"><span>Animation Group</span></h2>';
@@ -786,15 +786,15 @@ async function showComponent(j,adjustToCenter) {
         center = bounds.center();        
     }
 
-    if (component.getType() != KT.componentType.fixed) {
-        if (editMode) {
-            tempnode = hwv.model.createNode(hwv.model.getRootNode());
-            component.showHandles(false, tempnode, center);
 
-        }
-        else
-            component.showHandles(false, undefined, center);
+    if (editMode) {
+        tempnode = hwv.model.createNode(hwv.model.getRootNode());
+        component.showHandles(false, tempnode, center);
+
     }
+    else
+        component.showHandles(false, undefined, center);
+    
 
 
 }
@@ -1315,3 +1315,29 @@ function rgbToHex(color) {
 
         return "#" + _componentToHex(color.r) +  _componentToHex(color.g) +  _componentToHex(color.b);          
 }
+
+
+ 
+    
+function exportToFile(filename) {
+
+    function _makeTextFile(text) {
+        let data = new Blob([text], {type: 'text/plain'});           
+        let textFile = window.URL.createObjectURL(data);
+    
+        return textFile;
+      }
+
+    let text =  JSON.stringify(KT.KinematicsManager.getTemplate(currentTemplate));
+
+    let link = document.createElement('a');
+    link.setAttribute('download', "hierachy.json");
+    link.href = _makeTextFile(text);
+    document.body.appendChild(link);
+
+    window.requestAnimationFrame(function () {
+        let event = new MouseEvent('click');
+        link.dispatchEvent(event);
+        document.body.removeChild(link);
+    });
+}              

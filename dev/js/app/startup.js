@@ -22,7 +22,6 @@ async function msready() {
 
 
       mySelectionBasket  = new SelectionBasket(hwv);
-      mySelectionBasket.initializeUI("selectionbasketcontainer", true);
       
       myLayout.on('stateChanged', function () {
         if (hwv != null) {
@@ -119,7 +118,11 @@ function createUILayout() {
     // myLayout.registerComponent('Selection Basket', function (container, componentState) {
     //     $(container.getElement()).append($("#selectionbasketcontainer"));
     // });
-
+    myLayout.on('stateChanged', function () {
+        if (hwv != null) {
+            hwv.resizeCanvas();            
+        }
+    });
   
     myLayout.init();
 
@@ -132,23 +135,14 @@ function createUILayout() {
                     name: 'Microengine',
                     fun: async function () {
                         loadIKData("microengine.json");
-                        // myMaterialTool  = new MaterialTool(hwv);
-                        // let res = await fetch('data/material2.json');
-                        // let json = await res.json();
-                        // myMaterialTool.fromJson(json);
-                        // myMaterialTool.refresh();
-
+                      
                     },
                 },
                 {
                     name: 'Sentry',
                     fun: async function () {
                         loadIKData("sentry2.json");
-                        // myMaterialTool  = new MaterialTool(hwv);
-                        // let res = await fetch('data/material2.json');
-                        // let json = await res.json();
-                        // myMaterialTool.fromJson(json);
-                        // myMaterialTool.refresh();
+                     
 
                     },
                 },
@@ -156,14 +150,23 @@ function createUILayout() {
                     name: 'Hoist',
                     fun: async function () {
                         loadIKData("hoist3.json");
-                        // myMaterialTool  = new MaterialTool(hwv);
-                        // let res = await fetch('data/material2.json');
-                        // let json = await res.json();
-                        // myMaterialTool.fromJson(json);
-                        // myMaterialTool.refresh();
+                      
+                    },
+                },              
+                {
+                    name: 'robot',
+                    fun: async function () {
+                        loadIKData("bubarobot.json");
 
                     },
-                },                                         
+                },                  
+                {
+                    name: 'Gripper',
+                    fun: async function () {
+                        loadIKData("gripper.json");
+
+                    },
+                },                                   
             ]
         },      
         {

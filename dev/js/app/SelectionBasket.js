@@ -414,7 +414,8 @@ class SelectionBasket {
     }
 
     _updateSelection() {
-        if (this._suppressSelectionUpdate)
+        if (this._suppressSelectionUpdate || !this._uidiv) 
+
             return;
 
         let rows = this._table.getRows();

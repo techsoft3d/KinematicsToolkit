@@ -920,7 +920,6 @@ export class KinematicsComponent {
 
 
      _rotate(angle, ignoreLimits, add) {
-       
         // if (ignoreLimits == undefined) {
         //     if (angle > this._maxangle)
         //         angle = this._maxangle;
@@ -992,6 +991,7 @@ export class KinematicsComponent {
         }
         else
              KinematicsManager.viewer.model.setNodeMatrix(this._nodeid, result2);
+        this._touched = true;
 
     }
 
@@ -1033,6 +1033,7 @@ export class KinematicsComponent {
         let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
 
         KinematicsManager.viewer.model.setNodeMatrix(this._nodeid, result2);
+        this._touched = true;
 
     }
 

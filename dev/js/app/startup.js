@@ -134,14 +134,14 @@ function createUILayout() {
                 {
                     name: 'Microengine',
                     fun: async function () {
-                        loadIKData("microengine.json");
+                        loadIKData("data/microengine.json");
                       
                     },
                 },
                 {
                     name: 'Sentry',
                     fun: async function () {
-                        loadIKData("sentry2.json");
+                        loadIKData("dataTemp/sentry2.json");
                      
 
                     },
@@ -149,21 +149,21 @@ function createUILayout() {
                 {
                     name: 'Hoist',
                     fun: async function () {
-                        loadIKData("hoist3.json");
+                        loadIKData("dataTemp/hoist3.json");
                       
                     },
                 },              
                 {
                     name: 'robot',
                     fun: async function () {
-                        loadIKData("bubarobot.json");
+                        loadIKData("dataTemp/bubarobot.json");
 
                     },
                 },                  
                 {
                     name: 'Gripper',
                     fun: async function () {
-                        loadIKData("gripper.json");
+                        loadIKData("dataTemp/gripper.json");
 
                     },
                 },                                   
@@ -347,7 +347,7 @@ function createUILayout() {
 
 async function loadIKData(name){
 
-    let res = await fetch('data/' + name);
+    let res = await fetch(name);
     data = await res.json();
     KT.KinematicsManager.addTemplate(data);
     currentTemplate = data._templateId;

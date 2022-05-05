@@ -104,6 +104,15 @@ else
     return '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
 }
 
+
+function addComponentMappedTypeToSelect(i,component)
+{
+    if (i == component.getMappedType())
+    return  '<option selected value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
+else
+    return '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
+}
+
 function generateComponentTypeSelect(component) {
     var html = '<select id="componenttype" class="form-select" style="font-size:11px" value="">\n';
 
@@ -122,28 +131,11 @@ function generateComponentTypeSelect(component) {
 function generateMapComponentTypeSelect(component) {
     var html = '<select id="mappedcomponenttype" class="form-select" style="font-size:11px" value="">\n';
 
-    if (component.getMappedType() == 0)
-        html += '<option selected value="' + string_of_enum(KT.componentType,0) + '">' + string_of_enum(KT.componentType,0) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType,0) + '">' + string_of_enum(KT.componentType,0) + '</option>\n';
 
-    if (component.getMappedType() == 1)
-        html += '<option selected value="' + string_of_enum(KT.componentType,1) + '">' + string_of_enum(KT.componentType,1) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType,1) + '">' + string_of_enum(KT.componentType,1) + '</option>\n';
-
-
-    if (component.getMappedType() == 8)
-        html += '<option selected value="' + string_of_enum(KT.componentType, 9) + '">' + string_of_enum(KT.componentType, 9) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType, 9) + '">' + string_of_enum(KT.componentType, 9) + '</option>\n';
-
-
-    if (component.getMappedType() == 9)
-        html += '<option selected value="' + string_of_enum(KT.componentType, 10) + '">' + string_of_enum(KT.componentType, 10) + '</option>\n';
-    else
-        html += '<option value="' + string_of_enum(KT.componentType, 10) + '">' + string_of_enum(KT.componentType, 10) + '</option>\n';
-
+    html+=addComponentMappedTypeToSelect(0,component);
+    html+=addComponentMappedTypeToSelect(1,component);
+    html+=addComponentMappedTypeToSelect(8,component);
+    html+=addComponentMappedTypeToSelect(9,component);
 
     html += '</select>';
     return html;
@@ -1315,10 +1307,7 @@ function rgbToHex(color) {
 
         return "#" + _componentToHex(color.r) +  _componentToHex(color.g) +  _componentToHex(color.b);          
 }
-
-
- 
-    
+   
 function exportToFile(filename) {
 
     function _makeTextFile(text) {
@@ -1327,7 +1316,6 @@ function exportToFile(filename) {
     
         return textFile;
       }
-
     let text =  JSON.stringify(KT.KinematicsManager.getTemplate(currentTemplate));
 
     let link = document.createElement('a');

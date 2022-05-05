@@ -61,7 +61,7 @@ const componentType = {
 
 export {componentType};
  
-/** This class represents a single Kinematics Component*/
+/** This class represents a Kinematics Component*/
 export class KinematicsComponent {
  /**
      * Creates a Kinematic Component Object

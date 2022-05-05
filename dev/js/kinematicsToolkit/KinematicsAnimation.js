@@ -8,7 +8,7 @@ export const animationType = {
     
 };
 
-/** This class provides functionality related to controlling a group fo animations*/
+/** This class provides functionality related to controlling a group of animations*/
 export class KinematicsAnimationGroup {
     constructor(hierachy) {
 
@@ -17,24 +17,50 @@ export class KinematicsAnimationGroup {
         this.name = "";
     }        
 
+ /**
+     * Retrieves all animation references associated with this animation group
+     * An animation reference consists of the animation template id and the component it is associated with
+     * @return {array} Array of animation references
+     */    
     getAnimations()
     {
         return this._animations;
     }
 
+
+ /**
+     * Retrieves an animation references by index
+     * @param  {number} i - Index of animation references
+     * @return {KinematicsComponent} Animation reference
+     */      
     getAnimationByIndex(i)
     {
         return this._animations[i];
     }
 
+
+ /**
+     * Adds a new animation reference to this animation group
+     * @param  {uuid} animation - Animation Template ID
+     * @return {component} Component that is associated with the animation template
+     */          
     addAnimation(animation, component) {
         this._animations.push({animation: animation, component: component});
     }
 
+
+ /**
+     * Sets the name of the animation group
+     * @param  {string} name - Name
+     */  
     setName(name) {
         this.name = name;
     }
 
+ /**
+     * Retrieves the name of the animation group
+     * @return {string} Name
+     */         
     getName() {
         return this.name;
     }
@@ -51,6 +77,10 @@ export class KinematicsAnimationGroup {
         this.name = def.name;
     }
 
+    
+ /**
+     * Plays all animations associated to this animation group
+     */  
     play()
     {
         for (let i=0;i<this._animations.length;i++)
@@ -66,7 +96,6 @@ export class KinematicsAnimationGroup {
 
 }
 
-/** This class provides functionality related to animating a component*/
 export class KinematicsAnimation {
 
     static fromJson(json, component) {

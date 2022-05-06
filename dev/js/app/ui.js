@@ -144,7 +144,7 @@ function generateMapComponentTypeSelect(component) {
 
 function generateExtraComponent1Select(component) {
     var html = '<select id="fixedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
-
+    html += '<option selected value="' + "EMPTY" + '">' + "EMPTY" + '</option>\n';
     for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
         if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
             let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
@@ -301,7 +301,7 @@ function generateComponentPropertiesData(id)
 
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits (Min/Max):</label></div>';
     html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
-    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button>';
+    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button><br>';
     html +='<input id="componentmax" type="number" value="' + component.getMaxLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
     html += '<button onclick="setMaxLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button>';    
     html+='</div></div>';
@@ -335,6 +335,16 @@ function generateComponentPropertiesData(id)
         html += '<div class="col">';
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(0,' + id + ')">Component 1 Pivot</button>';
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(1,' + id + ')">Component 2 Pivot</button>';
+        html += '</div></div>';
+    }    
+    if (component.getType() == KT.componentType.pivotConnector)
+    {
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
+
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
+        html += '<div class="col">';
+        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Connector Pivot</button>';
         html += '</div></div>';
     }    
     if (component.getType() == KT.componentType.revoluteSlide)
@@ -829,6 +839,15 @@ function updateComponent(j){
         let variablecomponent = currentHierachy.getComponentById(id);
         component.setExtraComponent2(variablecomponent);
     }
+
+    if (component.getType() == KT.componentType.pivotConnector && $("#fixedcomponentselect")[0] != undefined)
+    {
+        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+        let fixedcomponent = currentHierachy.getComponentById(id);        
+        component.setExtraComponent1(fixedcomponent);
+    }
+
+
     if (component.getType() == KT.componentType.revoluteSlide && $("#fixedcomponentselect")[0] != undefined)
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
@@ -956,15 +975,33 @@ function deleteComponentFromUI()
 
 }
 
-function moveupComponentFromUI()
-{
-    let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
-    let component = currentHierachy.getComponentById( currentComponent);
-    component.moveup();
-    drawIKDiv();
+function moveupComponentFromUI() {
+    if (shiftPressed) {
+        makeFirstComponentFromUI();
+    }
+    else {
+        let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
+        let component = currentHierachy.getComponentById(currentComponent);
+        component.moveup();
+        drawIKDiv();
+    }
 
 }
 
+function makeFirstComponentFromUI() {
+    let selid = parseInt($('#KinematicsTreeDiv').jstree().get_selected());
+    let component = currentHierachy.getComponentById(currentComponent);
+    let children = component._parent._children;
+    for (let i = 0; i < children.length; i++) {
+        if (children[i] == component) {
+            children.splice(i, 1);
+            break;
+        }
+    }
+    children.splice(0, 0, component);
+    drawIKDiv();
+
+}
 function adjustToPlane() {
     let r = KT.KinematicsManager.viewer.selectionManager.getResults();
     if (r.length == 0) return;
@@ -1064,7 +1101,6 @@ function updateMatePivot(type, j) {
 
     var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
     let pos = handleOperator.getPosition();
-    let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
     if (pos) {
         if (type === 0) {
             component.setExtraPivot1(pos.copy());
@@ -1075,6 +1111,19 @@ function updateMatePivot(type, j) {
         }
     }
 }
+
+function updateConnectorPivot(j) {
+
+    let component = currentHierachy.getComponentById(j);
+
+    var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
+    let pos = handleOperator.getPosition();
+    let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
+    if (pos) {
+        component.setExtraPivot1(pos.copy());
+    }
+}
+
 
 
 

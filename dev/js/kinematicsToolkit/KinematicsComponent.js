@@ -10,11 +10,11 @@ import { KinematicsUtility } from './KinematicsUtility.js';
  */
 const componentType = {
      /** Rotation around an axis.  
-      * Use SetCenter() and SetAxis() to define the rotation axis
+      * Use setCenter() and setAxis() to define the rotation axis
      */
     revolute: 0,
      /** Translation along an axis.  
-      * Use SetCenter() and SetAxis() to define the translation axis
+      * Use setCenter() and setAxis() to define the translation axis
       */
      prismatic: 1,
      /** Fixed. No Movement */
@@ -56,7 +56,7 @@ const componentType = {
 /** Component that is positioned based on other components  
       */            
     target:12,
-    mateConnector:13
+    pivotConnector:13
 };
 
 export {componentType};
@@ -100,6 +100,8 @@ export class KinematicsComponent {
         this._extraComponent2 = null;
 
         this._mappedTargetComponent = null;
+
+        this._targetPivot = null;
 
         this._helicalFactor = 1.0;
         this._reference = true;
@@ -272,7 +274,7 @@ export class KinematicsComponent {
      */             
     getCurrentValue()
     {
-        if (this._type == componentType.revolute)
+        if (this._type == componentType.revolute || this._type == componentType.pivotConnector)
             return this._currentAngle;
         else if (this._type == componentType.prismatic || this._type == componentType.helical)
             return this._currentPosition;
@@ -587,10 +589,13 @@ export class KinematicsComponent {
      */ 
     set(value) {
 
-        if (this._type == componentType.revolute)
+        if (this._type == componentType.revolute || this._type == componentType.prismatic) {
             this._rotate(value);
+        }        
         else if (this._type == componentType.prismatic || this._type == componentType.helical)
+        {
             this._translate(value);
+        }
     }
 
     toJson() {
@@ -635,6 +640,14 @@ export class KinematicsComponent {
         {
             def.extraComponent1 = this._extraComponent1._id;
             def.extraPivot1 = this._extraPivot1.toJson();
+
+        }
+        else if (this._type == componentType.pivotConnector)            
+        {
+            if (this._extraComponent1)
+                def.extraComponent1 = this._extraComponent1._id;
+            if (this._extraPivot1)
+                def.extraPivot1 = this._extraPivot1.toJson();
 
         }
         else if (this._type == componentType.pistonController)            
@@ -730,6 +743,17 @@ export class KinematicsComponent {
                 this._extraPivot2 = Communicator.Point3.fromJson(def.extraPivot2);
             }
         }
+        else if (this._type == componentType.pivotConnector)
+        {
+            if (def.extraComponent1)
+            {
+                this._extraComponent1 = def.extraComponent1;
+            }
+            if (def.extraPivot1)
+            {
+                this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
+            }
+        }         
         else if (this._type == componentType.revoluteSlide)
         {
             this._extraComponent1 = def.extraComponent1;
@@ -1073,7 +1097,7 @@ export class KinematicsComponent {
         }
 
 
-        if (this._type == componentType.revolute)
+        if (this._type == componentType.revolute || this._type == componentType.pivotConnector) 
         {
             let origmatrix = KinematicsManager.viewer.model.getNodeMatrix(this._nodeid);
 
@@ -1327,10 +1351,6 @@ export class KinematicsComponent {
             }
         }
     }
-
-
-
-
     
  /**
      * Make component child of parent component
@@ -1351,12 +1371,44 @@ export class KinematicsComponent {
         }
     }
 
-   
     async _updateComponentsFromReferenceRecursive(component) {
         if (!component)
             return;
 
-        if (component._type == componentType.revoluteSlide) {
+        if (component._type == componentType.pivotConnector) {
+            if (component._extraComponent1)
+            {
+                
+
+            }
+            else {
+                if (component._extraPivot1) {
+                    if (component._targetPivot) {
+                        let pivot1trans = component._parent.transformlocalPointToWorldSpace(component._extraPivot1);
+                        let centertrans = component.transformlocalPointToWorldSpace(component._center);
+                        let pivotorigtrans = component._parent.transformlocalPointToWorldSpace(component._targetPivot);
+                        let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
+                        let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
+                        let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
+
+                        await component._rotate(angle);
+                        let p22 = component.transformlocalPointToWorldSpace(component._extraPivot1);
+                        let diff = Communicator.Point3.subtract(p22, component._targetPivot).length();
+                        await component._rotate(-angle);
+                        p22 = component.transformlocalPointToWorldSpace(component._extraPivot1);
+                        let diff2 = Communicator.Point3.subtract(p22, component._targetPivot).length();
+                        if (diff2 > diff) {
+                            await component._rotate(angle);
+                        }
+
+                        component._targetPivot = null;
+
+                    }
+                }
+            }
+
+        }
+        else if (component._type == componentType.revoluteSlide) {
 
             let pivot1trans = component._extraComponent1.transformlocalPointToWorldSpace(component._extraPivot1);
             let centertrans = component._parent.transformlocalPointToWorldSpace(component._center);
@@ -1364,7 +1416,7 @@ export class KinematicsComponent {
 
             let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
             let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
-            let angle = Communicator.Util.computeAngleBetweenVector(v1,v2);
+            let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
             await component._rotate(angle);
 
             let r = component.transformlocalPointToWorldSpace(component._extraPivot1);

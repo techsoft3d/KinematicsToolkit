@@ -346,6 +346,14 @@ function generateComponentPropertiesData(id)
         html += '<div class="col">';
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Connector Pivot</button>';
         html += '</div></div>';
+        
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Slide Pivot:</label></div><div class="col">';
+        if (component.getIsSlidePivot())
+            html += '<input type="checkbox"  id="isslidepivot" checked>';
+        else
+            html += '<input type="checkbox" id="isslidepivot">';
+        html += '</div>';
+
     }    
     if (component.getType() == KT.componentType.revoluteSlide)
     {
@@ -845,6 +853,12 @@ function updateComponent(j){
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);        
         component.setExtraComponent1(fixedcomponent);
+
+                
+        if ($("#isslidepivot").is(":checked"))
+            component.setIsSlidePivot(true);
+        else
+            component.setIsSlidePivot(false);
     }
 
 

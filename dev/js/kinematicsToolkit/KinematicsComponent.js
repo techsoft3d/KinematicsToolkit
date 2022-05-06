@@ -589,7 +589,7 @@ export class KinematicsComponent {
      */ 
     set(value) {
 
-        if (this._type == componentType.revolute || this._type == componentType.prismatic) {
+        if (this._type == componentType.revolute || this._type == componentType.pivotConnector) {
             this._rotate(value);
         }        
         else if (this._type == componentType.prismatic || this._type == componentType.helical)
@@ -1376,9 +1376,69 @@ export class KinematicsComponent {
             return;
 
         if (component._type == componentType.pivotConnector) {
-            if (component._extraComponent1)
-            {
-                
+            if (component._extraComponent1) {
+                if (true) {
+                    let circlepivot = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
+                    let circlecenter = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);
+                    let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
+                    let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
+
+
+                    let rotaxis2 = Communicator.Point3.subtract(transformedAxis, transformedCenter).normalize();
+                    let plane = Communicator.Plane.createFromPointAndNormal(transformedCenter, rotaxis2);
+
+                    let cp = KinematicsUtility.closestPointOnPlane(plane, circlepivot);
+
+                    let newpivot = component.transformlocalPointToWorldSpace(cp);
+
+                    let cc = KinematicsUtility.closestPointOnPlane(plane, circlecenter);
+
+                    let xymatrix = KinematicsUtility.ComputeVectorToVectorRotationMatrix(rotaxis2, new Communicator.Point3(0, 0, 1));
+                    let xyinverse = Communicator.Matrix.inverse(xymatrix);
+
+                    cp = xymatrix.transform(cp);
+                    cc = xymatrix.transform(cc);
+                    let np = xymatrix.transform(newpivot);
+
+                    let tc = xymatrix.transform(transformedCenter);
+                    
+
+                    let circleRadius = Communicator.Point3.subtract(cp,cc).length();
+
+                    let intersections = KinematicsUtility.circleLineIntersection(circleRadius,cc.x,cc.y,tc.x,tc.y,np.x,np.y);
+                    let respoint = new Communicator.Point3(intersections.x2, intersections.y2, tc.z);
+                    respoint = xyinverse.transform(respoint);
+                    ViewerUtility.createDebugCube(KinematicsManager.viewer,respoint);
+                    component._extraComponent1._targetPivot = respoint;
+
+                }
+                else {
+
+                    let pivot1aft = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
+                    let pivot1before = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
+                    let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
+                    let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
+
+                    let rotaxis2 = Communicator.Point3.subtract(transformedAxis, transformedCenter).normalize();
+                    let plane = Communicator.Plane.createFromPointAndNormal(transformedCenter, rotaxis2);
+
+                    let p1 = KinematicsUtility.closestPointOnPlane(plane, pivot1aft);
+                    let p2 = KinematicsUtility.closestPointOnPlane(plane, pivot1before);
+
+                    let v1 = Communicator.Point3.subtract(p1, transformedCenter).normalize();
+                    let v2 = Communicator.Point3.subtract(p2, transformedCenter).normalize();
+                    let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
+
+                    await component._rotate(angle);
+                    let p22 = component.transformlocalPointToWorldSpace(pivot1before);
+                    let diff = Communicator.Point3.subtract(p22, pivot1aft).length();
+                    await component._rotate(-angle);
+                    p22 = component.transformlocalPointToWorldSpace(pivot1before);
+                    let diff2 = Communicator.Point3.subtract(p22, pivot1aft).length();
+                    if (diff2 > diff) {
+                        await component._rotate(angle);
+                    }
+                }
 
             }
             else {
@@ -1387,10 +1447,25 @@ export class KinematicsComponent {
                         let pivot1trans = component._parent.transformlocalPointToWorldSpace(component._extraPivot1);
                         let centertrans = component.transformlocalPointToWorldSpace(component._center);
                         let pivotorigtrans = component._parent.transformlocalPointToWorldSpace(component._targetPivot);
+                        let transformedAxis = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
+
+                
+
+
+                        let rotaxis2 = Communicator.Point3.subtract(transformedAxis, centertrans).normalize();
+                        let plane = Communicator.Plane.createFromPointAndNormal(pivotorigtrans, rotaxis2);
+    
+                        centertrans = KinematicsUtility.closestPointOnPlane(plane, centertrans);
+    
+                        
+                        ViewerUtility.createDebugCube(KinematicsManager.viewer,pivotorigtrans,10);
+                        ViewerUtility.createDebugCube(KinematicsManager.viewer,pivot1trans,10);
+                        ViewerUtility.createDebugCube(KinematicsManager.viewer,centertrans,10);
+
+
                         let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
                         let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
                         let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
-
                         await component._rotate(angle);
                         let p22 = component.transformlocalPointToWorldSpace(component._extraPivot1);
                         let diff = Communicator.Point3.subtract(p22, component._targetPivot).length();
@@ -1400,9 +1475,7 @@ export class KinematicsComponent {
                         if (diff2 > diff) {
                             await component._rotate(angle);
                         }
-
                         component._targetPivot = null;
-
                     }
                 }
             }

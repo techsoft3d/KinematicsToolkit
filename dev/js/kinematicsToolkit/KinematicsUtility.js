@@ -124,4 +124,44 @@ export class KinematicsUtility {
     }
 
 
+    // Constructor of the coordinates of the intersection points of a line and a circle:
+    static circleLineIntersection(r,xm,ym,x1,y1,x2,y2) {
+        let x_1 = null;	// x coordinate of first intersection point.
+        let y_1 = null;	// y coordinate of first intersection point.
+        let x_2 = null;	// x coordinate of second intersection point.
+        let y_2 = null;	// y coordinate of second intersection point.
+
+        let a = y1 - y2;
+        let b = x2 - x1;
+        let c = x1 * y2 - y1 * x2;
+
+        if (b == 0) {	// The line is a vertical line
+            let B = -2 * ym,
+                C = xm * xm + ym * ym + 2 * xm * c / a + c * c / (a * a) - r * r;
+            let D = B * B - 4 * C;
+            if (D < 0) { return; }	// if no intersections, bail out
+            x_1 = -c / a;
+            y_1 = (-B + Math.sqrt(D)) / 2;
+            if (D > 0) { 	 // if ( D == 0 ) line is tangent to circle; only one touch point, ie. x2 = x1 and y2 = y1.
+                x_2 = x_1;
+                y_2 = (-B - Math.sqrt(D)) / 2;
+            }
+        } else {
+            let A = (a * a / (b * b)) + 1,
+                B = 2 * (a * c / (b * b) - xm + a * ym / b),
+                C = xm * xm + ym * ym + 2 * ym * c / b + c * c / (b * b) - r * r;
+            let D = B * B - 4 * A * C;
+            if (D < 0) { return; }	// if no intersections, bail out
+            x_1 = (-B + Math.sqrt(D)) / (2 * A);
+            y_1 = (-a / b) * x_1 - c / b;
+            if (D > 0) {		 // if ( D == 0 ) line is tangent to circle; only one touch point, ie. x2 = x1 and y2 = y1.	
+                x_2 = (-B - Math.sqrt(D)) / (2 * A);
+                y_2 = (-a / b) * x_2 - c / b;
+            }
+        }
+        return {x1:x_1, y1:y_1, x2:x_2, y2:y_2};
+    }
+
+
+
 }

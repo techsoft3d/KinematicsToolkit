@@ -40,7 +40,7 @@ export class ComponentMoveOperator {
 
         if (this._mouseDown) {
             var p = event.getPosition();
-            this._component.set( this._currentcpos + p.x - this._startPosition.x);
+            this._component.set( (this._currentcpos + (p.x - this._startPosition.x)/5));
             this._component.getHierachy().updateComponents();
 
         }

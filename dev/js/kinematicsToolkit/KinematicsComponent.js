@@ -1400,6 +1400,8 @@ export class KinematicsComponent {
         let plane = Communicator.Plane.createFromPointAndNormal(pivotorigtrans, rotaxis2);
 
         centertrans = KinematicsUtility.closestPointOnPlane(plane, centertrans);
+        pivotorigtrans = KinematicsUtility.closestPointOnPlane(plane, pivotorigtrans);
+        pivot1trans = KinematicsUtility.closestPointOnPlane(plane, pivot1trans);
 
 
         let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
@@ -1471,6 +1473,10 @@ export class KinematicsComponent {
 
                     let tc = xymatrix.transform(transformedCenter);
                     
+                    ViewerUtility.createDebugCube(KinematicsManager.viewer, transformedCenter,10);
+                    ViewerUtility.createDebugCube(KinematicsManager.viewer, newpivot,10);
+                    ViewerUtility.createDebugCube(KinematicsManager.viewer, circlepivot,10,new Communicator.Color(0,0,1));
+
 
                     let circleRadius = Communicator.Point3.subtract(cp, cc).length();
 
@@ -1494,8 +1500,8 @@ export class KinematicsComponent {
                         let pivot1aft = component._extraComponent1._targetPivot.copy();
                         let pivot1bef = component.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
 
-                        ViewerUtility.createDebugCube(KinematicsManager.viewer, pivot1aft,10);
-                        ViewerUtility.createDebugCube(KinematicsManager.viewer, pivot1bef,10);
+//                        ViewerUtility.createDebugCube(KinematicsManager.viewer, pivot1aft,10);
+//                        ViewerUtility.createDebugCube(KinematicsManager.viewer, pivot1bef,10);
 
                         let centertrans = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._center);
                         let transformedAxis = component._extraComponent1.transformlocalPointToWorldSpace(Communicator.Point3.add(component._extraComponent1._center, component._extraComponent1._axis));
@@ -1524,7 +1530,7 @@ export class KinematicsComponent {
                         let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
                 
                         let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
-                        let final3 = Communicator.Matrix.multiply(result2,localmatrix);
+                        let final3 = Communicator.Matrix.multiply(localmatrix, result2);
                         KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);                    
                     }
 
@@ -1532,7 +1538,11 @@ export class KinematicsComponent {
                 }
                 else {
 
-                    let pivot1aft = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
+                    let pivot1aft;
+                    if (!component._extraComponent1._targetPivot)
+                        pivot1aft = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
+                    else
+                        pivot1aft = component._extraComponent1._targetPivot.copy();
                     let pivot1before = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
                     let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
                     let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));

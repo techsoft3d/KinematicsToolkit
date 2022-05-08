@@ -13,19 +13,6 @@ export class KinematicsComponentBehaviorPrismatic {
         this._type = componentType.prismatic;
     }
 
-
-    /**
-    * Sets type of component
-    * @param  {componentType} type - Component Type
-    */
-    setType(type) {
-        this._type = type;
-    }
-
-    /**
-      * Retrieves type of component
-      * @return {componentType} Component Type
-      */
     getType() {
         return this._type;
     }
@@ -34,7 +21,7 @@ export class KinematicsComponentBehaviorPrismatic {
     }
 
     toJson(def) {
-        
+
     }
 
 

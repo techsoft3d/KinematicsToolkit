@@ -13,19 +13,6 @@ export class KinematicsComponentBehaviorTarget {
         this._type = componentType.target;
     }
 
-
-    /**
-    * Sets type of component
-    * @param  {componentType} type - Component Type
-    */
-    setType(type) {
-        this._type = type;
-    }
-
-    /**
-      * Retrieves type of component
-      * @return {componentType} Component Type
-      */
     getType() {
         return this._type;
     }

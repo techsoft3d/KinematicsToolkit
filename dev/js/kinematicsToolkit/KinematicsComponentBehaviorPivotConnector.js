@@ -17,16 +17,6 @@ export class KinematicsComponentBehaviorPivotConnector {
         this._isSlidePivot = false;
         this._targetPivot = null;
     }
-
-
-    /**
-    * Sets type of component
-    * @param  {componentType} type - Component Type
-    */
-    setType(type) {
-        this._type = type;
-    }
-
     /**
       * Retrieves type of component
       * @return {componentType} Component Type

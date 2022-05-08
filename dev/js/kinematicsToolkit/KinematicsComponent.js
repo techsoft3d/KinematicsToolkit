@@ -148,16 +148,54 @@ export class KinematicsComponent {
     setType(type)
     {
         this._type = type;
+
+        if (this._type == componentType.revolute)
+        {
+            this._behavior = new KinematicsComponentBehaviorRevolute(this);
+        }
+        else if (this._type == componentType.prismatic)
+        {
+            this._behavior = new KinematicsComponentBehaviorPrismatic(this);
+        }
+        else if (this._type == componentType.pistonController)
+        {
+            this._behavior = new KinematicsComponentBehaviorPistonController(this);
+        }
+        else if (this._type == componentType.fixed)
+        {
+            this._behavior = new KinematicsComponentBehaviorFixed(this);
+        }
+        else if (this._type == componentType.target)
+        {
+            this._behavior = new KinematicsComponentBehaviorTarget(this);
+        }
+        else if (this._type == componentType.pivotConnector)
+        {
+            this._behavior = new KinematicsComponentBehaviorPivotConnector(this);
+        }
+        else
+        {
+            this._behavior = null;
+        }
+
     }
 
-   /**
-     * Retrieves type of component
-     * @return {componentType} Component Type
-     */
-    getType()
-    {
-        return this._type;
+    /**
+      * Retrieves type of component
+      * @return {componentType} Component Type
+      */
+    getType() {
+        if (this._behavior)
+            return this._behavior.getType();
+        else
+            return this._type;
     }
+
+
+    setBehavior(behavior) {
+        this._behavior = behavior;
+    }
+
 
     getBehavior()
     {
@@ -672,43 +710,13 @@ export class KinematicsComponent {
             this._axis = Communicator.Point3.fromJson(def.axis);
         }
 
-        this._type = def.type;
+        this.setType(def.type);
 
-        if (this._type == componentType.revolute)
+        if (this._behavior)
         {
-            this._behavior = new KinematicsComponentBehaviorRevolute(this);
             this._behavior.fromJson(def);
         }
-        else if (this._type == componentType.prismatic)
-        {
-            this._behavior = new KinematicsComponentBehaviorPrismatic(this);
-            this._behavior.fromJson(def);
-        }
-        else if (this._type == componentType.pistonController)
-        {
-            this._behavior = new KinematicsComponentBehaviorPistonController(this);
-            this._behavior.fromJson(def);
-        }
-        else if (this._type == componentType.fixed)
-        {
-            this._behavior = new KinematicsComponentBehaviorFixed(this);
-            this._behavior.fromJson(def);
-        }
-        else if (this._type == componentType.target)
-        {
-            this._behavior = new KinematicsComponentBehaviorTarget(this);
-            this._behavior.fromJson(def);
-        }
-        else if (this._type == componentType.pivotConnector)
-        {
-            this._behavior = new KinematicsComponentBehaviorPivotConnector(this);
-            this._behavior.fromJson(def);
-        }
-        else
-        {
-            this._behavior = null;
-        }
-
+ 
         this._mappedType = def.mappedType;
         this._parentMatrix = Communicator.Matrix.fromJson(def.parentMatrix);
         this._hierachy.getComponentHash()[this._id] = this;

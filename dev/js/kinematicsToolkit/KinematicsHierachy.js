@@ -460,9 +460,6 @@ export class KinematicsHierachy {
                     if (component.getExtraComponent1())
                         component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
                 }
-                else if (component.getType() == componentType.mapped) {
-                    component._mappedTargetComponent = this._componentHash[component.getMappedTargetComponent()];
-                }
             }
         }
 

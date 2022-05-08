@@ -8,7 +8,7 @@ import { KinematicsComponentBehaviorFixed } from './KinematicsComponentBehaviorF
 import { KinematicsComponentBehaviorTarget } from './KinematicsComponentBehaviorTarget.js';
 import { KinematicsComponentBehaviorPivotConnector } from './KinematicsComponentBehaviorPivotConnector.js';
 import { KinematicsComponentBehaviorPrismaticTriangle } from './KinematicsComponentBehaviorPrismaticTriangle.js';
-
+import { KinematicsComponentBehaviorMapped } from './KinematicsComponentBehaviorMapped.js';
 
 /**
  * Type of Component.
@@ -83,8 +83,6 @@ export class KinematicsComponent {
 
         this._behavior = new KinematicsComponentBehaviorRevolute(this);
 
-        this._mappedType = null;
-
         this._children = [];
         this._parent = parent;
 
@@ -106,9 +104,6 @@ export class KinematicsComponent {
         this._extraComponent1 = null;
         this._extraComponent2 = null;
 
-        this._mappedTargetComponent = null;
-
-        this._helicalFactor = 1.0;
         this._reference = true;
         this._touched = false;
 
@@ -117,7 +112,6 @@ export class KinematicsComponent {
         this._activeAnimation = false;
     }
 
- 
     initialize(nodeids, isReference) {
         this._reference = isReference;
         if (!this._parent)
@@ -140,7 +134,6 @@ export class KinematicsComponent {
     {
         return this._id;
     }
-
 
    /**
      * Sets type of component
@@ -178,6 +171,10 @@ export class KinematicsComponent {
         {
             this._behavior = new KinematicsComponentBehaviorPrismaticTriangle(this);
         }
+        else if (this._type == componentType.mapped)
+        {
+            this._behavior = new KinematicsComponentBehaviorMapped(this);
+        }
         else
         {
             this._behavior = null;
@@ -195,7 +192,6 @@ export class KinematicsComponent {
         else
             return this._type;
     }
-
 
     setBehavior(behavior) {
         this._behavior = behavior;
@@ -244,24 +240,7 @@ export class KinematicsComponent {
         return this._children[i];
     }
 
-    /**
-     * Sets the mapped type of a component (applicable to componentType.mapped)
-     * @param  {componentType} mappedType - Mapped Type
-     */
-    setMappedType(mappedType)
-    {
-        this._mappedType = mappedType;
-    }
-
-     /**
-     * Retrieves the mapped type of a component (applicable to componentType.mapped)
-     * @return {componentType} Mapped Type
-     */
-    getMappedType()
-    {
-        return this._mappedType;
-    }
-
+   
     setNodeId(nodeid)
     {
         this._nodeid = nodeid;
@@ -271,7 +250,6 @@ export class KinematicsComponent {
     {
         return this._nodeid;
     }
-
 
      /**
      * Retrieves the hierachy associated with a component
@@ -290,7 +268,6 @@ export class KinematicsComponent {
     {
         this._center = center;
     }
-
 
      /**
      * Retrieves the component center
@@ -319,7 +296,6 @@ export class KinematicsComponent {
         return this._axis;
     }
 
-
     /**
         * Retrieves the value of the current component (angle or relative position)
         * @return {number} Current Value
@@ -335,19 +311,16 @@ export class KinematicsComponent {
         }
     }
 
-
     getReferenceNodes()
     {
         return this._referenceNodes;
     }
-
 
     getParentMatrix()
     {
         return this._parentMatrix;
     }
 
-    
  /**
      * Retrieves the Extra Component 1 (not applicable to all component types)
      * @return {KinematicsComponent} Component
@@ -356,7 +329,6 @@ export class KinematicsComponent {
     {
         return this._extraComponent1;
     }
-
 
    /**
      * Sets the extra component 1
@@ -385,7 +357,6 @@ export class KinematicsComponent {
         this._extraComponent2 = component;
     }
 
-
  /**
      * Sets the extra pivot 2 (applicable to componentType.mate)
      * @param  {Point3} pivot - Pivot Point
@@ -394,8 +365,6 @@ export class KinematicsComponent {
     {
         this._extraPivot2 = pivot;
     }
-
-
 
 /**
    * Retrieves the Extra Pivot 2 (applicable to componentType.mate)
@@ -407,48 +376,6 @@ export class KinematicsComponent {
   }
 
 
-
- /**
-     * Sets the mapped target component (applicable to componentType.mapped)
-     * @param  {KinematicsComponent} component - Component
-     */         
-    setMappedTargetComponent(component)
-    {
-        this._mappedTargetComponent = component;
-    }
-
-
- /**
-     * Retrieves the mapped target component (applicable to componentType.mapped)
-     * @return {KinematicsComponent} Component
-     */       
-    getMappedTargetComponent()
-    {
-        return this._mappedTargetComponent;
-    }
-
-
- /**
-     * Sets the helical factor (applicable to componentType.mapped and componentType.helical)
-     * @param  {number} helicalFactor - Helical Factor
-     */       
-    setHelicalFactor(helicalFactor)
-    {
-        this._helicalFactor = helicalFactor;
-    }
-
-
- /**
-     * Retrieves the helical factor (applicable to componentType.mapped and componentType.helical)
-     * @return {number}  Helical Factor
-     */    
-    getHelicalFactor()
-    {
-        return this._helicalFactor;
-    }
-
-
-
  /**
      * Sets if component is a reference component  
      * Reference Components are components that are NOT children of their parent component in the HC node hierachy
@@ -457,7 +384,6 @@ export class KinematicsComponent {
     setIsReference(isReference) {
         this._reference = isReference;
     }
-
 
  /**
      * Retrieves if component is a reference component  
@@ -468,7 +394,6 @@ export class KinematicsComponent {
         return this._reference;
     }
 
-
  /**
      * Retrieves all animations associated with a component   
      * @return {array} Array of Animation Template Ids
@@ -476,7 +401,6 @@ export class KinematicsComponent {
     getAnimations() {
         return this._animations;
     }
-
 
  /**
      * Retrieves if an animation is currently active on a component
@@ -492,7 +416,6 @@ export class KinematicsComponent {
         
     }
 
-
  /**
      * Retrieves an animation associated with a component by its index
      * @param  {number} i - Index of animation
@@ -501,7 +424,6 @@ export class KinematicsComponent {
     getAnimationByIndex(i) {
         return this._animations[i];
     }
-
 
  /**
      * Sets the minimum limit value for a component
@@ -512,7 +434,6 @@ export class KinematicsComponent {
         this._minLimit = minlimit;
     }
 
-
  /**
      * Retrieves the minimum limit value for a component
      * @return {number} minimum limit
@@ -521,7 +442,6 @@ export class KinematicsComponent {
     {
         return this._minLimit;
     }
-
 
  /**
      * Sets the maximum limit value for a component
@@ -540,58 +460,7 @@ export class KinematicsComponent {
     {
         return this._maxLimit;
     }
-
-    
- /**
-     * Retrieves the belt object for this component (applicable to componentType.mapped with mapped type set to componentType.belt)
-     * @return {KinematicsBelt} Belt Object
-     */      
-    getBelt()
-    {
-        return this.belt;
-    }
-
-
- /**
-     * Sets the plane for the prismatic plane component  (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
-     * @param  {Plane} plane - Plane
-     */     
-    setPrismaticPlanePlane(plane)
-    {
-        this._prismaticPlanePlane = plane;
-    }
-
   
- /**
-     * Retrieves the plane for the prismatic plane component (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
-     * @return {Plane} Plane
-     */          
-    getPrismaticPlanePlane()
-    {
-        return this._prismaticPlanePlane;
-    }
-
-
- /**
-     * Sets the tip for the prismatic plane component  (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
-     * @param  {Point3} tip - Tip
-     */         
-    setPrismaticPlaneTip(tip)
-    {
-        this._prismaticPlaneTip = tip;
-    }
-
- 
- /**
-     * Retrieves the tip for the prismatic plane component (applicable to componentType.mapped with mapped type set to componentType.prismaticPlane)
-     * @return {Point3} Tip
-     */             
-    getPrismaticPlaneTip()
-    {
-        return this._prismaticPlaneTip;
-    }
-
-
     /**
         * Sets the value (rotation or translation) for the component (applicable to componentType.prismatic or componentType.revolute)
         * @param  {number} value - Value
@@ -615,7 +484,7 @@ export class KinematicsComponent {
             children.push(this._children[i].toJson());
         }
         let refnodes = [];
-        if (this._type == componentType.mapped && (this._mappedType == componentType.belt)) {
+        if (this.getType() == componentType.mapped && (this._behavior._mappedType == componentType.belt)) {
             for (let i = 0; i < this._referenceNodes.length; i++) {
                 if (this._referenceNodes[i].nodeid != this.belt.getBaseNode())
                     refnodes.push({ nodeid: this._referenceNodes[i].nodeid, matrix: this._referenceNodes[i].matrix.toJson() });
@@ -628,13 +497,8 @@ export class KinematicsComponent {
             }
         }
 
-        let def = { nodeid: this._nodeid, id: this._id, mappedType: this._mappedType,reference: this._reference, type: this._type,center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
+        let def = { nodeid: this._nodeid, id: this._id,reference: this._reference, type: this._type,center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
             parentMatrix: this._parentMatrix.toJson() };
-
-        if (this._mappedType == componentType.belt) {
-            def.parentMatrix = new Communicator.Matrix().toJson();
-        }
-
 
         if (this._behavior)
         {
@@ -662,21 +526,7 @@ export class KinematicsComponent {
         {
             def.helicalFactor = this._helicalFactor;
         }
-        else if (this._type == componentType.mapped)            
-        {
-            def.helicalFactor = this._helicalFactor;
-            def.mappedTargetComponent = this._mappedTargetComponent._id;
-            if (this._mappedType == componentType.belt)
-            {
-                def.belt = this.belt.toJson();
-            }
-
-            if (this._mappedType == componentType.prismaticPlane)
-            {
-                def._prismaticPlanePlane = {d: this._prismaticPlanePlane.d, normal: this._prismaticPlanePlane.normal.toJson()};
-                def._prismaticPlaneTip = this._prismaticPlaneTip.toJson();
-            }
-        }
+      
       
 
         def.animations = [];
@@ -722,7 +572,6 @@ export class KinematicsComponent {
             this._behavior.fromJson(def,version);
         }
  
-        this._mappedType = def.mappedType;
         this._parentMatrix = Communicator.Matrix.fromJson(def.parentMatrix);
         this._hierachy.getComponentHash()[this._id] = this;
     
@@ -755,36 +604,8 @@ export class KinematicsComponent {
         {
             this._helicalFactor = def.helicalFactor;
         }
-        else if (this._type == componentType.mapped)            
-        {
-            this._helicalFactor = def.helicalFactor;
-            this._mappedTargetComponent = def.mappedTargetComponent;
-            if (this._mappedType == componentType.belt)
-            {
-                this.belt = new KinematicsBelt();
-                this.belt.fromJson(def.belt, this);
-                for (let i=0;i<this._referenceNodes.length;i++)
-                {
-                    KinematicsManager.viewer.model.setNodesVisibility([this._referenceNodes[i].nodeid], false);
-                }
-                await this.belt.initialize();
-                this._referenceNodes.push({nodeid:this.belt.getBaseNode(), matrix: new Communicator.Matrix()});
-
-            }
-
-            if (this._mappedType == componentType.prismaticPlane)
-            {
-                let normal = Communicator.Point3.fromJson(def._prismaticPlanePlane.normal);
-                this._prismaticPlanePlane = new Communicator.Plane();
-                this._prismaticPlanePlane.d = def._prismaticPlanePlane.d;
-                this._prismaticPlanePlane.normal = normal;
-                this._prismaticPlaneTip = Communicator.Point3.fromJson(def._prismaticPlaneTip);
-            }
-            
-        }
        
-
-
+       
         for (let i = 0; i < def.children.length; i++) {
             let component = new KinematicsComponent(this, this._hierachy);
 
@@ -799,8 +620,6 @@ export class KinematicsComponent {
         }
     }
 
-
-    
  /**
      * Add an animation template id to the component.
      * @param  {uuid} animationid - Animation ID
@@ -865,8 +684,6 @@ export class KinematicsComponent {
 
     }
 
-
-  
  /**
      * Remove all nodes specified in the supplied array from the component
      * @param  {array} nodeids - Array of nodeids to remove from the component
@@ -885,8 +702,7 @@ export class KinematicsComponent {
     }
 
     transformPointToComponentSpace(pos)
-    {
-       
+    {  
         let netmatrix = this._hierachy.getReferenceNodeNetMatrix(this);
         let netmatrixinverse = Communicator.Matrix.inverse(netmatrix);
         return netmatrixinverse.transform(pos);    
@@ -904,8 +720,6 @@ export class KinematicsComponent {
         mat = Communicator.Matrix.multiply(mat, matrix);
         return mat.transform(pos);
     }
-
-
 
     _calculateAngleRotMatrix(angle,add,axis)    
     {
@@ -1012,7 +826,6 @@ export class KinematicsComponent {
                 delta = this._maxLimit;
             }
         }
-
         
         this._currentPosition = delta;
 
@@ -1036,9 +849,6 @@ export class KinematicsComponent {
 
     }
 
-   
-
-   
  /**
      * Derives component matrix from active handle matrix
      * @param  {object} matrix - Handle Matrix
@@ -1224,10 +1034,6 @@ export class KinematicsComponent {
         KinematicsManager.handlePlacementOperator.lastAxis = axis.copy();
     }
 
-
-
-    
-
     async calculateGradient() {
         
         let angle = this._currentAngle;
@@ -1364,9 +1170,6 @@ export class KinematicsComponent {
 
             let newlength = Communicator.Point3.subtract(pivot1trans, pivot2trans).length();
 
-      
-
-
             if (Math.abs(originallength - newlength) > 0.001) {
                 let reactcomponent;
                 let triggercomponent;
@@ -1500,58 +1303,7 @@ export class KinematicsComponent {
             }
 
             component._rotate(length * component._helicalFactor, true, true);
-        }
-        else if (component._type == componentType.mapped) {
-            if (component._mappedType == componentType.prismaticPlane) {
-                let matrix = KinematicsManager.viewer.model.getNodeNetMatrix(component._mappedTargetComponent._nodeid);
-                let pp = matrix.transform(component._prismaticPlaneTip);
-                let dist = component._prismaticPlanePlane.distanceToPoint(pp);
-                if (dist < 0)
-                    await component._translate(dist * component._helicalFactor);
-                else
-                    await component._translate(0);
-            }
-            else if (component._mappedTargetComponent._type == componentType.prismatic || (component._mappedTargetComponent._type == componentType.mapped && component._mappedTargetComponent._mappedType == componentType.prismatic)) {
-                let savdelta = component._mappedTargetComponent._currentPosition;
-                let savmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._mappedTargetComponent._nodeid);
-                let p1 = component._mappedTargetComponent._parent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
-                let p2 = component._mappedTargetComponent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
-                let length = Communicator.Point3.subtract(p2, p1).length();
-                component._mappedTargetComponent._translate(length);
-                let p3 = component._mappedTargetComponent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
-                component._mappedTargetComponent._translate(-length);
-                let p4 = component._mappedTargetComponent.transformlocalPointToWorldSpace(component._mappedTargetComponent._center);
-                if (Communicator.Point3.subtract(p3, p2).length() < Communicator.Point3.subtract(p4, p2).length())
-                    length = -length;
-                KinematicsManager.viewer.model.setNodeMatrix(component._mappedTargetComponent._nodeid, savmatrix);
-
-                if (component._mappedType == componentType.revolute) 
-                {
-                    await component._rotate(length * component._helicalFactor, true);
-                    component._currentAngle = length * component._helicalFactor;
-                }
-                else if (component._mappedType == componentType.prismatic)
-                    await component._translate(length * component._helicalFactor, true);
-                else if (component._mappedType == componentType.belt)
-                    await component.belt.move(length * component._helicalFactor);                    
-
-                component._mappedTargetComponent._currentPosition = savdelta;
-            }
-            else if (component._mappedTargetComponent._type == componentType.revolute || component._mappedTargetComponent._type == componentType.mapped) {
-             
-                if (component._mappedType == componentType.revolute) 
-                {
-                    await component._rotate(component._mappedTargetComponent._currentAngle * component._helicalFactor, true);
-                    component._currentAngle = component._mappedTargetComponent._currentAngle * component._helicalFactor;
-                }
-                else if (component._mappedType == componentType.prismatic)
-                    await component._translate(component._mappedTargetComponent._currentAngle * component._helicalFactor, true);
-                else if (component._mappedType == componentType.belt)
-                    await component.belt.move(component._mappedTargetComponent._currentAngle * component._helicalFactor);
-
-                
-            }
-        }        
+        }      
     }
 
     async _updateReferenceNodeMatrices() {
@@ -1565,7 +1317,6 @@ export class KinematicsComponent {
                     let resmatrix2 = Communicator.Matrix.multiply(resmatrix3, r2);
                     KinematicsManager.viewer.model.setNodeMatrix(this._referenceNodes[i].nodeid, resmatrix2);
                 }
-
             }
             else {
                 for (let i = 0; i < this._referenceNodes.length; i++) {
@@ -1585,6 +1336,4 @@ export class KinematicsComponent {
             }
         }
     }
-
-
 }

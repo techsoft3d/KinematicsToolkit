@@ -107,7 +107,7 @@ else
 
 function addComponentMappedTypeToSelect(i,component)
 {
-    if (i == component.getMappedType())
+    if (i == component.getBehavior().getMappedType())
     return  '<option selected value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
 else
     return '<option value="' + string_of_enum(KT.componentType,i) + '">' + string_of_enum(KT.componentType,i) + '</option>\n';
@@ -129,7 +129,7 @@ function generateComponentTypeSelect(component) {
 }   
 
 
-function generateMapComponentTypeSelect(component) {
+function generateMappedComponentTypeSelect(component) {
     var html = '<select id="mappedcomponenttype" class="form-select" style="font-size:11px" value="">\n';
 
 
@@ -166,7 +166,7 @@ function generateMappedComponentSelect(component) {
     for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
         if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
             let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getMappedTargetComponent())
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getBehavior().getMappedTargetComponent())
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';
@@ -206,7 +206,7 @@ function generateKinematicsTreeDataRecursive(component, parentid)
     $('#KinematicsTreeDiv').jstree().create_node(parentid, {
         "id": component.getId().toString(),
         "text": parentid=="#" ? component.getId() + ":root": component.getType() != KT.componentType.mapped ? 
-            component.getId() + ":" + string_of_enum(KT.componentType,component.getType()) : component.getId() + ":" + string_of_enum(KT.componentType,component.getType()) + ":" + string_of_enum(KT.componentType,component.getMappedType()) + ":" + component.getMappedTargetComponent().getId(),
+            component.getId() + ":" + string_of_enum(KT.componentType,component.getType()) : component.getId() + ":" + string_of_enum(KT.componentType,component.getType()) + ":" + string_of_enum(KT.componentType,component.getBehavior().getMappedType()) + ":" + component.getBehavior().getMappedTargetComponent().getId(),
         });
 
 
@@ -393,9 +393,9 @@ function generateComponentPropertiesData(id)
 
     
 
-        html += '<div class="col">' + generateMapComponentTypeSelect(component) + '</div></div>';
+        html += '<div class="col">' + generateMappedComponentTypeSelect(component) + '</div></div>';
 
-        if (component.getMappedType() == KT.componentType.prismaticPlane)
+        if (component.getBehavior().getMappedType() == KT.componentType.prismaticPlane)
         {
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
             html += '<div class="col">';
@@ -409,35 +409,35 @@ function generateComponentPropertiesData(id)
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Component:</label></div>';
         html += '<div class="col">' + generateMappedComponentSelect(component) + '</div></div>';
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
-        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getHelicalFactor() + '"></div></div>';
-        if (component.getMappedType() == KT.componentType.belt)
+        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
+        if (component.getBehavior().getMappedType() == KT.componentType.belt)
         {     
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Width:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltWidth(' + id + ')" id="beltwidth" type="number" value="' + component.getBelt().getWidth() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltWidth(' + id + ')" id="beltwidth" type="number" value="' + component.getBehavior().getBelt().getWidth() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Segments:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltSegmentCount(' + id + ')" id="beltsegments" type="number" value="' + component.getBelt().getSegmentNum() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltSegmentCount(' + id + ')" id="beltsegments" type="number" value="' + component.component.getBehavior().getBelt().getSegmentNum() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Thickness:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltThickness(' + id + ')" id="beltthickness" type="number" value="' + component.getBelt().getThickness() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltThickness(' + id + ')" id="beltthickness" type="number" value="' + component.getBehavior().getBelt().getThickness() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Gap:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltGap(' + id + ')" id="beltgap" type="number" value="' + component.getBelt().getGap() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltGap(' + id + ')" id="beltgap" type="number" value="' + component.getBehavior().getBelt().getGap() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Tracks:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltTracks(' + id + ')" id="belttracks" type="number" value="' + component.getBelt().getTracks() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltTracks(' + id + ')" id="belttracks" type="number" value="' + component.getBehavior().getBelt().getTracks() + '" class="form-control" style="font-size:11px"></div></div>';
 
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Invert Track Orientation</label></div><div class="col">';
-            if (component.getBelt().getTrackOrientation())
+            if (component.getBehavior().getBelt().getTrackOrientation())
                 html += '<input type="checkbox" onclick="updateBeltOrientation(' + id + ')" id="belttrackorientation" checked>';
             else
                 html += '<input type="checkbox" onclick="updateBeltOrientation(' + id + ')" id="belttrackorientation">';
             html += '</div></div>';            
 
             let dis;
-            if (component.getBelt().getAlignVector())
+            if (component.getBehavior().getBelt().getAlignVector())
                 dis = '';
             else
                 dis = 'disabled';
@@ -445,14 +445,14 @@ function generateComponentPropertiesData(id)
 
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Align Vector:</label></div>';
-            if (component.getBelt().getAlignVector()) {
-                let alignVector = component.getBelt().getAlignVector();
+            if (component.getBehavior().getBelt().getAlignVector()) {
+                let alignVector = component.getBehavior().getBelt().getAlignVector();
                 html += '<div class="col"><input ' + dis + ' onchange="updateAlignVector(' + id + ')" id="alignvector" type="text" value="' + alignVector.x + ' ' + alignVector.y + ' ' + alignVector.z + '" class="form-control" style="display:inline;width:50%;font-size:11px">';
             }
             else
                 html += '<div class="col"><input ' + dis + ' onchange="updateAlignVector(' + id + ')" id="alignvector" type="text" value="" class="form-control" style="display:inline;width:50%;font-size:11px">';
 
-            if (component.getBelt().getAlignVector())
+            if (component.getBehavior().getBelt().getAlignVector())
                 html += '<input style="margin-bottom:5px;margin-left:5px" type="checkbox" onclick="updateAlignVector(' + id + ')" id="alignvectorcheckbox" checked>';
             else
 
@@ -460,8 +460,8 @@ function generateComponentPropertiesData(id)
             html += '</div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Colors:</label></div>';
-            let hexcolor1 = rgbToHex(component.getBelt().GetColor1());
-            let hexcolor2 = rgbToHex(component.getBelt().getColor2());
+            let hexcolor1 = rgbToHex(component.getBehavior().getBelt().GetColor1());
+            let hexcolor2 = rgbToHex(component.getBehavior().getBelt().getColor2());
             html += '<div class="col"><input style="height:20px;width:20px;padding:0;border:none" onchange="updateBeltColor(' + id + ',0)" type="color" onclick="" id="beltcolor1" name="favcolor" value="' + hexcolor1 + '"></input>';
             html += '<input style="height:20px;width:20px;padding:0;border:none;margin-left:5px" onchange="updateBeltColor(' + id + ',1)" type="color" onclick="" id="beltcolor2" name="favcolor" value="' + hexcolor2 + '"></input></div></div>';
 
@@ -882,16 +882,16 @@ function updateComponent(j){
     }
     else if (component.getType() == KT.componentType.mapped && $("#helicalfactor")[0] != undefined)
     {
-        component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
 
-        component.setMappedType(KT.componentType[$("#mappedcomponenttype")[0].value]);
+        component.getBehavior().setMappedType(KT.componentType[$("#mappedcomponenttype")[0].value]);
 
-        if (component.getMappedType() == KT.componentType.belt && !component.getBelt())
-            component.belt = new Belt();               
+        if (component.getBehavior().getMappedType() == KT.componentType.belt && !component.getBehavior().getBelt())
+            component.getBehavior().createBelt();
 
 
         let id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
-        component.setMappedTargetComponent(currentHierachy.getComponentById(id));
+        component.getBehavior().setMappedTargetComponent(currentHierachy.getComponentById(id));
     }
     else if (component.getType() == KT.componentType.revolute)
     {

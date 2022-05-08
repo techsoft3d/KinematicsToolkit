@@ -133,7 +133,6 @@ export class KinematicsComponentBehaviorPistonController {
         return this._extraComponent1;
     }
 
-
     /**
       * Sets the extra component 1
       * @param  {KinematicsComponent} component - Component

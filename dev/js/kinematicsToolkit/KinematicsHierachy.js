@@ -449,7 +449,7 @@ export class KinematicsHierachy {
             }
             else {
 
-                if (component.getType() == componentType.prismaticAggregate || component.getType() == componentType.mate) {
+                if (component.getType() == componentType.mate) {
                     component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
                     component.setExtraComponent2(this._componentHash[component.getExtraComponent2()]);
                 }

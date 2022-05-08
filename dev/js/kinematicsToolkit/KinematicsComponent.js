@@ -9,6 +9,8 @@ import { KinematicsComponentBehaviorTarget } from './KinematicsComponentBehavior
 import { KinematicsComponentBehaviorPivotConnector } from './KinematicsComponentBehaviorPivotConnector.js';
 import { KinematicsComponentBehaviorPrismaticTriangle } from './KinematicsComponentBehaviorPrismaticTriangle.js';
 import { KinematicsComponentBehaviorMapped } from './KinematicsComponentBehaviorMapped.js';
+import { KinematicsComponentBehaviorHelical } from './KinematicsComponentBehaviorHelical.js';
+import { KinematicsComponentBehaviorPrismaticAggregate } from './KinematicsComponentBehaviorPrismaticAggregate.js';
 
 /**
  * Type of Component.
@@ -175,6 +177,14 @@ export class KinematicsComponent {
         {
             this._behavior = new KinematicsComponentBehaviorMapped(this);
         }
+        else if (this._type == componentType.helical)
+        {
+            this._behavior = new KinematicsComponentBehaviorHelical(this);
+        }        
+        else if (this._type == componentType.prismaticAggregate)
+        {
+            this._behavior = new KinematicsComponentBehaviorPrismaticAggregate(this);
+        }        
         else
         {
             this._behavior = null;
@@ -304,10 +314,7 @@ export class KinematicsComponent {
         if (this._behavior)
             return this._behavior.getCurrentValue();
         else {
-            if (this._type == componentType.helical)
-            {
-                return this._currentPosition;
-            }
+          
         }
     }
 
@@ -320,60 +327,6 @@ export class KinematicsComponent {
     {
         return this._parentMatrix;
     }
-
- /**
-     * Retrieves the Extra Component 1 (not applicable to all component types)
-     * @return {KinematicsComponent} Component
-     */       
-    getExtraComponent1()
-    {
-        return this._extraComponent1;
-    }
-
-   /**
-     * Sets the extra component 1
-     * @param  {KinematicsComponent} component - Component
-     */     
-    setExtraComponent1(component)
-    {
-        this._extraComponent1 = component;
-    }
-
- /**
-     * Retrieves the Extra Component 2 (not applicable to all component types)
-     * @return {KinematicsComponent} Component
-     */       
-    getExtraComponent2()
-    {
-        return this._extraComponent2;
-    }
-
-   /**
-     * Sets the extra component 2
-     * @param  {KinematicsComponent} component - Component
-     */     
-    setExtraComponent2(component)
-    {
-        this._extraComponent2 = component;
-    }
-
- /**
-     * Sets the extra pivot 2 (applicable to componentType.mate)
-     * @param  {Point3} pivot - Pivot Point
-     */     
-    setExtraPivot2(pivot)
-    {
-        this._extraPivot2 = pivot;
-    }
-
-/**
-   * Retrieves the Extra Pivot 2 (applicable to componentType.mate)
-   * @return {Point3} Pivot
-   */         
-  getExtraPivot2()
-  {
-      return this._extraPivot2;
-  }
 
 
  /**
@@ -471,9 +424,6 @@ export class KinematicsComponent {
         }
         else {
 
-            if (this._type == componentType.helical) {
-                this._translate(value);
-            }
         }
     }
 
@@ -505,7 +455,7 @@ export class KinematicsComponent {
             this._behavior.toJson(def);
         }
 
-        if (this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
+        if (this._type == componentType.mate)            
         {
             def.extraComponent1 = this._extraComponent1._id;
             def.extraComponent2 = this._extraComponent2._id;
@@ -522,10 +472,6 @@ export class KinematicsComponent {
             def.extraPivot1 = this._extraPivot1.toJson();
 
         }     
-        else if (this._type == componentType.helical)            
-        {
-            def.helicalFactor = this._helicalFactor;
-        }
       
       
 
@@ -585,7 +531,7 @@ export class KinematicsComponent {
             this._hierachy._componentNodeidHash[def.referenceNodes[i].nodeid] = this;
         }
         
-        if (this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
+        if (this._type == componentType.mate)            
         {
             this._extraComponent1 = def.extraComponent1;
             this._extraComponent2 = def.extraComponent2;
@@ -600,10 +546,6 @@ export class KinematicsComponent {
             this._extraComponent1 = def.extraComponent1;
             this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
         }                
-        else if (this._type == componentType.helical)            
-        {
-            this._helicalFactor = def.helicalFactor;
-        }
        
        
         for (let i = 0; i < def.children.length; i++) {
@@ -1279,31 +1221,7 @@ export class KinematicsComponent {
             }
 
         }                  
-        else if (component._type == componentType.prismaticAggregate)
-        {
-            let matrix1 = KinematicsManager.viewer.model.getNodeMatrix(component._extraComponent1._nodeid);
-            let matrix2 = KinematicsManager.viewer.model.getNodeMatrix(component._extraComponent2._nodeid);
-            let resmatrix = Communicator.Matrix.multiply(matrix1, matrix2);
-            await KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, resmatrix);
-
-        }      
-        else if (component._type == componentType.helical)
-        {
-            let p1 = component._parent.transformlocalPointToWorldSpace(component._center);
-            let p2 = component.transformlocalPointToWorldSpace(component._center);
-            let length = Communicator.Point3.subtract(p2,p1).length();
-            component._translate(length);
-            let p3 = component.transformlocalPointToWorldSpace(component._center);
-            component._translate(-length);
-            let p4 = component.transformlocalPointToWorldSpace(component._center);
-            if (Communicator.Point3.subtract(p3,p2).length() < Communicator.Point3.subtract(p4,p2).length())
-            {
-                component._translate(length);
-                length = -length;
-            }
-
-            component._rotate(length * component._helicalFactor, true, true);
-        }      
+       
     }
 
     async _updateReferenceNodeMatrices() {

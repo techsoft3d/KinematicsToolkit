@@ -385,7 +385,7 @@ function generateComponentPropertiesData(id)
     else if (component.getType() == KT.componentType.helical)
     {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
-        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getHelicalFactor() + '"></div></div>';
+        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
     }
     else if (component.getType() == KT.componentType.mapped)
     {
@@ -878,7 +878,7 @@ function updateComponent(j){
     }
     else if (component.getType() == KT.componentType.helical && $("#helicalfactor")[0] != undefined)
     {
-        component.setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
     }
     else if (component.getType() == KT.componentType.mapped && $("#helicalfactor")[0] != undefined)
     {

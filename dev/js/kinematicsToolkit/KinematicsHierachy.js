@@ -452,14 +452,8 @@ export class KinematicsHierachy {
                 if (component.getType() == componentType.mate) {
                     component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
                     component.setExtraComponent2(this._componentHash[component.getExtraComponent2()]);
-                }
-                if (component.getType() == componentType.revoluteSlide) {
-                    component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-                }
-                else if (component.getType() == componentType.pivotConnector) {
-                    if (component.getExtraComponent1())
-                        component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-                }
+                }              
+            
             }
         }
 

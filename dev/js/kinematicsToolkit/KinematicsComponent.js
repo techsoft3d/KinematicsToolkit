@@ -11,6 +11,7 @@ import { KinematicsComponentBehaviorPrismaticTriangle } from './KinematicsCompon
 import { KinematicsComponentBehaviorMapped } from './KinematicsComponentBehaviorMapped.js';
 import { KinematicsComponentBehaviorHelical } from './KinematicsComponentBehaviorHelical.js';
 import { KinematicsComponentBehaviorPrismaticAggregate } from './KinematicsComponentBehaviorPrismaticAggregate.js';
+import { KinematicsComponentBehaviorRevoluteSlide } from './KinematicsComponentBehaviorRevoluteSlide.js';
 
 /**
  * Type of Component.
@@ -181,9 +182,9 @@ export class KinematicsComponent {
         {
             this._behavior = new KinematicsComponentBehaviorHelical(this);
         }        
-        else if (this._type == componentType.prismaticAggregate)
+        else if (this._type == componentType.revoluteSlide)
         {
-            this._behavior = new KinematicsComponentBehaviorPrismaticAggregate(this);
+            this._behavior = new KinematicsComponentBehaviorRevoluteSlide(this);
         }        
         else
         {
@@ -466,12 +467,7 @@ export class KinematicsComponent {
                 def.extraPivot2 = this._extraPivot2.toJson();
             }
         }
-        else if (this._type == componentType.revoluteSlide)            
-        {
-            def.extraComponent1 = this._extraComponent1._id;
-            def.extraPivot1 = this._extraPivot1.toJson();
-
-        }     
+      
       
       
 
@@ -541,12 +537,7 @@ export class KinematicsComponent {
                 this._extraPivot2 = Communicator.Point3.fromJson(def.extraPivot2);
             }
         }      
-        else if (this._type == componentType.revoluteSlide)
-        {
-            this._extraComponent1 = def.extraComponent1;
-            this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
-        }                
-       
+     
        
         for (let i = 0; i < def.children.length; i++) {
             let component = new KinematicsComponent(this, this._hierachy);
@@ -1081,29 +1072,7 @@ export class KinematicsComponent {
             return;
         }
 
-   
-        if (component._type == componentType.revoluteSlide) {
 
-            let pivot1trans = component._extraComponent1.transformlocalPointToWorldSpace(component._extraPivot1);
-            let centertrans = component._parent.transformlocalPointToWorldSpace(component._center);
-            let pivotorigtrans = component._parent.transformlocalPointToWorldSpace(component._extraPivot1);
-
-            let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
-            let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
-            let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
-            await component._rotate(angle);
-
-            let r = component.transformlocalPointToWorldSpace(component._extraPivot1);
-            let pray = new Communicator.Point3(centertrans.x + v2.x * 10000, centertrans.y + v2.y * 10000, centertrans.z + v2.z * 10000);
-
-            let outpoint = new Communicator.Point3(0,0,0);
-            let ldist = Communicator.Util.computePointToLineDistance(r,centertrans,pray,outpoint);
-
-
-             if (ldist > 0.0001)
-                await component._rotate(-angle);
-
-        }
         if (component._type == componentType.mate) {
 
             let originallength = Communicator.Point3.subtract(component._extraPivot1, component._extraPivot2).length();

@@ -866,7 +866,7 @@ function updateComponent(j){
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);
-        component.setExtraComponent1(fixedcomponent);
+        component.getBehavior().setExtraComponent1(fixedcomponent);
     }
 
     if (component.getType() == KT.componentType.pistonController && $("#fixedcomponentselect")[0] != undefined)
@@ -1117,11 +1117,11 @@ function updateMatePivot(type, j) {
     let pos = handleOperator.getPosition();
     if (pos) {
         if (type === 0) {
-            component.setExtraPivot1(pos.copy());
+            component.getBehavior().setExtraPivot1(pos.copy());
         }
         else
         {
-            component.setExtraPivot2(pos.copy());
+            component.getBehavior().setExtraPivot2(pos.copy());
         }
     }
 }
@@ -1134,7 +1134,7 @@ function updateConnectorPivot(j) {
     let pos = handleOperator.getPosition();
     let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
     if (pos) {
-        component.setExtraPivot1(pos.copy());
+        component.GetBehavior().setExtraPivot1(pos.copy());
     }
 }
 

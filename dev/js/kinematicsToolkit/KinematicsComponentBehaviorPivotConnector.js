@@ -38,7 +38,9 @@ export class KinematicsComponentBehaviorPivotConnector {
 
 
     jsonFixup() {
-        this._extraComponent1 = this._component.getHierachy().getComponentHash()[this._extraComponent1];
+        if (this._extraComponent1) {
+            this._extraComponent1 = this._component.getHierachy().getComponentHash()[this._extraComponent1];
+        }
     }
 
     toJson(def) {
@@ -78,7 +80,7 @@ export class KinematicsComponentBehaviorPivotConnector {
         * @param  {Point3} pivot - Pivot Point
         */
     setExtraPivot1(pivot) {
-        this._behavior._extraPivot1 = pivot;
+        this._extraPivot1 = pivot;
     }
 
 
@@ -87,7 +89,7 @@ export class KinematicsComponentBehaviorPivotConnector {
        * @return {Point3} Pivot
        */
     getExtraPivot1() {
-        return this._behavior._extraPivot1;
+        return this._extraPivot1;
     }
 
 
@@ -344,26 +346,6 @@ export class KinematicsComponentBehaviorPivotConnector {
     getIsSlidePivot() {
         return this._isSlidePivot;
     }
-
-    
- /**
-     * Sets the extra pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
-     * @param  {Point3} pivot - Pivot Point
-     */         
-  setExtraPivot1(pivot)
-  {
-      this._extraPivot1 = pivot;
-  }
-
-
-/**
-   * Retrieves the Extra Pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
-   * @return {Point3} Pivot
-   */     
-  getExtraPivot1()
-  {
-      return this._extraPivot1;
-  }
 
 
 

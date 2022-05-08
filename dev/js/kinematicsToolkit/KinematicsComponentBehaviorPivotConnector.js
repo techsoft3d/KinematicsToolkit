@@ -25,7 +25,7 @@ export class KinematicsComponentBehaviorPivotConnector {
         return this._type;
     }
 
-    async fromJson(def) {
+    async fromJson(def,version) {
         if (def.extraComponent1) {
             this._extraComponent1 = def.extraComponent1;
         }

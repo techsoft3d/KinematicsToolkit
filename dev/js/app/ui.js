@@ -185,7 +185,7 @@ function generateExtraComponent2Select(component) {
     for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
         if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
             let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getExtraComponent2())
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getBehavior().getExtraComponent2())
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';
@@ -842,10 +842,10 @@ function updateComponent(j){
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);
-        component.setExtraComponent1(fixedcomponent);
+        component.getBehavior().setExtraComponent1(fixedcomponent);
         id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
         let variablecomponent = currentHierachy.getComponentById(id);
-        component.setExtraComponent2(variablecomponent);
+        component.getBehavior().setExtraComponent2(variablecomponent);
     }
 
     if (component.getType() == KT.componentType.pivotConnector && $("#fixedcomponentselect")[0] != undefined)

@@ -17,7 +17,7 @@ export class KinematicsComponentBehaviorFixed {
         return this._type;
     }
 
-    async fromJson(def) {
+    async fromJson(def,version) {
     }
 
     toJson(def) {

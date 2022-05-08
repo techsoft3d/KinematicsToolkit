@@ -18,7 +18,7 @@ export class KinematicsComponentBehaviorPistonController {
         return this._type;
     }
 
-    async fromJson(def) {
+    async fromJson(def,version) {
         this._extraComponent1 = def.extraComponent1;
     }
 

@@ -70,12 +70,12 @@ export class KinematicsComponentBehaviorRevolute {
         }
     }
 
-    async fromJson(def) {
+    async fromJson(def, version) {
         if (def.fixedAxis) {
 
             if (version == undefined) {
                 let axis = Communicator.Point3.fromJson(def.fixedAxis);
-                this._fixedAxis = Communicator.Point3.subtract(axis, this._center).normalize();
+                this._fixedAxis = Communicator.Point3.subtract(axis, this._component._center).normalize();
             }
             else
                 this._fixedAxis = Communicator.Point3.fromJson(def.fixedAxis);

@@ -7,6 +7,7 @@ import { KinematicsComponentBehaviorPistonController } from './KinematicsCompone
 import { KinematicsComponentBehaviorFixed } from './KinematicsComponentBehaviorFixed.js';
 import { KinematicsComponentBehaviorTarget } from './KinematicsComponentBehaviorTarget.js';
 import { KinematicsComponentBehaviorPivotConnector } from './KinematicsComponentBehaviorPivotConnector.js';
+import { KinematicsComponentBehaviorPrismaticTriangle } from './KinematicsComponentBehaviorPrismaticTriangle.js';
 
 
 /**
@@ -172,6 +173,10 @@ export class KinematicsComponent {
         else if (this._type == componentType.pivotConnector)
         {
             this._behavior = new KinematicsComponentBehaviorPivotConnector(this);
+        }
+        else if (this._type == componentType.prismaticTriangle)
+        {
+            this._behavior = new KinematicsComponentBehaviorPrismaticTriangle(this);
         }
         else
         {
@@ -636,7 +641,7 @@ export class KinematicsComponent {
             this._behavior.toJson(def);
         }
 
-        if (this._type == componentType.prismaticTriangle || this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
+        if (this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
         {
             def.extraComponent1 = this._extraComponent1._id;
             def.extraComponent2 = this._extraComponent2._id;
@@ -714,7 +719,7 @@ export class KinematicsComponent {
 
         if (this._behavior)
         {
-            this._behavior.fromJson(def);
+            this._behavior.fromJson(def,version);
         }
  
         this._mappedType = def.mappedType;
@@ -731,7 +736,7 @@ export class KinematicsComponent {
             this._hierachy._componentNodeidHash[def.referenceNodes[i].nodeid] = this;
         }
         
-        if (this._type == componentType.prismaticTriangle || this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
+        if (this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
         {
             this._extraComponent1 = def.extraComponent1;
             this._extraComponent2 = def.extraComponent2;
@@ -1478,42 +1483,7 @@ export class KinematicsComponent {
             let resmatrix = Communicator.Matrix.multiply(matrix1, matrix2);
             await KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, resmatrix);
 
-        }
-        else if (component._type == componentType.prismaticTriangle)
-        {
-            let p1 = component._extraComponent1.transformlocalPointToWorldSpace(component._center);
-            let p2 =  component._extraComponent2.transformlocalPointToWorldSpace(component._extraComponent2._center);            
-            let p3 = component._extraComponent2._parent.transformlocalPointToWorldSpace(component._center);     
-
-
-            let delta = Communicator.Point3.subtract(p2,p1);
-            let delta2 = Communicator.Point3.subtract(p2,p3);
-            let ld1 = delta.length();
-            let ld2 = delta2.length();
-
-            delta.normalize();
-            delta2.normalize();
-
-            let angle = Communicator.Util.computeAngleBetweenVector(delta, delta2);
-
-            await component._extraComponent2._rotate(-angle, true);
-            let p1x = component._extraComponent2.transformlocalPointToWorldSpace(component._center);
-           
-            let delta3 = Communicator.Point3.subtract(p1x,p1);
-            let ld3 = delta3.length();
-
-            await component._extraComponent2._rotate(angle, true);
-            p1x = component._extraComponent2.transformlocalPointToWorldSpace(component._center);
-            let delta4 = Communicator.Point3.subtract(p1x,p1);
-            let ld4 = delta4.length();
-
-            if (ld4>ld3)
-                await component._extraComponent2._rotate(-angle, true);
-
-            await component._extraComponent2._updateReferenceNodeMatrices();
-
-             await component._translate(ld1 - ld2);
-        }
+        }      
         else if (component._type == componentType.helical)
         {
             let p1 = component._parent.transformlocalPointToWorldSpace(component._center);

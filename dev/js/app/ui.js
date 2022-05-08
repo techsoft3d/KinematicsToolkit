@@ -148,7 +148,7 @@ function generateExtraComponent1Select(component) {
     for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
         if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
             let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
-            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getExtraComponent1())
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getBehavior().getExtraComponent1())
                 html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
             else
                 html += '<option value="' + componentname + '">' + componentname + '</option>\n';
@@ -308,7 +308,7 @@ function generateComponentPropertiesData(id)
     
     if (component.getType() == KT.componentType.revolute) {
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Fixed Axis</label></div><div class="col">';
-        if (component.getFixedAxis())
+        if (component.getBehavior().getFixedAxis())
             html += '<input type="checkbox" onclick="showFixedAxis(' + id + ')" id="hasfixedaxis" checked>';
         else
             html += '<input type="checkbox" onclick="showFixedAxis(' + id + ')" id="hasfixedaxis">';
@@ -344,11 +344,11 @@ function generateComponentPropertiesData(id)
 
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
         html += '<div class="col">';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Connector Pivot</button>';
+        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Connector Pivot</button>';
         html += '</div></div>';
         
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Slide Pivot:</label></div><div class="col">';
-        if (component.getIsSlidePivot())
+        if (component.getBehavior().getIsSlidePivot())
             html += '<input type="checkbox"  id="isslidepivot" checked>';
         else
             html += '<input type="checkbox" id="isslidepivot">';
@@ -852,13 +852,13 @@ function updateComponent(j){
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);        
-        component.setExtraComponent1(fixedcomponent);
+        component.getBehavior().setExtraComponent1(fixedcomponent);
 
                 
         if ($("#isslidepivot").is(":checked"))
-            component.setIsSlidePivot(true);
+            component.getBehavior().setIsSlidePivot(true);
         else
-            component.setIsSlidePivot(false);
+            component.getBehavior().setIsSlidePivot(false);
     }
 
 
@@ -873,8 +873,8 @@ function updateComponent(j){
     {
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);
-        component.setExtraComponent1(fixedcomponent); 
-        component.adjustExtraComponentToPistonController();
+        component.getBehavior().setExtraComponent1(fixedcomponent); 
+        component.getBehavior().adjustExtraComponentToPistonController();
     }
     else if (component.getType() == KT.componentType.helical && $("#helicalfactor")[0] != undefined)
     {
@@ -897,12 +897,12 @@ function updateComponent(j){
     {
         if (!$("#hasfixedaxis").is(":checked"))
         {
-            component.setFixedAxis(null);
+            component.getBehavior().setFixedAxis(null);
         }
         else
         {
             let matrix = KinematicsManager.viewer.model.getNodeMatrix(tempnode);
-            component.setFixedAxisFromMatrix(matrix);
+            component.getBehavior().setFixedAxisFromMatrix(matrix);
 
         }
               

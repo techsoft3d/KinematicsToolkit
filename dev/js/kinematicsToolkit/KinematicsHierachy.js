@@ -107,7 +107,7 @@ export class KinematicsHierachy {
         if (!component)
             return;
 
-        component._execute();
+        await component._execute();
 
         await component._updateReferenceNodeMatrices();
 
@@ -440,32 +440,29 @@ export class KinematicsHierachy {
                 break;
             }                
             component = component.getChildren()[0];
-        }      
-        
-        for (let i in this._componentHash)
-        {
+        }
+
+        for (let i in this._componentHash) {
             let component = this._componentHash[i];
-            if (component.getType() == componentType.prismaticTriangle || component.getType() == componentType.prismaticAggregate || component.getType() == componentType.mate)
-            {
-                component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-                component.setExtraComponent2(this._componentHash[component.getExtraComponent2()]);
+            if (component.getBehavior()) {
+                component.getBehavior().jsonFixup();
             }
-            if (component.getType() == componentType.revoluteSlide)
-            {
-                component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-            }
-            else if (component.getType() == componentType.pistonController)
-            {
-                component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-            }
-            else if (component.getType() == componentType.pivotConnector)
-            {
-                if (component.getExtraComponent1())
+            else {
+
+                if (component.getType() == componentType.prismaticTriangle || component.getType() == componentType.prismaticAggregate || component.getType() == componentType.mate) {
                     component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-            }
-            else if (component.getType() == componentType.mapped)
-            {
-                component._mappedTargetComponent = this._componentHash[component.getMappedTargetComponent()];
+                    component.setExtraComponent2(this._componentHash[component.getExtraComponent2()]);
+                }
+                if (component.getType() == componentType.revoluteSlide) {
+                    component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
+                }
+                else if (component.getType() == componentType.pivotConnector) {
+                    if (component.getExtraComponent1())
+                        component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
+                }
+                else if (component.getType() == componentType.mapped) {
+                    component._mappedTargetComponent = this._componentHash[component.getMappedTargetComponent()];
+                }
             }
         }
 

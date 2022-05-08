@@ -1,6 +1,12 @@
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsBelt } from './KinematicsBelt.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
+import { KinematicsComponentBehaviorRevolute } from './KinematicsComponentBehaviorRevolute.js';
+import { KinematicsComponentBehaviorPrismatic } from './KinematicsComponentBehaviorPrismatic.js';
+import { KinematicsComponentBehaviorPistonController } from './KinematicsComponentBehaviorPistonController.js';
+import { KinematicsComponentBehaviorFixed } from './KinematicsComponentBehaviorFixed.js';
+import { KinematicsComponentBehaviorTarget } from './KinematicsComponentBehaviorTarget.js';
+import { KinematicsComponentBehaviorPivotConnector } from './KinematicsComponentBehaviorPivotConnector.js';
 
 
 /**
@@ -73,6 +79,9 @@ export class KinematicsComponent {
         this._id = hierachy._highestId++;
 
         this._type = componentType.revolute;
+
+        this._behavior = new KinematicsComponentBehaviorRevolute(this);
+
         this._mappedType = null;
 
         this._children = [];
@@ -90,9 +99,6 @@ export class KinematicsComponent {
 
         this._currentPosition = 0;
 
-        this._fixedAxis = null;
-        this._fixedAxisTarget = null;
-
         this._referenceNodes = [];
         this._parentMatrix = new Communicator.Matrix();
 
@@ -100,9 +106,6 @@ export class KinematicsComponent {
         this._extraComponent2 = null;
 
         this._mappedTargetComponent = null;
-
-        this._targetPivot = null;
-        this._isSlidePivot = false;
 
         this._helicalFactor = 1.0;
         this._reference = true;
@@ -154,6 +157,11 @@ export class KinematicsComponent {
     getType()
     {
         return this._type;
+    }
+
+    getBehavior()
+    {
+        return this._behavior;
     }
 
      /**
@@ -269,16 +277,19 @@ export class KinematicsComponent {
     }
 
 
- /**
-     * Retrieves the value of the current component (angle or relative position)
-     * @return {number} Current Value
-     */             
-    getCurrentValue()
-    {
-        if (this._type == componentType.revolute || (this._type == componentType.pivotConnector && !this._isSlidePivot))
-            return this._currentAngle;
-        else if (this._type == componentType.prismatic || this._type == componentType.helical || (this._type == componentType.pivotConnector && this._isSlidePivot))
-            return this._currentPosition;
+    /**
+        * Retrieves the value of the current component (angle or relative position)
+        * @return {number} Current Value
+        */
+    getCurrentValue() {
+        if (this._behavior)
+            return this._behavior.getCurrentValue();
+        else {
+            if (this._type == componentType.helical)
+            {
+                return this._currentPosition;
+            }
+        }
     }
 
 
@@ -331,25 +342,6 @@ export class KinematicsComponent {
         this._extraComponent2 = component;
     }
 
- /**
-     * Sets the extra pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
-     * @param  {Point3} pivot - Pivot Point
-     */         
-    setExtraPivot1(pivot)
-    {
-        this._extraPivot1 = pivot;
-    }
-
-
- /**
-     * Retrieves the Extra Pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
-     * @return {Point3} Pivot
-     */     
-    getExtraPivot1()
-    {
-        return this._extraPivot1;
-    }
-
 
  /**
      * Sets the extra pivot 2 (applicable to componentType.mate)
@@ -360,26 +352,6 @@ export class KinematicsComponent {
         this._extraPivot2 = pivot;
     }
 
-
- /**
-     * Retrieves if component is slide pivot
-     * @return {bool} Is Slide Pivot
-     */         
-    getIsSlidePivot()
-    {
-        return this._isSlidePivot;
-    }
-
-
-    
- /**
-     * Sets the extra pivot 2 (applicable to componentType.mate)
-     * @param  {Point3} pivot - Pivot Point
-     */     
-  setIsSlidePivot(isSlidePivot)
-  {
-      this._isSlidePivot = isSlidePivot;
-  }
 
 
 /**
@@ -526,35 +498,6 @@ export class KinematicsComponent {
         return this._maxLimit;
     }
 
- /**
-     * Sets the fixed axis for this component (applicable to componentType.revolute)  
-     * This defines the axis that is fixed in the component
-     * @param  {Point3} axis - Fixed Axis
-     */ 
-    setFixedAxis(axis)
-    {
-        this._fixedAxis = axis;
-    }
-
- /**
-     * Sets the fixed axis target for this component (applicable to componentType.revolute)  
-     * This defines the axis that the fixed axis will be rotated to.
-     * @param  {Point3} axis - Fixed Axis Target
-     */ 
-    setFixedAxisTarget(axis)
-    {
-        this._fixedAxisTarget = axis;
-    }
-
- /**
-     * Retrieves the fixed axis for this component (applicable to componentType.revolute)  
-     * @return {Poin3} Fixed Axis
-     */      
-    getFixedAxis()
-    {
-        return this._fixedAxis;
-    }
-
     
  /**
      * Retrieves the belt object for this component (applicable to componentType.mapped with mapped type set to componentType.belt)
@@ -605,19 +548,20 @@ export class KinematicsComponent {
         return this._prismaticPlaneTip;
     }
 
-    
- /**
-     * Sets the value (rotation or translation) for the component (applicable to componentType.prismatic or componentType.revolute)
-     * @param  {number} value - Value
-     */ 
-    set(value) {
 
-        if (this._type == componentType.revolute || (this._type == componentType.pivotConnector && !this._isSlidePivot)) {
-            this._rotate(value);
-        }        
-        else if (this._type == componentType.prismatic || this._type == componentType.helical || (this._type == componentType.pivotConnector && this._isSlidePivot))
-        {
-            this._translate(value);
+    /**
+        * Sets the value (rotation or translation) for the component (applicable to componentType.prismatic or componentType.revolute)
+        * @param  {number} value - Value
+        */
+    set(value) {
+        if (this._behavior) {
+            this._behavior.set(value);
+        }
+        else {
+
+            if (this._type == componentType.helical) {
+                this._translate(value);
+            }
         }
     }
 
@@ -648,6 +592,12 @@ export class KinematicsComponent {
             def.parentMatrix = new Communicator.Matrix().toJson();
         }
 
+
+        if (this._behavior)
+        {
+            this._behavior.toJson(def);
+        }
+
         if (this._type == componentType.prismaticTriangle || this._type == componentType.prismaticAggregate || this._type == componentType.mate)            
         {
             def.extraComponent1 = this._extraComponent1._id;
@@ -664,20 +614,7 @@ export class KinematicsComponent {
             def.extraComponent1 = this._extraComponent1._id;
             def.extraPivot1 = this._extraPivot1.toJson();
 
-        }
-        else if (this._type == componentType.pivotConnector)            
-        {
-            if (this._extraComponent1)
-                def.extraComponent1 = this._extraComponent1._id;
-            if (this._extraPivot1)
-                def.extraPivot1 = this._extraPivot1.toJson();
-            def.isSlidePivot = this._isSlidePivot;                
-
-        }
-        else if (this._type == componentType.pistonController)            
-        {
-            def.extraComponent1 = this._extraComponent1._id;
-        }
+        }     
         else if (this._type == componentType.helical)            
         {
             def.helicalFactor = this._helicalFactor;
@@ -697,14 +634,7 @@ export class KinematicsComponent {
                 def._prismaticPlaneTip = this._prismaticPlaneTip.toJson();
             }
         }
-        else if (this._type == componentType.revolute)            
-        {
-            if (this._fixedAxis)
-            {
-                def.fixedAxis = this._fixedAxis.toJson();
-                def.fixedAxisTarget = this._fixedAxisTarget.toJson();
-            }
-        }
+      
 
         def.animations = [];
         for (let i=0;i<this._animations.length;i++)
@@ -743,6 +673,42 @@ export class KinematicsComponent {
         }
 
         this._type = def.type;
+
+        if (this._type == componentType.revolute)
+        {
+            this._behavior = new KinematicsComponentBehaviorRevolute(this);
+            this._behavior.fromJson(def);
+        }
+        else if (this._type == componentType.prismatic)
+        {
+            this._behavior = new KinematicsComponentBehaviorPrismatic(this);
+            this._behavior.fromJson(def);
+        }
+        else if (this._type == componentType.pistonController)
+        {
+            this._behavior = new KinematicsComponentBehaviorPistonController(this);
+            this._behavior.fromJson(def);
+        }
+        else if (this._type == componentType.fixed)
+        {
+            this._behavior = new KinematicsComponentBehaviorFixed(this);
+            this._behavior.fromJson(def);
+        }
+        else if (this._type == componentType.target)
+        {
+            this._behavior = new KinematicsComponentBehaviorTarget(this);
+            this._behavior.fromJson(def);
+        }
+        else if (this._type == componentType.pivotConnector)
+        {
+            this._behavior = new KinematicsComponentBehaviorPivotConnector(this);
+            this._behavior.fromJson(def);
+        }
+        else
+        {
+            this._behavior = null;
+        }
+
         this._mappedType = def.mappedType;
         this._parentMatrix = Communicator.Matrix.fromJson(def.parentMatrix);
         this._hierachy.getComponentHash()[this._id] = this;
@@ -766,28 +732,12 @@ export class KinematicsComponent {
                 this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
                 this._extraPivot2 = Communicator.Point3.fromJson(def.extraPivot2);
             }
-        }
-        else if (this._type == componentType.pivotConnector)
-        {
-            if (def.extraComponent1)
-            {
-                this._extraComponent1 = def.extraComponent1;
-            }
-            if (def.extraPivot1)
-            {
-                this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
-            }
-            this._isSlidePivot = def.isSlidePivot;
-        }         
+        }      
         else if (this._type == componentType.revoluteSlide)
         {
             this._extraComponent1 = def.extraComponent1;
             this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
-        }         
-        else if (this._type == componentType.pistonController)            
-        {
-            this._extraComponent1 = def.extraComponent1;
-        }
+        }                
         else if (this._type == componentType.helical)            
         {
             this._helicalFactor = def.helicalFactor;
@@ -819,20 +769,7 @@ export class KinematicsComponent {
             }
             
         }
-        else if (this._type == componentType.revolute)            
-        {
-            if (def.fixedAxis)
-            {
-
-                if (version == undefined) {
-                    let axis = Communicator.Point3.fromJson(def.fixedAxis);
-                    this._fixedAxis = Communicator.Point3.subtract(axis, this._center).normalize();
-                }
-                else
-                    this._fixedAxis = Communicator.Point3.fromJson(def.fixedAxis);
-                this._fixedAxisTarget = Communicator.Point3.fromJson(def.fixedAxisTarget);
-            }
-        }
+       
 
 
         for (let i = 0; i < def.children.length; i++) {
@@ -933,23 +870,6 @@ export class KinematicsComponent {
             }
         }
     }
-
-
-
- /**
-     * Aligns the component related to the piston controller to its plane
-     */     
-    adjustExtraComponentToPistonController()
-    {
-
-        let naxis = component._axis;
-        let plane = Communicator.Plane.createFromPointAndNormal(component._center, naxis);
-        let pol = KinematicsUtility.closestPointOnPlane(plane, component._extraComponent1._center);
-        
-        component._extraComponent1._axis = component._extraComponent1._axis.copy();
-        component._extraComponent1._center = pol;
-    }
-
 
     transformPointToComponentSpace(pos)
     {
@@ -1138,7 +1058,7 @@ export class KinematicsComponent {
         }
 
 
-        if (this._type == componentType.revolute || (this._type == componentType.pivotConnector && !this._isSlidePivot)) 
+        if (this._type == componentType.revolute || (this._type == componentType.pivotConnector && !this._behavior._isSlidePivot)) 
         {
             let origmatrix = KinematicsManager.viewer.model.getNodeMatrix(this._nodeid);
 
@@ -1215,29 +1135,6 @@ export class KinematicsComponent {
         }
     }
 
-    
-
-   
- /**
-     * Calculates Fixed Axis and Fixed Axis Target from matrix
-     */        
-    setFixedAxisFromMatrix(matrix) {
-        let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
-        if (handleOperator.getPosition()) {
-            if (!KinematicsManager.handlePlacementOperator.lastAxis2) 
-                return;           
-
-
-            let pivotaxis = Communicator.Point3.add(handleOperator.getPosition(),KinematicsManager.handlePlacementOperator.lastAxis2);
-            let pivot = matrix.transform(handleOperator.getPosition());
-            pivotaxis = matrix.transform(pivotaxis);
-
-            this._fixedAxis = Communicator.Point3.subtract(pivotaxis, this.center).normalize();
-            this._fixedAxisTarget = new Communicator.Point3(0,-1,0);
-            
-
-        }
-    }
 
   
  /**
@@ -1288,7 +1185,7 @@ export class KinematicsComponent {
         handlesop._addAxisTranslationHandle(pos, axis, nodeids);
         handlesop._addAxisTranslationHandle(pos, axis.copy().scale(-1), nodeids);
 
-        if (this._type != componentType.prismatic && this._type != componentType.prismaticTriangle && !(this._type == componentType.pivotConnector && this._isSlidePivot))
+        if (this._type != componentType.prismatic && this._type != componentType.prismaticTriangle && !(this._type == componentType.pivotConnector && this._behavior._isSlidePivot))
             handlesop._addAxisRotationHandle(pos, axis, nodeids);
 
         
@@ -1393,38 +1290,6 @@ export class KinematicsComponent {
         }
     }
 
-     _calculatePivotConnectorRotation(component, targetpivot) {
-
-        let pivot1trans = component._parent.transformlocalPointToWorldSpace(component._extraPivot1);
-        let centertrans = component.transformlocalPointToWorldSpace(component._center);
-        let pivotorigtrans = component._parent.transformlocalPointToWorldSpace(targetpivot);
-        let transformedAxis = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
-
-        let rotaxis2 = Communicator.Point3.subtract(transformedAxis, centertrans).normalize();
-        let plane = Communicator.Plane.createFromPointAndNormal(pivotorigtrans, rotaxis2);
-
-        centertrans = KinematicsUtility.closestPointOnPlane(plane, centertrans);
-        pivotorigtrans = KinematicsUtility.closestPointOnPlane(plane, pivotorigtrans);
-        pivot1trans = KinematicsUtility.closestPointOnPlane(plane, pivot1trans);
-
-
-        let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
-        let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
-        let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
-        
-        var armatrix = component._calculateAngleRotMatrix(angle);
-        let p22 = component.transformlocalPointToWorldSpaceWithMatrix(component._extraPivot1,armatrix);
-        let diff = Communicator.Point3.subtract(p22, targetpivot).length();
-        armatrix = component._calculateAngleRotMatrix(-angle);
-        p22 = component.transformlocalPointToWorldSpaceWithMatrix(component._extraPivot1,armatrix);
-        let diff2 = Communicator.Point3.subtract(p22,targetpivot).length();
-        if (diff2 > diff) {
-            return angle;
-        }
-        else {
-            return -angle;
-        }
-    }
 
     
  /**
@@ -1449,197 +1314,14 @@ export class KinematicsComponent {
     async _execute() {
         let component = this;
 
-        if (component._type == componentType.pivotConnector) {
-            if (component._extraComponent1) {
-                if (component._touched) {
-
-                    if (component._isSlidePivot) {
-                        let extraPivot = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                        let extraPivotCurrent = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                        let extraAxis =  component._extraComponent1._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._extraComponent1._extraPivot1, component._extraComponent1._axis));
-                        let extraCenter =  component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);
-                        
-                        let center = component._parent.transformlocalPointToWorldSpace(component._center);
-                        let axis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
-                        let transformedPivot = component.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-
-                        axis = Communicator.Point3.subtract(axis, center).normalize();
-                        extraAxis = Communicator.Point3.subtract(extraAxis, extraPivot).normalize();
-                        
-                        let plane = Communicator.Plane.createFromPointAndNormal(extraPivot, extraAxis);
-                        center = KinematicsUtility.closestPointOnPlane(plane, center);
-                        extraCenter = KinematicsUtility.closestPointOnPlane(plane, extraCenter);
-
-                        let xymatrix = KinematicsUtility.ComputeVectorToVectorRotationMatrix(extraAxis, new Communicator.Point3(0, 0, 1));
-                        let xyinverse = Communicator.Matrix.inverse(xymatrix);
-
-                        let tcenter = xymatrix.transform(center);
-                        let tpivot = xymatrix.transform(transformedPivot);
-                        let qcenter = xymatrix.transform(extraCenter);
-                        let qpivot = xymatrix.transform(extraPivot);
-                        
-
-                        let tr = Communicator.Point3.subtract(tpivot, tcenter).length();
-                        let qr = Communicator.Point3.subtract(qpivot, qcenter).length();
-
-                        let intersection = KinematicsUtility.circleIntersection(tcenter.x, tcenter.y, tr, qcenter.x, qcenter.y, qr);
-
-                        intersection.p1.z = tcenter.z;
-                        intersection.p2.z = qcenter.z;
-                        let pp1 = xyinverse.transform(intersection.p1);
-                        let pp2 = xyinverse.transform(intersection.p2);
-
-                        let d1 = Communicator.Point3.subtract(pp1, extraPivotCurrent).length();
-                        let d2 = Communicator.Point3.subtract(pp2, extraPivotCurrent).length();
-                        if (d1 < d2) {
-                            component._extraComponent1._targetPivot = pp1;
-                        }
-                        else
-                        {
-                            component._extraComponent1._targetPivot = pp2;
-                        }
-
-                        let v1 = Communicator.Point3.subtract(extraPivot, center).normalize();
-                        let v2 = Communicator.Point3.subtract(component._extraComponent1._targetPivot, center).normalize();
-                        let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
-                        
-                        var armatrix = component._calculateAngleRotMatrix(angle,undefined,extraAxis);
-                        let p22 = component.transformlocalPointToWorldSpaceWithMatrix(extraPivot,armatrix);
-                        let diff = Communicator.Point3.subtract(p22, component._extraComponent1._targetPivot).length();
-                        armatrix = component._calculateAngleRotMatrix(-angle);
-                        p22 = component.transformlocalPointToWorldSpaceWithMatrix(extraPivot,armatrix);
-                        let diff2 = Communicator.Point3.subtract(p22,component._extraComponent1._targetPivot).length();
-                        if (diff2 > diff) {
-                            armatrix = component._calculateAngleRotMatrix(angle,undefined,extraAxis);
-                        }
-
-                        let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
-                        let final3 = Communicator.Matrix.multiply(localmatrix, armatrix);
-                        KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);
-                    
-                    }
-                    else {
-
-                        let circlepivot = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                        let circlecenter = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);
-                        let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
-                        let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
-
-
-                        let rotaxis2 = Communicator.Point3.subtract(transformedAxis, transformedCenter).normalize();
-                        let plane = Communicator.Plane.createFromPointAndNormal(transformedCenter, rotaxis2);
-
-                        let cp = KinematicsUtility.closestPointOnPlane(plane, circlepivot);
-
-                        let newpivot = component.transformlocalPointToWorldSpace(cp);
-
-                        let cc = KinematicsUtility.closestPointOnPlane(plane, circlecenter);
-
-                        let xymatrix = KinematicsUtility.ComputeVectorToVectorRotationMatrix(rotaxis2, new Communicator.Point3(0, 0, 1));
-                        let xyinverse = Communicator.Matrix.inverse(xymatrix);
-
-                        cp = xymatrix.transform(cp);
-                        cc = xymatrix.transform(cc);
-                        let np = xymatrix.transform(newpivot);
-
-                        let tc = xymatrix.transform(transformedCenter);
-
-                        // ViewerUtility.createDebugCube(KinematicsManager.viewer, transformedCenter, 10);
-                        // ViewerUtility.createDebugCube(KinematicsManager.viewer, newpivot, 10);
-                        // ViewerUtility.createDebugCube(KinematicsManager.viewer, circlepivot, 10, new Communicator.Color(0, 0, 1));
-
-
-                        let circleRadius = Communicator.Point3.subtract(cp, cc).length();
-
-                        let intersections = KinematicsUtility.circleLineIntersection(circleRadius, cc.x, cc.y, tc.x, tc.y, np.x, np.y);
-                        if (!intersections) {
-                            component._extraComponent1._targetPivot = circlepivot.copy();
-                        }
-                        else {
-                            let respoint = new Communicator.Point3(intersections.x1, intersections.y1, tc.z);
-                            respoint = xyinverse.transform(respoint);
-                            let rot = this._calculatePivotConnectorRotation(component._extraComponent1, respoint);
-                            if (rot < component._extraComponent1._minLimit) {
-                                respoint = new Communicator.Point3(intersections.x2, intersections.y2, tc.z);
-                                respoint = xyinverse.transform(respoint);
-                            }
-
-                            //                        ViewerUtility.createDebugCube(KinematicsManager.viewer, respoint);
-                            component._extraComponent1._targetPivot = respoint;
-                        }
-                    }
-                }
-                else {
-
-                    let pivot1aft;
-                    if (!component._extraComponent1._targetPivot)
-                        pivot1aft = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                    else
-                        pivot1aft = component._extraComponent1._targetPivot.copy();
-                    let pivot1before = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                    let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
-                    let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
-
-                    let rotaxis2 = Communicator.Point3.subtract(transformedAxis, transformedCenter).normalize();
-                    let plane = Communicator.Plane.createFromPointAndNormal(transformedCenter, rotaxis2);
-
-                    let p1 = KinematicsUtility.closestPointOnPlane(plane, pivot1aft);
-                    let p2 = KinematicsUtility.closestPointOnPlane(plane, pivot1before);
-
-                    let v1 = Communicator.Point3.subtract(p1, transformedCenter).normalize();
-                    let v2 = Communicator.Point3.subtract(p2, transformedCenter).normalize();
-                    let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
-
-                    await component._rotate(angle);
-                    let p22 = component.transformlocalPointToWorldSpace(pivot1before);
-                    let diff = Communicator.Point3.subtract(p22, pivot1aft).length();
-                    await component._rotate(-angle);
-                    p22 = component.transformlocalPointToWorldSpace(pivot1before);
-                    let diff2 = Communicator.Point3.subtract(p22, pivot1aft).length();
-                    if (diff2 > diff) {
-                        await component._rotate(angle);
-                    }
-                    if (component._isSlidePivot) {
-                        let pivot1aft = component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                        let pivot1bef = component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._extraPivot1);
-                        
-                        let delta = Communicator.Point3.subtract(pivot1aft, pivot1bef).length();
-
-                        let moveaxis = Communicator.Point3.subtract(pivot1aft, transformedCenter).normalize();
-
-                        let transmatrix = new Communicator.Matrix();
-                        transmatrix = new Communicator.Matrix();
-                        transmatrix.setTranslationComponent(-component._center.x, -component._center.y, -component._center.z);
-                
-                        let invtransmatrix = new Communicator.Matrix();
-                        invtransmatrix.setTranslationComponent(component._center.x, component._center.y, component._center.z);
-                
-                        let deltamatrix = new Communicator.Matrix();
-                        deltamatrix.setTranslationComponent(moveaxis.x * delta, moveaxis.y * delta,moveaxis.z * delta);
-                
-                        let result = Communicator.Matrix.multiply(transmatrix, deltamatrix);
-                        let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
-                
-                        let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
-                        let final3 = Communicator.Matrix.multiply(localmatrix, result2);
-                        KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);                    
-                    }
-
-                }
-
-            }
-            else {
-                if (component._extraPivot1) {
-                    if (component._targetPivot) {
-                        let angle = this._calculatePivotConnectorRotation(component, component._targetPivot);
-                        await component._rotate(angle);                        
-                        component._targetPivot = null;
-                    }
-                }
-            }
-            component._touched = false;
+        if (this._behavior)
+        {
+            await this._behavior.execute(component);
+            return;
         }
-        else if (component._type == componentType.revoluteSlide) {
+
+   
+        if (component._type == componentType.revoluteSlide) {
 
             let pivot1trans = component._extraComponent1.transformlocalPointToWorldSpace(component._extraPivot1);
             let centertrans = component._parent.transformlocalPointToWorldSpace(component._center);
@@ -1780,92 +1462,7 @@ export class KinematicsComponent {
 
             }
 
-        }            
-        else if (component._type == componentType.pistonController)
-        {
-            let p1 = component._parent.transformlocalPointToWorldSpace(component._center);
-            let p1a = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._axis));
-
-            let p2 =  component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);            
-            let p3 =  component._extraComponent1._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._extraComponent1._center,component._extraComponent1._axis));            
-
-            let naxis = Communicator.Point3.subtract(p3,p2).normalize();
-            let pol = KinematicsUtility.nearestPointOnLine(p2, naxis, p1);
-            let delta = Communicator.Point3.subtract(pol,p1);
-            let a =  delta.length();
-
-            let c = Communicator.Point3.subtract(component._extraComponent1._center,component._center).length();          
-
-            let b = Math.sqrt(c*c - a*a);            
-            let angle = Math.asin(b/c) * (180/Math.PI);
-
-            let offaxismatrix = new Communicator.Matrix();
-            let transmatrix = new Communicator.Matrix();
-            let resaxis = Communicator.Point3.subtract(p1a, p1).normalize();
-    
-            transmatrix = new Communicator.Matrix();
-            transmatrix.setTranslationComponent(-p1.x, -p1.y, -p1.z);
-    
-            let invtransmatrix = new Communicator.Matrix();
-            invtransmatrix.setTranslationComponent(p1.x, p1.y, p1.z);
-    
-            Communicator.Util.computeOffaxisRotation(resaxis, -angle, offaxismatrix);
-    
-            let result = Communicator.Matrix.multiply(transmatrix, offaxismatrix);
-            let result2 = Communicator.Matrix.multiply(result, invtransmatrix);            
-
-            let temp1 = Communicator.Point3.subtract(pol,p1).normalize();
-            temp1.scale(b);
-            let pointonline = Communicator.Point3.add(p1,temp1);
-            let pol2 = result2.transform(pointonline);
-
-            offaxismatrix = new Communicator.Matrix();
-            Communicator.Util.computeOffaxisRotation(resaxis, angle, offaxismatrix);
-
-
-            result = Communicator.Matrix.multiply(transmatrix, offaxismatrix);
-            result2 = Communicator.Matrix.multiply(result, invtransmatrix);
-
-            temp1 = Communicator.Point3.subtract(pol,p1).normalize();
-            temp1.scale(b);
-            pointonline = Communicator.Point3.add(p1,temp1);
-            let pol3 = result2.transform(pointonline);
-
-
-            let ttt =  component._extraComponent1._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);    
-            let ttt1 = Communicator.Point3.subtract(pol2,ttt).length();
-            let ttt2 = Communicator.Point3.subtract(pol3,ttt).length();
-
-            if (ttt2 < ttt1)
-                pol2 = pol3;
-                
-            let p22 =  component._parent.transformlocalPointToWorldSpace(component._extraComponent1._center);    
-
-            let v1 = Communicator.Point3.subtract(p22,p1).normalize();
-            let v2 = Communicator.Point3.subtract(pol2,p1).normalize();
-
-            let fangle = Communicator.Util.computeAngleBetweenVector(v1,v2);
-            await component._rotate(-fangle);
-
-            p22 =  component.transformlocalPointToWorldSpace(component._extraComponent1._center);    
-            let diff = Communicator.Point3.subtract(p22,pol2).length();
-            await component._rotate(fangle);
-            p22 =  component.transformlocalPointToWorldSpace(component._extraComponent1._center);    
-            let diff2 = Communicator.Point3.subtract(p22,pol2).length();
-            if (diff2>diff)
-                await component._rotate(-fangle);
-
-            let deltafj = Communicator.Point3.subtract(component._extraComponent1._center,component.transformlocalPointToWorldSpace(component._extraComponent1._center)).length();
-             await component._extraComponent1._translate(-deltafj);
-             let dx = Communicator.Point3.subtract(component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._center),component.transformlocalPointToWorldSpace(component._extraComponent1._center)).length();
-             await component._extraComponent1._translate(deltafj);
-             let dx2 = Communicator.Point3.subtract(component._extraComponent1.transformlocalPointToWorldSpace(component._extraComponent1._center),component.transformlocalPointToWorldSpace(component._extraComponent1._center)).length();
-            if (dx2>dx)
-                await component._extraComponent1._translate(-deltafj);
-
-
-
-        }
+        }                  
         else if (component._type == componentType.prismaticAggregate)
         {
             let matrix1 = KinematicsManager.viewer.model.getNodeMatrix(component._extraComponent1._nodeid);
@@ -1976,40 +1573,8 @@ export class KinematicsComponent {
 
                 
             }
-        }
-        else if (component._type == componentType.revolute && component._fixedAxis)
-        {          
-            let centerworld = component.transformlocalPointToWorldSpace(component._center);
-            let fixedworld = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._fixedAxis));
-
-            let axis1 = Communicator.Point3.subtract(fixedworld,centerworld).normalize();
-
-       
-            let axis2 = component._fixedAxisTarget;
-
-            let rotaxis = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._axis));
-            let rotaxis2 = Communicator.Point3.subtract(rotaxis,centerworld).normalize();
-
-            let plane = Communicator.Plane.createFromPointAndNormal(centerworld, rotaxis2);
-            let dist = plane.distanceToPoint(new Communicator.Point3.add(centerworld, axis2));
-            let res = KinematicsUtility.closestPointOnPlane(plane, new Communicator.Point3.add(centerworld, axis2));
-            axis2 = new Communicator.Point3.subtract(res,centerworld).normalize();
-            let angle = Communicator.Util.computeAngleBetweenVector(axis1, axis2);
-            await component._rotate(angle,true, true);
-
-
-            centerworld = component.transformlocalPointToWorldSpace(component._center);
-            fixedworld = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center,component._fixedAxis));
-            let axis1x = Communicator.Point3.subtract(fixedworld,centerworld).normalize();
-
-            let delta = Communicator.Point3.subtract(axis1x,axis2).length();
-            if (delta>0.001)
-                await component._rotate(-angle*2,true,true);
-            
-        }                         
-
+        }        
     }
-
 
     async _updateReferenceNodeMatrices() {
         if (this._reference) {

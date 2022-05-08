@@ -103,6 +103,21 @@ export class KinematicsHierachy {
         }        
     }
     
+    async _updateComponentsRecursive(component) {
+        if (!component)
+            return;
+
+        component._execute();
+
+        await component._updateReferenceNodeMatrices();
+
+        if (component._children.length > 0)
+        {
+            for (let j=0;j<component._children.length;j++)
+                await this._updateComponentsRecursive(component._children[j]);
+        }
+
+    }
 
 
    /**
@@ -110,7 +125,7 @@ export class KinematicsHierachy {
      */   
     async updateComponents()
     {
-        await this._rootComponent._updateComponentsFromReferenceRecursive(this._rootComponent);
+        await this._updateComponentsRecursive(this._rootComponent);
     }
 
 

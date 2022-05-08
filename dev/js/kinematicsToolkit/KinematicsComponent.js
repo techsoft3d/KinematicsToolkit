@@ -1446,9 +1446,8 @@ export class KinematicsComponent {
         }
     }
 
-    async _updateComponentsFromReferenceRecursive(component) {
-        if (!component)
-            return;
+    async _execute() {
+        let component = this;
 
         if (component._type == componentType.pivotConnector) {
             if (component._extraComponent1) {
@@ -1906,7 +1905,7 @@ export class KinematicsComponent {
             if (ld4>ld3)
                 await component._extraComponent2._rotate(-angle, true);
 
-            await this._updateReferenceNodeMatrices(component._extraComponent2);
+            await component._extraComponent2._updateReferenceNodeMatrices();
 
              await component._translate(ld1 - ld2);
         }
@@ -2007,46 +2006,39 @@ export class KinematicsComponent {
             if (delta>0.001)
                 await component._rotate(-angle*2,true,true);
             
-        }
-                    
-        await this._updateReferenceNodeMatrices(component);
-        if (component._children.length > 0)
-        {
-            for (let j=0;j<component._children.length;j++)
-                await this._updateComponentsFromReferenceRecursive(component._children[j]);
-        }
+        }                         
 
     }
 
 
-    async _updateReferenceNodeMatrices(component) {
-        if (component._reference) {
+    async _updateReferenceNodeMatrices() {
+        if (this._reference) {
 
-            if (component._parent && component._parent._reference == false) {
-                for (let i = 0; i < component._referenceNodes.length; i++) {
-                    let resmatrix = Communicator.Matrix.multiply(component._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(component._nodeid));
-                    let resmatrix3 = Communicator.Matrix.multiply(resmatrix, KinematicsManager.viewer.model.getNodeMatrix(component._parent._nodeid));
-                    let r2 = Communicator.Matrix.inverse(component._parent._parentMatrix);
+            if (this._parent && this._parent._reference == false) {
+                for (let i = 0; i < this._referenceNodes.length; i++) {
+                    let resmatrix = Communicator.Matrix.multiply(this._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(this._nodeid));
+                    let resmatrix3 = Communicator.Matrix.multiply(resmatrix, KinematicsManager.viewer.model.getNodeMatrix(this._parent._nodeid));
+                    let r2 = Communicator.Matrix.inverse(this._parent._parentMatrix);
                     let resmatrix2 = Communicator.Matrix.multiply(resmatrix3, r2);
-                    KinematicsManager.viewer.model.setNodeMatrix(component._referenceNodes[i].nodeid, resmatrix2);
+                    KinematicsManager.viewer.model.setNodeMatrix(this._referenceNodes[i].nodeid, resmatrix2);
                 }
 
             }
             else {
-                for (let i = 0; i < component._referenceNodes.length; i++) {
-                    let resmatrix = Communicator.Matrix.multiply(component._referenceNodes[i].matrix, this._hierachy.getReferenceNodeNetMatrix(component));
-                    let r2 = Communicator.Matrix.inverse(component._parentMatrix);
+                for (let i = 0; i < this._referenceNodes.length; i++) {
+                    let resmatrix = Communicator.Matrix.multiply(this._referenceNodes[i].matrix, this._hierachy.getReferenceNodeNetMatrix(this));
+                    let r2 = Communicator.Matrix.inverse(this._parentMatrix);
                     let resmatrix2 = Communicator.Matrix.multiply(resmatrix, r2);
-                    KinematicsManager.viewer.model.setNodeMatrix(component._referenceNodes[i].nodeid, resmatrix2);
+                    KinematicsManager.viewer.model.setNodeMatrix(this._referenceNodes[i].nodeid, resmatrix2);
                 }
             }
         }
         else {
-            for (let i = 0; i < component._referenceNodes.length; i++) {
-                let resmatrix = Communicator.Matrix.multiply(component._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(component._nodeid));
-                let r2 = Communicator.Matrix.inverse(component._parentMatrix);
+            for (let i = 0; i < this._referenceNodes.length; i++) {
+                let resmatrix = Communicator.Matrix.multiply(this._referenceNodes[i].matrix, KinematicsManager.viewer.model.getNodeMatrix(this._nodeid));
+                let r2 = Communicator.Matrix.inverse(this._parentMatrix);
                 let resmatrix2 = Communicator.Matrix.multiply(resmatrix, r2);
-                KinematicsManager.viewer.model.setNodeMatrix(component._referenceNodes[i].nodeid, resmatrix2);
+                KinematicsManager.viewer.model.setNodeMatrix(this._referenceNodes[i].nodeid, resmatrix2);
             }
         }
     }

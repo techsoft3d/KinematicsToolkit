@@ -145,33 +145,48 @@ class MyKinematicsComponentBehavior {
     getType() {
         return this._type;
     }
+
+    //add any additional behavior properties during serialization
     async fromJson(def, version) {
         this._helicalFactor = def.helicalFactor;
     }
-    jsonFixup() {
 
+    //fixup function during load, replaces id of component with object (not used for this behavior)
+    jsonFixup() {
+    //this._extraComponent1 = this._component.getHierachy().getComponentHash()[this._extraComponent1];
     }
+
+    //retrieve any additional behavior properties during loading
     toJson(def) {
         def.helicalFactor = this._helicalFactor;
     }
    
+    //return the relative movement value (this will usually be _currentPosition or _currentAngle)
     getCurrentValue() {
         return this._component._currentPosition;
     }
 
+   //set the movement value. Only applicable for component behavior that are not set from other components (otherwise return undefined).
     set(value) {
         this._component._translate(value);
     }                
+
+   //Custom functions for your behavior  
      getHelicalFactor() {
         return this._helicalFactor;
     }
     setHelicalFactor(helicalFactor) {
         this._helicalFactor = helicalFactor;
     }
+
+    //Defines the movement type for the component (prismatic, revolute or fixed) 
     getMovementType()
     {
         return KT.componentType.prismatic;
     }
+
+    //This function is executed whenever a component changes its state and updateComponents is called
+    //This is where you define your custom behavior
     async execute() {
         let component = this._component;
         let p1 = component.getParent().transformlocalPointToWorldSpace(component.getCenter());

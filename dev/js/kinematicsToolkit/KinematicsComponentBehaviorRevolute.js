@@ -94,15 +94,17 @@ export class KinematicsComponentBehaviorRevolute {
         }
     }
 
-  getCurrentValue()
-  {      
-      return this._component._currentAngle;
-  }
+    getCurrentValue() {
+        return this._component._currentAngle;
+    }
 
-  set(value)
-  {
-    this._component._rotate(value);
-  }
+    set(value) {
+        this._component._rotate(value);
+    }
+
+    getMovementType() {
+        return componentType.revolute;
+    }
 
     async execute() {
         let component = this._component;

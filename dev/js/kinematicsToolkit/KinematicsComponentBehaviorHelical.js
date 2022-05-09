@@ -59,6 +59,11 @@ export class KinematicsComponentBehaviorHelical {
         this._helicalFactor = helicalFactor;
     }
 
+    getMovementType()
+    {
+        return componentType.prismatic;
+    }
+
 
     async execute() {
         let component = this._component;

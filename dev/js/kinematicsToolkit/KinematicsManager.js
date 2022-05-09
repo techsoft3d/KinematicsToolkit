@@ -17,6 +17,7 @@ export class KinematicsManager {
         KinematicsManager.viewer = viewer;
 
         KinematicsManager._hierachies = [];
+        KinematicsManager._customTypeCallback = null;
         KinematicsManager._hierachyTemplates = [];
         KinematicsManager._animationTemplates = [];
         KinematicsManager._animations = [];
@@ -333,6 +334,20 @@ export class KinematicsManager {
         KinematicsManager._animationGroups[id].play();
     }
 
+        
+    /**
+         * Sets the callback for creating a custom type object
+         * @param  {function} customTypeCallback - Callback function when creating a custom type
+         */ 
+    static setCustomTypeCallback(customTypeCallback)
+    {
+        KinematicsManager._customTypeCallback = customTypeCallback;
+    }
+         
+     static getCustomTypeCallback()
+     {
+         return KinematicsManager._customTypeCallback;
+     }
     
     static _doAnimation(timestamp) {
 

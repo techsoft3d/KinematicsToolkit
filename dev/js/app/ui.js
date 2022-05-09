@@ -14,7 +14,7 @@ let editMode = false;
 function string_of_enum(e,value) 
 {
   for (var k in e) if (e[k] == value) return k;
-  return null;
+  return "Custom";
 }
 
 
@@ -495,7 +495,7 @@ function generateComponentPropertiesData(id)
 
 
 
-    if (component.getMappedType() == KT.componentType.belt) {
+    if (component.getType() == KT.componentType.mapped && component.getBehavior().getMappedType() == KT.componentType.belt) {
 
         let componentlist = [];
         for (let i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {

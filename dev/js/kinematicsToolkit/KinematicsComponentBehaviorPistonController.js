@@ -36,6 +36,11 @@ export class KinematicsComponentBehaviorPistonController {
     set(value) {
     }
 
+    getMovementType()
+    {
+        return componentType.fixed;
+    }
+
     async execute() {
         let component = this._component;
 

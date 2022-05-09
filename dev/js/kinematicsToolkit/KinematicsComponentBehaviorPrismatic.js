@@ -37,6 +37,12 @@ export class KinematicsComponentBehaviorPrismatic {
         this._component._translate(value);
     }
 
+    getMovementType()
+    {
+        return componentType.prismatic;
+    }
+
+
     async execute() {
     }
 

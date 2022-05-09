@@ -3,6 +3,79 @@ var mySelectionBasket;
 var myMaterialTool;
 var shiftPressed = false;
 
+
+class MyKinematicsComponentBehaviorHelical {
+    constructor(component) {
+        this._component = component;
+        this._type = 128;                
+        this._helicalFactor = 1.0;
+
+    }
+
+    getType() {
+        return this._type;
+    }
+
+    async fromJson(def, version) {
+        this._helicalFactor = def.helicalFactor;
+    }
+
+    jsonFixup() {
+
+    }
+
+    toJson(def) {
+        def.helicalFactor = this._helicalFactor;
+    }
+   
+    getCurrentValue() {
+        return this._component._currentPosition;
+    }
+
+    set(value) {
+        this._component._translate(value);
+    }                
+     getHelicalFactor() {
+        return this._helicalFactor;
+    }
+
+
+    setHelicalFactor(helicalFactor) {
+        this._helicalFactor = helicalFactor;
+    }
+
+    getMovementType()
+    {
+        return KT.componentType.prismatic;
+    }
+
+
+    async execute() {
+        let component = this._component;
+        let p1 = component.getParent().transformlocalPointToWorldSpace(component.getCenter());
+        let p2 = component.transformlocalPointToWorldSpace(component.getCenter());
+        let length = Communicator.Point3.subtract(p2, p1).length();
+        component._translate(length);
+        let p3 = component.transformlocalPointToWorldSpace(component.getCenter());
+        component._translate(-length);
+        let p4 = component.transformlocalPointToWorldSpace(component.getCenter());
+        if (Communicator.Point3.subtract(p3, p2).length() < Communicator.Point3.subtract(p4, p2).length()) {
+            component._translate(length);
+            length = -length;
+        }
+        component._rotate(length * this._helicalFactor, true, true);
+    }
+
+}
+
+function customTypeCallback(component, type)
+{
+    if (type == 128)
+    {
+        return new MyKinematicsComponentBehaviorHelical(component);
+    }
+}
+
 async function msready() {
 
     hwv.view.setAmbientOcclusionEnabled(true);
@@ -275,8 +348,8 @@ function createUILayout() {
                 let component2 = hierachy.createComponent(component1,[30,29]);                 
                 component2.setCenter(new Communicator.Point3(18.07,28.59,-11));
                 component2.setAxis(new Communicator.Point3(-1,0,0));
-                component2.setFixedAxis(new Communicator.Point3(0,0,-1));
-                component2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
+                component2.getBehavior().setFixedAxis(new Communicator.Point3(0,0,-1));
+                component2.getBehavior().setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 
                 component1.set(45);
                 hierachy.updateComponents();   
@@ -285,6 +358,42 @@ function createUILayout() {
                 drawIKDiv();
             }
         },   
+    
+        {
+            name: 'Custom Behavior Example',
+            fun: function () {
+          
+
+                let hierachy = KT.KinematicsManager.createHierachy();
+                let root = hierachy.getRootComponent();
+                let component1 = hierachy.createComponent(root,[34]);                 
+                component1.setCenter(new Communicator.Point3(84.67,28.49,-20));
+                component1.setAxis(new Communicator.Point3(1,0,0));
+
+                let behavior = new MyKinematicsComponentBehaviorHelical(component1);
+                component1.setBehavior(behavior);
+             
+                hierachy.updateComponents();   
+
+                currentHierachy = hierachy;
+                drawIKDiv();
+            }
+        },           
+        
+        {
+            name: 'Custom Behavior Load',
+            fun: async function () {
+          
+                KT.KinematicsManager.setCustomTypeCallback(customTypeCallback);
+                let res = await fetch('dataTemp/microenginecustom.json');
+                data = await res.json();
+                let templateId = KT.KinematicsManager.addTemplate(data);
+                let hierachy = await KT.KinematicsManager.applyToModel(templateId);
+                hierachy.updateComponents();
+                currentHierachy = hierachy;
+                drawIKDiv();
+            }
+        },           
         {
             name: 'Load Micronengine Def Sample',
             fun: async function () {

@@ -71,6 +71,16 @@ export class KinematicsComponentBehaviorPivotConnector {
         }
     }
 
+    getMovementType()
+    {
+        if (!this._isSlidePivot) {
+            return componentType.revolute;
+        }
+        else {
+            return componentType.prismatic;
+        }
+    }
+
     /**
         * Sets the extra pivot 1
         * @param  {Point3} pivot - Pivot Point

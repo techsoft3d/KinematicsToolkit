@@ -50,6 +50,11 @@ export class KinematicsComponentBehaviorMate {
     set(value) {
     }
 
+    getMovementType()
+    {
+        return componentType.fixed;
+    }
+
     /**
             * Retrieves the Extra Component 1 
             * @return {KinematicsComponent} Component

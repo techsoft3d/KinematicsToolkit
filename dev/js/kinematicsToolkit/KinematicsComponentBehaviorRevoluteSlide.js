@@ -41,6 +41,11 @@ export class KinematicsComponentBehaviorRevoluteSlide {
     set(value) {
     }
 
+    getMovementType()
+    {
+        return componentType.fixed;
+    }
+
     /**
           * Retrieves the Extra Component 1 
           * @return {KinematicsComponent} Component

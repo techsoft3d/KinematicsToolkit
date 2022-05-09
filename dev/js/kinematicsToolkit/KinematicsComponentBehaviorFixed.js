@@ -29,6 +29,11 @@ export class KinematicsComponentBehaviorFixed {
      
     }
 
+    getMovementType()
+    {
+        return componentType.fixed;
+    }
+
     getCurrentValue() {      
     }
 

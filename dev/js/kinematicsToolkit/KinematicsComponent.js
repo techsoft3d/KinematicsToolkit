@@ -200,7 +200,7 @@ export class KinematicsComponent {
         }     
         else
         {
-            this._behavior = null;
+            this._behavior = (KinematicsManager.getCustomTypeCallback())(this,type);
         }
 
     }
@@ -467,7 +467,7 @@ export class KinematicsComponent {
             }
         }
 
-        let def = { nodeid: this._nodeid, id: this._id,reference: this._reference, type: this._type,center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
+        let def = { nodeid: this._nodeid, id: this._id,reference: this._reference, type: this.getType(),center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
             parentMatrix: this._parentMatrix.toJson() };
 
         if (this._behavior)
@@ -806,7 +806,7 @@ export class KinematicsComponent {
         }
 
 
-        if (this._type == componentType.revolute || (this._type == componentType.pivotConnector && !this._behavior._isSlidePivot)) 
+        if (this._behavior.getMovementType() == componentType.revolute) 
         {
             let origmatrix = KinematicsManager.viewer.model.getNodeMatrix(this._nodeid);
 
@@ -933,7 +933,7 @@ export class KinematicsComponent {
         handlesop._addAxisTranslationHandle(pos, axis, nodeids);
         handlesop._addAxisTranslationHandle(pos, axis.copy().scale(-1), nodeids);
 
-        if (this._type != componentType.prismatic && this._type != componentType.prismaticTriangle && !(this._type == componentType.pivotConnector && this._behavior._isSlidePivot))
+        if (this._behavior.getMovementType() != componentType.prismatic)
             handlesop._addAxisRotationHandle(pos, axis, nodeids);
 
         
@@ -967,7 +967,7 @@ export class KinematicsComponent {
         let targetDistanceBefore = this._hierachy.distanceFromIKTarget();
 
         let gradient;
-        if (this._type == componentType.revolute)
+        if (this._behavior.getMovementType() == componentType.revolute)
         {
             await this._rotate(this._currentAngle + this._hierachy._ikSamplingDistance, true);
    //         await this.updateComponents();
@@ -983,7 +983,7 @@ export class KinematicsComponent {
             gradient = (targetDistanceAfter - targetDistanceBefore) / this._hierachy._ikSamplingDistanceTranslation;
         }
         
-        if (this._type == componentType.revolute)
+        if (this._behavior.getMovementType() == componentType.revolute)
             await this._rotate(angle);
         else
             await this._translate(delta);
@@ -994,7 +994,7 @@ export class KinematicsComponent {
 
     async update(gradient)
     {
-        if (this._type == componentType.revolute)
+        if (this._behavior.getMovementType() == componentType.revolute)
             await this._rotate(this._currentAngle - this._hierachy._ikLearningRate * gradient);
         else
             await this._translate(this._currentPosition - (this._hierachy._ikLearningRate) * gradient);
@@ -1002,7 +1002,7 @@ export class KinematicsComponent {
 
     reset()
     {
-        if (this._type == componentType.revolute)
+        if (this._behavior.getMovementType() == componentType.revolute)
             this._rotate(0);
         else
             this._translate(0);

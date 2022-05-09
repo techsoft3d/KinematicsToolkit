@@ -41,6 +41,11 @@ export class KinematicsComponentBehaviorPrismaticTriangle {
     set(value) {
     }
 
+    getMovementType()
+    {
+        return componentType.fixed;
+    }
+
     async execute() {
         let component = this._component;
 

@@ -35,6 +35,11 @@ export class KinematicsComponentBehaviorTarget {
     set(value) {
     }
 
+    getMovementType()
+    {
+        return componentType.fixed;
+    }
+
     async execute() {
     }
 

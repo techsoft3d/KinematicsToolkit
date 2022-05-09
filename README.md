@@ -173,7 +173,7 @@ class MyKinematicsComponentBehavior {
         return this._type;
     }
 
-    //add any additional behavior properties during serialization
+    //retrieve any additional behavior properties during loading
     async fromJson(def, version) {
         this._helicalFactor = def.helicalFactor;
     }
@@ -184,6 +184,7 @@ class MyKinematicsComponentBehavior {
     }
 
     //retrieve any additional behavior properties during loading
+    //add any additional behavior properties during serialization    
     toJson(def) {
         def.helicalFactor = this._helicalFactor;
     }

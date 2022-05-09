@@ -51,7 +51,23 @@ http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs
 Assumes microengine model is already loaded.
 
 
-**Creating a new Kinematics Hierachy:**
+**Creating a new Kinematics Hierachy:**  
+The basic process of creating a new Kinematics Hierachy and interact with it is:
+
+1. Initialize Static KinematicsManager Object (only do this once per session)
+2. Create a new Kinematics Hierachy (or load an existing hierachy template. In this case skip Step 3 & 4. See example further below on how to load a hierachy template and apply it to a mode/node)
+3. Add components to the newly created Hierachy.
+4. For each component:
+    1. Set its parent component.
+    2. Set its type to define the components attached behavior.
+    3. Set its associated nodeids to define the components geometry.
+    3. Set its center and axis.
+    4. Set custom properties on behavior object of component based on behavior type (see documentation for more details on the various behavior types).
+5. When interacting with a kinematics hierachy:
+    1. Retrieve component by its id or a nodeid of the associated HOOPS nodes.
+    2. Change value of component with set() function. 
+    2. Call updateComponents on hierachy object to reflect hierachy state in WebViewer.
+
 
 ```
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
@@ -64,6 +80,10 @@ let hierachy = KT.KinematicsManager.createHierachy();
 let root = hierachy.getRootComponent();
 let component1 = hierachy.createComponent(root,[34]);                 
 
+/* Use setType to change the type of a component to one of the built-in types. This will replace the 
+current behavior of the component. See the example further below on how to define custom behaviors*/
+// component1.setType(KT.componentType.prismatic);
+
 /* Define Center & Axis for revolute component */
 component1.setCenter(new Communicator.Point3(84.67,28.49,-20));
 component1.setAxis(new Communicator.Point3(1,0,0));
@@ -73,7 +93,7 @@ let component2 = hierachy.createComponent(component1,[30,29]);
 component2.setCenter(new Communicator.Point3(18.07,28.59,-11));
 component2.setAxis(new Communicator.Point3(-1,0,0));
 
-/* Specify a fixed axis for second component*/
+/* Specify a fixed axis for second component. Most properties of a component have to be set on its behavior object*/
 component2.getBehavior().setFixedAxis(new Communicator.Point3(0,0,-1));
 
 /* Specify a target axis for the above specified fixed axis*/
@@ -243,7 +263,6 @@ function customTypeCallback(component, type)
 
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
 KT.KinematicsManager.initialize(hwv);   
-
 
 /* Set callback for custom behavior instantiation*/
 KT.KinematicsManager.setCustomTypeCallback(customTypeCallback);

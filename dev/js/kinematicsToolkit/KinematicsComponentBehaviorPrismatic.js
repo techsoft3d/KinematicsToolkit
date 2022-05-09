@@ -26,6 +26,7 @@ export class KinematicsComponentBehaviorPrismatic {
 
     jsonFixup()
     {
+        
      
     }
 

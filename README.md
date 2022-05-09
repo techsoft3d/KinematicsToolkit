@@ -13,6 +13,8 @@ The Kinematics Manager also comes with its own animation system (powerd by anime
 
 In addition to the core Kinematics Toolkit classes this repo contains an experimental Editor Environment for interactively creating Kinematics Hierachies, setting up animations and exporting those to JSON.
 
+For questions/feedback please send an email to guido@techsoft3d.com or post in our forum https://forum.techsoft3d.com/ .
+
 **Limitations:**
 * **This library is not an officially supported part of HOOPS Communicator and provided as-is.**
 * This engine is not meant as a mathematically precise solver for arbitrary complex mechanical systems. Its main purpose is to provide the ability to efficently animate a CAD model for which its movement properties are known. 

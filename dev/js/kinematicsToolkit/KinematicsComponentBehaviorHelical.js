@@ -3,7 +3,9 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+/** This class represents the behavior for a helical component.
+ * A helical component performs a rotation when the component is translated.
+*/
 export class KinematicsComponentBehaviorHelical {
 
    
@@ -30,11 +32,7 @@ export class KinematicsComponentBehaviorHelical {
     toJson(def) {
         def.helicalFactor = this._helicalFactor;
     }
-
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
+   
     getCurrentValue() {
         return this._component._currentPosition;
     }

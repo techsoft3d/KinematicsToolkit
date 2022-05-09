@@ -2,9 +2,8 @@ import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
 
-/** This class contains functionality related to a Belt component for animating belts of various types*/
+/** This class contains functionality related to a Belt component for animating belts of various types (experimetal)*/
 export class KinematicsBelt {
-
 
     constructor() {
         this._wheels = [];
@@ -22,8 +21,7 @@ export class KinematicsBelt {
         this._alignvector = null;
         this._trackorientation = false;
         this._color1 = new Communicator.Color(64,64,64);
-        this._color2 = new Communicator.Color(20,20,20);
-          
+        this._color2 = new Communicator.Color(20,20,20);          
     }
 
     getBaseNode()

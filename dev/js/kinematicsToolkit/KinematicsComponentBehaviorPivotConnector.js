@@ -3,7 +3,10 @@ import { KinematicsManager } from './KinematicsManager.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a pivot connector component.  
+ * A pivot connector componments movement is based on a common pivot point.
+*/
 export class KinematicsComponentBehaviorPivotConnector {
 
     /**
@@ -17,10 +20,7 @@ export class KinematicsComponentBehaviorPivotConnector {
         this._isSlidePivot = false;
         this._targetPivot = null;
     }
-    /**
-      * Retrieves type of component
-      * @return {componentType} Component Type
-      */
+   
     getType() {
         return this._type;
     }
@@ -53,10 +53,6 @@ export class KinematicsComponentBehaviorPivotConnector {
 
     }
 
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
     getCurrentValue() {
         if (!this._isSlidePivot) {
             return this._component._currentAngle;
@@ -76,7 +72,7 @@ export class KinematicsComponentBehaviorPivotConnector {
     }
 
     /**
-        * Sets the extra pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
+        * Sets the extra pivot 1
         * @param  {Point3} pivot - Pivot Point
         */
     setExtraPivot1(pivot) {
@@ -85,15 +81,12 @@ export class KinematicsComponentBehaviorPivotConnector {
 
 
     /**
-       * Retrieves the Extra Pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
+       * Retrieves the Extra Pivot 1 
        * @return {Point3} Pivot
        */
     getExtraPivot1() {
         return this._extraPivot1;
     }
-
-
-
 
     _calculatePivotConnectorRotation(component, targetpivot) {
 
@@ -322,7 +315,7 @@ export class KinematicsComponentBehaviorPivotConnector {
     }
 
     /**
-        * Retrieves the Extra Component 1 (not applicable to all component types)
+        * Retrieves the Extra Component 1 
         * @return {KinematicsComponent} Component
         */
     getExtraComponent1() {
@@ -350,8 +343,8 @@ export class KinematicsComponentBehaviorPivotConnector {
 
 
     /**
-       * Sets the extra pivot 2 (applicable to componentType.mate)
-       * @param  {Point3} pivot - Pivot Point
+       * Sets if component is slide pivot
+       * @param  {bool} isSlidePivot - Is component slide pivot\
        */
     setIsSlidePivot(isSlidePivot) {
         this._isSlidePivot = isSlidePivot;

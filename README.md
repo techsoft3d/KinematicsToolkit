@@ -66,10 +66,10 @@ component2.setCenter(new Communicator.Point3(18.07,28.59,-11));
 component2.setAxis(new Communicator.Point3(-1,0,0));
 
 /* Specify a fixed axis for second component*/
-component2.setFixedAxis(new Communicator.Point3(0,0,-1));
+component2.getBehavior().setFixedAxis(new Communicator.Point3(0,0,-1));
 
 /* Specify a target axis for the above specified fixed axis*/
-component2.setFixedAxisTarget(new Communicator.Point3(0,0,-1));
+component2.getBehavior().setFixedAxisTarget(new Communicator.Point3(0,0,-1));
 
 /* Rotate first component to 45 degrees from default position*/
 component1.set(45);

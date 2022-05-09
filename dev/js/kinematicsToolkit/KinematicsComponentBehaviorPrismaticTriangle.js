@@ -2,12 +2,12 @@ import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a prismatic triangle component.  
+ *  The movemenet of a prismatic triangle component calculates hinge movement based on a static and variable component.
+*/
 export class KinematicsComponentBehaviorPrismaticTriangle {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.prismaticTriangle;
@@ -35,10 +35,6 @@ export class KinematicsComponentBehaviorPrismaticTriangle {
 
     }
 
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
     getCurrentValue() {
     }
 
@@ -85,7 +81,7 @@ export class KinematicsComponentBehaviorPrismaticTriangle {
     }
 
     /**
-        * Retrieves the Extra Component 1 (not applicable to all component types)
+        * Retrieves the Extra Component 1 
         * @return {KinematicsComponent} Component
         */
     getExtraComponent1() {
@@ -102,7 +98,7 @@ export class KinematicsComponentBehaviorPrismaticTriangle {
     }
 
     /**
-         * Retrieves the Extra Component 2 (not applicable to all component types)
+         * Retrieves the Extra Component 2 
          * @return {KinematicsComponent} Component
          */
     getExtraComponent2() {

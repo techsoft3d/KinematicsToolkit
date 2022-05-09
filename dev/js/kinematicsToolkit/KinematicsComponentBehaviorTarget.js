@@ -2,12 +2,12 @@ import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a target component.  
+ *  A target components position is based on other components. Functionally equivalent to fixed component.
+*/
 export class KinematicsComponentBehaviorTarget {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.target;

@@ -3,12 +3,12 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a revolute component.  
+ *  A prismatic component allows only rotation around an axis.
+*/
 export class KinematicsComponentBehaviorRevolute {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.revolute;
@@ -22,7 +22,7 @@ export class KinematicsComponentBehaviorRevolute {
     }
 
     /**
-        * Sets the fixed axis for this component (applicable to componentType.revolute)  
+        * Sets the fixed axis for this component 
         * This defines the axis that is fixed in the component
         * @param  {Point3} axis - Fixed Axis
         */
@@ -31,7 +31,7 @@ export class KinematicsComponentBehaviorRevolute {
     }
 
     /**
-       * Sets the fixed axis target for this component (applicable to componentType.revolute)  
+       * Sets the fixed axis target for this component 
        * This defines the axis that the fixed axis will be rotated to.
        * @param  {Point3} axis - Fixed Axis Target
        */
@@ -40,7 +40,7 @@ export class KinematicsComponentBehaviorRevolute {
     }
 
     /**
-       * Retrieves the fixed axis for this component (applicable to componentType.revolute)  
+       * Retrieves the fixed axis for this component 
        * @return {Poin3} Fixed Axis
        */
     getFixedAxis() {
@@ -94,11 +94,6 @@ export class KinematicsComponentBehaviorRevolute {
         }
     }
 
-    
- /**
-     * Retrieves the value of the current component (angle or relative position)
-     * @return {number} Current Value
-     */             
   getCurrentValue()
   {      
       return this._component._currentAngle;

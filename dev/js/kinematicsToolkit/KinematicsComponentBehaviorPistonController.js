@@ -2,12 +2,12 @@ import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a piston controller component.  
+ * A piston controller component drives piston movement.
+*/
 export class KinematicsComponentBehaviorPistonController {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.pistonController;
@@ -29,11 +29,7 @@ export class KinematicsComponentBehaviorPistonController {
     toJson(def) {
         def.extraComponent1 = this._extraComponent1._id;
     }
-
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
+   
     getCurrentValue() {
     }
 
@@ -126,7 +122,7 @@ export class KinematicsComponentBehaviorPistonController {
     }
 
     /**
-        * Retrieves the Extra Component 1 (not applicable to all component types)
+        * Retrieves the Extra Component 1 
         * @return {KinematicsComponent} Component
         */
     getExtraComponent1() {

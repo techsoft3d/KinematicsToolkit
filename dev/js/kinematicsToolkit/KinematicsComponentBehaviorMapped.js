@@ -3,18 +3,20 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 import { KinematicsBelt } from './KinematicsBelt.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a mapped component.  
+ * A mapped components movement is based on component referenced by mapped target.
+*/
 export class KinematicsComponentBehaviorMapped {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.mapped;
         this._mappedType = null;
         this._mappedTargetComponent = null;
         this._helicalFactor = 1.0;
+        this._prismaticPlanePlane = null;
+        this._prismaticPlaneTip = null;
 
 
     }
@@ -78,10 +80,6 @@ export class KinematicsComponentBehaviorMapped {
 
     }
 
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
     getCurrentValue() {
     }
 

@@ -2,12 +2,12 @@ import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a prismatic component.  
+ * A prismatic component allows only translation along an axis.
+*/
 export class KinematicsComponentBehaviorPrismatic {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.prismatic;
@@ -24,16 +24,11 @@ export class KinematicsComponentBehaviorPrismatic {
 
     }
 
-
     jsonFixup()
     {
      
     }
 
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
     getCurrentValue() {
         return this._component._currentPosition;
     }

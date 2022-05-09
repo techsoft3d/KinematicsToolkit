@@ -2,12 +2,12 @@ import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+/** This class represents the behavior for a fixed component.
+ * Fixed components are moving only relative to their parent component.
+*/
 export class KinematicsComponentBehaviorFixed {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
+    
     constructor(component) {
         this._component = component;
         this._type = componentType.fixed;

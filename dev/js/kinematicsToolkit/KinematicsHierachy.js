@@ -50,7 +50,6 @@ export class KinematicsHierachy {
       return this._componentHash;
   }
 
- 
 /**
   * Retrieve Root Component
   * @return {KinematicsComponent} Component 
@@ -59,7 +58,6 @@ export class KinematicsHierachy {
   {
       return this._rootComponent;
   }
-
 
    /**
      * Retrieves component associated with this hierachy from its id
@@ -83,7 +81,6 @@ export class KinematicsHierachy {
     {
         return this._templateId;
     }
-
     
    /**
      * Generate or Update Template for this Hierachy
@@ -118,7 +115,6 @@ export class KinematicsHierachy {
         }
 
     }
-
 
    /**
      * Update all components 
@@ -186,7 +182,6 @@ export class KinematicsHierachy {
         return this._ikSpeed;
     }
 
-
      /**
      * Set Minimum Sampling Distance for Inverse Kinematics
      * @param  {number} ikSamplingDistance - IK Sampling Distance
@@ -204,7 +199,6 @@ export class KinematicsHierachy {
     {
         return this._ikSamplingDistance;
     }
-
      
     setIkSamplingDistanceTranslation(ikSamplingDistanceTranslation)
     {
@@ -215,7 +209,6 @@ export class KinematicsHierachy {
     {
         return this._ikSamplingDistanceTranslation;
     }
-
        
  /**
      * Set Learning Rate for Inverse Kinematics
@@ -234,8 +227,7 @@ export class KinematicsHierachy {
     {
         return this._ikLearningRate;
     }
-   
-    
+       
   /**
     * Retrieves if Inverse Kinematics is currently activer
     * @return {bool} IK Active
@@ -247,7 +239,6 @@ export class KinematicsHierachy {
         else
             return false;
     }
-
     
   /**
     * Stop any Inverse Kinematics calculation
@@ -260,7 +251,6 @@ export class KinematicsHierachy {
             this._interval = null;
         }
     }
-
        
   /**
     * Activate Inverse Kinematics and set Kinematics Tip to currently active handle position
@@ -292,9 +282,7 @@ export class KinematicsHierachy {
             }, 1);
         }
     }
-
-    
-         
+             
   /**
     * Insert Handle from Inverse Kinematics Target Point
      */  
@@ -305,7 +293,6 @@ export class KinematicsHierachy {
         KinematicsManager.viewer.model.setNodesVisibility([KinematicsManager.handleNode], true);
         handleOperator.showHandles();
     }
-
        
   /**
     * Set Handle to Inverse Kinematics Tip
@@ -323,8 +310,6 @@ export class KinematicsHierachy {
         if (insertHandle)
             this.insertIKHandle();
     }
-
-
       
   /**
     * Set Inverse Kinematics Tip to Handle Position
@@ -337,8 +322,6 @@ export class KinematicsHierachy {
      
         this._ikTip = this._tipComponent.transformPointToComponentSpace(pos);
     }
-
-
 
     setTargetAnchorToHandlePosition()
     {
@@ -369,7 +352,6 @@ export class KinematicsHierachy {
     {
         this._rootComponent.removeAnimationRecursive(animationTemplateId);
     }
-
 
   /**
     * Generate JSON object for this Hierarchy
@@ -409,7 +391,6 @@ export class KinematicsHierachy {
 
         return def;
     }
-
          
   /**
     * Populate Hierachy from provided JSON object 
@@ -446,15 +427,7 @@ export class KinematicsHierachy {
             let component = this._componentHash[i];
             if (component.getBehavior()) {
                 component.getBehavior().jsonFixup();
-            }
-            else {
-
-                if (component.getType() == componentType.mate) {
-                    component.setExtraComponent1(this._componentHash[component.getExtraComponent1()]);
-                    component.setExtraComponent2(this._componentHash[component.getExtraComponent2()]);
-                }              
-            
-            }
+            }            
         }
 
         if (def.animations != undefined) {
@@ -474,7 +447,6 @@ export class KinematicsHierachy {
 
         return def;
     }
-
            
   /**
     * Reset All Components in Hierachy
@@ -494,8 +466,6 @@ export class KinematicsHierachy {
             this._interval = null;
         }
     }
-
-
     
    /**
      * Create a new component
@@ -529,7 +499,6 @@ export class KinematicsHierachy {
 
         return component;
     }
-
      
    /**
      * Create a new component from the current selection and handle parameters
@@ -550,7 +519,6 @@ export class KinematicsHierachy {
         newcomponent.setParametersFromHandle();
         return newcomponent;      
     }
-
        
    /**
      * Rebuild internal node hierachy
@@ -560,9 +528,6 @@ export class KinematicsHierachy {
         KinematicsManager.viewer.model.deleteNode(this._rootComponent.getNodeId());
         this._rebuildComponentTreeRecursive(this._rootComponent);        
     }
-
-
-     
      
    /**
      * Apply current hierachy to node
@@ -581,13 +546,10 @@ export class KinematicsHierachy {
         this._applyToModelRecursive(this._rootComponent, KinematicsManager.viewer.model.getNodeIdOffset(childnode), startmatrix);
     }
 
-    
-
     getReferenceNodeNetMatrix(incomponent) 
     { 
         return KinematicsManager.viewer.model.getNodeNetMatrix(incomponent.getNodeId());
     }
-
 
     _applyToModelRecursive(component, offset, startmatrix)
     {
@@ -631,8 +593,6 @@ export class KinematicsHierachy {
         return this._dirty;
     }
 
-    
-    
     setNodeId(nodeid)
     {
         this._nodeid = nodeid;        
@@ -677,10 +637,10 @@ export class KinematicsHierachy {
             }
             if (component.getType() == componentType.prismaticAggregate)
             {
-                let gradient = await component.getExtraComponent1().calculateGradient();
-                await component.getExtraComponent1().update(gradient);       
-                gradient = await component.getExtraComponent2().calculateGradient();
-                await component.getExtraComponent2().update(gradient);                       
+                let gradient = await component.getBehavior().getExtraComponent1().calculateGradient();
+                await component.getBehavior().getExtraComponent1().update(gradient);       
+                gradient = await component.getBehavior().getExtraComponent2().calculateGradient();
+                await component.getBehavior().getExtraComponent2().update(gradient);                       
             }
             if (component.getChildren().length==0 || (component.getType() == componentType.fixed && component != this._rootComponent))
                 break;                

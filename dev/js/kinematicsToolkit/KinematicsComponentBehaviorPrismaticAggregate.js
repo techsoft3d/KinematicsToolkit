@@ -3,13 +3,18 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a prismatic aggregate component.  
+ * A prismatic aggregate components position is calculated based on the position of two components.
+*/
 export class KinematicsComponentBehaviorPrismaticAggregate {
 
 
     constructor(component) {
         this._component = component;
         this._type = componentType.prismaticAggregate;
+        this._extraComponent1 = null;
+        this._extraComponent2 = null;
 
     }
 
@@ -34,10 +39,6 @@ export class KinematicsComponentBehaviorPrismaticAggregate {
 
     }
 
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
     getCurrentValue() {
     }
 
@@ -45,7 +46,7 @@ export class KinematicsComponentBehaviorPrismaticAggregate {
     }
 
     /**
-           * Retrieves the Extra Component 1 (not applicable to all component types)
+           * Retrieves the Extra Component 1 
            * @return {KinematicsComponent} Component
            */
     getExtraComponent1() {
@@ -63,7 +64,7 @@ export class KinematicsComponentBehaviorPrismaticAggregate {
 
 
     /**
-        * Retrieves the Extra Component 2 (not applicable to all component types)
+        * Retrieves the Extra Component 2 
         * @return {KinematicsComponent} Component
         */
     getExtraComponent2() {

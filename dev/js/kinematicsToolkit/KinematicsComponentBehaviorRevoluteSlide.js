@@ -3,12 +3,11 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents a Hierachy of Kinematics Components*/
+
+/** This class represents the behavior for a revolute slide component (Experimental).
+*/
 export class KinematicsComponentBehaviorRevoluteSlide {
 
-    /**
-    * Create a Kinematics Hierachy Object.    
-    */
     constructor(component) {
         this._component = component;
         this._type = componentType.revoluteSlide;
@@ -35,10 +34,6 @@ export class KinematicsComponentBehaviorRevoluteSlide {
         def.extraPivot1 = this._extraPivot1.toJson();
     }
 
-    /**
-        * Retrieves the value of the current component (angle or relative position)
-        * @return {number} Current Value
-        */
     getCurrentValue() {
      
     }
@@ -47,7 +42,7 @@ export class KinematicsComponentBehaviorRevoluteSlide {
     }
 
     /**
-          * Retrieves the Extra Component 1 (not applicable to all component types)
+          * Retrieves the Extra Component 1 
           * @return {KinematicsComponent} Component
           */
     getExtraComponent1() {
@@ -63,7 +58,7 @@ export class KinematicsComponentBehaviorRevoluteSlide {
     }
 
     /**
-            * Sets the extra pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
+            * Sets the extra pivot 1 
             * @param  {Point3} pivot - Pivot Point
             */
     setExtraPivot1(pivot) {
@@ -72,14 +67,12 @@ export class KinematicsComponentBehaviorRevoluteSlide {
 
 
     /**
-       * Retrieves the Extra Pivot 1 (applicable to componentType.revoluteSlide and componentType.mate)
+       * Retrieves the Extra Pivot 1 
        * @return {Point3} Pivot
        */
     getExtraPivot1() {
         return this._extraPivot1;
     }
-
-
 
     async execute() {
         let component = this._component;

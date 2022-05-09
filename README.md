@@ -51,11 +51,10 @@ Example URL (when running via Visual Studio Code Live Server plugin):
 
 
 ## Code Samples:
-
-Assumes microengine model is already loaded.
-
+*Examples assume "microengine" sample model is already loaded into the root node of the HOOPS Web Viewer.*
 
 **Creating a new Kinematics Hierachy:**  
+
 The basic process of creating a new Kinematics Hierachy and interact with it is:
 
 1. Initialize Static KinematicsManager Object (only do this once per session)
@@ -74,7 +73,9 @@ The basic process of creating a new Kinematics Hierachy and interact with it is:
 
 
 ```
+
 /* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
+
 KT.KinematicsManager.initialize(hwv);   
 
 /* Create a new Kinematics Hierachy */

@@ -1,7 +1,7 @@
 {
     "sort": false,
     "source": {
-        "include": [ "dev/js/kinematicsToolkit" ],
+        "include": [ "dev/js/kinematicsToolkit","README.md" ],
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },

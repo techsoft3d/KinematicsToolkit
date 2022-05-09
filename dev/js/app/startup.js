@@ -384,7 +384,7 @@ function createUILayout() {
             name: 'Custom Behavior Load',
             fun: async function () {
           
-                KT.KinematicsManager.setCustomeBehaviorCreationCallback(customTypeCallback);
+                KT.KinematicsManager.setCustomBehaviorCreationCallback(customTypeCallback);
                 let res = await fetch('dataTemp/microenginecustom.json');
                 data = await res.json();
                 let templateId = KT.KinematicsManager.addTemplate(data);

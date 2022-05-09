@@ -273,7 +273,7 @@ function customBehaviorCreationCallback(component, type)
 KT.KinematicsManager.initialize(hwv);   
 
 /* Set callback for custom behavior instantiation*/
-KT.KinematicsManager.setCustomeBehaviorCreationCallback(customBehaviorCreationCallback);
+KT.KinematicsManager.setCustomBehaviorCreationCallback(customBehaviorCreationCallback);
   
 /* Fetch Kinematics Hierachy Definition from server*/
 let res = await fetch('data/microenginecustom.json');

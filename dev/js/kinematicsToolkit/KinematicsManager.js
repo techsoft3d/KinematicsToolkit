@@ -339,7 +339,7 @@ export class KinematicsManager {
          * Sets the callback for creating a custom type object
          * @param  {function} customTypeCallback - Callback function when creating a custom type
          */ 
-    static setCustomeBehaviorCreationCallback(customTypeCallback)
+    static setCustomBehaviorCreationCallback(customTypeCallback)
     {
         KinematicsManager._customTypeCallback = customTypeCallback;
     }

@@ -13,7 +13,7 @@ The Kinematics Manager also comes with its own animation system (powerd by anime
 
 In addition to the core Kinematics Toolkit classes this repo contains an experimental Editor Environment for interactively creating Kinematics Hierachies, setting up animations and exporting those to JSON.
 
-For questions/feedback please send an email to guido@techsoft3d.com or post in our forum https://forum.techsoft3d.com/ .
+For questions/feedback please send an email to guido@techsoft3d.com or post in our forum https://forum.techsoft3d.com/. For a 90 day trial of the HOOPS Web Platform go to https://www.techsoft3d.com/products/hoops/web-platform.
 
 **Limitations:**
 * **This library is not an officially supported part of HOOPS Communicator and provided as-is.**
@@ -22,23 +22,22 @@ For questions/feedback please send an email to guido@techsoft3d.com or post in o
 * The Inverse kinematics capabilites and various other functionality is currently in an experimental state.  
   
 **Future Direction:**
-* Improved Documentation and more samples
-* We will be looking into adding additional component types
+* Improved Documentation and more samples.
+* We will be looking into adding additional component types.
 * We are looking into using the Mating information provided for some formats by HOOPS Exchange to help define the Kinematics Hierachy for a CAD Model.
-* We will be investigating if an Open Source Physics engine can be added to the Kinematics Toolkit to allow for more physics driven kinematics
-* We are looking into adding support for the new Keyframe-based Animation System provided in HOOPS Communicator 
-* We are looking into improving various parts of the UI
+* We will be investigating if an Open Source Physics engine can be added to the Kinematics Toolkit to allow for more physics driven kinematics.
+* We are looking into adding support for the new Keyframe-based Animation System provided in HOOPS Communicator.
+* We are looking into improving various parts of the UI.
 
 
 
-### Install
-* add dist/kinematicsManager.min.js to your project
+## Install
+* add dist/kinematicsManager.min.js to your project.
 ```
     <script src="./js/kinematicsManager.min.js"></script>
 ```
 
-
-### Using the Editor
+## Using the Editor
 **The Editor is currently in an experimetal state. Work on docs is in pogress.**  
 
 Example URL (when running via Visual Studio Code Live Server plugin)
@@ -47,9 +46,9 @@ http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs
 
 
 
-### Code Samples:
+## Code Samples:
 
-Assumes microengine model is already loaded
+Assumes microengine model is already loaded.
 
 
 **Creating a new Kinematics Hierachy:**
@@ -259,5 +258,16 @@ let templateId = KT.KinematicsManager.addTemplate(data);
 /* Apply template to model (microengine) */
 let hierachy = await KT.KinematicsManager.applyToModel(templateId);
 
-
 ```                
+
+
+## Acknowledgments
+### Engine:
+* Anime.js (https://animejs.com/)
+
+### Editor:
+* GoldenLayout (https://golden-layout.com/)
+* Tabulator (http://tabulator.info/)
+* jsTree (https://www.jstree.com/)
+
+

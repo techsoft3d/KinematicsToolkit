@@ -21,24 +21,24 @@ import { KinematicsComponentBehaviorMate } from './KinematicsComponentBehaviorMa
  */
 const componentType = {
      /** Rotation around an axis.  
-      * Use setCenter() and setAxis() to define the rotation axis
+      * Use setCenter() and setAxis() to define the rotation axis.
      */
     revolute: 0,
      /** Translation along an axis.  
-      * Use setCenter() and setAxis() to define the translation axis
+      * Use setCenter() and setAxis() to define the translation axis.
       */
      prismatic: 1,
      /** Fixed. No Movement */
     fixed:2,
      /** Aggregates the position of two components.  
-      * Use setExtraComponent1() and setExtraComponent2() to define the components
+      * Use setExtraComponent1() and setExtraComponent2() to define the components.
       */
      prismaticAggregate: 3,
  /** Calculates hinge movement based on static and variable component.  
       * Use setExtraComponent1() and setExtracComponent2() to define related component.
       */    
      prismaticTriangle: 4,
-  /** Performs a rotation when the component is translated  
+  /** Performs a rotation when the component is translated.  
       * Use setHelicalFactor() to set rotation factor.
       */     
      helical: 5,
@@ -51,7 +51,7 @@ const componentType = {
       */    
     pistonController: 7,
  /**  Restricts movement by plane. Only valid as mapped type.  
-      * Use setPrismaticPlanePlane() and setPrismaticPlaneTip() to define plane
+      * Use setPrismaticPlanePlane() and setPrismaticPlaneTip() to define plane.
       */        
   prismaticPlane: 8,
   /**  Creates a belt/conveyor. Only valid as mapped type.  
@@ -64,11 +64,11 @@ const componentType = {
 /** Experimental. WIP
       */          
     revoluteSlide:11,
-/** Component that is positioned based on other components  
+/** Component that is positioned based on other components.  
       */            
     target:12,
 
-/** Calculates component based on common pivot
+/** Calculates component based on common pivot.
       */            
     pivotConnector:13
 };

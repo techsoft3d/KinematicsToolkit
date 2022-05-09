@@ -3,7 +3,7 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
-/** This class represents the behavior for a mate component (experimental)*/
+/** This class represents the behavior for a mate component (experimental).*/
 export class KinematicsComponentBehaviorMate {
 
 

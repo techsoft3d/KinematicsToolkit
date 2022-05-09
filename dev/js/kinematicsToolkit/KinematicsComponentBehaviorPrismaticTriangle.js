@@ -4,7 +4,7 @@ import { KinematicsUtility } from './KinematicsUtility.js';
 
 
 /** This class represents the behavior for a prismatic triangle component.  
- *  The movemenet of a prismatic triangle component calculates hinge movement based on a static and variable component.
+ *  The movement of a prismatic triangle component calculates hinge movement based on a static and variable component.
 */
 export class KinematicsComponentBehaviorPrismaticTriangle {
 

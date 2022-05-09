@@ -32,15 +32,19 @@ For questions/feedback please send an email to guido@techsoft3d.com or post in o
 
 
 ## Install
-* add dist/kinematicsManager.min.js to your project.
+Add dist/kinematicsManager.min.js to your project.
 ```
     <script src="./js/kinematicsManager.min.js"></script>
 ```
 
+## Documentation
+Live Documentation can be found at: <https://techsoft3d.github.io/KinematicsToolkit/>
+
+
 ## Using the Editor
 **The Editor is currently in an experimetal state. Work on docs is in pogress.**  
 
-Example URL (when running via Visual Studio Code Live Server plugin)
+Example URL (when running via Visual Studio Code Live Server plugin):
 
 <http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs>
 

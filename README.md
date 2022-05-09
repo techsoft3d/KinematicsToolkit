@@ -59,7 +59,7 @@ Assumes microengine model is already loaded.
 The basic process of creating a new Kinematics Hierachy and interact with it is:
 
 1. Initialize Static KinematicsManager Object (only do this once per session)
-2. Create a new Kinematics Hierachy (or load an existing hierachy template. In this case skip Step 3 & 4. See example further below on how to load a hierachy template and apply it to a mode/node)
+2. Create a new Kinematics Hierachy (or load an existing hierachy template. In this case skip Step 3 & 4. See example further below on how to load a hierachy template and apply it to a model/node)
 3. Add components to the newly created Hierachy.
 4. For each component:
     1. Set its parent component.
@@ -141,7 +141,9 @@ data = await res.json();
 /* Create Kinematics Template */
 let templateId = KT.KinematicsManager.addTemplate(data);
 
-/* Apply template to model (microengine) */
+/* Apply template to the currently loaded model*/
+/* You can also apply the template to a model loaded with one of the "loadSubtree" functions by specifying the nodeid of the container node of the model as the optional second parameter of the applyToModel function*/
+
 let hierachy = await KT.KinematicsManager.applyToModel(templateId);
 
 /* get Component with id 1 */

@@ -66,8 +66,7 @@ export class ComponentMoveOperator {
                     }
 
                     if (component !== null) {
-                        if (component.getBehavior().getMovementType() === componentType.revolute  && !component.getAnimationActive()) {
-                            component.selectReferenceNodes();
+                        if ((component.getBehavior().getMovementType() === componentType.revolute || component.getBehavior().getMovementType() === componentType.prismatic)  && !component.getAnimationActive()) {                            component.selectReferenceNodes();
                             this._component = component;
                         }
 

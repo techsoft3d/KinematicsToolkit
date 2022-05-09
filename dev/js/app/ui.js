@@ -1134,7 +1134,7 @@ function updateConnectorPivot(j) {
     let pos = handleOperator.getPosition();
     let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
     if (pos) {
-        component.GetBehavior().setExtraPivot1(pos.copy());
+        component.getBehavior().setExtraPivot1(pos.copy());
     }
 }
 

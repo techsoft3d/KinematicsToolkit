@@ -149,8 +149,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                     axis = Communicator.Point3.subtract(axis, center).normalize();
                     extraAxis = Communicator.Point3.subtract(extraAxis, extraPivot).normalize();
-
-                    let plane = Communicator.Plane.createFromPointAndNormal(extraPivot, extraAxis);
+                    let plane = Communicator.Plane.createFromPointAndNormal(extraPivot, extraAxis);                    
                     center = KinematicsUtility.closestPointOnPlane(plane, center);
                     extraCenter = KinematicsUtility.closestPointOnPlane(plane, extraCenter);
 
@@ -254,6 +253,13 @@ export class KinematicsComponentBehaviorPivotConnector {
             }
             else {
 
+                let tempaxis;
+                if (this._isSlidePivot)
+                {
+                    tempaxis = component._axis.copy();
+                    component._axis = this._extraComponent1._axis.copy();
+                }
+
                 let pivot1aft;
                 if (!this._extraComponent1._behavior._targetPivot)
                     pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
@@ -287,6 +293,9 @@ export class KinematicsComponentBehaviorPivotConnector {
                     let pivot1bef = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
 
                     let delta = Communicator.Point3.subtract(pivot1aft, pivot1bef).length();
+                    pivot1aft = KinematicsUtility.closestPointOnPlane(plane, pivot1aft);
+                    pivot1before = KinematicsUtility.closestPointOnPlane(plane, pivot1before);
+                    transformedCenter = KinematicsUtility.closestPointOnPlane(plane, transformedCenter);
 
                     let moveaxis = Communicator.Point3.subtract(pivot1aft, transformedCenter).normalize();
 
@@ -306,6 +315,8 @@ export class KinematicsComponentBehaviorPivotConnector {
                     let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
                     let final3 = Communicator.Matrix.multiply(localmatrix, result2);
                     KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);
+
+                    component._axis = tempaxis;
                 }
 
             }

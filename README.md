@@ -58,7 +58,7 @@ Example URL (when running via Visual Studio Code Live Server plugin):
 The basic process of creating a new Kinematics Hierachy and interact with it is:
 
 1. Initialize Static KinematicsManager Object (only do this once per session)
-2. Create a new Kinematics Hierachy (or load an existing hierachy template. In this case skip Step 3 & 4. See example further below on how to load a hierachy template and apply it to a model/node)
+2. Create a new Kinematics Hierachy (or load an existing hierachy template. In this case skip Step 3 & 4. See example further below on how to load a hierachy template and apply it to a model/node.
 3. Add components to the newly created Hierachy.
 4. For each component:
     1. Set its parent component.
@@ -67,14 +67,14 @@ The basic process of creating a new Kinematics Hierachy and interact with it is:
     3. Set its center and axis.
     4. Set custom properties on behavior object of component based on behavior type (see documentation for more details on the various behavior types).
 5. When interacting with a kinematics hierachy:
-    1. Retrieve component by its id or a nodeid of the associated HOOPS nodes.
+    1. Retrieve component by its id or a nodeid of the associated hoops web viewer nodes.
     2. Change value of component with set() function. 
-    2. Call updateComponents on hierachy object to reflect hierachy state in WebViewer.
+    2. Call updateComponents on hierachy object to reflect hierachy state in hoops web viewer.
 
 
 ```
 
-/* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
+/* Initialize KinematicsManager with HOOPS Communicator Web Viewer Object */
 
 KT.KinematicsManager.initialize(hwv);   
 
@@ -132,7 +132,7 @@ var jsontext = JSON.stringify(KT.KinematicsManager.getTemplate(hierachy.getTempl
 **Loading an existing Kinematics Hierachy Template and applying it to a model:**
 
 ```
-/* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
+/* Initialize KinematicsManager with HOOPS Communicator Web Viewer Object */
 KT.KinematicsManager.initialize(hwv);   
 
 /* Fetch Kinematics Hierachy Definition from server*/
@@ -234,7 +234,7 @@ class MyKinematicsComponentBehavior {
 }
 
 
-/* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
+/* Initialize KinematicsManager with HOOPS Communicator Web Viewer Object */
 KT.KinematicsManager.initialize(hwv);   
 
 /* Create a new Kinematics Hierachy */
@@ -261,7 +261,7 @@ hierachy.updateComponents();
 ```
 
 /* Define callback function that creates custom component behavior from previous example */
-function customTypeCallback(component, type)
+function customBehaviorCreationCallback(component, type)
 {
     if (type == 128)
     {
@@ -269,11 +269,11 @@ function customTypeCallback(component, type)
     }
 }
 
-/* Initialize KinematicsManager with HOOPS Communicator WebViewer Object */
+/* Initialize KinematicsManager with HOOPS Communicator Web Viewer Object */
 KT.KinematicsManager.initialize(hwv);   
 
 /* Set callback for custom behavior instantiation*/
-KT.KinematicsManager.setCustomTypeCallback(customTypeCallback);
+KT.KinematicsManager.setCustomeBehaviorCreationCallback(customBehaviorCreationCallback);
   
 /* Fetch Kinematics Hierachy Definition from server*/
 let res = await fetch('data/microenginecustom.json');

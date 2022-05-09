@@ -13,7 +13,7 @@ The Kinematics Manager also comes with its own animation system (powerd by anime
 
 In addition to the core Kinematics Toolkit classes this repo contains an experimental Editor Environment for interactively creating Kinematics Hierachies, setting up animations and exporting those to JSON.
 
-For questions/feedback please send an email to guido@techsoft3d.com or post in our forum <https://forum.techsoft3d.com/>. For a 90 day trial of the HOOPS Web Platform go to <https://www.techsoft3d.com/products/hoops/web-platform>.
+For questions/feedback please send an email to guido@techsoft3d.com or post in our [forum](https://forum.techsoft3d.com/). For a 90 day trial of the HOOPS Web Platform go to [Web Platform](https://www.techsoft3d.com/products/hoops/web-platform).
 
 **Limitations:**
 * **This library is not an officially supported part of HOOPS Communicator and provided as-is.**
@@ -38,7 +38,7 @@ Add dist/kinematicsManager.min.js to your project.
 ```
 
 ## Documentation
-Live Documentation can be found at: <https://techsoft3d.github.io/KinematicsToolkit/>
+Live Documentation can be found at: [Docs](https://techsoft3d.github.io/KinematicsToolkit/)
 
 
 ## Using the Editor
@@ -286,11 +286,11 @@ let hierachy = await KT.KinematicsManager.applyToModel(templateId);
 
 ## Acknowledgments
 ### Engine:
-* Anime.js (<https://animejs.com/>)
+* [Anime.js](https://animejs.com/)
 
 ### Editor:
-* GoldenLayout (<https://golden-layout.com/>)
-* Tabulator (<http://tabulator.info/>)
-* jsTree (<https://www.jstree.com/>)
+* [GoldenLayout](https://golden-layout.com/)
+* [Tabulator](http://tabulator.info/)
+* [jsTree](https://www.jstree.com/)
 
 

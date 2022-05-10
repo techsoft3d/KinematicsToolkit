@@ -498,14 +498,14 @@ async function sentryanim() {
     if (!firstSentryLoad) {
         firstSentryLoad = true;
         myMaterialTool = new MaterialTool(hwv);
-        let res = await fetch('data/sentrymaterial.json');
+        let res = await fetch('dataTemp/sentrymaterial.json');
         let json = await res.json();
         myMaterialTool.fromJson(json);
         myMaterialTool.refresh();
 
 
 
-        await loadIKData("sentry2.json");
+        await loadIKData("dataTemp/sentry2.json");
         currentHierachy = KT.KinematicsManager.applyToModel("572ca79b-0573-4a10-b4f6-0f6f8c3b6ec0");
         drawIKDiv();
     }

@@ -47,7 +47,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
         if (this._extraComponent1)
             def.extraComponent1 = this._extraComponent1._id;
-        if (this._behavior._extraPivot1)
+        if (this._extraPivot1)
             def.extraPivot1 = this._extraPivot1.toJson();
         def.isSlidePivot = this._isSlidePivot;
 
@@ -103,8 +103,8 @@ export class KinematicsComponentBehaviorPivotConnector {
         let pivot1trans = component._parent.transformlocalPointToWorldSpace(component._behavior._extraPivot1);
         let centertrans = component.transformlocalPointToWorldSpace(component._center);
         let pivotorigtrans = component._parent.transformlocalPointToWorldSpace(targetpivot);
-        let transformedAxis = component.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
-
+        let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
+        let pivotorigtrans2 = pivotorigtrans.copy();
         let rotaxis2 = Communicator.Point3.subtract(transformedAxis, centertrans).normalize();
         let plane = Communicator.Plane.createFromPointAndNormal(pivotorigtrans, rotaxis2);
 
@@ -119,10 +119,10 @@ export class KinematicsComponentBehaviorPivotConnector {
 
         var armatrix = component._calculateAngleRotMatrix(angle);
         let p22 = component.transformlocalPointToWorldSpaceWithMatrix(component._behavior._extraPivot1, armatrix);
-        let diff = Communicator.Point3.subtract(p22, targetpivot).length();
+        let diff = Communicator.Point3.subtract(p22, pivotorigtrans2).length();
         armatrix = component._calculateAngleRotMatrix(-angle);
         p22 = component.transformlocalPointToWorldSpaceWithMatrix(component._behavior._extraPivot1, armatrix);
-        let diff2 = Communicator.Point3.subtract(p22, targetpivot).length();
+        let diff2 = Communicator.Point3.subtract(p22, pivotorigtrans2).length();
         if (diff2 > diff) {
             return angle;
         }
@@ -172,25 +172,35 @@ export class KinematicsComponentBehaviorPivotConnector {
                     let pp1 = xyinverse.transform(intersection.p1);
                     let pp2 = xyinverse.transform(intersection.p2);
 
+                  
                     let d1 = Communicator.Point3.subtract(pp1, extraPivotCurrent).length();
                     let d2 = Communicator.Point3.subtract(pp2, extraPivotCurrent).length();
+
+                    let targetPivot;
                     if (d1 < d2) {
-                        this._extraComponent1._behavior._targetPivot = pp1;
+                        targetPivot = pp1;
                     }
                     else {
-                        this._extraComponent1._behavior._targetPivot = pp2;
+                        targetPivot = pp2;
                     }
 
+                    this._extraComponent1._behavior._targetPivot = this._extraComponent1._parent.transformPointToComponentSpace(targetPivot);
+
+                    let ea1 = component.transformPointToComponentSpace(extraPivot);
+                    let ea2 = component.transformPointToComponentSpace(Communicator.Point3.add(extraPivot,extraAxis));
+                    extraAxis = Communicator.Point3.subtract(ea2,ea1).normalize();
+
                     let v1 = Communicator.Point3.subtract(extraPivot, center).normalize();
-                    let v2 = Communicator.Point3.subtract(this._extraComponent1._behavior._targetPivot, center).normalize();
+                    let v2 = Communicator.Point3.subtract(targetPivot, center).normalize();
                     let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
 
                     var armatrix = component._calculateAngleRotMatrix(angle, undefined, extraAxis);
                     let p22 = component.transformlocalPointToWorldSpaceWithMatrix(extraPivot, armatrix);
-                    let diff = Communicator.Point3.subtract(p22, this._extraComponent1._behavior._targetPivot).length();
-                    armatrix = component._calculateAngleRotMatrix(-angle);
+                                    
+                    let diff = Communicator.Point3.subtract(p22, targetPivot).length();
+                    armatrix = component._calculateAngleRotMatrix(-angle,undefined, extraAxis);
                     p22 = component.transformlocalPointToWorldSpaceWithMatrix(extraPivot, armatrix);
-                    let diff2 = Communicator.Point3.subtract(p22, this._extraComponent1._behavior._targetPivot).length();
+                    let diff2 = Communicator.Point3.subtract(p22, targetPivot).length();
                     if (diff2 > diff) {
                         armatrix = component._calculateAngleRotMatrix(angle, undefined, extraAxis);
                     }
@@ -279,14 +289,14 @@ export class KinematicsComponentBehaviorPivotConnector {
                 let v2 = Communicator.Point3.subtract(p2, transformedCenter).normalize();
                 let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
 
-                await component._rotate(angle);
+                component._rotate(angle);
                 let p22 = component.transformlocalPointToWorldSpace(pivot1before);
                 let diff = Communicator.Point3.subtract(p22, pivot1aft).length();
-                await component._rotate(-angle);
+                component._rotate(-angle);
                 p22 = component.transformlocalPointToWorldSpace(pivot1before);
                 let diff2 = Communicator.Point3.subtract(p22, pivot1aft).length();
                 if (diff2 > diff) {
-                    await component._rotate(angle);
+                    component._rotate(angle);
                 }
                 if (this._isSlidePivot) {
                     let pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
@@ -299,6 +309,12 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                     let moveaxis = Communicator.Point3.subtract(pivot1aft, transformedCenter).normalize();
 
+
+                    let ea1 = component.transformPointToComponentSpace(transformedCenter);
+                    let ea2 = component.transformPointToComponentSpace(Communicator.Point3.add(transformedCenter,moveaxis));
+                    moveaxis = Communicator.Point3.subtract(ea2,ea1).normalize();
+
+
                     let transmatrix = new Communicator.Matrix();
                     transmatrix = new Communicator.Matrix();
                     transmatrix.setTranslationComponent(-component._center.x, -component._center.y, -component._center.z);
@@ -308,6 +324,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                     let deltamatrix = new Communicator.Matrix();
                     deltamatrix.setTranslationComponent(moveaxis.x * delta, moveaxis.y * delta, moveaxis.z * delta);
+                    component._currentPosition = delta;
 
                     let result = Communicator.Matrix.multiply(transmatrix, deltamatrix);
                     let result2 = Communicator.Matrix.multiply(result, invtransmatrix);

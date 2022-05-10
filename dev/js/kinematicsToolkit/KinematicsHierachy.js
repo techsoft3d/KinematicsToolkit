@@ -122,6 +122,7 @@ export class KinematicsHierachy {
     async updateComponents()
     {
         await this._updateComponentsRecursive(this._rootComponent);
+        await this._updateComponentsRecursive(this._rootComponent);
     }
 
 

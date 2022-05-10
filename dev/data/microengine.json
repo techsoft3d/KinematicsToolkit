@@ -13,7 +13,6 @@
   "_ikSpeed": 100,
   "_targetAnchorNode": null,
   "components": {
-    "nodeid": -66,
     "id": 0,
     "reference": true,
     "type": 2,
@@ -31,7 +30,6 @@
     "maxangle": 1000,
     "children": [
       {
-        "nodeid": -67,
         "id": 1,
         "reference": true,
         "type": 0,
@@ -47,7 +45,6 @@
         },
         "children": [
           {
-            "nodeid": -68,
             "id": 4,
             "reference": true,
             "type": 7,
@@ -197,7 +194,6 @@
         ]
       },
       {
-        "nodeid": -69,
         "id": 3,
         "reference": true,
         "type": 12,

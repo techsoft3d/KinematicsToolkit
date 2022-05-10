@@ -467,7 +467,7 @@ export class KinematicsComponent {
             }
         }
 
-        let def = { nodeid: this._nodeid, id: this._id,reference: this._reference, type: this.getType(),center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
+        let def = {id: this._id,reference: this._reference, type: this.getType(),center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
             parentMatrix: this._parentMatrix.toJson() };
 
         if (this._behavior)

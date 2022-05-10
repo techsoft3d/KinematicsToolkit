@@ -49,8 +49,12 @@ Example URL (when running via Visual Studio Code Live Server plugin):
 <http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs>
 
 
+## Demo
+
+[HOOPS 3D Sandbox Live Code Sample](https://3dsandbox.techsoft3d.com/?snippet=5hnMVX2elhDdheTfnZSmKJv8)
 
 ## Code Samples:
+
 *Examples assume "microengine" sample model is already loaded into the root node of the HOOPS Web Viewer.*
 
 **Creating a new Kinematics Hierachy:**  

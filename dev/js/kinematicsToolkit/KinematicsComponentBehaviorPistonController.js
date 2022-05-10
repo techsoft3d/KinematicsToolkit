@@ -51,7 +51,10 @@ export class KinematicsComponentBehaviorPistonController {
         let p3 = this._extraComponent1._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(this._extraComponent1._center, this._extraComponent1._axis));
 
         let naxis = Communicator.Point3.subtract(p3, p2).normalize();
+
+
         let pol = KinematicsUtility.nearestPointOnLine(p2, naxis, p1);
+
         let delta = Communicator.Point3.subtract(pol, p1);
         let a = delta.length();
 
@@ -116,7 +119,7 @@ export class KinematicsComponentBehaviorPistonController {
         if (diff2 > diff)
             await component._rotate(-fangle);
 
-        let deltafj = Communicator.Point3.subtract(this._extraComponent1._center, component.transformlocalPointToWorldSpace(this._extraComponent1._center)).length();
+        let deltafj = Communicator.Point3.subtract(this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._center), component.transformlocalPointToWorldSpace(this._extraComponent1._center)).length();
         await this._extraComponent1._translate(-deltafj);
         let dx = Communicator.Point3.subtract(this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._center), component.transformlocalPointToWorldSpace(this._extraComponent1._center)).length();
         await this._extraComponent1._translate(deltafj);

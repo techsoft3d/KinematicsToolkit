@@ -47,7 +47,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
         if (this._extraComponent1)
             def.extraComponent1 = this._extraComponent1._id;
-        if (this._behavior._extraPivot1)
+        if (this._extraPivot1)
             def.extraPivot1 = this._extraPivot1.toJson();
         def.isSlidePivot = this._isSlidePivot;
 

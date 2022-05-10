@@ -308,7 +308,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                     let deltamatrix = new Communicator.Matrix();
                     deltamatrix.setTranslationComponent(moveaxis.x * delta, moveaxis.y * delta, moveaxis.z * delta);
-
+                    component._currentPosition = delta;
                     let result = Communicator.Matrix.multiply(transmatrix, deltamatrix);
                     let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
 

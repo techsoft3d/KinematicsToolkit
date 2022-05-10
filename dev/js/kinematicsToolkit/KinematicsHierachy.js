@@ -359,7 +359,7 @@ export class KinematicsHierachy {
     * @return {object} JSON object
      */      
     toJson() {
-        let def = { version: 1.0,_ikTip: this._ikTip.toJson(),_templateId: this._templateId,_ikSamplingDistance: this._ikSamplingDistance, _ikSamplingDistanceTranslation: this._ikSamplingDistanceTranslation, _ikLearningRate: this._ikLearningRate, _ikThreshold: this._ikThreshold, _ikSpeed: this._ikSpeed, 
+        let def = { version: KinematicsManager.getVersion(),_ikTip: this._ikTip.toJson(),_templateId: this._templateId,_ikSamplingDistance: this._ikSamplingDistance, _ikSamplingDistanceTranslation: this._ikSamplingDistanceTranslation, _ikLearningRate: this._ikLearningRate, _ikThreshold: this._ikThreshold, _ikSpeed: this._ikSpeed, 
             _targetAnchorNode:this._targetAnchorNode };
         if (this._targetAnchorPosition)            
             def._targetAnchorPosition = this._targetAnchorPosition.toJson();

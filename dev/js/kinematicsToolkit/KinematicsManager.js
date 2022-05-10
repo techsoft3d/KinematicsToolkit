@@ -24,6 +24,16 @@ export class KinematicsManager {
         KinematicsManager._animationGroups = [];
         KinematicsManager.handlePlacementOperator = null;
         KinematicsManager.componentMoveOperator = null;
+        KinematicsManager._version = "0.9.0";
+    }
+
+    
+    /**
+    * Retrieves Toolkit Version
+    * @return {hash} Hierachy Template Array
+    */
+    static getVersion() {
+        return KinematicsManager._version;
     }
 
     /**

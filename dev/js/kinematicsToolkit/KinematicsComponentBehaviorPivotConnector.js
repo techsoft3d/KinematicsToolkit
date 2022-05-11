@@ -279,8 +279,10 @@ export class KinematicsComponentBehaviorPivotConnector {
                 let p1 = KinematicsUtility.closestPointOnPlane(plane, pivot1aft);
                 let p2 = KinematicsUtility.closestPointOnPlane(plane, pivot1before);
 
-                // ViewerUtility.createDebugCube(KinematicsManager.viewer, p2, 10, new Communicator.Color(0, 0, 255));
-                // ViewerUtility.createDebugCube(KinematicsManager.viewer, p1, 10, new Communicator.Color(255, 0, 0));
+                // if (!this._isSlidePivot)
+                // {
+                //     await ViewerUtility.createDebugCube(KinematicsManager.viewer, p1, 10, new Communicator.Color(255, 0, 0),true);
+                // }
 
                 let v1 = Communicator.Point3.subtract(p1, transformedCenter).normalize();
                 let v2 = Communicator.Point3.subtract(p2, transformedCenter).normalize();
@@ -302,6 +304,11 @@ export class KinematicsComponentBehaviorPivotConnector {
                 p22 = component.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);                
                 p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
             
+
+                // if (!this._isSlidePivot)
+                // {
+                //     await ViewerUtility.createDebugCube(KinematicsManager.viewer, p22, 10, new Communicator.Color(0, 0, 255));
+                // }
 
               
                 if (this._isSlidePivot) {

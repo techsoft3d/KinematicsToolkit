@@ -151,12 +151,21 @@ class ViewerUtility {
     }
 
 
-    static async createDebugCube(viewer,pos, scale, color)
+    static async createDebugCube(viewer,pos, scale, color, flush)
     {
+        if (window.debugCubeNode === undefined)
+        {
+            window.debugCubeNode = await viewer.model.createNode(viewer.model.getRootNode());
+        }
 
+        if (flush)
+        {
+            await viewer.model.deleteNode(window.debugCubeNode);
+            window.debugCubeNode = await viewer.model.createNode(viewer.model.getRootNode());
+        }
         let cubeMesh = await ViewerUtility.createCubeMesh(viewer, true, pos, scale);
         let myMeshInstanceData = new Communicator.MeshInstanceData(cubeMesh);
-        var ttt = hwv.model.createNode(hwv.model.getRootNode());
+        var ttt = hwv.model.createNode( window.debugCubeNode);
         let cubenode = await viewer.model.createMeshInstance(myMeshInstanceData, ttt);
         if (color)
             hwv.model.setNodesFaceColor([ttt], color);

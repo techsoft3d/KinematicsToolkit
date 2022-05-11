@@ -1,7 +1,8 @@
 import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
-import { KinematicsUtility } from './KinematicsUtility.js';
 import { KinematicsBelt } from './KinematicsBelt.js';
+import { KinematicsManager } from './KinematicsManager.js';
+
 
 
 /** This class represents the behavior for a mapped component.  
@@ -38,7 +39,7 @@ export class KinematicsComponentBehaviorMapped {
                 KinematicsManager.viewer.model.setNodesVisibility([this._component._referenceNodes[i].nodeid], false);
             }
             await this.belt.initialize();
-            this._referenceNodes.push({nodeid:this.belt.getBaseNode(), matrix: new Communicator.Matrix()});
+            this._component._referenceNodes.push({nodeid:this.belt.getBaseNode(), matrix: new Communicator.Matrix()});
 
         }
 
@@ -96,8 +97,8 @@ export class KinematicsComponentBehaviorMapped {
 
         if (this._mappedType == componentType.prismaticPlane) {
             let matrix = KinematicsManager.viewer.model.getNodeNetMatrix(this._mappedTargetComponent._nodeid);
-            let pp = matrix.transform(component._prismaticPlaneTip);
-            let dist = component._prismaticPlanePlane.distanceToPoint(pp);
+            let pp = matrix.transform(this._prismaticPlaneTip);
+            let dist = this._prismaticPlanePlane.distanceToPoint(pp);
             if (dist < 0)
                 await component._translate(dist * this._helicalFactor);
             else

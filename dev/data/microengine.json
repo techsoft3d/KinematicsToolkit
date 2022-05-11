@@ -26,8 +26,6 @@
       "y": 0,
       "z": 0
     },
-    "minangle": -1000,
-    "maxangle": 1000,
     "children": [
       {
         "id": 1,

@@ -253,8 +253,8 @@ function setMinLimit(id)
     component = currentHierachy.getComponentById(id);
     if (shiftPressed)
     {
-        $("#componentmin")[0].value  = undefined;
-        component.setMinLimit(undefined);
+        $("#componentmin")[0].value  = "";
+        component.setMinLimit();
     }
     else
     {
@@ -271,8 +271,8 @@ function setMaxLimit(id)
     component = currentHierachy.getComponentById(id);
     if (shiftPressed)
     {
-        $("#componentmax")[0].value  = undefined;
-        component.setMaxLimit(undefined);
+        $("#componentmax")[0].value  = "";
+        component.setMaxLimit();
     }
     else
     {
@@ -301,9 +301,9 @@ function generateComponentPropertiesData(id)
 
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits (Min/Max):</label></div>';
     html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
-    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button><br>';
+    html += '<button onclick="setMinLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Get</button><br>';
     html +='<input id="componentmax" type="number" value="' + component.getMaxLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
-    html += '<button onclick="setMaxLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button>';    
+    html += '<button onclick="setMaxLimit(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Get</button>';    
     html+='</div></div>';
     
     if (component.getType() == KT.componentType.revolute) {

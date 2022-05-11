@@ -240,6 +240,13 @@ function createUILayout() {
 
                     },
                 },                                   
+                {
+                    name: 'Gripper2',
+                    fun: async function () {
+                        loadIKData("dataTemp/gripper2.json");
+
+                    },
+                },                                   
             ]
         },      
         {

@@ -112,17 +112,19 @@ export class KinematicsComponentBehaviorPivotConnector {
         pivotorigtrans = KinematicsUtility.closestPointOnPlane(plane, pivotorigtrans);
         pivot1trans = KinematicsUtility.closestPointOnPlane(plane, pivot1trans);
 
-
         let v1 = Communicator.Point3.subtract(pivotorigtrans, centertrans).normalize();
         let v2 = Communicator.Point3.subtract(pivot1trans, centertrans).normalize();
         let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
 
         var armatrix = component._calculateAngleRotMatrix(angle);
         let p22 = component.transformlocalPointToWorldSpaceWithMatrix(component._behavior._extraPivot1, armatrix);
-        let diff = Communicator.Point3.subtract(p22, targetpivot).length();
+        p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
+
+        let diff = Communicator.Point3.subtract(p22, pivotorigtrans).length();
         armatrix = component._calculateAngleRotMatrix(-angle);
         p22 = component.transformlocalPointToWorldSpaceWithMatrix(component._behavior._extraPivot1, armatrix);
-        let diff2 = Communicator.Point3.subtract(p22, targetpivot).length();
+        p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
+        let diff2 = Communicator.Point3.subtract(p22, pivotorigtrans).length();
         if (diff2 > diff) {
             return angle;
         }
@@ -174,23 +176,29 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                     let d1 = Communicator.Point3.subtract(pp1, extraPivotCurrent).length();
                     let d2 = Communicator.Point3.subtract(pp2, extraPivotCurrent).length();
+
+                    let targetPivot;
                     if (d1 < d2) {
-                        this._extraComponent1._behavior._targetPivot = pp1;
+                        targetPivot = pp1;
                     }
                     else {
-                        this._extraComponent1._behavior._targetPivot = pp2;
+                        targetPivot = pp2;
                     }
 
+                
+
+                    this._extraComponent1._behavior._targetPivot = this._extraComponent1._parent.transformPointToComponentSpace(targetPivot);
+
                     let v1 = Communicator.Point3.subtract(extraPivot, center).normalize();
-                    let v2 = Communicator.Point3.subtract(this._extraComponent1._behavior._targetPivot, center).normalize();
+                    let v2 = Communicator.Point3.subtract(targetPivot, center).normalize();
                     let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
 
                     var armatrix = component._calculateAngleRotMatrix(angle, undefined, extraAxis);
                     let p22 = component.transformlocalPointToWorldSpaceWithMatrix(extraPivot, armatrix);
-                    let diff = Communicator.Point3.subtract(p22, this._extraComponent1._behavior._targetPivot).length();
+                    let diff = Communicator.Point3.subtract(p22, targetPivot).length();
                     armatrix = component._calculateAngleRotMatrix(-angle);
                     p22 = component.transformlocalPointToWorldSpaceWithMatrix(extraPivot, armatrix);
-                    let diff2 = Communicator.Point3.subtract(p22, this._extraComponent1._behavior._targetPivot).length();
+                    let diff2 = Communicator.Point3.subtract(p22, targetPivot).length();
                     if (diff2 > diff) {
                         armatrix = component._calculateAngleRotMatrix(angle, undefined, extraAxis);
                     }
@@ -228,7 +236,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                     // ViewerUtility.createDebugCube(KinematicsManager.viewer, transformedCenter, 10);
                     // ViewerUtility.createDebugCube(KinematicsManager.viewer, newpivot, 10);
-                    // ViewerUtility.createDebugCube(KinematicsManager.viewer, circlepivot, 10, new Communicator.Color(0, 0, 1));
+                    // ViewerUtility.createDebugCube(KinematicsManager.viewer, circlepivot, 10, new Communicator.Color(0, 0, 255));
 
 
                     let circleRadius = Communicator.Point3.subtract(cp, cc).length();
@@ -246,7 +254,6 @@ export class KinematicsComponentBehaviorPivotConnector {
                             respoint = xyinverse.transform(respoint);
                         }
 
-                        //                        ViewerUtility.createDebugCube(KinematicsManager.viewer, respoint);
                         this._extraComponent1._behavior._targetPivot = respoint;
                     }
                 }
@@ -260,11 +267,8 @@ export class KinematicsComponentBehaviorPivotConnector {
                     component._axis = this._extraComponent1._axis.copy();
                 }
 
-                let pivot1aft;
-                if (!this._extraComponent1._behavior._targetPivot)
-                    pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
-                else
-                    pivot1aft = this._extraComponent1._behavior._targetPivot.copy();
+                let pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
+
                 let pivot1before = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
                 let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
                 let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
@@ -280,14 +284,21 @@ export class KinematicsComponentBehaviorPivotConnector {
                 let angle = Communicator.Util.computeAngleBetweenVector(v1, v2);
 
                 await component._rotate(angle);
-                let p22 = component.transformlocalPointToWorldSpace(pivot1before);
-                let diff = Communicator.Point3.subtract(p22, pivot1aft).length();
+                let p22 = component.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);                
+                p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
+              
+                
+                let diff = Communicator.Point3.subtract(p22, p1).length();
                 await component._rotate(-angle);
-                p22 = component.transformlocalPointToWorldSpace(pivot1before);
-                let diff2 = Communicator.Point3.subtract(p22, pivot1aft).length();
+                p22 = component.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
+                p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
+                let diff2 = Communicator.Point3.subtract(p22, p1).length();
                 if (diff2 > diff) {
                     await component._rotate(angle);
                 }
+                p22 = component.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);                
+                p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
+              
                 if (this._isSlidePivot) {
                     let pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
                     let pivot1bef = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
@@ -298,6 +309,9 @@ export class KinematicsComponentBehaviorPivotConnector {
                     transformedCenter = KinematicsUtility.closestPointOnPlane(plane, transformedCenter);
 
                     let moveaxis = Communicator.Point3.subtract(pivot1aft, transformedCenter).normalize();
+                    let ea1 = component._parent.transformPointToComponentSpace(transformedCenter);
+                    let ea2 = component._parent.transformPointToComponentSpace(Communicator.Point3.add(transformedCenter,moveaxis));
+                    moveaxis = Communicator.Point3.subtract(ea2,ea1).normalize();
 
                     let transmatrix = new Communicator.Matrix();
                     transmatrix = new Communicator.Matrix();

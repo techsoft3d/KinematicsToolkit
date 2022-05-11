@@ -642,7 +642,7 @@ export class KinematicsComponent {
     transformlocalPointToWorldSpaceWithMatrix(pos, matrix)    
     {
         let mat = this._hierachy.getReferenceNodeNetMatrix(this._parent);
-        mat = Communicator.Matrix.multiply(mat, matrix);
+        mat = Communicator.Matrix.multiply(matrix, mat);
         return mat.transform(pos);
     }
 

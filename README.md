@@ -38,7 +38,7 @@ Add dist/kinematicsManager.min.js to your project.
 ```
 
 ## Documentation
-Live Documentation can be found at: [Docs](https://techsoft3d.github.io/KinematicsToolkit/)
+Live Documentation can be found here: [https://techsoft3d.github.io/KinematicsToolkit/](https://techsoft3d.github.io/KinematicsToolkit/)
 
 
 ## Using the Editor
@@ -61,7 +61,7 @@ Example URL (when running via Visual Studio Code Live Server plugin):
 
 The basic process of creating a new Kinematics Hierachy and interact with it is:
 
-1. Initialize Static KinematicsManager Object (only do this once per session)
+1. Initialize Static KinematicsManager Object (only do this once per session).
 2. Create a new Kinematics Hierachy (or load an existing hierachy template. In this case skip Step 3 & 4. See example further below on how to load a hierachy template and apply it to a model/node.
 3. Add components to the newly created Hierachy.
 4. For each component:
@@ -188,7 +188,6 @@ class MyKinematicsComponentBehavior {
     //this._extraComponent1 = this._component.getHierachy().getComponentHash()[this._extraComponent1];
     }
 
-    //retrieve any additional behavior properties during loading
     //add any additional behavior properties during serialization    
     toJson(def) {
         def.helicalFactor = this._helicalFactor;
@@ -213,13 +212,16 @@ class MyKinematicsComponentBehavior {
     }
 
     //Defines the movement type for the component (prismatic, revolute or fixed) 
+    //Only prismatic or revolute components can be interacted with directly
     getMovementType()
     {
         return KT.componentType.prismatic;
     }
 
     //This function is executed whenever a component changes its state and updateComponents is called
-    //This is where you define your custom behavior
+    //It is where you define the custom behavior for your component.
+    //We are working on additional documentation and more examples for defining custom behaviors.
+
     async execute() {
         let component = this._component;
         let p1 = component.getParent().transformlocalPointToWorldSpace(component.getCenter());

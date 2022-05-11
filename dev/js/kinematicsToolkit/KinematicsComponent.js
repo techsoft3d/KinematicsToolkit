@@ -456,7 +456,7 @@ export class KinematicsComponent {
         let refnodes = [];
         if (this.getType() == componentType.mapped && (this._behavior._mappedType == componentType.belt)) {
             for (let i = 0; i < this._referenceNodes.length; i++) {
-                if (this._referenceNodes[i].nodeid != this.belt.getBaseNode())
+                if (this._referenceNodes[i].nodeid != this._behavior.belt.getBaseNode())
                     refnodes.push({ nodeid: this._referenceNodes[i].nodeid, matrix: this._referenceNodes[i].matrix.toJson() });
 
             }

@@ -254,6 +254,13 @@ function createUILayout() {
 
                     },
                 },       
+                {
+                    name: 'MR-1718',
+                    fun: async function () {
+                        loadIKData("dataTemp/mr1718-arm.json");
+                    },
+                },
+
             ]
         },      
         {

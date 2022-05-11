@@ -739,8 +739,8 @@ function drawIKDiv() {
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="startAnimationGroup();">Play</button>';    
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="stopAllAnimations();">Stop</button>';    
     html += '<br><button type="button" style="font-size:11px" onclick="newAnimationGroupDialog()" class="btn btn-secondary btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#newupdateanimationgroup">New</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Edit</button>';
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Delete</button>';
+    // html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Edit</button>';
+    // html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Delete</button>';
     html += '<h2 style="margin-top:20px;"><span>Component Hierachy</span></h2>';
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(false);">Add</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="addComponentFromUI(true);">Add to Root</button>';

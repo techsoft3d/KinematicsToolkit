@@ -384,7 +384,7 @@ export class KinematicsHierachy {
         for (let i=0;i<KinematicsManager._animationGroups.length;i++)
         {
             let group = KinematicsManager._animationGroups[i];
-            if (group.hierachy == this)
+            if (group._hierachy == this)
             {
                 def.animationGroups.push(group.toJson());
             }

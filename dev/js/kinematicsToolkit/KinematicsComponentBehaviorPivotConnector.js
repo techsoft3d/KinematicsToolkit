@@ -269,7 +269,7 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                 let pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
 
-                let pivot1before = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
+                let pivot1before = component._parent.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
                 let transformedCenter = component._parent.transformlocalPointToWorldSpace(component._center);
                 let transformedAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(component._center, component._axis));
 
@@ -278,6 +278,9 @@ export class KinematicsComponentBehaviorPivotConnector {
 
                 let p1 = KinematicsUtility.closestPointOnPlane(plane, pivot1aft);
                 let p2 = KinematicsUtility.closestPointOnPlane(plane, pivot1before);
+
+                // ViewerUtility.createDebugCube(KinematicsManager.viewer, p2, 10, new Communicator.Color(0, 0, 255));
+                // ViewerUtility.createDebugCube(KinematicsManager.viewer, p1, 10, new Communicator.Color(255, 0, 0));
 
                 let v1 = Communicator.Point3.subtract(p1, transformedCenter).normalize();
                 let v2 = Communicator.Point3.subtract(p2, transformedCenter).normalize();
@@ -298,6 +301,8 @@ export class KinematicsComponentBehaviorPivotConnector {
                 }
                 p22 = component.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);                
                 p22 = KinematicsUtility.closestPointOnPlane(plane, p22);
+            
+
               
                 if (this._isSlidePivot) {
                     let pivot1aft = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);

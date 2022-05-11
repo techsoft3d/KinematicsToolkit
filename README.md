@@ -6,7 +6,7 @@ In a typical CAD model the product structure is often flat or unrelated to the k
 
 In addition to this basic functionality the Kinematics Manager also offers the ability to define indirect components that are driven by other components based on their mathematical relationships. For example a mapped Component will move or rotate depending on the movement or rotation of another component. Other components allow for the creation of hinges, pistons and other more complex mechanical systems. It is also possible to define your own component behaviors. In addition, the Kinematics Toolkit provides a simple Inverse Kinematics solver based on the gradient decent method.
 
-Once a Kinematics Hierachy is defined it can be easily exported to a JSON object and its template can then be applied to individual instances of a CAD model that exist in the scene, each driven by their own kinematics state (e.g. a number of IoT enabled devices in a building).
+Once a Kinematics Hierachy is defined it can be easily exported to a JSON object and its template can then be applied to individual instances of a CAD model, each driven by their own kinematics state (e.g. a number of IoT enabled devices in a building).
 
 
 The Kinematics Manager also comes with its own animation system (powerd by anime.js) which makes it easy to define simple animations (like pressing a button or starting up a fan) and combining those into more complex animation groups.
@@ -17,7 +17,7 @@ For questions/feedback please send an email to guido@techsoft3d.com or post in o
 
 **Limitations:**
 * **This library is not an officially supported part of HOOPS Communicator and provided as-is.**
-* This engine is not meant as a mathematically precise solver for arbitrary complex mechanical systems. Its main purpose is to provide the ability to efficently animate a CAD model for which its movement properties are known. 
+* This engine is not meant as a mathematically precise solver for arbitrary complex mechanical systems. Its main purpose is to provide the ability to efficently and easily animate a CAD model for which its movement properties are known. 
 * There is no physics engine and no object-to-object collission taken into account by the Kinematics Solver.
 * The Inverse kinematics capabilites and various other functionality is currently in an experimental state.  
   

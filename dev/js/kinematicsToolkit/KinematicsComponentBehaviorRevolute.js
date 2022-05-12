@@ -54,12 +54,12 @@ export class KinematicsComponentBehaviorRevolute {
         */
     setFixedAxisFromMatrix(matrix) {
         let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
-        if (handleOperator.getPosition()) {
-            if (!KinematicsManager.handlePlacementOperator.lastAxis2)
+        if (KinematicsManager.getHandleOperator().getPosition()) {
+            if (!KinematicsManager.getHandleOperator().getSecondAxis())
                 return;
 
 
-            let pivotaxis = Communicator.Point3.add(handleOperator.getPosition(), KinematicsManager.handlePlacementOperator.lastAxis2);
+            let pivotaxis = Communicator.Point3.add(handleOperator.getPosition(), KinematicsManager.getHandleOperator().getSecondAxis());
             let pivot = matrix.transform(handleOperator.getPosition());
             pivotaxis = matrix.transform(pivotaxis);
 

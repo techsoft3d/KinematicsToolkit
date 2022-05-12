@@ -36,6 +36,16 @@ export class KinematicsManager {
         return KinematicsManager._version;
     }
 
+       
+    /**
+    * Retrieves Handle Placement Operator
+    * @return {object} Handle Operator
+    */
+    static getHandleOperator()
+    {
+        return KinematicsManager.handlePlacementOperator;
+    }
+
     /**
      * Initializes Handle Placement Operator
      */

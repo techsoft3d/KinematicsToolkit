@@ -17,8 +17,6 @@ function string_of_enum(e,value)
   return "Custom";
 }
 
-
-
 function switchTemplate() {
     currentTemplate = $("#templateselect").val();
     currentHierachy = null;
@@ -265,7 +263,6 @@ function setMinLimit(id)
 
 }
 
-
 function setMaxLimit(id)
 {
     component = currentHierachy.getComponentById(id);
@@ -442,8 +439,6 @@ function generateComponentPropertiesData(id)
             else
                 dis = 'disabled';
 
-
-
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Align Vector:</label></div>';
             if (component.getBehavior().getBelt().getAlignVector()) {
                 let alignVector = component.getBehavior().getBelt().getAlignVector();
@@ -491,9 +486,6 @@ function generateComponentPropertiesData(id)
     html += '<button type="button" style="font-size:11px" onclick="updateanimationdialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#DefineAnimation">Update</button>';
     html += '<button type="button" style="font-size:11px" onclick="newanimationdialog()" class="btn btn-primary btn-sm ms-1 mt-1" data-bs-toggle="modal" data-bs-target="#DefineAnimation">New</button>';
     $("#KinematicsComponentPropertiesDiv").append(html);
-
-
-
 
     if (component.getType() == KT.componentType.mapped && component.getBehavior().getMappedType() == KT.componentType.belt) {
 
@@ -782,9 +774,6 @@ function updateKinematicsManager() {
      currentHierachy.setIkSpeed(parseFloat($("#ikspeed")[0].value));
 }
 
-
-
-
 async function showComponent(j,adjustToCenter) {
     
     let component = currentHierachy.getComponentById( j);
@@ -796,7 +785,6 @@ async function showComponent(j,adjustToCenter) {
         let bounds = await hwv.model.getNodesBounding([hwv.selectionManager.getLast().getNodeId()]);
         center = bounds.center();        
     }
-
 
     if (editMode) {
         tempnode = hwv.model.createNode(hwv.model.getRootNode());
@@ -1090,9 +1078,9 @@ function updatePrismaticPlane(type, j) {
 
     let component = currentHierachy.getComponentById( j);
 
-    var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
-    let pos = handleOperator.getPosition();
-    let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
+    let pos = KT.KinematicsManager.getHandleOperator().getPosition();
+    let axis = KT.KinematicsManager.getHandleOperator().getAxis();
+
     if (type === 0) {
         if (pos) {
             component.setPrismaticPlanePlane(new Communicator.Plane());
@@ -1129,22 +1117,12 @@ function updateMatePivot(type, j) {
 function updateConnectorPivot(j) {
 
     let component = currentHierachy.getComponentById(j);
+    let pos = KT.KinematicsManager.getHandleOperator().getPosition();
 
-    var handleOperator = hwv.operatorManager.getOperator(Communicator.OperatorId.Handle);
-    let pos = handleOperator.getPosition();
-    let axis = KT.KinematicsManager.handlePlacementOperator.lastAxis;
     if (pos) {
         component.getBehavior().setExtraPivot1(pos.copy());
     }
 }
-
-
-
-
-
-
-
-
 
 function animateComponent(j){
     let animationtemplate = KT.KinematicsManager.getAnimationTemplate($("#animationtemplateselect").val());

@@ -13,6 +13,7 @@ import { KinematicsComponentBehaviorHelical } from './KinematicsComponentBehavio
 import { KinematicsComponentBehaviorPrismaticAggregate } from './KinematicsComponentBehaviorPrismaticAggregate.js';
 import { KinematicsComponentBehaviorRevoluteSlide } from './KinematicsComponentBehaviorRevoluteSlide.js';
 import { KinematicsComponentBehaviorMate } from './KinematicsComponentBehaviorMate.js';
+import { KinematicsComponentBehaviorPivotSystem } from './KinematicsComponentBehaviorPivotSystem.js';
 
 /**
  * Type of Component.
@@ -70,7 +71,8 @@ const componentType = {
 
 /** Calculates component based on common pivot.
       */            
-    pivotConnector:13
+    pivotConnector:13,
+    pivotSystem:14,
 };
 
 export {componentType};
@@ -197,6 +199,10 @@ export class KinematicsComponent {
         else if (this._type == componentType.mate)
         {
             this._behavior = new KinematicsComponentBehaviorMate(this);
+        }     
+        else if (this._type == componentType.pivotSystem)
+        {
+            this._behavior = new KinematicsComponentBehaviorPivotSystem(this);
         }     
         else
         {
@@ -866,10 +872,9 @@ export class KinematicsComponent {
      * Calculates Center and Axis of component from active handle 
      */     
     setParametersFromHandle() {
-        let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
-        if (handleOperator.getPosition()) {
-            let pos = handleOperator.getPosition();
-            let axis = KinematicsManager.handlePlacementOperator.lastAxis;
+        if (KinematicsManager.handlePlacementOperator.getPosition()) {
+            let pos = KinematicsManager.handlePlacementOperator.getPosition();
+            let axis = KinematicsManager.handlePlacementOperator.getAxis();
             if (!axis) return;
             let netmatrix = this._hierachy.getReferenceNodeNetMatrix(this);
             let netmatrixinverse = Communicator.Matrix.inverse(netmatrix);
@@ -953,10 +958,10 @@ export class KinematicsComponent {
             }
             handlesop._addAxisTranslationHandle(pos, fixedAxis, nodeids);                
 
-            KinematicsManager.handlePlacementOperator.lastAxis2 = fixedAxis.copy();
+            KinematicsManager.getHandleOperator().setSecondAxis(fixedAxis.copy());
 
         }
-        KinematicsManager.handlePlacementOperator.lastAxis = axis.copy();
+        KinematicsManager.getHandleOperator().setAxis(axis.copy());
     }
 
     async calculateGradient() {

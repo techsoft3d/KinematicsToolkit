@@ -5,12 +5,32 @@ export class HandlePlacementOperator  {
 
         this._activeHighlight = null;
         this._currentSelItem = null;
-        this.lastAxis = null;
-        this.lastAxis2 = null;
+        this._axis = null;
+        this._axis2 = null;
         
     }
 
+    getPosition()
+    {
+        let handleOperator = this._viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
+        return handleOperator.getPosition();
+    }
 
+    getAxis() {
+        return this._axis;
+    }
+
+    getSecondAxis() {
+        return this._axis2;
+    }
+
+    setAxis(axis) {
+        this._axis = axis;
+    }
+
+    setSecondAxis(axis) {
+        this._axis2 = axis;
+    }
 
     insertHandles(addMainHandles)
     {
@@ -37,7 +57,7 @@ export class HandlePlacementOperator  {
                 if (points.length === 2) {
                     let axis = Communicator.Point3.subtract(points[1], points[0]);
 
-                    this.lastAxis = axis.copy();
+                    this._axis = axis.copy();
 
                     let length_1 = axis.length();
                     let position = points[0].copy().add(axis.normalize().scale(length_1 / 2));
@@ -62,8 +82,8 @@ export class HandlePlacementOperator  {
 
                         let axis = Communicator.Point3.subtract(p2, p1);
                         let axis2 = Communicator.Point3.subtract(p3, p1);
-                        this.lastAxis = axis.copy();
-                        this.lastAxis2 = axis2.copy();
+                        this._axis = axis.copy();
+                        this._axis2 = axis2.copy();
                         let position = pt.center;
                         this._addAxisTranslationHandle(position, axis, snodeIds);
                         this._addAxisTranslationHandle(position, axis.copy().scale(-1), snodeIds);
@@ -75,7 +95,6 @@ export class HandlePlacementOperator  {
             }
             else {
                 let axis = faceEntity.getNormal();
-                let length_1 = axis.length();
                 let position = faceEntity.getPosition().copy();
                 position = faceEntity.getBounding().center().copy();
 
@@ -86,8 +105,8 @@ export class HandlePlacementOperator  {
                     if (axis2.length() < 0.00001) 
                     axis2 = Communicator.Point3.cross(new Communicator.Point3(0, 1, 0),axis);
 
-                    this.lastAxis = axis.copy();
-                    this.lastAxis2 = axis2.copy();
+                    this._axis = axis.copy();
+                    this._axis2 = axis2.copy();
                     this._addAxisTranslationHandle(position, axis, snodeIds);
                     this._addAxisTranslationHandle(position, axis.copy().scale(-1), snodeIds);
                     this._addAxisRotationHandle(position, axis, snodeIds);
@@ -108,6 +127,8 @@ export class HandlePlacementOperator  {
         const handleOperator = this._viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
         handleOperator.removeHandles();
 
+        this._axis = null;
+        this._axis2 = null;
 
         if (event.controlDown())        
         {

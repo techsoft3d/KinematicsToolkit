@@ -36,7 +36,6 @@ export class KinematicsComponentBehaviorPivotConnector {
         this._isSlidePivot = def.isSlidePivot;
     }
 
-
     jsonFixup() {
         if (this._extraComponent1) {
             this._extraComponent1 = this._component.getHierachy().getComponentHash()[this._extraComponent1];
@@ -50,7 +49,6 @@ export class KinematicsComponentBehaviorPivotConnector {
         if (this._extraPivot1)
             def.extraPivot1 = this._extraPivot1.toJson();
         def.isSlidePivot = this._isSlidePivot;
-
     }
 
     getCurrentValue() {
@@ -88,7 +86,6 @@ export class KinematicsComponentBehaviorPivotConnector {
     setExtraPivot1(pivot) {
         this._extraPivot1 = pivot;
     }
-
 
     /**
        * Retrieves the Extra Pivot 1 
@@ -138,7 +135,6 @@ export class KinematicsComponentBehaviorPivotConnector {
 
         if (this._extraComponent1) {
             if (component._touched) {
-
                 if (this._isSlidePivot) {
                     let extraPivot = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
                     let extraPivotCurrent = this._extraComponent1.transformlocalPointToWorldSpace(this._extraComponent1._behavior._extraPivot1);
@@ -185,8 +181,7 @@ export class KinematicsComponentBehaviorPivotConnector {
                         targetPivot = pp2;
                     }
 
-                
-
+            
                     this._extraComponent1._behavior._targetPivot = this._extraComponent1._parent.transformPointToComponentSpace(targetPivot);
 
                     let v1 = Communicator.Point3.subtract(extraPivot, center).normalize();
@@ -346,7 +341,6 @@ export class KinematicsComponentBehaviorPivotConnector {
                 }
 
             }
-
         }
         else {
             if (component._behavior._extraPivot1) {
@@ -358,7 +352,6 @@ export class KinematicsComponentBehaviorPivotConnector {
             }
         }
         component._touched = false;
-
     }
 
     /**
@@ -369,7 +362,6 @@ export class KinematicsComponentBehaviorPivotConnector {
         return this._extraComponent1;
     }
 
-
     /**
       * Sets the extra component 1
       * @param  {KinematicsComponent} component - Component
@@ -377,7 +369,6 @@ export class KinematicsComponentBehaviorPivotConnector {
     setExtraComponent1(component) {
         this._extraComponent1 = component;
     }
-
 
     /**
         * Retrieves if component is slide pivot
@@ -387,8 +378,6 @@ export class KinematicsComponentBehaviorPivotConnector {
         return this._isSlidePivot;
     }
 
-
-
     /**
        * Sets if component is slide pivot
        * @param  {bool} isSlidePivot - Is component slide pivot\
@@ -396,21 +385,5 @@ export class KinematicsComponentBehaviorPivotConnector {
     setIsSlidePivot(isSlidePivot) {
         this._isSlidePivot = isSlidePivot;
     }
-
-
-    /**
-        * Aligns the component related to the piston controller to its plane
-        */
-    adjustExtraComponentToPistonController() {
-        let component = this._component;
-
-        let naxis = component._axis;
-        let plane = Communicator.Plane.createFromPointAndNormal(component._center, naxis);
-        let pol = KinematicsUtility.closestPointOnPlane(plane, this._extraComponent1._center);
-
-        this._extraComponent1._axis = this._extraComponent1._axis.copy();
-        this._extraComponent1._center = pol;
-    }
-
 
 }

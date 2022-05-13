@@ -173,7 +173,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             return totalmatrix2;
         }
     }
-
+    
     async _resolve(incomponent, plane, xymatrix, xyinverse) {
         let component = this._component;
         if (!this._associatedComponentHash)
@@ -216,7 +216,6 @@ export class KinematicsComponentBehaviorPivotSystem {
             
              let intersect = this._circleIntersectionFromPoints(inpivotWorld, outpivotWorldCurrent, outcenterWorld, outpivotWorld,xymatrix, xyinverse);
 
-       //     ViewerUtility.createDebugCube(KinematicsManager.viewer, intersect, 10, new Communicator.Color(255, 0, 0));
 
             let angle = this._calculateAngle(outpivotWorldCurrent, intersect, inpivotWorld);
 
@@ -254,7 +253,8 @@ export class KinematicsComponentBehaviorPivotSystem {
             let angle = this._calculateAngle(pivotbefore, pivotafter, centerWorld);
 
             let centerComponent = component._parent.transformPointToComponentSpace(centerWorld);
-            let matrix = this._findAngleSignMatrix(angle, component._axis, centerComponent,new Communicator.Matrix(), pivotbefore, pivotafter);
+            let pivotbeforeComponent = component._parent.transformPointToComponentSpace(pivotbefore);
+            let matrix = this._findAngleSignMatrix(angle, component._axis, centerComponent,new Communicator.Matrix(), pivotbeforeComponent, pivotafter);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, matrix);
 
             for (let c in this._associatedComponentHash)

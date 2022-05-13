@@ -142,16 +142,42 @@ export class KinematicsComponentBehaviorPivotSystem {
         {
             return pp2;
         }
+    }
+    
 
-
-
+    _calculateAngle(p1,p2,p3)
+    {
+        let v1 = Communicator.Point3.subtract(p1, p3).normalize();
+        let v2 = Communicator.Point3.subtract(p2, p3).normalize();
+        return Communicator.Util.computeAngleBetweenVector(v1, v2);
     }
 
+    _findAngleSignMatrix(angle, normal, pivot,deltamatrix,outpivot, targetpoint)
+    {
+        let rotmatrix = this._component._calculateAngleRotMatrix(angle,undefined,normal,pivot);
+        let totalmatrix = Communicator.Matrix.multiply(deltamatrix, rotmatrix);
+        let test = this._component.transformlocalPointToWorldSpaceWithMatrix(outpivot, totalmatrix); 
+        let dist1 = Communicator.Point3.subtract(test, targetpoint).length();
+
+        let rotmatrix2 = this._component._calculateAngleRotMatrix(-angle,undefined,normal,pivot);
+        let totalmatrix2 = Communicator.Matrix.multiply(deltamatrix, rotmatrix2);
+        let test2 = this._component.transformlocalPointToWorldSpaceWithMatrix(outpivot, totalmatrix2); 
+        let dist2 = Communicator.Point3.subtract(test2, targetpoint).length();
+
+        if (dist1 < dist2)
+        {
+            return totalmatrix;
+        }
+        else
+        {
+            return totalmatrix2;
+        }
+    }
 
     async _resolve(incomponent, plane, xymatrix, xyinverse) {
+        let component = this._component;
         if (!this._associatedComponentHash)
         {
-            let component = this._component;
             let inpivot, outpivot;
             let outcomponent;
             if (this._extraComponent1.getId() == incomponent.getId()) {
@@ -184,13 +210,60 @@ export class KinematicsComponentBehaviorPivotSystem {
             let deltamatrix = new Communicator.Matrix();
             deltamatrix.setTranslationComponent(delta.x, delta.y, delta.z);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, deltamatrix);
+
             let outpivotWorldCurrent = component.transformlocalPointToWorldSpace(outpivot);
             outpivotWorldCurrent =  KinematicsUtility.closestPointOnPlane(plane, outpivotWorldCurrent);
             
+             let intersect = this._circleIntersectionFromPoints(inpivotWorld, outpivotWorldCurrent, outcenterWorld, outpivotWorld,xymatrix, xyinverse);
 
-            let intersect = this._circleIntersectionFromPoints(inpivotWorld, outpivotWorldCurrent, outcenterWorld, outpivotWorld,xymatrix, xyinverse);
+       //     ViewerUtility.createDebugCube(KinematicsManager.viewer, intersect, 10, new Communicator.Color(255, 0, 0));
 
-           await ViewerUtility.createDebugCube(KinematicsManager.viewer, intersect, 10, new Communicator.Color(0, 0, 255),true);
+            let angle = this._calculateAngle(outpivotWorldCurrent, intersect, inpivotWorld);
+
+            //let inpivotComponent =  this._parent.transformPointToComponentSpace(inpivotWorld);
+
+            let totalmatrix = this._findAngleSignMatrix(angle, component._axis,inpivotComponent, deltamatrix,outpivot, intersect);           
+
+
+
+//             ViewerUtility.createDebugCube(KinematicsManager.viewer, test, 10, new Communicator.Color(0, 0, 255));
+
+            KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, totalmatrix);
+            outcomponent._behavior._resolve(component,plane,xymatrix,xyinverse);
+        }        
+        else
+        {            
+            let centerWorld = component.transformlocalPointToWorldSpace(component._center);
+            centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
+
+            let componentpivot;
+            if (incomponent._behavior._extraComponent1 == component)
+            {
+                componentpivot = incomponent._center;            
+            }
+            else
+            {
+                componentpivot = incomponent._behavior._extraPivot1;            
+            }
+
+            let pivotbefore = incomponent._parent.transformlocalPointToWorldSpace(componentpivot);
+            pivotbefore = KinematicsUtility.closestPointOnPlane(plane, pivotbefore);
+            let pivotafter = incomponent.transformlocalPointToWorldSpace(componentpivot);
+            pivotafter = KinematicsUtility.closestPointOnPlane(plane, pivotafter);
+            
+            let angle = this._calculateAngle(pivotbefore, pivotafter, centerWorld);
+
+            let centerComponent = component._parent.transformPointToComponentSpace(centerWorld);
+            let matrix = this._findAngleSignMatrix(angle, component._axis, centerComponent,new Communicator.Matrix(), pivotbefore, pivotafter);
+            KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, matrix);
+
+            for (let c in this._associatedComponentHash)
+            {
+                if (this._associatedComponentHash[c] != incomponent)
+                {
+                    await this._associatedComponentHash[c]._behavior._resolve(component,plane, xymatrix, xyinverse);
+                }
+            }
 
 
         }

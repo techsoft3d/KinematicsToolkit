@@ -648,23 +648,28 @@ export class KinematicsComponent {
         return mat.transform(pos);
     }
 
-    _calculateAngleRotMatrix(angle,add,axis)    
+    _calculateAngleRotMatrix(angle,add,axis, center)    
     {
               
         let offaxismatrix = new Communicator.Matrix();
         let transmatrix = new Communicator.Matrix();
         let resaxis;
+        let rescenter;
         if (axis)
             resaxis = axis;
         else
             resaxis = this._axis;
 
+        if (center)
+            rescenter = center;
+        else
+            rescenter = this._center;
 
         transmatrix = new Communicator.Matrix();
-        transmatrix.setTranslationComponent(-this._center.x, -this._center.y, -this._center.z);
+        transmatrix.setTranslationComponent(-rescenter.x, -rescenter.y, -rescenter.z);
 
         let invtransmatrix = new Communicator.Matrix();
-        invtransmatrix.setTranslationComponent(this._center.x, this._center.y, this._center.z);
+        invtransmatrix.setTranslationComponent(rescenter.x, rescenter.y, rescenter.z);
 
         Communicator.Util.computeOffaxisRotation(resaxis, angle, offaxismatrix);
 

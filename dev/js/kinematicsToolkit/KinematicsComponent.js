@@ -445,12 +445,8 @@ export class KinematicsComponent {
         * @param  {number} value - Value
         */
     set(value) {
-        if (this._behavior) {
-            this._behavior.set(value);
-        }
-        else {
-
-        }
+        this._behavior.set(value);
+        this._touched = true;       
     }
 
     toJson() {
@@ -735,7 +731,6 @@ export class KinematicsComponent {
 
            
         KinematicsManager.viewer.model.setNodeMatrix(this._nodeid, resmatrix);
-        this._touched = true;
 
     }
 
@@ -993,7 +988,6 @@ export class KinematicsComponent {
         else
             await this._translate(delta);
 
-        this._touched = true;
         return gradient;
     }
 
@@ -1099,5 +1093,24 @@ export class KinematicsComponent {
                 KinematicsManager.viewer.model.setNodeMatrix(this._referenceNodes[i].nodeid, resmatrix2);
             }
         }
+    }
+
+    getWorldPlane()
+    {
+        let center = this._parent.transformlocalPointToWorldSpace(this._center);
+        let axis = this._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(this._center, this._axis));
+        axis = Communicator.Point3.subtract(axis, center).normalize();
+
+        return Communicator.Plane.createFromPointAndNormal(center, axis);                    
+    }
+
+    
+    getXYMatrix()
+    {
+        let center = this._parent.transformlocalPointToWorldSpace(this._center);
+        let axis = this._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(this._center, this._axis));
+        axis = Communicator.Point3.subtract(axis, center).normalize();
+
+        return KinematicsUtility.ComputeVectorToVectorRotationMatrix(axis, new Communicator.Point3(0, 0, 1));       
     }
 }

@@ -121,6 +121,7 @@ function generateComponentTypeSelect(component) {
     html+=addComponentTypeToSelect(11,component);
     html+=addComponentTypeToSelect(12,component);
     html+=addComponentTypeToSelect(13,component);
+    html+=addComponentTypeToSelect(14,component);
         
     html += '</select>';
     return html;
@@ -179,7 +180,7 @@ function generateMappedComponentSelect(component) {
 
 function generateExtraComponent2Select(component) {
     var html = '<select id="variablecomponentselect" class="form-select" style="font-size:11px" value="">\n';
-
+    html += '<option selected value="' + "EMPTY" + '">' + "EMPTY" + '</option>\n';
     for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
         if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
             let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
@@ -350,7 +351,25 @@ function generateComponentPropertiesData(id)
         else
             html += '<input type="checkbox" id="isslidepivot">';
         html += '</div>';
+    }    
+    if (component.getType() == KT.componentType.pivotSystem)
+    {
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
+        html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
 
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
+        html += '<div class="col">';
+        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Pivot 2</button>';
+        html += '</div></div>';
+        
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Slide Pivot:</label></div><div class="col">';
+        if (component.getBehavior().getIsSlidePivot())
+            html += '<input type="checkbox"  id="isslidepivot" checked>';
+        else
+            html += '<input type="checkbox" id="isslidepivot">';
+        html += '</div>';
     }    
     if (component.getType() == KT.componentType.revoluteSlide)
     {
@@ -841,6 +860,24 @@ function updateComponent(j){
         let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
         let fixedcomponent = currentHierachy.getComponentById(id);        
         component.getBehavior().setExtraComponent1(fixedcomponent);
+
+                
+        if ($("#isslidepivot").is(":checked"))
+            component.getBehavior().setIsSlidePivot(true);
+        else
+            component.getBehavior().setIsSlidePivot(false);
+    }
+
+    
+    if (component.getType() == KT.componentType.pivotSystem && $("#fixedcomponentselect")[0] != undefined && $("#variablecomponentselect")[0] != undefined)
+    {
+        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+        let fixedcomponent = currentHierachy.getComponentById(id);        
+        component.getBehavior().setExtraComponent1(fixedcomponent);
+
+        id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
+        let variablecomponent = currentHierachy.getComponentById(id);        
+        component.getBehavior().setExtraComponent2(variablecomponent);
 
                 
         if ($("#isslidepivot").is(":checked"))

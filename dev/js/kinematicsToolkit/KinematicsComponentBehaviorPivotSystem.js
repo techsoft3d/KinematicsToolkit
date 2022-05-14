@@ -207,6 +207,10 @@ export class KinematicsComponentBehaviorPivotSystem {
 
                     let delta = Communicator.Point3.subtract(currentPivotWorld, startPivotWorld).length();
                     
+                    if (currentPivotWorld.equalsWithTolerance(startPivotWorld,0.0001))
+                    {
+                        return;
+                    }
                     let moveaxis = Communicator.Point3.subtract(currentPivotWorld, startPivotWorld).normalize();
                     let ea1 = component._parent.transformPointToComponentSpace(centerWorld);
                     let ea2 = component._parent.transformPointToComponentSpace(Communicator.Point3.add(centerWorld,moveaxis));

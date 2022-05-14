@@ -46,6 +46,8 @@ export class ComponentMoveOperator {
         }
         else {
 
+            if (event.getButtons() != Communicator.Buttons.None)
+                return;
             let view = this._viewer.view;
             let config = new Communicator.PickConfig(Communicator.SelectionMask.Line);
             this._component = null;

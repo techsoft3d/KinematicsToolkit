@@ -776,7 +776,6 @@ export class KinematicsComponent {
         let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
 
         KinematicsManager.viewer.model.setNodeMatrix(this._nodeid, result2);
-        this._touched = true;
 
     }
 

@@ -101,15 +101,90 @@ export class KinematicsComponentBehaviorPivotSystem {
             let touchedHash = [];
             touchedHash[component._id] = true;
 
-            let plane = component.getWorldPlane();
-            let xymatrix = component.getXYMatrix();
-            let xyinverse = Communicator.Matrix.inverse(xymatrix);
+            let plane, xymatrix, xyinverse;
 
-
-            for (let c in this._associatedComponentHash) {
-                this._associatedComponentHash[c]._behavior._resolve(this._component, plane, xymatrix, xyinverse, touchedHash);
+            if (!this._isSlidePivot) {
+                plane = component.getWorldPlane();
+                xymatrix = component.getXYMatrix();
             }
+            else
+            {
+                plane = this._extraComponent1.getWorldPlane();
+                xymatrix = this._extraComponent1.getXYMatrix();
+            }
+
+
+            xyinverse = Communicator.Matrix.inverse(xymatrix);
+
+            if (this._associatedComponentHash)
+            {
+                for (let c in this._associatedComponentHash) {
+                    this._associatedComponentHash[c]._behavior._resolve(this._component, plane, xymatrix, xyinverse, touchedHash);
+                }
+            }
+            else
+            {
+                if (this._isSlidePivot)
+                {
+                    let centerWorld = component._parent.transformlocalPointToWorldSpace(component._center);
+                    centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
+
+                    let pivotOrigWorld = component._parent.transformlocalPointToWorldSpace(this._extraPivot1);
+                    pivotOrigWorld = KinematicsUtility.closestPointOnPlane(plane, pivotOrigWorld);
+
+                    let pivotWorld = component.transformlocalPointToWorldSpace(this._extraPivot1);
+                    pivotWorld = KinematicsUtility.closestPointOnPlane(plane, pivotWorld);
+
+                    let centerSecondWorld = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._center);
+                    centerSecondWorld = KinematicsUtility.closestPointOnPlane(plane, centerSecondWorld);
+
+                    let pivotSecondWorld = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraPivot1);
+                    pivotSecondWorld = KinematicsUtility.closestPointOnPlane(plane, pivotSecondWorld);
+                    let intersect = this._circleIntersectionFromPoints(centerWorld, pivotWorld, centerSecondWorld, pivotSecondWorld, xymatrix, xyinverse);
+
+                    let angle = this._calculateAngle(pivotOrigWorld, intersect, centerWorld);
+                    let totalmatrix = this._findAngleSignMatrix(angle, this._extraComponent1._axis, component._center, new Communicator.Matrix(), pivotOrigWorld, intersect);
+
+                    let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
+                    let final3 = Communicator.Matrix.multiply(localmatrix, totalmatrix);
+                    KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);
+
+                }
+
+                this._extraComponent1._behavior._resolve(this._component, plane, xymatrix, xyinverse, touchedHash);
+            }
+
             component._touched = false;
+        }
+    }
+
+    
+    _circleLineIntersectionFromPoints(p1, p2, p3, p4, xymatrix, xyinverse) {
+
+
+        let p1t = xymatrix.transform(p1);
+        let p2t = xymatrix.transform(p2);
+        let p3t = xymatrix.transform(p3);
+        let p4t = xymatrix.transform(p4);
+
+        let tr = Communicator.Point3.subtract(p2t, p1t).length();
+
+        let intersections = KinematicsUtility.circleLineIntersection(tr, p1t.x, p1t.y, p3t.x, p3t.y, p4t.x, p4t.y);
+
+        let i1 = new Communicator.Point3(intersections.x1,intersections.y1, p1t.z);
+        let i2 = new Communicator.Point3(intersections.x2,intersections.y2, p1t.z);
+
+        let pp1 = xyinverse.transform(i1);
+        let pp2 = xyinverse.transform(i2);
+
+        let l1 = Communicator.Point3.subtract(pp1, p2).length();
+        let l2 = Communicator.Point3.subtract(pp2, p2).length();
+
+        if (l1 < l2) {
+            return pp1;
+        }
+        else {
+            return pp2;
         }
     }
 
@@ -142,6 +217,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         else {
             return pp2;
         }
+        
     }
 
 
@@ -286,8 +362,6 @@ export class KinematicsComponentBehaviorPivotSystem {
 
                 let angle = this._calculateAngle(outpivotWorldCurrent, intersect, inpivotWorld);
 
-                //let inpivotComponent =  this._parent.transformPointToComponentSpace(inpivotWorld);
-
                 let totalmatrix = this._findAngleSignMatrix(angle, component._axis, inpivotComponent, deltamatrix, outpivot, intersect);
                 //             ViewerUtility.createDebugCube(KinematicsManager.viewer, test, 10, new Communicator.Color(0, 0, 255));
 
@@ -299,9 +373,31 @@ export class KinematicsComponentBehaviorPivotSystem {
             let centerWorld = component.transformlocalPointToWorldSpace(component._center);
             centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
 
-            let componentpivot;
+            let componentpivot, newpivotafter;
             if (incomponent._behavior._extraComponent1 == component) {
-                componentpivot = incomponent._center;
+                if (incomponent._behavior._extraComponent2)
+                {
+                    componentpivot = incomponent._center;
+
+                }
+                else
+                {
+                    componentpivot = incomponent._behavior._extraPivot1;
+                    let lineend = incomponent.transformlocalPointToWorldSpace(componentpivot);
+                    lineend = KinematicsUtility.closestPointOnPlane(plane, lineend);
+                    let linestart = incomponent.transformlocalPointToWorldSpace(incomponent._center);
+                    linestart = KinematicsUtility.closestPointOnPlane(plane, linestart);
+
+                    let circlecenter = component.transformlocalPointToWorldSpace(component._center);
+                    circlecenter = KinematicsUtility.closestPointOnPlane(plane, circlecenter);
+
+                    let circleend = component.transformlocalPointToWorldSpace(componentpivot);
+                    circleend = KinematicsUtility.closestPointOnPlane(plane, circleend);
+
+                    newpivotafter = this._circleLineIntersectionFromPoints(circlecenter, circleend, linestart, lineend, xymatrix, xyinverse);
+
+
+                }
             }
             else {
                 componentpivot = incomponent._behavior._extraPivot1;
@@ -309,8 +405,16 @@ export class KinematicsComponentBehaviorPivotSystem {
 
             let pivotbefore = incomponent._parent.transformlocalPointToWorldSpace(componentpivot);
             pivotbefore = KinematicsUtility.closestPointOnPlane(plane, pivotbefore);
-            let pivotafter = incomponent.transformlocalPointToWorldSpace(componentpivot);
-            pivotafter = KinematicsUtility.closestPointOnPlane(plane, pivotafter);
+            let pivotafter;
+            if (newpivotafter)
+            {
+                pivotafter = newpivotafter;
+            }
+            else
+            {
+                pivotafter = incomponent.transformlocalPointToWorldSpace(componentpivot);
+                pivotafter = KinematicsUtility.closestPointOnPlane(plane, pivotafter);
+            }
 
             let angle = this._calculateAngle(pivotbefore, pivotafter, centerWorld);
 

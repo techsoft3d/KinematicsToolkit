@@ -760,7 +760,6 @@ export class KinematicsComponent {
         
         this._currentPosition = delta;
 
-        let offaxismatrix = new Communicator.Matrix();
         let transmatrix = new Communicator.Matrix();
         let resaxis = this._axis;
         transmatrix = new Communicator.Matrix();

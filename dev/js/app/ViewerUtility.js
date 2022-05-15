@@ -160,8 +160,8 @@ class ViewerUtility {
 
         if (flush)
         {
-            await viewer.model.deleteNode(window.debugCubeNode);
-            window.debugCubeNode = await viewer.model.createNode(viewer.model.getRootNode());
+            viewer.model.deleteNode(window.debugCubeNode);
+            window.debugCubeNode = viewer.model.createNode(viewer.model.getRootNode());
         }
         let cubeMesh = await ViewerUtility.createCubeMesh(viewer, true, pos, scale);
         let myMeshInstanceData = new Communicator.MeshInstanceData(cubeMesh);

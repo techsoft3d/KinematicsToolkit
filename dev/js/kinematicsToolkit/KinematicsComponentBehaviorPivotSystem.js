@@ -228,22 +228,29 @@ export class KinematicsComponentBehaviorPivotSystem {
         return Communicator.Util.computeAngleBetweenVector(v1, v2);
     }
 
-    _findAngleSignMatrix(angle, normal, pivot, deltamatrix, outpivot, targetpoint, component) {
+    _findAngleSignMatrix(angle, normal, pivot, deltamatrix, outpivot, targetpoint, component, plane) {
+
         let rotmatrix = this._component._calculateAngleRotMatrix(angle, undefined, normal, pivot);
         let totalmatrix = Communicator.Matrix.multiply(deltamatrix, rotmatrix);
         let test = this._component.transformlocalPointToWorldSpaceWithMatrix(outpivot, totalmatrix);
+        test = KinematicsUtility.closestPointOnPlane(plane, test);
         let dist1 = Communicator.Point3.subtract(test, targetpoint).length();
 
         let rotmatrix2 = this._component._calculateAngleRotMatrix(-angle, undefined, normal, pivot);
         let totalmatrix2 = Communicator.Matrix.multiply(deltamatrix, rotmatrix2);
         let test2 = this._component.transformlocalPointToWorldSpaceWithMatrix(outpivot, totalmatrix2);
+        test2 = KinematicsUtility.closestPointOnPlane(plane, test2);
+
         let dist2 = Communicator.Point3.subtract(test2, targetpoint).length();
 
         if (dist1 < dist2) {
+
+
             component._currentAngle = angle;
             return totalmatrix;
         }
         else {
+
             component._currentAngle = -angle;
             return totalmatrix2;
         }
@@ -273,12 +280,12 @@ export class KinematicsComponentBehaviorPivotSystem {
                 if (!this._isSlidePivot)
                 {
 
-                    let totalmatrix = this._findAngleSignMatrix(angle, component._axis, component._center, new Communicator.Matrix(), startPivotWorld, currentPivotWorld, component);
+                    let totalmatrix = this._findAngleSignMatrix(angle, component._axis, component._center, new Communicator.Matrix(), this._extraPivot1, currentPivotWorld, component, plane);
                     KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, totalmatrix);
                 }
                 else
                 {
-                    let totalmatrix = this._findAngleSignMatrix(angle, incomponent._axis, component._center, new Communicator.Matrix(), startPivotWorld, currentPivotWorld, component);
+                    let totalmatrix = this._findAngleSignMatrix(angle, incomponent._axis, component._center, new Communicator.Matrix(), this._extraPivot1, currentPivotWorld, component, plane);
                     KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, totalmatrix);
 
                     startPivotWorld = component.transformlocalPointToWorldSpace(this._extraPivot1);
@@ -365,7 +372,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
                 let angle = this._calculateAngle(outpivotWorldCurrent, intersect, inpivotWorld);
 
-                let totalmatrix = this._findAngleSignMatrix(angle, component._axis, inpivotComponent, deltamatrix, outpivot, intersect,component);
+                let totalmatrix = this._findAngleSignMatrix(angle, component._axis, inpivotComponent, deltamatrix, outpivot, intersect,component, plane);
                 //             ViewerUtility.createDebugCube(KinematicsManager.viewer, test, 10, new Communicator.Color(0, 0, 255));
 
                 KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, totalmatrix);
@@ -423,7 +430,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
             let centerComponent = component._parent.transformPointToComponentSpace(centerWorld);
             let pivotbeforeComponent = component._parent.transformPointToComponentSpace(pivotbefore);
-            let matrix = this._findAngleSignMatrix(angle, component._axis, centerComponent, new Communicator.Matrix(), pivotbeforeComponent, pivotafter, component);
+            let matrix = this._findAngleSignMatrix(angle, component._axis, centerComponent, new Communicator.Matrix(), pivotbeforeComponent, pivotafter, component, plane);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, matrix);
 
             for (let c in this._associatedComponentHash) {

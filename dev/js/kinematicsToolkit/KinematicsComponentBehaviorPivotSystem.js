@@ -388,7 +388,7 @@ export class KinematicsComponentBehaviorPivotSystem {
                     deltamatrix.setTranslationComponent(moveaxis.x * delta, moveaxis.y * delta, moveaxis.z * delta);
                     let result = Communicator.Matrix.multiply(transmatrix, deltamatrix);
                     let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
-
+                    component._currentPosition = delta;
                     let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
                     let final3 = Communicator.Matrix.multiply(localmatrix, result2);
                     KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);

@@ -121,7 +121,6 @@ function generateComponentTypeSelect(component) {
     html+=addComponentTypeToSelect(11,component);
     html+=addComponentTypeToSelect(12,component);
     html+=addComponentTypeToSelect(13,component);
-    html+=addComponentTypeToSelect(14,component);
         
     html += '</select>';
     return html;
@@ -353,23 +352,6 @@ function generateComponentPropertiesData(id)
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(0,' + id + ')">Component 1 Pivot</button>';
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;" onclick="updateMatePivot(1,' + id + ')">Component 2 Pivot</button>';
         html += '</div></div>';
-    }    
-    if (component.getType() == KT.componentType.pivotConnector)
-    {
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
-        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
-
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
-        html += '<div class="col">';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Connector Pivot</button>';
-        html += '</div></div>';
-        
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Slide Pivot:</label></div><div class="col">';
-        if (component.getBehavior().getIsSlidePivot())
-            html += '<input type="checkbox"  id="isslidepivot" checked>';
-        else
-            html += '<input type="checkbox" id="isslidepivot">';
-        html += '</div>';
     }    
     if (component.getType() == KT.componentType.pivotSystem)
     {
@@ -876,19 +858,6 @@ function updateComponent(j){
         id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
         let variablecomponent = currentHierachy.getComponentById(id);
         component.getBehavior().setExtraComponent2(variablecomponent);
-    }
-
-    if (component.getType() == KT.componentType.pivotConnector && $("#fixedcomponentselect")[0] != undefined)
-    {
-        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
-        let fixedcomponent = currentHierachy.getComponentById(id);        
-        component.getBehavior().setExtraComponent1(fixedcomponent);
-
-                
-        if ($("#isslidepivot").is(":checked"))
-            component.getBehavior().setIsSlidePivot(true);
-        else
-            component.getBehavior().setIsSlidePivot(false);
     }
 
     

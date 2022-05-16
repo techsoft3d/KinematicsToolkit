@@ -6,7 +6,6 @@ import { KinematicsComponentBehaviorPrismatic } from './KinematicsComponentBehav
 import { KinematicsComponentBehaviorPistonController } from './KinematicsComponentBehaviorPistonController.js';
 import { KinematicsComponentBehaviorFixed } from './KinematicsComponentBehaviorFixed.js';
 import { KinematicsComponentBehaviorTarget } from './KinematicsComponentBehaviorTarget.js';
-import { KinematicsComponentBehaviorPivotConnector } from './KinematicsComponentBehaviorPivotConnector.js';
 import { KinematicsComponentBehaviorPrismaticTriangle } from './KinematicsComponentBehaviorPrismaticTriangle.js';
 import { KinematicsComponentBehaviorMapped } from './KinematicsComponentBehaviorMapped.js';
 import { KinematicsComponentBehaviorHelical } from './KinematicsComponentBehaviorHelical.js';
@@ -71,8 +70,7 @@ const componentType = {
 
 /** Calculates component based on common pivot.
       */            
-    pivotConnector:13,
-    pivotSystem:14,
+   pivotSystem:13,
 };
 
 export {componentType};
@@ -171,11 +169,7 @@ export class KinematicsComponent {
         else if (this._type == componentType.target)
         {
             this._behavior = new KinematicsComponentBehaviorTarget(this);
-        }
-        else if (this._type == componentType.pivotConnector)
-        {
-            this._behavior = new KinematicsComponentBehaviorPivotConnector(this);
-        }
+        }     
         else if (this._type == componentType.prismaticTriangle)
         {
             this._behavior = new KinematicsComponentBehaviorPrismaticTriangle(this);

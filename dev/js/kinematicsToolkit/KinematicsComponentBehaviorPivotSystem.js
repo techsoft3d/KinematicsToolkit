@@ -388,7 +388,17 @@ export class KinematicsComponentBehaviorPivotSystem {
                     deltamatrix.setTranslationComponent(moveaxis.x * delta, moveaxis.y * delta, moveaxis.z * delta);
                     let result = Communicator.Matrix.multiply(transmatrix, deltamatrix);
                     let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
-                    component._currentPosition = delta;
+
+                    let d1 = Communicator.Point3.subtract(moveaxis, component._axis).length();
+                    let d2 = Communicator.Point3.subtract(new Communicator.Point3(-moveaxis.x, -moveaxis.y, -moveaxis.z), component._axis).length();
+                    if (d1 < d2)
+                    {
+                        component._currentPosition = delta;
+                    }
+                    else
+                    {
+                        component._currentPosition = -delta;
+                    }
                     let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
                     let final3 = Communicator.Matrix.multiply(localmatrix, result2);
                     KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);
@@ -413,7 +423,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
                 let inpivotWorld = incomponent.transformlocalPointToWorldSpace(inpivot);
                 let currentpivotWorld = component._parent.transformlocalPointToWorldSpace(inpivot);
-                let outpivotWorld = component._parent.transformlocalPointToWorldSpace(outpivot);
+                let outpivotWorld = outcomponent._parent.transformlocalPointToWorldSpace(outpivot);
 
 
 
@@ -492,7 +502,7 @@ export class KinematicsComponentBehaviorPivotSystem {
                 componentpivot = incomponent._behavior._extraPivot1;
             }
 
-            let pivotbefore = incomponent._parent.transformlocalPointToWorldSpace(componentpivot);
+            let pivotbefore = component._parent.transformlocalPointToWorldSpace(componentpivot);
             pivotbefore = KinematicsUtility.closestPointOnPlane(plane, pivotbefore);
             let pivotafter;
             if (newpivotafter)

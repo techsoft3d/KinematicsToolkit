@@ -142,65 +142,53 @@ export class KinematicsComponent {
         return this._id;
     }
 
-   /**
-     * Sets type of component
-     * @param  {componentType} type - Component Type
-     */
-    setType(type)
-    {
-        this._type = type;
+    /**
+      * Sets type of component
+      * @param  {componentType} type - Component Type
+      */
+    setType(type) {
+        if (this._type != type) {
+            this._type = type;
 
-        if (this._type == componentType.revolute)
-        {
-            this._behavior = new KinematicsComponentBehaviorRevolute(this);
-        }
-        else if (this._type == componentType.prismatic)
-        {
-            this._behavior = new KinematicsComponentBehaviorPrismatic(this);
-        }
-        else if (this._type == componentType.pistonController)
-        {
-            this._behavior = new KinematicsComponentBehaviorPistonController(this);
-        }
-        else if (this._type == componentType.fixed)
-        {
-            this._behavior = new KinematicsComponentBehaviorFixed(this);
-        }
-        else if (this._type == componentType.target)
-        {
-            this._behavior = new KinematicsComponentBehaviorTarget(this);
-        }     
-        else if (this._type == componentType.prismaticTriangle)
-        {
-            this._behavior = new KinematicsComponentBehaviorPrismaticTriangle(this);
-        }
-        else if (this._type == componentType.mapped)
-        {
-            this._behavior = new KinematicsComponentBehaviorMapped(this);
-        }
-        else if (this._type == componentType.helical)
-        {
-            this._behavior = new KinematicsComponentBehaviorHelical(this);
-        }        
-        else if (this._type == componentType.revoluteSlide)
-        {
-            this._behavior = new KinematicsComponentBehaviorRevoluteSlide(this);
-        }        
-        else if (this._type == componentType.prismaticAggregate)
-        {
-            this._behavior = new KinematicsComponentBehaviorPrismaticAggregate(this);
-        }        
-        else if (this._type == componentType.mate)
-        {
-            this._behavior = new KinematicsComponentBehaviorMate(this);
-        }     
-        else if (this._type == componentType.pivotSystem)
-        {
-            this._behavior = new KinematicsComponentBehaviorPivotSystem(this);
-        }     
-        else
-        {
-            this._behavior = (KinematicsManager.getCustomTypeCallback())(this,type);
+            if (this._type == componentType.revolute) {
+                this._behavior = new KinematicsComponentBehaviorRevolute(this);
+            }
+            else if (this._type == componentType.prismatic) {
+                this._behavior = new KinematicsComponentBehaviorPrismatic(this);
+            }
+            else if (this._type == componentType.pistonController) {
+                this._behavior = new KinematicsComponentBehaviorPistonController(this);
+            }
+            else if (this._type == componentType.fixed) {
+                this._behavior = new KinematicsComponentBehaviorFixed(this);
+            }
+            else if (this._type == componentType.target) {
+                this._behavior = new KinematicsComponentBehaviorTarget(this);
+            }
+            else if (this._type == componentType.prismaticTriangle) {
+                this._behavior = new KinematicsComponentBehaviorPrismaticTriangle(this);
+            }
+            else if (this._type == componentType.mapped) {
+                this._behavior = new KinematicsComponentBehaviorMapped(this);
+            }
+            else if (this._type == componentType.helical) {
+                this._behavior = new KinematicsComponentBehaviorHelical(this);
+            }
+            else if (this._type == componentType.revoluteSlide) {
+                this._behavior = new KinematicsComponentBehaviorRevoluteSlide(this);
+            }
+            else if (this._type == componentType.prismaticAggregate) {
+                this._behavior = new KinematicsComponentBehaviorPrismaticAggregate(this);
+            }
+            else if (this._type == componentType.mate) {
+                this._behavior = new KinematicsComponentBehaviorMate(this);
+            }
+            else if (this._type == componentType.pivotSystem) {
+                this._behavior = new KinematicsComponentBehaviorPivotSystem(this);
+            }
+            else {
+                this._behavior = (KinematicsManager.getCustomTypeCallback())(this, type);
+            }
         }
 
     }

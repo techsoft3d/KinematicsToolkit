@@ -266,6 +266,12 @@ function createUILayout() {
                         loadIKData("dataTemp/simgrip.json");
                     },
                 },
+                {
+                    name: 'lgripper',
+                    fun: async function () {
+                        loadIKData("dataTemp/lgripper.json");
+                    },
+                },
                 
 
             ]

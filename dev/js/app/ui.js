@@ -368,12 +368,20 @@ function generateComponentPropertiesData(id)
         html += '<div class="col">';
         html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Pivot 2</button>';
         html += '</div></div>';
+
         
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Slide Pivot:</label></div><div class="col">';
-        if (component.getBehavior().getIsSlidePivot())
-            html += '<input type="checkbox"  id="isslidepivot" checked>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Prismatic:</label></div><div class="col">';
+        if (component.getBehavior().getIsPrismatic())
+            html += '<input type="checkbox"  id="isPrismatic" checked>';
         else
-            html += '<input type="checkbox" id="isslidepivot">';
+            html += '<input type="checkbox" id="isPrismatic">';
+        html += '</div></div>';
+
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Revolute Slide:</label></div><div class="col">';
+        if (component.getBehavior().getIsRevoluteSlide())
+            html += '<input type="checkbox"  id="isRevoluteSlide" checked>';
+        else
+            html += '<input type="checkbox" id="isRevoluteSlide">';
         html += '</div>';
     }    
     if (component.getType() == KT.componentType.revoluteSlide)
@@ -848,7 +856,6 @@ function updateComponent(j){
     component.setParametersFromHandle();
     let text = $("#componenttype")[0].value;
     component.setType(KT.componentType[text]);
-    component.setType(KT.componentType[text]);
 
     if ((component.getType() == KT.componentType.prismaticTriangle || component.getType() == KT.componentType.prismaticAggregate || component.getType() == KT.componentType.mate) && $("#fixedcomponentselect")[0] != undefined)
     {
@@ -876,10 +883,15 @@ function updateComponent(j){
 
         component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
                         
-        if ($("#isslidepivot").is(":checked"))
-            component.getBehavior().setIsSlidePivot(true);
+        if ($("#isRevoluteSlide").is(":checked"))
+            component.getBehavior().setIsRevoluteSlide(true);
         else
-            component.getBehavior().setIsSlidePivot(false);
+            component.getBehavior().setIsRevoluteSlide(false);
+
+        if ($("#isPrismatic").is(":checked"))
+            component.getBehavior().setIsPrismatic(true);
+        else
+            component.getBehavior().setIsPrismatic(false);            
     }
 
 

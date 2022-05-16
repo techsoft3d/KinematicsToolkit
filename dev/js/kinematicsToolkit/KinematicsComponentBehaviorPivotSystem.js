@@ -3,6 +3,9 @@ import { KinematicsManager } from './KinematicsManager.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
+/** This class represents the behavior for a pivot system component.  
+ * A pivot system component is part of a system of components defined by common pivot points.
+*/
 export class KinematicsComponentBehaviorPivotSystem {
 
     constructor(component) {
@@ -10,6 +13,8 @@ export class KinematicsComponentBehaviorPivotSystem {
         this._type = componentType.pivotSystem;
         this._extraComponent1 = null;
         this._extraComponent2 = null;
+        this._mappedComponent = null;
+        this._helicalFactor = 1;
         this._extraPivot1 = null;
         this._isSlidePivot = false;
         this._associatedComponentHash = null;
@@ -20,7 +25,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         return this._type;
     }
 
-    addToHash(component) {
+    _addToHash(component) {
         if (!this._associatedComponentHash) {
             this._associatedComponentHash = [];
         }
@@ -36,20 +41,33 @@ export class KinematicsComponentBehaviorPivotSystem {
             this._extraComponent2 = def.extraComponent2;
         }
 
+        if (def.mappedComponent) {
+            this._mappedComponent = def.mappedComponent;
+        }
+
         if (def.extraPivot1) {
             this._extraPivot1 = Communicator.Point3.fromJson(def.extraPivot1);
         }
+
+        if (def.helicalFactor)
+            this._helicalFactor = def.helicalFactor;
+
         this._isSlidePivot = def.isSlidePivot;
     }
 
     jsonFixup() {
         if (this._extraComponent1) {
             this._extraComponent1 = this._component.getHierachy().getComponentHash()[this._extraComponent1];
-            this._extraComponent1._behavior.addToHash(this._component);
+            this._extraComponent1._behavior._addToHash(this._component);
         }
         if (this._extraComponent2) {
             this._extraComponent2 = this._component.getHierachy().getComponentHash()[this._extraComponent2];
-            this._extraComponent2._behavior.addToHash(this._component);
+            this._extraComponent2._behavior._addToHash(this._component);
+        }
+
+        if (this._mappedComponent) {
+            this._mappedComponent = this._component.getHierachy().getComponentHash()[this._mappedComponent];
+            this._mappedComponent._behavior._addToHash(this._component);
         }
     }
 
@@ -58,6 +76,10 @@ export class KinematicsComponentBehaviorPivotSystem {
             def.extraComponent1 = this._extraComponent1._id;
         if (this._extraComponent2)
             def.extraComponent2 = this._extraComponent2._id;
+        if (this._mappedComponent)
+            def.mappedComponent = this._mappedComponent._id;         
+            
+        def.helicalFactor = this._helicalFactor;            
 
         if (this._extraPivot1)
             def.extraPivot1 = this._extraPivot1.toJson();
@@ -85,6 +107,10 @@ export class KinematicsComponentBehaviorPivotSystem {
     }
 
     getMovementType() {
+        if (this._extraComponent1 && this._extraComponent2)
+        {
+            return componentType.fixed;
+        }
         if (!this._isSlidePivot) {
             return componentType.revolute;
         }
@@ -119,39 +145,51 @@ export class KinematicsComponentBehaviorPivotSystem {
             if (this._associatedComponentHash)
             {
                 for (let c in this._associatedComponentHash) {
-                    this._associatedComponentHash[c]._behavior._resolve(this._component, plane, xymatrix, xyinverse, touchedHash);
+                    if (this._associatedComponentHash[c]._behavior._mappedComponent == this._component)
+                    {
+                        this._associatedComponentHash[c]._behavior._resolveMapped(this._component,plane, xymatrix, xyinverse,touchedHash);
+                    }
+                    else
+                    {
+                        this._associatedComponentHash[c]._behavior._resolve(component, plane, xymatrix, xyinverse, touchedHash);
+                    }
                 }
             }
-            else
-            {
-                if (this._isSlidePivot)
-                {
-                    let centerWorld = component._parent.transformlocalPointToWorldSpace(component._center);
-                    centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
+            else {
+                if (this._extraComponent1) {
+                    if (this._isSlidePivot) {
+                        let centerWorld = component._parent.transformlocalPointToWorldSpace(component._center);
+                        centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
 
-                    let pivotOrigWorld = component._parent.transformlocalPointToWorldSpace(this._extraPivot1);
-                    pivotOrigWorld = KinematicsUtility.closestPointOnPlane(plane, pivotOrigWorld);
+                        let pivotOrigWorld = component._parent.transformlocalPointToWorldSpace(this._extraPivot1);
+                        pivotOrigWorld = KinematicsUtility.closestPointOnPlane(plane, pivotOrigWorld);
 
-                    let pivotWorld = component.transformlocalPointToWorldSpace(this._extraPivot1);
-                    pivotWorld = KinematicsUtility.closestPointOnPlane(plane, pivotWorld);
+                        let pivotWorld = component.transformlocalPointToWorldSpace(this._extraPivot1);
+                        pivotWorld = KinematicsUtility.closestPointOnPlane(plane, pivotWorld);
 
-                    let centerSecondWorld = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._center);
-                    centerSecondWorld = KinematicsUtility.closestPointOnPlane(plane, centerSecondWorld);
+                        let centerSecondWorld = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraComponent1._center);
+                        centerSecondWorld = KinematicsUtility.closestPointOnPlane(plane, centerSecondWorld);
 
-                    let pivotSecondWorld = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraPivot1);
-                    pivotSecondWorld = KinematicsUtility.closestPointOnPlane(plane, pivotSecondWorld);
-                    let intersect = this._circleIntersectionFromPoints(centerWorld, pivotWorld, centerSecondWorld, pivotSecondWorld, xymatrix, xyinverse);
+                        let pivotSecondWorld = this._extraComponent1._parent.transformlocalPointToWorldSpace(this._extraPivot1);
+                        pivotSecondWorld = KinematicsUtility.closestPointOnPlane(plane, pivotSecondWorld);
+                        let intersect = this._circleIntersectionFromPoints(centerWorld, pivotWorld, centerSecondWorld, pivotSecondWorld, xymatrix, xyinverse);
 
-                    let angle = this._calculateAngle(pivotOrigWorld, intersect, centerWorld);
-                    let totalmatrix = this._findAngleSignMatrix(angle, this._extraComponent1._axis, component._center, new Communicator.Matrix(), pivotOrigWorld, intersect);
+                        let angle = this._calculateAngle(pivotOrigWorld, intersect, centerWorld);
+                        let totalmatrix = this._findAngleSignMatrix(angle, this._extraComponent1._axis, component._center, new Communicator.Matrix(), pivotOrigWorld, intersect,component,plane);
 
-                    let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
-                    let final3 = Communicator.Matrix.multiply(localmatrix, totalmatrix);
-                    KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);
+                        let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
+                        let final3 = Communicator.Matrix.multiply(localmatrix, totalmatrix);
+                        KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);
 
+                    }
+
+                    this._extraComponent1._behavior._resolve(this._component, plane, xymatrix, xyinverse, touchedHash);
                 }
+            }
+            if (this._mappedComponent)
+            {
+                this._mappedComponent._behavior._resolveMapped(this._component,plane, xymatrix, xyinverse,touchedHash);
 
-                this._extraComponent1._behavior._resolve(this._component, plane, xymatrix, xyinverse, touchedHash);
             }
 
             component._touched = false;
@@ -177,8 +215,8 @@ export class KinematicsComponentBehaviorPivotSystem {
         let pp1 = xyinverse.transform(i1);
         let pp2 = xyinverse.transform(i2);
 
-        let l1 = Communicator.Point3.subtract(pp1, p2).length();
-        let l2 = Communicator.Point3.subtract(pp2, p2).length();
+        let l1 = Communicator.Point3.subtract(pp1, p4).length();
+        let l2 = Communicator.Point3.subtract(pp2, p4).length();
 
         if (l1 < l2) {
             return pp1;
@@ -255,6 +293,43 @@ export class KinematicsComponentBehaviorPivotSystem {
             return totalmatrix2;
         }
     }
+
+    async _resolveMapped(incomponent, plane, xymatrix, xyinverse, touchedHash) {
+        let component = this._component;
+        if (touchedHash[component._id]) {
+            return;
+        }
+        touchedHash[component._id] = true;
+
+        let helicalFactor = 0;
+        if (incomponent._behavior._mappedComponent != undefined && incomponent._behavior._mappedComponent == component)
+        {
+            helicalFactor = 1/incomponent._behavior._helicalFactor;            
+        }
+        else
+        {
+            helicalFactor = component._behavior._helicalFactor;     
+        }
+
+        component._rotate(incomponent._currentAngle * helicalFactor);
+
+        for (let c in this._associatedComponentHash) {
+            if (this._associatedComponentHash[c]._behavior._mappedComponent == component)
+            {
+                this._associatedComponentHash[c]._behavior._resolveMapped(component,plane, xymatrix, xyinverse,touchedHash);
+            }
+            else
+            {
+                this._associatedComponentHash[c]._behavior._resolve(component, plane, xymatrix, xyinverse, touchedHash);
+            }
+        }
+        if (this._mappedComponent)
+        {
+            this._mappedComponent._behavior._resolveMapped(component,plane, xymatrix, xyinverse,touchedHash);
+
+        }
+    }
+
 
     async _resolve(incomponent, plane, xymatrix, xyinverse, touchedHash) {
         let component = this._component;
@@ -390,22 +465,26 @@ export class KinematicsComponentBehaviorPivotSystem {
                     componentpivot = incomponent._center;
 
                 }
-                else
-                {
+                else {
                     componentpivot = incomponent._behavior._extraPivot1;
-                    let lineend = incomponent.transformlocalPointToWorldSpace(componentpivot);
-                    lineend = KinematicsUtility.closestPointOnPlane(plane, lineend);
-                    let linestart = incomponent.transformlocalPointToWorldSpace(incomponent._center);
-                    linestart = KinematicsUtility.closestPointOnPlane(plane, linestart);
+                    if (!incomponent._behavior._isSlidePivot) {
+                        let lineend = incomponent.transformlocalPointToWorldSpace(componentpivot);
+                        lineend = KinematicsUtility.closestPointOnPlane(plane, lineend);
+                        let linestart = incomponent.transformlocalPointToWorldSpace(incomponent._center);
+                        linestart = KinematicsUtility.closestPointOnPlane(plane, linestart);
 
-                    let circlecenter = component.transformlocalPointToWorldSpace(component._center);
-                    circlecenter = KinematicsUtility.closestPointOnPlane(plane, circlecenter);
+                        let circlecenter = component.transformlocalPointToWorldSpace(component._center);
+                        circlecenter = KinematicsUtility.closestPointOnPlane(plane, circlecenter);
 
-                    let circleend = component.transformlocalPointToWorldSpace(componentpivot);
-                    circleend = KinematicsUtility.closestPointOnPlane(plane, circleend);
+                        let circleend = component.transformlocalPointToWorldSpace(componentpivot);
+                        circleend = KinematicsUtility.closestPointOnPlane(plane, circleend);
 
-                    newpivotafter = this._circleLineIntersectionFromPoints(circlecenter, circleend, linestart, lineend, xymatrix, xyinverse);
-
+                        newpivotafter = this._circleLineIntersectionFromPoints(circlecenter, circleend, linestart, lineend, xymatrix, xyinverse);
+                    }
+                    else {
+                        newpivotafter =  incomponent.transformlocalPointToWorldSpace(componentpivot);
+                        newpivotafter = KinematicsUtility.closestPointOnPlane(plane, newpivotafter);
+                    }
 
                 }
             }
@@ -435,11 +514,21 @@ export class KinematicsComponentBehaviorPivotSystem {
 
             for (let c in this._associatedComponentHash) {
                 if (this._associatedComponentHash[c] != incomponent) {
-                    this._associatedComponentHash[c]._behavior._resolve(component, plane, xymatrix, xyinverse, touchedHash);
+                    if (this._associatedComponentHash[c]._behavior._mappedComponent == component)
+                    {
+                        this._associatedComponentHash[c]._behavior._resolveMapped(component,plane, xymatrix, xyinverse,touchedHash);
+                    }
+                    else
+                    {
+                        this._associatedComponentHash[c]._behavior._resolve(component, plane, xymatrix, xyinverse, touchedHash);
+                    }
                 }
             }
 
-
+            if (this._mappedComponent)
+            {
+                this._mappedComponent._behavior._resolveMapped(component,plane, xymatrix, xyinverse,touchedHash);
+            }
         }
     }
 
@@ -459,6 +548,24 @@ export class KinematicsComponentBehaviorPivotSystem {
         this._extraComponent1 = component;
     }
 
+    
+    /**
+        * Retrieves the Mapped Component
+        * @return {KinematicsComponent} Component
+        */
+     getMappedComponent() {
+        return this._mappedComponent;
+    }
+
+    /**
+      * Sets the Mapped Component
+      * @param  {KinematicsComponent} component - Component
+      */
+    setMappedComponent(component) {
+        this._mappedComponent = component;
+    }
+
+
     /**
        * Retrieves the Extra Component 1 
        * @return {KinematicsComponent} Component
@@ -475,6 +582,23 @@ export class KinematicsComponentBehaviorPivotSystem {
         this._extraComponent2 = component;
     }
 
+
+    /**
+        * Retrieves the helical factor
+        * @return {number}  Helical Factor
+        */
+     getHelicalFactor() {
+        return this._helicalFactor;
+    }
+
+
+    /**
+        * Sets the helical factor
+        * @param  {number} helicalFactor - Helical Factor
+        */
+    setHelicalFactor(helicalFactor) {
+        this._helicalFactor = helicalFactor;
+    }
 
 
     /**

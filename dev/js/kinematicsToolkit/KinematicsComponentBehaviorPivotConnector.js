@@ -4,8 +4,8 @@ import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
 
-/** This class represents the behavior for a pivot connector component.  
- * A pivot connector componments movement is based on a common pivot point.
+/** This class represents the behavior for a pivot connector component. (DEPRICATED)
+ * A pivot connector components movement is based on a common pivot point.
 */
 export class KinematicsComponentBehaviorPivotConnector {
 

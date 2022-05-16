@@ -129,7 +129,7 @@ export class KinematicsComponentBehaviorMapped {
 
             this._mappedTargetComponent._currentPosition = savdelta;
         }
-        else if (this._mappedTargetComponent._type == componentType.revolute || this._mappedTargetComponent._type == componentType.mapped) {
+        else if (this._mappedTargetComponent._behavior.getMovementType() == componentType.revolute || this._mappedTargetComponent._type == componentType.mapped) {
 
             if (this._mappedType == componentType.revolute) {
                 await component._rotate(this._mappedTargetComponent._currentAngle * this._helicalFactor, true);
@@ -182,7 +182,7 @@ export class KinematicsComponentBehaviorMapped {
 
 
     /**
-        * Retrieves the helical factor (applicable to componentType.mapped and componentType.helical)
+        * Retrieves the helical factor
         * @return {number}  Helical Factor
         */
     getHelicalFactor() {
@@ -191,7 +191,7 @@ export class KinematicsComponentBehaviorMapped {
 
 
     /**
-        * Sets the helical factor (applicable to componentType.mapped and componentType.helical)
+        * Sets the helical factor
         * @param  {number} helicalFactor - Helical Factor
         */
     setHelicalFactor(helicalFactor) {

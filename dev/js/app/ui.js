@@ -178,6 +178,25 @@ function generateMappedComponentSelect(component) {
 }   
 
 
+function generateMappedPivotSystemSelect(component) {
+    var html = '<select id="mappedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
+    html += '<option selected value="' + "EMPTY" + '">' + "EMPTY" + '</option>\n';
+    for (var i in KT.KinematicsManager.getHierachyByIndex(0).getComponentHash()) {
+        if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getParent() && KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i)!=component) {
+            let componentname = KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getId() + ":" + string_of_enum(KT.componentType, KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i).getType());
+            if (KT.KinematicsManager.getHierachyByIndex(0).getComponentById(i) == component.getBehavior().getMappedComponent())
+                html += '<option selected value="' + componentname + '">' + componentname + '</option>\n';
+            else
+                html += '<option value="' + componentname + '">' + componentname + '</option>\n';
+
+        }
+    }
+   
+    html += '</select>';
+    return html;
+}   
+
+
 function generateExtraComponent2Select(component) {
     var html = '<select id="variablecomponentselect" class="form-select" style="font-size:11px" value="">\n';
     html += '<option selected value="' + "EMPTY" + '">' + "EMPTY" + '</option>\n';
@@ -358,6 +377,10 @@ function generateComponentPropertiesData(id)
         html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
         html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Componet:</label></div>';
+        html += '<div class="col">' + generateMappedPivotSystemSelect(component) + '</div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
+        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
 
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
         html += '<div class="col">';
@@ -879,7 +902,11 @@ function updateComponent(j){
         let variablecomponent = currentHierachy.getComponentById(id);        
         component.getBehavior().setExtraComponent2(variablecomponent);
 
-                
+        id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
+        component.getBehavior().setMappedComponent(currentHierachy.getComponentById(id));
+
+        component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+                        
         if ($("#isslidepivot").is(":checked"))
             component.getBehavior().setIsSlidePivot(true);
         else
@@ -905,7 +932,7 @@ function updateComponent(j){
     {
         component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
     }
-    else if (component.getType() == KT.componentType.mapped && $("#helicalfactor")[0] != undefined)
+    else if (component.getType() == KT.componentType.mapped && $("#helicalfactor")[0] != undefined && $("#mappedcomponenttype")[0] != undefined)
     {
         component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
 

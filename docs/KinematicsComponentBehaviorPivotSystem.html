@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: KinematicsComponentBehaviorMate</title>
+    <title>JSDoc: Class: KinematicsComponentBehaviorPivotSystem</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: KinematicsComponentBehaviorMate</h1>
+    <h1 class="page-title">Class: KinematicsComponentBehaviorPivotSystem</h1>
 
     
 
@@ -28,9 +28,10 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>KinematicsComponentBehaviorMate<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>KinematicsComponentBehaviorPivotSystem<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><p>This class represents the behavior for a mate component (experimental).</p></div>
+            <div class="class-description"><p>This class represents the behavior for a pivot system component.<br>
+A pivot system component is part of a system of components defined by common pivot points.</p></div>
         
     
 </header>
@@ -45,7 +46,7 @@
     
 
     
-    <h4 class="name" id="KinematicsComponentBehaviorMate"><span class="type-signature"></span>new KinematicsComponentBehaviorMate<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="KinematicsComponentBehaviorPivotSystem"><span class="type-signature"></span>new KinematicsComponentBehaviorPivotSystem<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -129,7 +130,7 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="KinematicsComponentBehaviorMate.html">KinematicsComponentBehaviorMate</a></dt>
+            <dt><a href="KinematicsComponentBehaviorPivotSystem.html">KinematicsComponentBehaviorPivotSystem</a></dt>
             <dd></dd>
         </dl>
     
@@ -264,7 +265,7 @@
 
 
 <div class="description">
-    <p>Retrieves the Extra Component 2</p>
+    <p>Retrieves the Extra Component 1</p>
 </div>
 
 
@@ -466,7 +467,7 @@
     
 
     
-    <h4 class="name" id="getExtraPivot2"><span class="type-signature"></span>getExtraPivot2<span class="signature">()</span><span class="type-signature"> &rarr; {Point3}</span></h4>
+    <h4 class="name" id="getHelicalFactor"><span class="type-signature"></span>getHelicalFactor<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
     
@@ -474,7 +475,7 @@
 
 
 <div class="description">
-    <p>Retrieves the Extra Pivot 2</p>
+    <p>Retrieves the helical factor</p>
 </div>
 
 
@@ -542,7 +543,7 @@
 
         
 <div class="param-desc">
-    <p>Pivot</p>
+    <p>Helical Factor</p>
 </div>
 
 
@@ -553,7 +554,217 @@
     </dt>
     <dd>
         
-<span class="param-type">Point3</span>
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getIsSlidePivot"><span class="type-signature"></span>getIsSlidePivot<span class="signature">()</span><span class="type-signature"> &rarr; {bool}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Retrieves if component is slide pivot</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Is Slide Pivot</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">bool</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getMappedComponent"><span class="type-signature"></span>getMappedComponent<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="KinematicsComponent.html">KinematicsComponent</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Retrieves the Mapped Component</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Component</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
 
 
     </dd>
@@ -711,7 +922,7 @@
 
 
 <div class="description">
-    <p>Sets the extra component 2</p>
+    <p>Sets the extra component 1</p>
 </div>
 
 
@@ -967,7 +1178,7 @@
     
 
     
-    <h4 class="name" id="setExtraPivot2"><span class="type-signature"></span>setExtraPivot2<span class="signature">(pivot)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setHelicalFactor"><span class="type-signature"></span>setHelicalFactor<span class="signature">(helicalFactor)</span><span class="type-signature"></span></h4>
     
 
     
@@ -975,7 +1186,7 @@
 
 
 <div class="description">
-    <p>Sets the extra pivot 2</p>
+    <p>Sets the helical factor</p>
 </div>
 
 
@@ -1011,13 +1222,13 @@
 
         <tr>
             
-                <td class="name"><code>pivot</code></td>
+                <td class="name"><code>helicalFactor</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Point3</span>
+<span class="param-type">number</span>
 
 
             
@@ -1027,7 +1238,271 @@
 
             
 
-            <td class="description last"><p>Pivot Point</p></td>
+            <td class="description last"><p>Helical Factor</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setIsSlidePivot"><span class="type-signature"></span>setIsSlidePivot<span class="signature">(isSlidePivot)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Sets if component is slide pivot</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>isSlidePivot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Is component slide pivot\</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setMappedComponent"><span class="type-signature"></span>setMappedComponent<span class="signature">(component)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Sets the Mapped Component</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>component</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="KinematicsComponent.html">KinematicsComponent</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Component</p></td>
         </tr>
 
     

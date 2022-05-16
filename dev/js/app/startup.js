@@ -260,6 +260,13 @@ function createUILayout() {
                         loadIKData("dataTemp/mr1718-arm.json");
                     },
                 },
+                {
+                    name: 'Simgrip',
+                    fun: async function () {
+                        loadIKData("dataTemp/simgrip.json");
+                    },
+                },
+                
 
             ]
         },      

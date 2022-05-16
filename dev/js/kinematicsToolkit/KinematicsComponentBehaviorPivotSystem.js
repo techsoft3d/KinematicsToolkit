@@ -246,14 +246,32 @@ export class KinematicsComponentBehaviorPivotSystem {
         let qr = Communicator.Point3.subtract(p4t, p3t).length();
         let intersection = KinematicsUtility.circleIntersection(p1t.x, p1t.y, tr, p3t.x, p3t.y, qr);
 
-        intersection.p1.z = p1t.z;
-        intersection.p2.z = p3t.z;
+        let pp1,pp2,l1,l2;
+        if (intersection.p1)
+        {
+            intersection.p1.z = p1t.z;
+            pp1 = xyinverse.transform(intersection.p1);
+            l1 = Communicator.Point3.subtract(pp1, p2).length();
+        }
 
-        let pp1 = xyinverse.transform(intersection.p1);
-        let pp2 = xyinverse.transform(intersection.p2);
+        if (intersection.p2)
+        {
+         intersection.p2.z = p3t.z;
+          pp2 = xyinverse.transform(intersection.p2);
+          l2 = Communicator.Point3.subtract(pp2, p2).length();
 
-        let l1 = Communicator.Point3.subtract(pp1, p2).length();
-        let l2 = Communicator.Point3.subtract(pp2, p2).length();
+        }
+
+        if (!l1 && !l2)
+        {
+            return p2;            
+        }
+        if (!l1)
+            return pp2;
+            
+        if (!l2)
+            return pp1;
+        
 
         if (l1 < l2) {
             return pp1;
@@ -470,7 +488,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
     async _resolveMultiComponent(incomponent, plane, xymatrix, xyinverse, touchedHash) {
         let component = this._component;
-        let centerWorld = component.transformlocalPointToWorldSpace(component._center);
+        let centerWorld = component._parent.transformlocalPointToWorldSpace(component._center);
         centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
 
         let componentpivot, newpivotafter;

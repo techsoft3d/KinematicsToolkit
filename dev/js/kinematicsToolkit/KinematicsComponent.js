@@ -451,7 +451,7 @@ export class KinematicsComponent {
             }
         }
 
-        let def = {id: this._id,reference: this._reference, type: this.getType(),center: this._center.toJson(), axis: this._axis.toJson(), minangle: this._minLimit, maxangle: this._maxLimit, children: children, referenceNodes:refnodes,
+        let def = {id: this._id,reference: this._reference, type: this.getType(),center: this._center.toJson(), axis: this._axis.toJson(), minLimit: this._minLimit, maxLimit: this._maxLimit, children: children, referenceNodes:refnodes,
             parentMatrix: this._parentMatrix.toJson() };
 
         if (this._behavior)
@@ -468,8 +468,8 @@ export class KinematicsComponent {
     }
 
     async fromJson(def, version) {
-        this._minLimit = def.minangle;
-        this._maxLimit = def.maxangle;
+        this._minLimit = def.minLimit;
+        this._maxLimit = def.maxLimit;
         this._reference = def.reference;
         this._center = Communicator.Point3.fromJson(def.center);
 

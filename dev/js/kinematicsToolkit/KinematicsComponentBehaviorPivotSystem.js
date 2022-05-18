@@ -486,6 +486,35 @@ export class KinematicsComponentBehaviorPivotSystem {
             let ea2 = component._parent.transformPointToComponentSpace(Communicator.Point3.add(centerWorld, moveaxis));
             moveaxis = Communicator.Point3.subtract(ea2, ea1).normalize();
 
+            let d1 = Communicator.Point3.subtract(moveaxis, component._axis).length();
+            let d2 = Communicator.Point3.subtract(new Communicator.Point3(-moveaxis.x, -moveaxis.y, -moveaxis.z), component._axis).length();
+
+            let delta2 = delta;
+            if (d1 < d2) {
+                if ( component._minLimit != undefined && delta2 < component._minLimit ) {
+                    delta2 =  component._minLimit;
+                }
+                if ( component._maxLimit != undefined && delta2 > component._maxLimit ) {
+                    delta2 =  component._maxLimit;
+                }
+
+                component._currentPosition = delta2;
+                delta = delta2;
+
+            }
+            else {
+                delta2  = -delta2;
+                if ( component._minLimit != undefined && delta2 < component._minLimit ) {
+                    delta2 =  component._minLimit;
+                }
+                if ( component._maxLimit != undefined && delta2 > component._maxLimit ) {
+                    delta2 =  component._maxLimit;
+                }
+
+                component._currentPosition = delta2;
+                delta = -delta2;
+            }
+
             let transmatrix = new Communicator.Matrix();
             transmatrix = new Communicator.Matrix();
             transmatrix.setTranslationComponent(-component._center.x, -component._center.y, -component._center.z);
@@ -498,14 +527,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             let result = Communicator.Matrix.multiply(transmatrix, deltamatrix);
             let result2 = Communicator.Matrix.multiply(result, invtransmatrix);
 
-            let d1 = Communicator.Point3.subtract(moveaxis, component._axis).length();
-            let d2 = Communicator.Point3.subtract(new Communicator.Point3(-moveaxis.x, -moveaxis.y, -moveaxis.z), component._axis).length();
-            if (d1 < d2) {
-                component._currentPosition = delta;
-            }
-            else {
-                component._currentPosition = -delta;
-            }
+        
             let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
             let final3 = Communicator.Matrix.multiply(localmatrix, result2);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, final3);

@@ -77,7 +77,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         {
            return;
         }
-        if (!startcomponent.result && !component._behavior.extraComponent1)
+        if (!startcomponent.result && !component._behavior._extraComponent1)
         {
             startcomponent.result = component;
         }

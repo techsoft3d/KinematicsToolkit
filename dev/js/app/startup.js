@@ -272,6 +272,18 @@ function createUILayout() {
                         loadIKData("dataTemp/lgripper.json");
                     },
                 },
+                {
+                    name: 'Forklift',
+                    fun: async function () {
+                        loadIKData("dataTemp/forklift.json");
+                    },
+                },               
+                {
+                    name: 'Gripper3',
+                    fun: async function () {
+                        loadIKData("dataTemp/gripper3.json");
+                    },
+                },                          
                 
 
             ]

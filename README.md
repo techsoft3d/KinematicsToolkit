@@ -17,17 +17,17 @@ For questions/feedback please send an email to guido@techsoft3d.com or post in o
 
 **Limitations:**
 * **This library is not an officially supported part of HOOPS Communicator and provided as-is.**
-* This engine is not meant as a mathematically precise solver for arbitrary complex mechanical systems. Its main purpose is to provide the ability to efficently and easily animate a CAD model for which its movement properties are known. 
-* There is no physics engine and no object-to-object collission taken into account by the Kinematics Solver.
+* This engine is not meant as a mathematically precise solver for arbitrarily complex mechanical systems. Its main purpose is to provide the ability to efficently and easily animate a CAD model for which its kinematics-related properties are known. 
+* There is no physics and no object-to-object collission taken into account by the Kinematics Solver.
 * The Inverse kinematics capabilites and various other functionality is currently in an experimental state.  
   
 **Future Direction:**
 * Improved Documentation and more samples.
+* Improvements to various parts of the Editor UI.
 * We will be looking into adding additional component types.
 * We are looking into using the Mating information provided for some formats by HOOPS Exchange to help define the Kinematics Hierachy for a CAD Model.
 * We will be investigating if an Open Source Physics engine can be added to the Kinematics Toolkit to allow for more physics driven kinematics.
 * We are looking into adding support for the new Keyframe-based Animation System provided in HOOPS Communicator.
-* We are looking into improving various parts of the UI.
 
 
 
@@ -44,7 +44,7 @@ Live Documentation can be found here: [https://techsoft3d.github.io/KinematicsTo
 ## Using the Editor
 **The Editor is currently in an experimetal state. Work on docs is in pogress.**  
 
-Example URL (when running via Visual Studio Code Live Server plugin):
+Here is how to starting the editor locally when using Visual Studio Code Live Server plugin:
 
 <http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs>
 

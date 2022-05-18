@@ -1,6 +1,7 @@
 import { KinematicsAnimationGroup } from './KinematicsAnimation.js';
 import { KinematicsComponent } from './KinematicsComponent.js';
 import { componentType } from './KinematicsComponent.js';
+import { KinematicsComponentBehaviorPivotSystem } from './KinematicsComponentBehaviorPivotSystem.js';
 import { KinematicsManager } from './KinematicsManager.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
@@ -121,7 +122,10 @@ export class KinematicsHierachy {
      */   
     async updateComponents()
     {
+        KinematicsComponentBehaviorPivotSystem.clearExecutedSystems(this);
         await this._updateComponentsRecursive(this._rootComponent);
+        await KinematicsComponentBehaviorPivotSystem.executeUnexecutedSystems(this);
+
         await this._updateComponentsRecursive(this._rootComponent);
     }
 
@@ -445,7 +449,7 @@ export class KinematicsHierachy {
                 KinematicsManager.addAnimationGroup(group);
             }
         }
-
+        this.resetPivotSystems();
         return def;
     }
            
@@ -529,6 +533,15 @@ export class KinematicsHierachy {
         KinematicsManager.viewer.model.deleteNode(this._rootComponent.getNodeId());
         this._rebuildComponentTreeRecursive(this._rootComponent);        
     }
+
+     /**
+     * Rebuild pivotsystem
+     */
+      async resetPivotSystems()
+      {
+          KinematicsComponentBehaviorPivotSystem.rebuildAllHashes(this);
+          KinematicsComponentBehaviorPivotSystem.findAllSystems(this);
+      }
      
    /**
      * Apply current hierachy to node

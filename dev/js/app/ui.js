@@ -968,6 +968,7 @@ function updateComponent(j){
     let jstreenode =  $('#KinematicsTreeDiv').jstree().get_node(component.getId());
     $('#KinematicsTreeDiv').jstree().set_text(jstreenode, !component.getParent() ? component.getId() + ":root": component.getId() + ":" + string_of_enum(KT.componentType,component.getType()));
     generateComponentPropertiesData(j);
+    currentHierachy.resetPivotSystems();
 }
 
 

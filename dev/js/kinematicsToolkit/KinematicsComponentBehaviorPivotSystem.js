@@ -20,7 +20,103 @@ export class KinematicsComponentBehaviorPivotSystem {
         this._isPrismatic = false;
         this._associatedComponentHash = null;
         this._processed = false;
+        this._wasExecuted = false;
     }
+
+
+    static clearExecutedSystems(hierachy) {
+        for (let i=0;i<hierachy._systems.length;i++) {
+            hierachy._systems[i]._behavior._wasExecuted = false;
+        }
+    }
+
+    static async executeUnexecutedSystems(hierachy) {
+        for (let i=0;i<hierachy._systems.length;i++) {
+            if (!hierachy._systems[i]._behavior._wasExecuted) {
+                hierachy._systems[i]._touched = true;
+                await hierachy._systems[i]._behavior.execute(hierachy);
+            }
+        }
+
+    }
+
+    static rebuildAllHashes(hierachy)
+    {
+        for (let i in hierachy.getComponentHash())
+        {
+            let component = hierachy.getComponentById(i);
+            if (component.getType() == componentType.pivotSystem)
+            {
+                component._behavior._associatedComponentHash = null;
+            }
+        }
+
+        for (let i in hierachy.getComponentHash())
+        {
+            let component = hierachy.getComponentById(i);
+            if (component.getType() == componentType.pivotSystem)
+            {
+                if (component._behavior._extraComponent1)
+                {
+                    component._behavior._extraComponent1._behavior._addToHash(component);
+                }
+                if (component._behavior._extraComponent2)
+                {
+                    component._behavior._extraComponent2._behavior._addToHash(component);
+                }
+                if (component._behavior._mappedComponent)
+                {
+                    component._behavior._mappedComponent._behavior._addToHash(component);
+                }
+            }
+        }
+    }
+
+    static _gatherSystems(component, foundComponents, startcomponent) {
+        if (foundComponents[component._id])
+        {
+           return;
+        }
+        if (!startcomponent.result && !component._behavior.extraComponent1)
+        {
+            startcomponent.result = component;
+        }
+        foundComponents[component._id] = true;
+        if (component._behavior._extraComponent1) {
+            KinematicsComponentBehaviorPivotSystem._gatherSystems(component._behavior._extraComponent1, foundComponents,startcomponent);
+        }
+        if (component._behavior._extraComponent2) {
+            KinematicsComponentBehaviorPivotSystem._gatherSystems(component._behavior._extraComponent2, foundComponents,startcomponent);
+        }
+
+        if (component._behavior._mappedComponent) {
+            KinematicsComponentBehaviorPivotSystem._gatherSystems(component._behavior._mappedComponent, foundComponents,startcomponent);            
+        }
+
+        if (component._behavior._associatedComponentHash) {
+            for (let c in component._behavior._associatedComponentHash) {
+                KinematicsComponentBehaviorPivotSystem._gatherSystems(component._behavior._associatedComponentHash[c], foundComponents,startcomponent);            
+            }
+        }        
+        
+    }
+
+    static findAllSystems(hierachy)
+    {
+        let foundComponents = [];
+        hierachy._systems = [];
+        for (let i in hierachy.getComponentHash())
+        {
+            let component = hierachy.getComponentById(i);
+            if (component.getType() == componentType.pivotSystem && foundComponents[component._id] == undefined)
+            {
+                let startcomponent = {result:null};
+                KinematicsComponentBehaviorPivotSystem._gatherSystems(component, foundComponents,startcomponent);
+                hierachy._systems.push(startcomponent.result);
+            }
+        }
+    }
+
 
     getType() {
         return this._type;
@@ -130,6 +226,7 @@ export class KinematicsComponentBehaviorPivotSystem {
     async execute() {
         let component = this._component;
         if (component._touched) {
+            this._wasExecuted = true;
             let touchedHash = [];
             touchedHash[component._id] = true;
 
@@ -182,7 +279,7 @@ export class KinematicsComponentBehaviorPivotSystem {
                         let intersect = this._circleIntersectionFromPoints(centerWorld, pivotWorld, centerSecondWorld, pivotSecondWorld, xymatrix, xyinverse);
 
                         let angle = this._calculateAngle(pivotOrigWorld, intersect, centerWorld);
-                        let totalmatrix = this._findAngleSignMatrix(angle, this._extraComponent1._axis, component._center, new Communicator.Matrix(), pivotOrigWorld, intersect, component, plane);
+                        let totalmatrix = this._findAngleSignMatrix(angle, this._extraComponent1._axis, component._center, new Communicator.Matrix(), this._extraPivot1, intersect, component, plane);
 
                         let localmatrix = KinematicsManager.viewer.model.getNodeMatrix(component._nodeid);
                         let final3 = Communicator.Matrix.multiply(localmatrix, totalmatrix);
@@ -324,6 +421,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             return;
         }
         touchedHash[component._id] = true;
+        this._wasExecuted = true;
 
         let helicalFactor = 0;
         if (incomponent._behavior._mappedComponent != undefined && incomponent._behavior._mappedComponent == component) {
@@ -374,10 +472,11 @@ export class KinematicsComponentBehaviorPivotSystem {
             let totalmatrix = this._findAngleSignMatrix(angle, incomponent._axis, component._center, new Communicator.Matrix(), this._extraPivot1, currentPivotWorld, component, plane);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, totalmatrix);
 
-            startPivotWorld = component.transformlocalPointToWorldSpace(this._extraPivot1);
+             startPivotWorld = component.transformlocalPointToWorldSpace(this._extraPivot1);
             startPivotWorld = KinematicsUtility.closestPointOnPlane(plane, startPivotWorld);
 
             let delta = Communicator.Point3.subtract(currentPivotWorld, startPivotWorld).length();
+           
 
             if (currentPivotWorld.equalsWithTolerance(startPivotWorld, 0.0001)) {
                 return;
@@ -576,6 +675,8 @@ export class KinematicsComponentBehaviorPivotSystem {
             return;
         }
         touchedHash[this._component._id] = true;
+        this._wasExecuted = true;
+
         if (!this._associatedComponentHash) {
             if (!this._extraComponent2) {
                 this._resolveEndComponent(incomponent, plane, xymatrix, xyinverse, touchedHash);

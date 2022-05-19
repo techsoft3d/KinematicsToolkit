@@ -24,7 +24,7 @@ export class KinematicsManager {
         KinematicsManager._animationGroups = [];
         KinematicsManager.handlePlacementOperator = null;
         KinematicsManager.componentMoveOperator = null;
-        KinematicsManager._version = "0.9.1";
+        KinematicsManager._version = "0.9.2";
     }
 
     

@@ -361,7 +361,10 @@ export class KinematicsComponentBehaviorPivotSystem {
 
         if (!l1 && !l2)
         {
-            this._component._hierachy._cantResolve = true;
+            if (this._component._enforceLimits)
+            {
+                this._component._hierachy._cantResolve = true;
+            }
             return p2;            
         }
         if (!l1)
@@ -494,9 +497,15 @@ export class KinematicsComponentBehaviorPivotSystem {
             if (d1 < d2) {
                 if ( component._minLimit != undefined && delta2 < component._minLimit ) {
                     delta2 =  component._minLimit;
+                    if (this._component._enforceLimits) {
+                        this._component._hierachy._cantResolve = true;
+                    }
                 }
                 if ( component._maxLimit != undefined && delta2 > component._maxLimit ) {
                     delta2 =  component._maxLimit;
+                    if (this._component._enforceLimits) {
+                        this._component._hierachy._cantResolve = true;
+                    }
                 }
 
                 component._currentPosition = delta2;
@@ -507,9 +516,15 @@ export class KinematicsComponentBehaviorPivotSystem {
                 delta2  = -delta2;
                 if ( component._minLimit != undefined && delta2 < component._minLimit ) {
                     delta2 =  component._minLimit;
+                    if (this._component._enforceLimits) {
+                        this._component._hierachy._cantResolve = true;
+                    }
                 }
                 if ( component._maxLimit != undefined && delta2 > component._maxLimit ) {
                     delta2 =  component._maxLimit;
+                    if (this._component._enforceLimits) {
+                        this._component._hierachy._cantResolve = true;
+                    }
                 }
 
                 component._currentPosition = delta2;

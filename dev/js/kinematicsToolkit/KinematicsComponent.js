@@ -117,6 +117,7 @@ export class KinematicsComponent {
         this._animations = [];
 
         this._activeAnimation = false;
+        this._enforceLimits = true;
     }
 
     initialize(nodeids, isReference) {
@@ -413,6 +414,22 @@ export class KinematicsComponent {
         this._maxLimit = maxlimit;
     }
 
+    /**
+    * Sets if limits should be enforced during behavior evalulation for this component
+    * @param  {bool} enforceLimits - Enforce Limits
+    */
+    setEnforceLimits(enforceLimits) {
+        this._enforceLimits = enforceLimits;
+    }
+
+    /**
+    * Retrieves if limits should be enforced during behavior evalulation for this component
+    * @return {bool} Enforce Limits
+    */
+    getEnforceLimits() {
+        return this._enforceLimits;
+    }
+
  /**
      * Retrieves the maximum limit value for a component
      * @return {number} maximum limit
@@ -454,7 +471,7 @@ export class KinematicsComponent {
         }
 
         let def = {id: this._id,reference: this._reference, type: this.getType(),center: this._center.toJson(), axis: this._axis.toJson(), minLimit: this._minLimit, maxLimit: this._maxLimit, children: children, referenceNodes:refnodes,
-            parentMatrix: this._parentMatrix.toJson() };
+            parentMatrix: this._parentMatrix.toJson(),enforceLimits:this._enforceLimits };
 
         if (this._behavior)
         {
@@ -495,6 +512,11 @@ export class KinematicsComponent {
         else
         {
             this._axis = Communicator.Point3.fromJson(def.axis);
+        }
+
+        if (def.enforceLimits != undefined)
+        {
+            this._enforceLimits = def.enforceLimits;
         }
 
         this.setType(def.type);

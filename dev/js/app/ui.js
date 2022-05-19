@@ -308,12 +308,20 @@ function generateComponentPropertiesData(id)
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Type:</label></div>';
     html += '<div class="col">' + generateComponentTypeSelect(component) + '</div></div>';
    
-    html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Reference</label></div><div class="col">';
+    html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Reference:</label></div><div class="col">';
     if (component.getIsReference())
         html += '<input type="checkbox"  id="isreference" checked>';
     else
         html += '<input type="checkbox" id="isreference">';
     html += '</div></div>';
+
+    html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Enforce limits:</label></div><div class="col">';
+    if (component.getEnforceLimits())
+        html += '<input type="checkbox"  id="enforcelimits" checked>';
+    else
+        html += '<input type="checkbox" id="enforcelimits">';
+    html += '</div></div>';
+
 
     html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Limits (Min/Max):</label></div>';
     html += '<div class="col"><input id="componentmin" type="number" value="' + component.getMinLimit() + '" class="form-control" style="font-size:11px;width:60px;display:inline">';
@@ -957,6 +965,12 @@ function updateComponent(j){
         component.setIsReference(true);
     else
         component.setIsReference(false);
+
+    if ($("#enforcelimits").is(":checked"))
+        component.setEnforceLimits(true);
+    else
+        component.setEnforceLimits(false);
+
 
     var nodeids = [];
     var selections = KT.KinematicsManager.viewer.selectionManager.getResults();

@@ -516,25 +516,17 @@ export class KinematicsHierachy {
         return def;
     }
            
-  /**
-    * Reset All Components in Hierachy
-     */  
+    /**
+      * Reset All Components in Hierachy
+       */
     resetComponents() {
 
-        let component = this._rootComponent;
-        while (true) {
-     
-            component.reset();
-            if (component.getChildren().length == 0)
-                break;
-            component = component.getChildren()[0];                
+        for (let i in this._componentHash) {
+            this._componentHash[i].reset();
         }
-        if (this._interval) {
-            clear_interval(this._interval);
-            this._interval = null;
-        }
+
     }
-    
+
    /**
      * Create a new component
      * @param  {KinematicsComponent} parentcomponent - Parent Component

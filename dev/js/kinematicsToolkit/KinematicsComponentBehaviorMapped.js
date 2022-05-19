@@ -34,12 +34,8 @@ export class KinematicsComponentBehaviorMapped {
         {
             this.belt = new KinematicsBelt();
             this.belt.fromJson(def.belt, this._component);
-            for (let i=0;i<this._component._referenceNodes.length;i++)
-            {
-                KinematicsManager.viewer.model.setNodesVisibility([this._component._referenceNodes[i].nodeid], false);
-            }
+           
             await this.belt.initialize();
-            this._component._referenceNodes.push({nodeid:this.belt.getBaseNode(), matrix: new Communicator.Matrix()});
 
         }
 
@@ -57,6 +53,18 @@ export class KinematicsComponentBehaviorMapped {
 
     jsonFixup() {
         this._mappedTargetComponent = this._component.getHierachy().getComponentHash()[this._mappedTargetComponent];
+        if (this._mappedType == componentType.belt)
+        {            
+            for (let i=0;i<this._component._referenceNodes.length;i++)
+            {
+                KinematicsManager.viewer.model.setNodesVisibility([this._component._referenceNodes[i].nodeid], false);
+            }
+            this.belt.initialize();            
+            this._component._referenceNodes.push({nodeid:this.belt.getBaseNode(), matrix: new Communicator.Matrix()});
+
+
+        }
+
     }
 
     toJson(def) {

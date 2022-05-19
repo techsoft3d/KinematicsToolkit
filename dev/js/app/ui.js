@@ -779,7 +779,7 @@ function drawIKDiv() {
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="insertComponentFromUI();">Insert</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="moveupComponentFromUI();">Move Up</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="deleteComponentFromUI();">Delete</button>';    
-    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="hwv.model.resetNodesTransform()";">Reset</button>';    
+    html += '<button type="button" style="font-size:11px" class="btn btn-secondary btn-sm ms-1"  onclick="hwv.model.resetNodesTransform();currentHierachy.resetComponents()">Reset</button>';    
     html +='<label class="form-label" style="font-size:11px">Edit:</label>';
     if (editMode)
         html += '<input style="font-size:11px" type="checkbox"  onclick="updateEditMode()" id="iseditmode" checked>';

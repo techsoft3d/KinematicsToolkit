@@ -1010,10 +1010,7 @@ export class KinematicsComponent {
 
     reset()
     {
-        if (this._behavior.getMovementType() == componentType.revolute)
-            this._rotate(0);
-        else
-            this._translate(0);
+        this._behavior.set(0);
     }
 
 

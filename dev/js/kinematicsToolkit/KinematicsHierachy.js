@@ -39,6 +39,8 @@ export class KinematicsHierachy {
         this._targetAnchorPosition = null;
         this._targetAnchorNode = null;       
         
+        this._enforceLimits = false;
+
         this._dirty = false;
     }
      
@@ -101,12 +103,25 @@ export class KinematicsHierachy {
         }        
     }
     
-    async _updateComponentsRecursive(component) {
+    async _updateComponentsWithBehaviorRecursive(component) {
         if (!component)
             return;
 
         await component._execute();
 
+        await component._updateReferenceNodeMatrices();
+
+        if (component._children.length > 0)
+        {
+            for (let j=0;j<component._children.length;j++)
+                await this._updateComponentsWithBehaviorRecursive(component._children[j]);
+        }
+    }
+
+    async _updateComponentsRecursive(component) {
+        if (!component)
+            return;
+       
         await component._updateReferenceNodeMatrices();
 
         if (component._children.length > 0)
@@ -122,12 +137,57 @@ export class KinematicsHierachy {
      */   
     async updateComponents()
     {
+        if (this._enforceLimits)
+        {
+            this._saveHierachyState();
+        }
         KinematicsComponentBehaviorPivotSystem.clearExecutedSystems(this);
-        await this._updateComponentsRecursive(this._rootComponent);
-        await KinematicsComponentBehaviorPivotSystem.executeUnexecutedSystems(this);
 
-        await this._updateComponentsRecursive(this._rootComponent);
+        await this._updateComponentsWithBehaviorRecursive(this._rootComponent);
+        await KinematicsComponentBehaviorPivotSystem.executeUnexecutedSystems(this);
+        await this._updateComponentsWithBehaviorRecursive(this._rootComponent);
+        if (this._enforceLimits && this._cantResolve)
+        {
+            this._restoreHierachyState();           
+            await this._updateComponentsRecursive(this._rootComponent);
+        }
     }
+
+    _saveHierachyStateRecursive(component)
+    {
+        this._stateMap.push({nodeid:component._nodeid,matrix:KinematicsManager.viewer.model.getNodeMatrix(component._nodeid).copy()});
+        let children = component._children;
+        for (let i=0;i<children.length;i++)
+        {
+            this._saveHierachyStateRecursive(children[i]);
+        }
+    }
+
+    _saveHierachyState()
+    {
+        this._stateMap = [];
+        this._cantResolve = false;
+        this._saveHierachyStateRecursive(this._rootComponent);
+        
+    }
+
+    
+
+    _restoreHierachyState()
+    {
+       for (let i=0;i<this._stateMap.length;i++)
+       {
+        KinematicsManager.viewer.model.setNodeMatrix(this._stateMap[i].nodeid, this._stateMap[i].matrix);
+
+       }
+       if (this._touchedRewind)
+       {
+            KinematicsManager.viewer.model.setNodeMatrix(this._touchedRewind.nodeid, this._touchedRewind.matrix);
+            this._touchedRewind = null;
+       }
+
+    }
+
 
 
 
@@ -563,6 +623,25 @@ export class KinematicsHierachy {
     getReferenceNodeNetMatrix(incomponent) 
     { 
         return KinematicsManager.viewer.model.getNodeNetMatrix(incomponent.getNodeId());
+    }
+
+
+    /**
+         * Sets if limits/constraints of model should be enforced
+         * @param  {bool} enforceLimits - If true, limits/constraints of model should be enforced
+         */
+    setEnforceLimits(enforceLimits) {
+        this._enforceLimits = enforceLimits;
+        this._hierachy._touchedRewind = false;
+        
+    }
+
+    /**
+     * Retrieves if limits/constraints of model should be enforced
+     * @return {bool} If true, limits/constraints of model should be enforced
+      */
+    getEnforceLimits() {
+        return this._enforceLimits;
     }
 
     _applyToModelRecursive(component, offset, startmatrix)

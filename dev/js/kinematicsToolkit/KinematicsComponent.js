@@ -427,8 +427,10 @@ export class KinematicsComponent {
         * @param  {number} value - Value
         */
     set(value) {
+        this._hierachy._touchedRewind = {nodeid: this._nodeid, matrix: KinematicsManager.viewer.model.getNodeMatrix(this._nodeid).copy()};
         this._behavior.set(value);
         this._touched = true;       
+        
     }
 
     toJson() {

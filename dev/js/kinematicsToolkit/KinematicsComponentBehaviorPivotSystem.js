@@ -361,6 +361,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
         if (!l1 && !l2)
         {
+            this._component._hierachy._cantResolve = true;
             return p2;            
         }
         if (!l1)

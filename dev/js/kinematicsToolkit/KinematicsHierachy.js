@@ -40,6 +40,7 @@ export class KinematicsHierachy {
         this._targetAnchorNode = null;       
         
         this._enforceLimits = false;
+        this._touchedRewind = null;
 
         this._dirty = false;
     }
@@ -632,7 +633,7 @@ export class KinematicsHierachy {
          */
     setEnforceLimits(enforceLimits) {
         this._enforceLimits = enforceLimits;
-        this._hierachy._touchedRewind = false;
+        this._touchedRewind = null;
         
     }
 

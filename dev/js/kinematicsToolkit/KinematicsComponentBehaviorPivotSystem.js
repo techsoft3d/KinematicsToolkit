@@ -674,14 +674,24 @@ export class KinematicsComponentBehaviorPivotSystem {
 
         if (component._behavior._isPrismatic) {
             let delta = Communicator.Point3.subtract(pivotafter, pivotbefore).length();
+            let limitdelta = delta;
             component._translate(delta);
+
             let test = component.transformlocalPointToWorldSpace(pivotbefore);
             component._translate(-delta);
+            limitdelta = -delta;
             let test2 = component.transformlocalPointToWorldSpace(pivotbefore);
             let d1 = Communicator.Point3.subtract(test, pivotafter).length();
             let d2 = Communicator.Point3.subtract(test2, pivotafter).length();
             if (d1 < d2)
+            {
                 component._translate(delta);
+                 limitdelta = delta;
+            }
+            if (this._component._enforceLimits && (limitdelta < component._minLimit  || limitdelta > component._maxLimit)) {
+                this._component._hierachy._cantResolve = true;
+            }
+
 
         }
         else {

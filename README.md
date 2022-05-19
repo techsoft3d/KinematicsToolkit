@@ -44,7 +44,7 @@ Live Documentation can be found here: [https://techsoft3d.github.io/KinematicsTo
 ## Using the Editor
 **The Editor is currently in an experimetal state. Work on docs is in pogress.**  
 
-Here is how to starting the editor locally when using Visual Studio Code Live Server plugin:
+Here is how to start the editor locally when using Visual Studio Code Live Server plugin:
 
 <http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs>
 

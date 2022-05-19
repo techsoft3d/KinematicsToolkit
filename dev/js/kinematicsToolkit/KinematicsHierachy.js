@@ -42,6 +42,8 @@ export class KinematicsHierachy {
         this._enforceLimits = false;
         this._touchedRewind = null;
 
+        this._systems = [];
+
         this._dirty = false;
     }
      

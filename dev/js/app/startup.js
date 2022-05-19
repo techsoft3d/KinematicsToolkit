@@ -280,6 +280,12 @@ function createUILayout() {
                         loadIKData("dataTemp/gripper3.json");
                     },
                 },
+                {
+                    name: 'Palette',
+                    fun: async function () {
+                        loadIKData("dataTemp/palette.json");
+                    },
+                },
 
 
             ]

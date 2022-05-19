@@ -25,19 +25,22 @@ export class KinematicsComponentBehaviorPivotSystem {
 
 
     static clearExecutedSystems(hierachy) {
-        for (let i=0;i<hierachy._systems.length;i++) {
-            hierachy._systems[i]._behavior._wasExecuted = false;
+        if (hierachy._systems) {
+            for (let i = 0; i < hierachy._systems.length; i++) {
+                hierachy._systems[i]._behavior._wasExecuted = false;
+            }
         }
     }
 
     static async executeUnexecutedSystems(hierachy) {
-        for (let i=0;i<hierachy._systems.length;i++) {
-            if (!hierachy._systems[i]._behavior._wasExecuted) {
-                hierachy._systems[i]._touched = true;
-                await hierachy._systems[i]._behavior.execute(hierachy);
+        if (hierachy._systems) {
+            for (let i = 0; i < hierachy._systems.length; i++) {
+                if (!hierachy._systems[i]._behavior._wasExecuted) {
+                    hierachy._systems[i]._touched = true;
+                    await hierachy._systems[i]._behavior.execute(hierachy);
+                }
             }
         }
-
     }
 
     static rebuildAllHashes(hierachy)
@@ -497,13 +500,13 @@ export class KinematicsComponentBehaviorPivotSystem {
             if (d1 < d2) {
                 if ( component._minLimit != undefined && delta2 < component._minLimit ) {
                     delta2 =  component._minLimit;
-                    if (this._component._enforceLimits) {
+                    if (this._component._enforceLimits && component._maxLimit) {
                         this._component._hierachy._cantResolve = true;
                     }
                 }
                 if ( component._maxLimit != undefined && delta2 > component._maxLimit ) {
                     delta2 =  component._maxLimit;
-                    if (this._component._enforceLimits) {
+                    if (this._component._enforceLimits && component._maxLimit) {
                         this._component._hierachy._cantResolve = true;
                     }
                 }
@@ -516,13 +519,13 @@ export class KinematicsComponentBehaviorPivotSystem {
                 delta2  = -delta2;
                 if ( component._minLimit != undefined && delta2 < component._minLimit ) {
                     delta2 =  component._minLimit;
-                    if (this._component._enforceLimits) {
+                    if (this._component._enforceLimits && component._maxLimit) {
                         this._component._hierachy._cantResolve = true;
                     }
                 }
                 if ( component._maxLimit != undefined && delta2 > component._maxLimit ) {
                     delta2 =  component._maxLimit;
-                    if (this._component._enforceLimits) {
+                    if (this._component._enforceLimits && component._maxLimit) {
                         this._component._hierachy._cantResolve = true;
                     }
                 }
@@ -688,7 +691,7 @@ export class KinematicsComponentBehaviorPivotSystem {
                 component._translate(delta);
                  limitdelta = delta;
             }
-            if (this._component._enforceLimits && (limitdelta < component._minLimit  || limitdelta > component._maxLimit)) {
+            if (this._component._enforceLimits && component._maxLimit && (limitdelta < component._minLimit  || limitdelta > component._maxLimit)) {
                 this._component._hierachy._cantResolve = true;
             }
 

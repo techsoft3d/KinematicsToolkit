@@ -454,7 +454,7 @@ function generateComponentPropertiesData(id)
             html += '<div class="col"><input onchange="updateBeltWidth(' + id + ')" id="beltwidth" type="number" value="' + component.getBehavior().getBelt().getWidth() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Segments:</label></div>';
-            html += '<div class="col"><input onchange="updateBeltSegmentCount(' + id + ')" id="beltsegments" type="number" value="' + component.component.getBehavior().getBelt().getSegmentNum() + '" class="form-control" style="font-size:11px"></div></div>';
+            html += '<div class="col"><input onchange="updateBeltSegmentCount(' + id + ')" id="beltsegments" type="number" value="' + component.getBehavior().getBelt().getSegmentNum() + '" class="form-control" style="font-size:11px"></div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Thickness:</label></div>';
             html += '<div class="col"><input onchange="updateBeltThickness(' + id + ')" id="beltthickness" type="number" value="' + component.getBehavior().getBelt().getThickness() + '" class="form-control" style="font-size:11px"></div></div>';
@@ -495,7 +495,7 @@ function generateComponentPropertiesData(id)
             html += '</div></div>';
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Colors:</label></div>';
-            let hexcolor1 = rgbToHex(component.getBehavior().getBelt().GetColor1());
+            let hexcolor1 = rgbToHex(component.getBehavior().getBelt().getColor1());
             let hexcolor2 = rgbToHex(component.getBehavior().getBelt().getColor2());
             html += '<div class="col"><input style="height:20px;width:20px;padding:0;border:none" onchange="updateBeltColor(' + id + ',0)" type="color" onclick="" id="beltcolor1" name="favcolor" value="' + hexcolor1 + '"></input>';
             html += '<input style="height:20px;width:20px;padding:0;border:none;margin-left:5px" onchange="updateBeltColor(' + id + ',1)" type="color" onclick="" id="beltcolor2" name="favcolor" value="' + hexcolor2 + '"></input></div></div>';
@@ -570,17 +570,17 @@ function generateComponentPropertiesData(id)
 
         wheeltable.on("rowClick", function (e, row) {
             let data = row.getData();
-            component.getBelt().getWheelByIndex(data.id).component.selectReferenceNodes();
+            component.getBehavior().getBelt().getWheelByIndex(data.id).component.selectReferenceNodes();
         });
 
         wheeltable.on("cellEdited", function (e) {
             let data = e.getRow().getData();
             if (data.component != "") {
-                component.getBelt().getWheelByIndex(data.id).component = currentHierachy.getComponentById( data.component.split(":")[0]);
+                component.getBehavior().getBelt().getWheelByIndex(data.id).component = currentHierachy.getComponentById( data.component.split(":")[0]);
             }
-            component.getBelt().getWheelByIndex(data.id).radius = parseFloat(data.radius);
-            component.getBelt().getWheelByIndex(data.id).inner = data.inner;
-            component.getBelt().getWheelByIndex(data.id).other = data.other;
+            component.getBehavior().getBelt().getWheelByIndex(data.id).radius = parseFloat(data.radius);
+            component.getBehavior().getBelt().getWheelByIndex(data.id).inner = data.inner;
+            component.getBehavior().getBelt().getWheelByIndex(data.id).other = data.other;
         });
 
     }
@@ -591,35 +591,35 @@ function generateComponentPropertiesData(id)
 function updateBeltWidth(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().setWidth(parseFloat($("#beltwidth").val()));
+    component.getBehavior().getBelt().setWidth(parseFloat($("#beltwidth").val()));
 }
 
 
 function updateBeltThickness(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().setThickness(parseFloat($("#beltthickness").val()));
+    component.getBehavior().getBelt().setThickness(parseFloat($("#beltthickness").val()));
 }
 
 
 function updateBeltGap(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().setGap(parseFloat($("#beltgap").val()));
+    component.getBehavior().getBelt().setGap(parseFloat($("#beltgap").val()));
 }
 
 
 function updateBeltTracks(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().setTracks(parseFloat($("#belttracks").val()));
+    component.getBehavior().getBelt().setTracks(parseFloat($("#belttracks").val()));
 }
 
 
 function updateBeltOrientation(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().setTrackOrientation($("#belttrackorientation").is(":checked"));
+    component.getBehavior().getBelt().setTrackOrientation($("#belttrackorientation").is(":checked"));
 }
 
 function updateBeltColor(id, col)
@@ -627,10 +627,10 @@ function updateBeltColor(id, col)
     let component = currentHierachy.getComponentById(id);
     if (col == 0)
     {
-        component.getBelt().setColor1(hexToRGB($("#beltcolor1").val()));
+        component.getBehavior().getBelt().setColor1(hexToRGB($("#beltcolor1").val()));
     }
     else
-        component.getBelt().setColor2(hexToRGB($("#beltcolor2").val()));
+        component.getBehavior().getBelt().setColor2(hexToRGB($("#beltcolor2").val()));
 
 }
 
@@ -641,7 +641,7 @@ function updateAlignVector(id, col)
     let ischecked = $("#alignvectorcheckbox").is(":checked");
     if (!ischecked)
     {
-        component.getBelt().setAlignVector(null);
+        component.getBehavior().getBelt().setAlignVector(null);
         $( "#alignvector" ).prop( "disabled", true );
 
     }
@@ -649,7 +649,7 @@ function updateAlignVector(id, col)
     {
         $( "#alignvector" ).prop( "disabled", false );
         var av =   $( "#alignvector" ).val().split(" ");
-        component.getBelt().setAlignVector(new Communicator.Point3(parseFloat(av[0]),parseFloat(av[1]),parseFloat(av[2])));
+        component.getBehavior().getBelt().setAlignVector(new Communicator.Point3(parseFloat(av[0]),parseFloat(av[1]),parseFloat(av[2])));
     }
 
 }
@@ -657,15 +657,15 @@ function updateAlignVector(id, col)
 function updateBeltSegmentCount(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().setSegmentNum(parseFloat($("#beltsegments").val()));
+    component.getBehavior().getBelt().setSegmentNum(parseFloat($("#beltsegments").val()));
 }
 
 function refreshWheelTable(component)
 {
     wheeltable.clearData();
-    for (let i=0;i<component.getBelt().getWheels().length;i++)
+    for (let i=0;i<component.getBehavior().getBelt().getWheels().length;i++)
     {
-        let wheel = component.getBelt().getWheelByIndex(i);
+        let wheel = component.getBehavior().getBelt().getWheelByIndex(i);
         let componentname;
         if (wheel.component)
         {
@@ -684,7 +684,7 @@ function refreshWheelTable(component)
 function addBeltWheel(id)
 {
     let component = currentHierachy.getComponentById(id);
-    component.getBelt().addWheel();
+    component.getBehavior().getBelt().addWheel();
     refreshWheelTable(component);
 }
 
@@ -696,7 +696,7 @@ function insertBeltWheelBefore(id)
     let data = wheeltable.getSelectedData();
     if (data.length>0)
     {
-        component.getBelt().insertWheel(data[0].id);
+        component.getBehavior().getBelt().insertWheel(data[0].id);
         refreshWheelTable(component);
     }
 }
@@ -708,7 +708,7 @@ function insertBeltWheelAfter(id)
     let data = wheeltable.getSelectedData();
     if (data.length>0)
     {
-        component.getBelt().insertWheel(data[0].id+1);
+        component.getBehavior().getBelt().insertWheel(data[0].id+1);
         refreshWheelTable(component);
     }
 }
@@ -718,14 +718,14 @@ function deleteBeltWheel(id)
     let component = currentHierachy.getComponentById(id);
     let data = wheeltable.getSelectedData();
     if (data.length>0)
-        component.getBelt().deleteWheel(data[0].id);
+    component.getBehavior().getBelt().deleteWheel(data[0].id);
     refreshWheelTable(component);
 }
 
 function rebuildBelt(id)
 {
     let component = currentHierachy.getComponentById(id); 
-    component.getBelt().initialize();       
+    component.getBehavior().getBelt().initialize();       
 }
 
 

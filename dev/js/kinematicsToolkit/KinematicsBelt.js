@@ -120,7 +120,7 @@ export class KinematicsBelt {
         return this._color2;
     }
 
-    getWheelByIndex()
+    getWheelByIndex(i)
     {
         return this._wheels[i];
     }

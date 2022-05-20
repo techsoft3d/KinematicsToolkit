@@ -22,6 +22,7 @@ export class KinematicsBelt {
         this._trackorientation = false;
         this._color1 = new Communicator.Color(64,64,64);
         this._color2 = new Communicator.Color(20,20,20);          
+        this._standinNodes = [];
     }
 
     getBaseNode()
@@ -130,6 +131,11 @@ export class KinematicsBelt {
         return this._wheels;
     }
 
+    setStandinNodes(standinnodes)
+    {
+        this._standinNodes = standinnodes;
+    }
+
     initializeWheels() {
 
         this.calcuateAlignMatrix();
@@ -168,6 +174,9 @@ export class KinematicsBelt {
         {
             def.wheels.push({radius: this._wheels[i].radius, component: this._wheels[i].component.getId(), inner: this._wheels[i].inner,other: this._wheels[i].other});
         }
+        
+
+        def.standinNodes = this._standinNodes;
 
         return def;        
     }
@@ -194,6 +203,11 @@ export class KinematicsBelt {
 
         for (let i = 0; i < def.wheels.length; i++) {
             this._wheels.push({ pos: null, radius: def.wheels[i].radius, component: component.getHierachy().getComponentHash()[def.wheels[i].component], inner: def.wheels[i].inner, other: def.wheels[i].other });
+        }
+
+        if (def.standinNodes)
+        {
+            this._standinNodes = def.standinNodes;
         }
 
         return def;
@@ -372,6 +386,10 @@ export class KinematicsBelt {
     }
 
     async initialize() {
+        for (let i=0;i<this._standinNodes.length;i++)
+        {
+            KinematicsManager.viewer.model.setNodesVisibility([this._standinNodes[i]], false);
+        }
         this.initializeWheels();      
         for (let i = 0; i < this._wheels.length; i++) {
 

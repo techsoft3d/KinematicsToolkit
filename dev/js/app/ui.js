@@ -478,6 +478,12 @@ function generateComponentPropertiesData(id)
                 dis = '';
             else
                 dis = 'disabled';
+                
+                html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Standin Nodes:</label></div><div class="col">';
+            
+                html += '<button onclick="setStandinNodes(' + id + ')" type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;width:35px">Set</button>';    
+                html += '</div></div>';            
+
 
             html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Align Vector:</label></div>';
             if (component.getBehavior().getBelt().getAlignVector()) {
@@ -1431,3 +1437,15 @@ function exportToFile(filename) {
         document.body.removeChild(link);
     });
 }              
+
+
+
+function setStandinNodes(j) {
+
+    let component = currentHierachy.getComponentById(j);
+    let nodeids = [];
+    let selections = KT.KinematicsManager.viewer.selectionManager.getResults();
+    for (let i = 0; i < selections.length; i++)
+        nodeids.push(selections[i].getNodeId());
+    component.getBehavior().getBelt().setStandinNodes(nodeids);
+}

@@ -123,7 +123,7 @@ export class KinematicsComponent {
     initialize(nodeids, isReference) {
         this._reference = isReference;
         if (!this._parent)
-            this._nodeid = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "rootComponent");
+            this._nodeid = KinematicsManager.viewer.model.createNode(this._hierachy.getRootNode(), "rootComponent");
         else
             this._nodeid = KinematicsManager.viewer.model.createNode(this._parent._nodeid, "component");
 
@@ -526,7 +526,7 @@ export class KinematicsComponent {
         this._hierachy.getComponentHash()[this._id] = this;
     
         if (!this._parent)
-            this._nodeid = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "rootComponent");
+            this._nodeid = KinematicsManager.viewer.model.createNode(this._hierachy.getRootNode(), "rootComponent");
         else
             this._nodeid = KinematicsManager.viewer.model.createNode(this._parent._nodeid, "component");
         for (let i=0;i<def.referenceNodes.length;i++)
@@ -534,7 +534,7 @@ export class KinematicsComponent {
             this._referenceNodes.push({nodeid:def.referenceNodes[i].nodeid, matrix: Communicator.Matrix.fromJson(def.referenceNodes[i].matrix)});
             this._hierachy._componentNodeidHash[def.referenceNodes[i].nodeid] = this;
         }
-       
+                      
         for (let i = 0; i < def.children.length; i++) {
             let component = new KinematicsComponent(this, this._hierachy);
 

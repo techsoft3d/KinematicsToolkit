@@ -30,7 +30,8 @@ export class KinematicsHierachy {
 
         this._targetPoint = new Communicator.Point3(0, 0, 0);
        
-        
+        this._rootNode = KinematicsManager.viewer.model.createNode(KinematicsManager.getRootNode(),"hierachy");
+
         this._rootComponent = this.createComponent(null,[],true);
         this._rootComponent.setType(componentType.fixed);
         
@@ -477,6 +478,13 @@ export class KinematicsHierachy {
         if (def._targetAnchorPosition)
             this._targetAnchorPosition = Communicator.Point3.fromJson(def._targetAnchorPosition);
 
+        let oldroot = this._rootNode;
+        setTimeout(function() {
+            KinematicsManager.viewer.model.deleteNode(oldroot);            
+        },100);
+        
+        this._rootNode = KinematicsManager.viewer.model.createNode(KinematicsManager.getRootNode(),"hierachy");
+        
         let component = new KinematicsComponent(null,this);
         component.fromJson(def.components, def.version);
         this._rootComponent = component;
@@ -681,6 +689,11 @@ export class KinematicsHierachy {
         return this._dirty;
     }
 
+    getRootNode()
+    {
+        return this._rootNode;
+    }
+
     setNodeId(nodeid)
     {
         this._nodeid = nodeid;        
@@ -737,5 +750,7 @@ export class KinematicsHierachy {
         await this._rootComponent.updateComponentsFromReference();
 
     }
+
+    
 }
 

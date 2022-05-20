@@ -25,6 +25,7 @@ export class KinematicsManager {
         KinematicsManager.handlePlacementOperator = null;
         KinematicsManager.componentMoveOperator = null;
         KinematicsManager._version = "0.9.2";
+        KinematicsManager._rootNode = viewer.model.createNode(viewer.model.getRootNode(), "KT_ROOT");
     }
 
     
@@ -34,6 +35,14 @@ export class KinematicsManager {
     */
     static getVersion() {
         return KinematicsManager._version;
+    }
+
+      /**
+    * Retrieves Root Node of Kinematics Toolkit
+    * @return {nodeid} Root node
+    */
+       static getRootNode() {
+        return KinematicsManager._rootNode;
     }
 
        
@@ -54,7 +63,7 @@ export class KinematicsManager {
         let myOperatorHandle = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
         KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
 
-        KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.viewer.model.getRootNode(), "handlenode");
+        KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.getRootNode(), "handlenode");
     }
 
     static setupComponentMoveOperator() {
@@ -144,19 +153,10 @@ export class KinematicsManager {
     * @param  {number} nodeid - nodeid
     * @return {KinematicsHierachy} Hierachy
     */
-    static getHierachyFromNodeId(nodeid) {
-        if (nodeid != undefined && nodeid != KinematicsManager.viewer.model.getRootNode()) {
-            while (1) {
-                if (KinematicsManager.viewer.model.getNodeParent(nodeid) == KinematicsManager.viewer.model.getRootNode())
-                    break;
-                else
-                    nodeid = KinematicsManager.viewer.model.getNodeParent(nodeid);
-
-            }
-        }
+    static getHierachyFromNodeId(nodeid) {        
         for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
-            if (KinematicsManager._hierachies[i].nodeid == nodeid)
-                return i;
+            if (KinematicsManager._hierachies[i]._nodeid == nodeid)
+                return KinematicsManager._hierachies[i];
         }
         return undefined;
     }

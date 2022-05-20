@@ -880,7 +880,6 @@ function updateComponent(j){
         let variablecomponent = currentHierachy.getComponentById(id);
         component.getBehavior().setExtraComponent2(variablecomponent);
     }
-
     
     if (component.getType() == KT.componentType.pivotSystem && $("#fixedcomponentselect")[0] != undefined && $("#variablecomponentselect")[0] != undefined)
     {
@@ -907,7 +906,6 @@ function updateComponent(j){
         else
             component.getBehavior().setIsPrismatic(false);            
     }
-
 
     if (component.getType() == KT.componentType.revoluteSlide && $("#fixedcomponentselect")[0] != undefined)
     {

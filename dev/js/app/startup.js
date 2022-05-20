@@ -349,10 +349,10 @@ function createUILayout() {
                 {
                     name: 'Load Multiple Microengines',
                     fun: async function () {
-                        myMaterialTool = new MaterialTool(hwv);
-                        let res = await fetch('data/material2.json');
-                        let json = await res.json();
-                        myMaterialTool.fromJson(json);
+                        // myMaterialTool = new MaterialTool(hwv);
+                        // let res = await fetch('data/material2.json');
+                        // let json = await res.json();
+                        // myMaterialTool.fromJson(json);
                         let topnode = hwv.model.createNode(hwv.model.getRootNode(), "microengines");
 
                         for (let i = 0; i < 5; i++) {
@@ -365,8 +365,8 @@ function createUILayout() {
                                 var m = new Communicator.Matrix();
                                 m.setTranslationComponent(j * 200, i * 200, 0);
                                 await hwv.model.setNodeMatrix(n, m);
-                                myMaterialTool.setOffset(offset);
-                                await myMaterialTool.refresh();
+                                // myMaterialTool.setOffset(offset);
+                                // await myMaterialTool.refresh();
 
                             }
                         }

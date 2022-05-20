@@ -32,7 +32,7 @@ export class HandlePlacementOperator  {
         this._axis2 = axis;
     }
 
-    insertHandles(addMainHandles)
+    insertHandles(event)
     {
 
 
@@ -96,9 +96,16 @@ export class HandlePlacementOperator  {
             else {
                 let axis = faceEntity.getNormal();
                 let position = faceEntity.getPosition().copy();
-                position = faceEntity.getBounding().center().copy();
+                if (!event.controlDown())
+                {
+                    position = faceEntity.getBounding().center().copy();
+                }
+                else
+                {
+                    position = this._currentSelItem.getPosition().copy();
+                }
 
-                if (addMainHandles)
+                if (event.altDown())
                     this._addMainHandle(snodeIds, position);
                 else {
                     let axis2 = Communicator.Point3.cross(new Communicator.Point3(1, 0, 0),axis);
@@ -129,16 +136,8 @@ export class HandlePlacementOperator  {
 
         this._axis = null;
         this._axis2 = null;
-
-        if (event.controlDown())        
-        {
-          
-            this._addAxisTranslationHandle(this._currentSelItem.getPosition(), new Communicator.Point3(0,0,1),[]);
-            event.setHandled(true);
-            return;
-        }
       
-        this.insertHandles(event.altDown());
+        this.insertHandles(event);
         
         event.setHandled(true);
     }

@@ -37,6 +37,8 @@ Add dist/kinematicsManager.min.js to your project.
     <script src="./js/kinematicsManager.min.js"></script>
 ```
 
+The library has been tested against HOOPS Communicator 2022 SP1 but should run with earlier or later versions of HOOPS Communicator.
+
 ## Documentation
 Live Documentation can be found here: [https://techsoft3d.github.io/KinematicsToolkit/](https://techsoft3d.github.io/KinematicsToolkit/)
 
@@ -48,6 +50,7 @@ Here is how to start the editor locally when using Visual Studio Code Live Serve
 
 <http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs>
 
+The editor is using HC2022 SP1.
 
 ## Demo
 

@@ -297,7 +297,7 @@ let hierachy = await KT.KinematicsManager.applyToModel(templateId);
 
 
 ## Acknowledgments
-### Engine:
+### KinematicsToolkit:
 * [Anime.js](https://animejs.com/)
 
 ### Editor:

@@ -355,8 +355,8 @@ function createUILayout() {
                         // myMaterialTool.fromJson(json);
                         let topnode = hwv.model.createNode(hwv.model.getRootNode(), "microengines");
 
-                        for (let i = 0; i < 5; i++) {
-                            for (let j = 0; j < 5; j++) {
+                        for (let i = 0; i < 2; i++) {
+                            for (let j = 0; j < 2; j++) {
                                 var n = hwv.model.createNode(topnode);
                                 await hwv.model.loadSubtreeFromScsFile(n, "models/microengine.scs");
                                 let children = hwv.model.getNodeChildren(n);

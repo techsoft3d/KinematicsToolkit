@@ -482,7 +482,7 @@ export class KinematicsHierachy {
         setTimeout(function() {
             KinematicsManager.viewer.model.deleteNode(oldroot);            
         },100);
-        
+
         this._rootNode = KinematicsManager.viewer.model.createNode(KinematicsManager.getRootNode(),"hierachy");
         
         let component = new KinematicsComponent(null,this);
@@ -657,8 +657,11 @@ export class KinematicsHierachy {
         component.setAxis(Communicator.Point3.subtract(temp,component.getCenter()).normalize());
         
         component._parentMatrix = Communicator.Matrix.multiply(component.getParentMatrix(), startmatrix);
-        if (component.fixedAxis)
-            component.fixedAxis = startmatrix.transform(component.fixedAxis);
+
+        if (component._behavior.applyToModel)
+        {
+            component._behavior.applyToModel(startmatrix);
+        }
          
         let referenceNodes = component.getReferenceNodes();
         for (let i=0;i<referenceNodes.length;i++)

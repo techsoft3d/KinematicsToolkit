@@ -190,7 +190,14 @@ export class KinematicsComponentBehaviorPivotSystem {
             def.extraPivot1 = this._extraPivot1.toJson();
         def.isRevoluteSlide = this._isRevoluteSlide;
         def.isPrismatic = this._isPrismatic;
+    }
 
+    applyToModel(matrix)
+    {
+        if (this._extraPivot1)
+        {
+            this._extraPivot1 = matrix.transform(this._extraPivot1);
+        }
     }
 
     getCurrentValue() {

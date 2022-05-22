@@ -21,6 +21,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         this._associatedComponentHash = null;
         this._processed = false;
         this._wasExecuted = false;
+        this._fixed = false;
     }
 
 
@@ -260,12 +261,26 @@ export class KinematicsComponentBehaviorPivotSystem {
             xyinverse = Communicator.Matrix.inverse(xymatrix);
 
             if (this._associatedComponentHash) {
+                let fixedComponent = null;
                 for (let c in this._associatedComponentHash) {
-                    if (this._associatedComponentHash[c]._behavior._mappedComponent == this._component) {
-                        this._associatedComponentHash[c]._behavior._resolveMapped(this._component, plane, xymatrix, xyinverse, touchedHash);
+                    if (this._associatedComponentHash[c]._behavior._fixed == true) {
+                        fixedComponent = this._associatedComponentHash[c];
                     }
-                    else {
-                        this._associatedComponentHash[c]._behavior._resolve(component, plane, xymatrix, xyinverse, touchedHash);
+                }
+
+                if (fixedComponent) {                  
+                    this._resolveMultiComponent(fixedComponent, plane, xymatrix, xyinverse, touchedHash, true);
+                }
+                else {
+
+
+                    for (let c in this._associatedComponentHash) {
+                        if (this._associatedComponentHash[c]._behavior._mappedComponent == this._component) {
+                            this._associatedComponentHash[c]._behavior._resolveMapped(this._component, plane, xymatrix, xyinverse, touchedHash);
+                        }
+                        else {
+                            this._associatedComponentHash[c]._behavior._resolve(component, plane, xymatrix, xyinverse, touchedHash);
+                        }
                     }
                 }
             }
@@ -633,7 +648,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
     }
 
-    async _resolveMultiComponent(incomponent, plane, xymatrix, xyinverse, touchedHash) {
+    async _resolveMultiComponent(incomponent, plane, xymatrix, xyinverse, touchedHash, extraIn) {
         let component = this._component;
         let centerWorld = component._parent.transformlocalPointToWorldSpace(component._center);
         centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
@@ -658,7 +673,13 @@ export class KinematicsComponentBehaviorPivotSystem {
                     let circleend = component.transformlocalPointToWorldSpace(componentpivot);
                     circleend = KinematicsUtility.closestPointOnPlane(plane, circleend);
 
-                    newpivotafter = this._circleLineIntersectionFromPoints(circlecenter, circleend, linestart, lineend, xymatrix, xyinverse);
+                    if (extraIn) {
+                        newpivotafter = this._circleIntersectionFromPoints(circlecenter, circleend, linestart, lineend, xymatrix, xyinverse);
+
+                    }
+                    else {
+                        newpivotafter = this._circleLineIntersectionFromPoints(circlecenter, circleend, linestart, lineend, xymatrix, xyinverse);
+                    }
                 }
                 else {
                     newpivotafter = incomponent.transformlocalPointToWorldSpace(componentpivot);
@@ -711,6 +732,11 @@ export class KinematicsComponentBehaviorPivotSystem {
             let pivotbeforeComponent = component._parent.transformPointToComponentSpace(pivotbefore);
             let matrix = this._findAngleSignMatrix(angle, component._axis, centerComponent, new Communicator.Matrix(), pivotbeforeComponent, pivotafter, component, plane);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, matrix);
+        }
+
+        if (extraIn)
+        {
+            incomponent = null;
         }
         for (let c in this._associatedComponentHash) {
             if (this._associatedComponentHash[c] != incomponent) {

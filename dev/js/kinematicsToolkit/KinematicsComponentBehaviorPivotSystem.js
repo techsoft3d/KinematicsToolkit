@@ -10,17 +10,24 @@ import { KinematicsUtility } from './KinematicsUtility.js';
  * @readonly
  * @enum {number}
  */
- export const pivotSystemType = {
+
+ const pivotSystemType = {
+    /** End Component that rotates along a center axis  */
    endRevolute:0,
+    /** End Component that rotates and translates along a center axis*/
    endPrismatic:1,
+    /** End Component that is connected to a center component*/
    endConnected:2,
+    /** Connector component that is connected to two other components*/
    connector:3,
+   /** Center component that rotates around a fixed axis. Connected to other components*/
    centerRot:4,
+   /** Center component that translates along a fixed axis. Connected to other components*/
    centerPrismatic:5,
 };
 
 
-
+export {pivotSystemType};
 
 /** This class represents the behavior for a pivot system component.  
  * A pivot system component is part of a system of components defined by common pivot points.
@@ -143,10 +150,19 @@ export class KinematicsComponentBehaviorPivotSystem {
         return this._type;
     }
 
+    /**
+      * Retrieves pivot type of this pivot system component
+      * @return {pivotSystemType} Pivot System Type
+      */
+
     getPivotType() {
         return this._pivotType;
     }
 
+    /**
+        * Sets the pivot type of this pivot system component.
+        * @param  {pivotSystemType} pivotType - Pivot System Type
+        */
     setPivotType(pivotType) {
         this._pivotType = pivotType;
     }
@@ -788,16 +804,17 @@ export class KinematicsComponentBehaviorPivotSystem {
         touchedHash[this._component._id] = true;
         this._wasExecuted = true;
 
-        if (!this._associatedComponentHash) {
-            if (!this._extraComponent2) {
-                this._resolveEndComponent(incomponent, plane, xymatrix, xyinverse, touchedHash);
-            }
-            else {
-                this._resolveConnectorComponent(incomponent, plane, xymatrix, xyinverse, touchedHash);
-            }
+        if (this._pivotType == pivotSystemType.connector)
+        {
+            this._resolveConnectorComponent(incomponent, plane, xymatrix, xyinverse, touchedHash);
         }
-        else {
+        else if (this._pivotType == pivotSystemType.endRevolute || this._pivotType == pivotSystemType.endPrismatic || this._pivotType == pivotSystemType.endConnected) {
+            this._resolveEndComponent(incomponent, plane, xymatrix, xyinverse, touchedHash);
+        }
+        else
+        {
             this._resolveMultiComponent(incomponent, plane, xymatrix, xyinverse, touchedHash);
+
         }
     }
 

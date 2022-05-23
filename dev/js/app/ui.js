@@ -389,19 +389,30 @@ function generateComponentPropertiesData(id)
         html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Pivot Type:</label></div>';
         html += '<div class="col">' + generateComponentPivotTypeSelect(component) + '</div></div>';
 
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
-        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
-        html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Componet:</label></div>';
-        html += '<div class="col">' + generateMappedPivotSystemSelect(component) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
-        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
+        if (component.getBehavior().getPivotType() != KT.pivotSystemType.centerRot && component.getBehavior().getPivotType() != KT.pivotSystemType.centerPrismatic)
+        {
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+            html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
 
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
-        html += '<div class="col">';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Pivot 2</button>';
-        html += '</div></div>';
+            if (component.getBehavior().getPivotType() == KT.pivotSystemType.connector)
+            {
+                html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
+                html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
+            }
+
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
+            html += '<div class="col">';
+            html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Pivot 2</button>';
+            html += '</div></div>';            
+        }
+        else
+        {
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Componet:</label></div>';
+            html += '<div class="col">' + generateMappedPivotSystemSelect(component) + '</div></div>';
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
+        
+            html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
+        }
 
         html += '</div>';
     }    
@@ -894,23 +905,32 @@ function updateComponent(j){
         component.getBehavior().setExtraComponent2(variablecomponent);
     }
     
-    if (component.getType() == KT.componentType.pivotSystem && $("#fixedcomponentselect")[0] != undefined && $("#variablecomponentselect")[0] != undefined)
+    if (component.getType() == KT.componentType.pivotSystem)
     {
         let text = $("#componentpivottype")[0].value;
         component.getBehavior().setPivotType(KT.pivotSystemType[text]);
 
-        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
-        let fixedcomponent = currentHierachy.getComponentById(id);        
-        component.getBehavior().setExtraComponent1(fixedcomponent);
+        if ($("#fixedcomponentselect")[0] != undefined)
+        {
+            let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+            let fixedcomponent = currentHierachy.getComponentById(id);        
+            component.getBehavior().setExtraComponent1(fixedcomponent);
+        }
 
-        id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
-        let variablecomponent = currentHierachy.getComponentById(id);        
-        component.getBehavior().setExtraComponent2(variablecomponent);
+        if ($("#variablecomponentselect")[0] != undefined)
+        {
+            id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
+            let variablecomponent = currentHierachy.getComponentById(id);        
+            component.getBehavior().setExtraComponent2(variablecomponent);
+        }
 
-        id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
-        component.getBehavior().setMappedComponent(currentHierachy.getComponentById(id));
+        if ($("#mappedcomponentselect")[0] != undefined)
+        {
+            id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
+            component.getBehavior().setMappedComponent(currentHierachy.getComponentById(id));
 
-        component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+            component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        }
                         
     }
 

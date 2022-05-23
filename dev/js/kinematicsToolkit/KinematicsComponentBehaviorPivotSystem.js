@@ -3,6 +3,25 @@ import { KinematicsManager } from './KinematicsManager.js';
 import { componentType } from './KinematicsComponent.js';
 import { KinematicsUtility } from './KinematicsUtility.js';
 
+
+
+/**
+ * Type of Pivot System Component.
+ * @readonly
+ * @enum {number}
+ */
+ export const pivotSystemType = {
+   endRevolute:0,
+   endPrismatic:1,
+   endConnected:2,
+   connector:3,
+   centerRot:4,
+   centerPrismatic:5,
+};
+
+
+
+
 /** This class represents the behavior for a pivot system component.  
  * A pivot system component is part of a system of components defined by common pivot points.
 */
@@ -11,17 +30,15 @@ export class KinematicsComponentBehaviorPivotSystem {
     constructor(component) {
         this._component = component;
         this._type = componentType.pivotSystem;
+        this._pivotType = pivotSystemType.centerRot;
         this._extraComponent1 = null;
         this._extraComponent2 = null;
         this._mappedComponent = null;
         this._helicalFactor = 1;
-        this._extraPivot1 = null;
-        this._isRevoluteSlide = false;
-        this._isPrismatic = false;
+        this._extraPivot1 = null;     
         this._associatedComponentHash = null;
         this._processed = false;
         this._wasExecuted = false;
-        this._fixed = false;
     }
 
 
@@ -126,6 +143,15 @@ export class KinematicsComponentBehaviorPivotSystem {
         return this._type;
     }
 
+    getPivotType() {
+        return this._pivotType;
+    }
+
+    setPivotType(pivotType) {
+        this._pivotType = pivotType;
+    }
+
+
     _addToHash(component) {
         if (!this._associatedComponentHash) {
             this._associatedComponentHash = [];
@@ -135,6 +161,10 @@ export class KinematicsComponentBehaviorPivotSystem {
     }
 
     async fromJson(def, version) {
+        if (def.pivotType != undefined)  {
+            this._pivotType = def.pivotType;        
+        }
+
         if (def.extraComponent1) {
             this._extraComponent1 = def.extraComponent1;
         }
@@ -152,9 +182,7 @@ export class KinematicsComponentBehaviorPivotSystem {
 
         if (def.helicalFactor)
             this._helicalFactor = def.helicalFactor;
-
-        this._isRevoluteSlide = def.isRevoluteSlide;
-        this._isPrismatic = def.isPrismatic;
+      
     }
 
     jsonFixup() {
@@ -178,6 +206,7 @@ export class KinematicsComponentBehaviorPivotSystem {
     }
 
     toJson(def) {
+        def.pivotType = this._pivotType;
         if (this._extraComponent1)
             def.extraComponent1 = this._extraComponent1._id;
         if (this._extraComponent2)
@@ -188,9 +217,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         def.helicalFactor = this._helicalFactor;
 
         if (this._extraPivot1)
-            def.extraPivot1 = this._extraPivot1.toJson();
-        def.isRevoluteSlide = this._isRevoluteSlide;
-        def.isPrismatic = this._isPrismatic;
+            def.extraPivot1 = this._extraPivot1.toJson();      
     }
 
     applyToModel(matrix)
@@ -202,7 +229,7 @@ export class KinematicsComponentBehaviorPivotSystem {
     }
 
     getCurrentValue() {
-        if (!this._isRevoluteSlide && !this._isPrismatic) {
+        if (this._pivotType != pivotSystemType.endPrismatic && this._pivotType != pivotSystemType.centerPrismatic) {
             return this._component._currentAngle;
         }
         else {
@@ -212,7 +239,7 @@ export class KinematicsComponentBehaviorPivotSystem {
     }
 
     set(value) {
-        if (!this._isRevoluteSlide && !this._isPrismatic) {
+        if (this._pivotType != pivotSystemType.endPrismatic && this._pivotType != pivotSystemType.centerPrismatic) {
             this._component._rotate(value);
         }
         else {
@@ -224,7 +251,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         if (this._extraComponent1 && this._extraComponent2) {
             return componentType.fixed;
         }
-        if (!this._isRevoluteSlide && !this._isPrismatic) {
+        if (this._pivotType != pivotSystemType.endPrismatic && this._pivotType != pivotSystemType.centerPrismatic) {
             return componentType.revolute;
         }
         else {
@@ -242,11 +269,11 @@ export class KinematicsComponentBehaviorPivotSystem {
             touchedHash[component._id] = true;
 
             let plane, xymatrix, xyinverse;
-            if (this._isRevoluteSlide) {
+            if (this._pivotType == pivotSystemType.endPrismatic) {
                 plane = this._extraComponent1.getWorldPlane();
                 xymatrix = this._extraComponent1.getXYMatrix();
             }            
-            else if (this._isPrismatic) {
+            else if (this._pivotType == pivotSystemType.centerPrismatic) {
                 for (let c in this._associatedComponentHash) {
                     plane = this._associatedComponentHash[c].getWorldPlane();
                     xymatrix = this._associatedComponentHash[c].getXYMatrix();
@@ -263,7 +290,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             if (this._associatedComponentHash) {
                 let fixedComponent = null;
                 for (let c in this._associatedComponentHash) {
-                    if (this._associatedComponentHash[c]._behavior._fixed == true) {
+                    if (this._associatedComponentHash[c]._behavior._pivotType == pivotSystemType.endConnected) {
                         fixedComponent = this._associatedComponentHash[c];
                     }
                 }
@@ -286,7 +313,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             }
             else {
                 if (this._extraComponent1) {
-                    if (this._isRevoluteSlide) {
+                    if (this._pivotType == pivotSystemType.endPrismatic) {
                         let centerWorld = component._parent.transformlocalPointToWorldSpace(component._center);
                         centerWorld = KinematicsUtility.closestPointOnPlane(plane, centerWorld);
 
@@ -492,7 +519,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         let angle = this._calculateAngle(startPivotWorld, currentPivotWorld, centerWorld);
 
 
-        if (!this._isRevoluteSlide) {
+        if (this._pivotType != pivotSystemType.endPrismatic) {
 
             let totalmatrix = this._findAngleSignMatrix(angle, component._axis, component._center, new Communicator.Matrix(), this._extraPivot1, currentPivotWorld, component, plane);
             KinematicsManager.viewer.model.setNodeMatrix(component._nodeid, totalmatrix);
@@ -617,7 +644,7 @@ export class KinematicsComponentBehaviorPivotSystem {
         let outpivotWorldCurrent = component.transformlocalPointToWorldSpace(outpivot);
         outpivotWorldCurrent = KinematicsUtility.closestPointOnPlane(plane, outpivotWorldCurrent);
 
-        if (outcomponent._behavior._isPrismatic) {
+        if (outcomponent._behavior._pivotType == pivotSystemType.centerPrismatic) {
             let outpivotWorldAxis = component._parent.transformlocalPointToWorldSpace(Communicator.Point3.add(outpivot,outcomponent._axis));
             outpivotWorldAxis = KinematicsUtility.closestPointOnPlane(plane, outpivotWorldAxis);
             
@@ -661,7 +688,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             }
             else {
                 componentpivot = incomponent._behavior._extraPivot1;
-                if (!incomponent._behavior._isRevoluteSlide) {
+                if (incomponent._behavior._pivotType != pivotSystemType.endPrismatic) {
                     let lineend = incomponent.transformlocalPointToWorldSpace(componentpivot);
                     lineend = KinematicsUtility.closestPointOnPlane(plane, lineend);
                     let linestart = incomponent.transformlocalPointToWorldSpace(incomponent._center);
@@ -703,7 +730,7 @@ export class KinematicsComponentBehaviorPivotSystem {
             pivotafter = KinematicsUtility.closestPointOnPlane(plane, pivotafter);
         }
 
-        if (component._behavior._isPrismatic) {
+        if (component._behavior._pivotType == pivotSystemType.centerPrismatic) {
             let delta = Communicator.Point3.subtract(pivotafter, pivotbefore).length();
             let limitdelta = delta;
             component._translate(delta);
@@ -842,41 +869,6 @@ export class KinematicsComponentBehaviorPivotSystem {
         this._helicalFactor = helicalFactor;
     }
 
-
-    /**
-        * Retrieves if component is slide rotation component
-        * @return {bool} Is Slide Pivot
-        */
-    getIsRevoluteSlide() {
-        return this._isRevoluteSlide;
-    }
-
-    /**
-       * Sets if component is slide rotation component
-       * @param  {bool} isRevoluteSlide - Is component slide rotation
-       */
-    setIsRevoluteSlide(isRevoluteSlide) {
-        this._isRevoluteSlide = isRevoluteSlide;
-    }
-
-    
-
-    /**
-        * Retrieves if component is prismatc
-        * @return {bool} Is prismatc Pivot
-        */
-     getIsPrismatic() {
-        return this._isPrismatic;
-    }
-
-    /**
-       * Sets if component is prismatc
-       * @param  {bool} isRevoluteSlide - Is component prismatc
-       */
-
-    setIsPrismatic(isPrismatic) {
-        this._isPrismatic = isPrismatic;
-    }
 
 
     /**

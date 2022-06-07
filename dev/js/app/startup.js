@@ -286,6 +286,12 @@ function createUILayout() {
                         loadIKData("dataTemp/palette.json");
                     },
                 },
+                {
+                    name: 'Walker',
+                    fun: async function () {
+                        loadIKData("dataTemp/walker.json");
+                    },
+                },
 
 
             ]

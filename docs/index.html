@@ -72,12 +72,14 @@ In a typical CAD model the product structure is often flat or unrelated to the k
 <p>Add dist/kinematicsManager.min.js to your project.</p>
 <pre class="prettyprint source"><code>    &lt;script src=&quot;./js/kinematicsManager.min.js&quot;>&lt;/script>
 </code></pre>
+<p>The library has been tested against HOOPS Communicator 2022 SP1 but should run with earlier or later versions of HOOPS Communicator.</p>
 <h2>Documentation</h2>
 <p>Live Documentation can be found here: <a href="https://techsoft3d.github.io/KinematicsToolkit/">https://techsoft3d.github.io/KinematicsToolkit/</a></p>
 <h2>Using the Editor</h2>
 <p><strong>The Editor is currently in an experimetal state. Work on docs is in pogress.</strong></p>
 <p>Here is how to start the editor locally when using Visual Studio Code Live Server plugin:</p>
 <p><a href="http:%5C/%5C/127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs">http://127.0.0.1:5500/dev/viewer.html?scs=models/microengine.scs</a></p>
+<p>The editor is using HC2022 SP1.</p>
 <h2>Demo</h2>
 <p><a href="https://3dsandbox.techsoft3d.com/?snippet=5hnMVX2elhDdheTfnZSmKJv8">Microengine Example</a></p>
 <p><a href="https://3dsandbox.techsoft3d.com/?snippet=2m1NQ7i09KiyT4PB9wLjKbv4">V12 Engine Example</a></p>
@@ -304,7 +306,7 @@ let hierachy = await KT.KinematicsManager.applyToModel(templateId);
 
 </code></pre>
 <h2>Acknowledgments</h2>
-<h3>Engine:</h3>
+<h3>KinematicsToolkit:</h3>
 <ul>
 <li><a href="https://animejs.com/">Anime.js</a></li>
 </ul>
@@ -324,13 +326,13 @@ let hierachy = await KT.KinematicsManager.applyToModel(templateId);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsAnimationGroup.html">KinematicsAnimationGroup</a></li><li><a href="KinematicsBelt.html">KinematicsBelt</a></li><li><a href="KinematicsComponent.html">KinematicsComponent</a></li><li><a href="KinematicsComponentBehaviorFixed.html">KinematicsComponentBehaviorFixed</a></li><li><a href="KinematicsComponentBehaviorHelical.html">KinematicsComponentBehaviorHelical</a></li><li><a href="KinematicsComponentBehaviorMapped.html">KinematicsComponentBehaviorMapped</a></li><li><a href="KinematicsComponentBehaviorMate.html">KinematicsComponentBehaviorMate</a></li><li><a href="KinematicsComponentBehaviorPistonController.html">KinematicsComponentBehaviorPistonController</a></li><li><a href="KinematicsComponentBehaviorPivotSystem.html">KinematicsComponentBehaviorPivotSystem</a></li><li><a href="KinematicsComponentBehaviorPrismatic.html">KinematicsComponentBehaviorPrismatic</a></li><li><a href="KinematicsComponentBehaviorPrismaticAggregate.html">KinematicsComponentBehaviorPrismaticAggregate</a></li><li><a href="KinematicsComponentBehaviorPrismaticTriangle.html">KinematicsComponentBehaviorPrismaticTriangle</a></li><li><a href="KinematicsComponentBehaviorRevolute.html">KinematicsComponentBehaviorRevolute</a></li><li><a href="KinematicsComponentBehaviorRevoluteSlide.html">KinematicsComponentBehaviorRevoluteSlide</a></li><li><a href="KinematicsComponentBehaviorTarget.html">KinematicsComponentBehaviorTarget</a></li><li><a href="KinematicsHierachy.html">KinematicsHierachy</a></li><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#componentType">componentType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="KinematicsAnimationGroup.html">KinematicsAnimationGroup</a></li><li><a href="KinematicsBelt.html">KinematicsBelt</a></li><li><a href="KinematicsComponent.html">KinematicsComponent</a></li><li><a href="KinematicsComponentBehaviorFixed.html">KinematicsComponentBehaviorFixed</a></li><li><a href="KinematicsComponentBehaviorHelical.html">KinematicsComponentBehaviorHelical</a></li><li><a href="KinematicsComponentBehaviorMapped.html">KinematicsComponentBehaviorMapped</a></li><li><a href="KinematicsComponentBehaviorMate.html">KinematicsComponentBehaviorMate</a></li><li><a href="KinematicsComponentBehaviorPistonController.html">KinematicsComponentBehaviorPistonController</a></li><li><a href="KinematicsComponentBehaviorPivotSystem.html">KinematicsComponentBehaviorPivotSystem</a></li><li><a href="KinematicsComponentBehaviorPrismatic.html">KinematicsComponentBehaviorPrismatic</a></li><li><a href="KinematicsComponentBehaviorPrismaticAggregate.html">KinematicsComponentBehaviorPrismaticAggregate</a></li><li><a href="KinematicsComponentBehaviorPrismaticTriangle.html">KinematicsComponentBehaviorPrismaticTriangle</a></li><li><a href="KinematicsComponentBehaviorRevolute.html">KinematicsComponentBehaviorRevolute</a></li><li><a href="KinematicsComponentBehaviorRevoluteSlide.html">KinematicsComponentBehaviorRevoluteSlide</a></li><li><a href="KinematicsComponentBehaviorTarget.html">KinematicsComponentBehaviorTarget</a></li><li><a href="KinematicsHierachy.html">KinematicsHierachy</a></li><li><a href="KinematicsManager.html">KinematicsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#componentType">componentType</a></li><li><a href="global.html#pivotSystemType">pivotSystemType</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu May 19 2022 10:08:04 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon May 23 2022 08:54:45 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

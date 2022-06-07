@@ -140,6 +140,29 @@ function generateMappedComponentTypeSelect(component) {
     return html;
 }   
 
+
+
+function addComponentPivotTypeToSelect(i,component)
+{
+    if (i == component.getBehavior().getPivotType())
+    return  '<option selected value="' + string_of_enum(KT.pivotSystemType,i) + '">' + string_of_enum(KT.pivotSystemType,i) + '</option>\n';
+else
+    return '<option value="' + string_of_enum(KT.pivotSystemType,i) + '">' + string_of_enum(KT.pivotSystemType,i) + '</option>\n';
+}
+
+function generateComponentPivotTypeSelect(component) {
+    var html = '<select id="componentpivottype" class="form-select" style="font-size:11px" value="">\n';
+
+    for (let i = 0; i < 6; i++) {
+        html+=addComponentPivotTypeToSelect(i,component);
+    }
+        
+    html += '</select>';
+    return html;
+}   
+
+
+
 function generateExtraComponent1Select(component) {
     var html = '<select id="fixedcomponentselect" class="form-select" style="font-size:11px" value="">\n';
     html += '<option selected value="' + "EMPTY" + '">' + "EMPTY" + '</option>\n';
@@ -363,33 +386,34 @@ function generateComponentPropertiesData(id)
     }    
     if (component.getType() == KT.componentType.pivotSystem)
     {
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
-        html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
-        html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Componet:</label></div>';
-        html += '<div class="col">' + generateMappedPivotSystemSelect(component) + '</div></div>';
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
-        html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
+        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Pivot Type:</label></div>';
+        html += '<div class="col">' + generateComponentPivotTypeSelect(component) + '</div></div>';
 
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
-        html += '<div class="col">';
-        html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Pivot 2</button>';
-        html += '</div></div>';
+        if (component.getBehavior().getPivotType() != KT.pivotSystemType.centerRot && component.getBehavior().getPivotType() != KT.pivotSystemType.centerPrismatic)
+        {
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 1:</label></div>';
+            html += '<div class="col">' + generateExtraComponent1Select(component) + '</div></div>';
 
+            if (component.getBehavior().getPivotType() == KT.pivotSystemType.connector)
+            {
+                html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Component 2:</label></div>';
+                html += '<div class="col">' + generateExtraComponent2Select(component) + '</div></div>';
+            }
+
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Params:</label></div>';
+            html += '<div class="col">';
+            html += '<button type="button" class="btn btn-primary btn-sm ms-1 mt-1" style = "font-size:11px;margin-bottom:3px;' + (component.getBehavior().getExtraPivot1() ? "background:red":"") + '" onclick="updateConnectorPivot(' + id + ')">Pivot 2</button>';
+            html += '</div></div>';            
+        }
+        else
+        {
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Mapped Componet:</label></div>';
+            html += '<div class="col">' + generateMappedPivotSystemSelect(component) + '</div></div>';
+            html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Factor:</label></div>';
         
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Prismatic:</label></div><div class="col">';
-        if (component.getBehavior().getIsPrismatic())
-            html += '<input type="checkbox"  id="isPrismatic" checked>';
-        else
-            html += '<input type="checkbox" id="isPrismatic">';
-        html += '</div></div>';
+            html += '<div class="col"><input id="helicalfactor" style="font-size:11px;background:none;font-weight:bold;position:relative;width:50px;"value="' +  component.getBehavior().getHelicalFactor() + '"></div></div>';
+        }
 
-        html += '<div class="row"><div class="col"><label class="form-label" style="font-size:11px">Revolute Slide:</label></div><div class="col">';
-        if (component.getBehavior().getIsRevoluteSlide())
-            html += '<input type="checkbox"  id="isRevoluteSlide" checked>';
-        else
-            html += '<input type="checkbox" id="isRevoluteSlide">';
         html += '</div>';
     }    
     if (component.getType() == KT.componentType.revoluteSlide)
@@ -881,30 +905,33 @@ function updateComponent(j){
         component.getBehavior().setExtraComponent2(variablecomponent);
     }
     
-    if (component.getType() == KT.componentType.pivotSystem && $("#fixedcomponentselect")[0] != undefined && $("#variablecomponentselect")[0] != undefined)
+    if (component.getType() == KT.componentType.pivotSystem)
     {
-        let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
-        let fixedcomponent = currentHierachy.getComponentById(id);        
-        component.getBehavior().setExtraComponent1(fixedcomponent);
+        let text = $("#componentpivottype")[0].value;
+        component.getBehavior().setPivotType(KT.pivotSystemType[text]);
 
-        id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
-        let variablecomponent = currentHierachy.getComponentById(id);        
-        component.getBehavior().setExtraComponent2(variablecomponent);
+        if ($("#fixedcomponentselect")[0] != undefined)
+        {
+            let id = parseInt($("#fixedcomponentselect")[0].value.split(":")[0]);
+            let fixedcomponent = currentHierachy.getComponentById(id);        
+            component.getBehavior().setExtraComponent1(fixedcomponent);
+        }
 
-        id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
-        component.getBehavior().setMappedComponent(currentHierachy.getComponentById(id));
+        if ($("#variablecomponentselect")[0] != undefined)
+        {
+            id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
+            let variablecomponent = currentHierachy.getComponentById(id);        
+            component.getBehavior().setExtraComponent2(variablecomponent);
+        }
 
-        component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        if ($("#mappedcomponentselect")[0] != undefined)
+        {
+            id = parseInt($("#mappedcomponentselect")[0].value.split(":")[0]);               
+            component.getBehavior().setMappedComponent(currentHierachy.getComponentById(id));
+
+            component.getBehavior().setHelicalFactor(parseFloat($("#helicalfactor")[0].value));
+        }
                         
-        if ($("#isRevoluteSlide").is(":checked"))
-            component.getBehavior().setIsRevoluteSlide(true);
-        else
-            component.getBehavior().setIsRevoluteSlide(false);
-
-        if ($("#isPrismatic").is(":checked"))
-            component.getBehavior().setIsPrismatic(true);
-        else
-            component.getBehavior().setIsPrismatic(false);            
     }
 
     if (component.getType() == KT.componentType.revoluteSlide && $("#fixedcomponentselect")[0] != undefined)

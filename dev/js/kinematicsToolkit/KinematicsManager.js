@@ -24,7 +24,7 @@ export class KinematicsManager {
         KinematicsManager._animationGroups = [];
         KinematicsManager.handlePlacementOperator = null;
         KinematicsManager.componentMoveOperator = null;
-        KinematicsManager._version = "0.9.2";
+        KinematicsManager._version = "0.9.3";
         KinematicsManager._rootNode = viewer.model.createNode(viewer.model.getRootNode(), "KT_ROOT");
     }
 

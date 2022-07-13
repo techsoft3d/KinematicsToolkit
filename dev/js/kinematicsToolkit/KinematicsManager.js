@@ -31,7 +31,7 @@ export class KinematicsManager {
     
     /**
     * Retrieves Toolkit Version
-    * @return {hash} Hierachy Template Array
+    *  @return {string} Toolkit Version
     */
     static getVersion() {
         return KinematicsManager._version;

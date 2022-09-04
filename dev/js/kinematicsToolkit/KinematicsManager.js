@@ -300,8 +300,9 @@ export class KinematicsManager {
     */    
     static stopAnimation(component) {
         for (let i = 0; i < KinematicsManager._animations.length; i++) {
-            if (component == undefined || KinematicsManager._animations[i].getComponent() == component)
+            if (component == undefined || KinematicsManager._animations[i].getComponent() == component) {
                 KinematicsManager._animations[i].setDone(true);
+            }
         }
 
     }
@@ -314,8 +315,9 @@ export class KinematicsManager {
     */      
     static changeAnimationSpeed(component, newspeed) {
         for (let i = 0; i < KinematicsManager._animations.length; i++) {
-            if (KinematicsManager._animations[i].component == component)
+            if (component == undefined || KinematicsManager._animations[i].getComponent() == component) {
                 KinematicsManager._animations[i].changeAnimationSpeed(newspeed);
+            }
         }
     }
 

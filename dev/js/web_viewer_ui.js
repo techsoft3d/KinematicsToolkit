@@ -1,6 +1,6 @@
 var __extends = this && this.__extends || function() {
-    var f = function(h, m) {
-        f = Object.setPrototypeOf || {
+    var e = function(f, l) {
+        e = Object.setPrototypeOf || {
             __proto__: []
         }
         instanceof Array && function(e, c) {
@@ -8,50 +8,50 @@ var __extends = this && this.__extends || function() {
         } || function(e, c) {
             for (var a in c) c.hasOwnProperty(a) && (e[a] = c[a])
         };
-        return f(h, m)
+        return e(f, l)
     };
-    return function(h, m) {
-        function e() {
-            this.constructor = h
+    return function(f, l) {
+        function h() {
+            this.constructor = f
         }
-        f(h, m);
-        h.prototype = null === m ? Object.create(m) : (e.prototype = m.prototype, new e)
+        e(f, l);
+        f.prototype = null === l ? Object.create(l) : (h.prototype = l.prototype, new h)
     }
 }(),
-__awaiter = this && this.__awaiter || function(f, h, m, e) {
-    return new(m || (m = Promise))(function(c, a) {
+__awaiter = this && this.__awaiter || function(e, f, l, h) {
+    return new(l || (l = Promise))(function(c, a) {
         function b(d) {
             try {
-                g(e.next(d))
-            } catch (l) {
-                a(l)
+                g(h.next(d))
+            } catch (k) {
+                a(k)
             }
         }
 
         function d(d) {
             try {
-                g(e["throw"](d))
-            } catch (l) {
-                a(l)
+                g(h["throw"](d))
+            } catch (k) {
+                a(k)
             }
         }
 
         function g(a) {
-            a.done ? c(a.value) : (new m(function(d) {
+            a.done ? c(a.value) : (new l(function(d) {
                 d(a.value)
             })).then(b, d)
         }
-        g((e = e.apply(f, h || [])).next())
+        g((h = h.apply(e, f || [])).next())
     })
 },
-__generator = this && this.__generator || function(f, h) {
-    function m(d) {
+__generator = this && this.__generator || function(e, f) {
+    function l(d) {
         return function(b) {
-            return e([d, b])
+            return h([d, b])
         }
     }
 
-    function e(g) {
+    function h(g) {
         if (a) throw new TypeError("Generator is already executing.");
         for (; c;) try {
             if (a = 1, b && (d = g[0] & 2 ? b["return"] : g[0] ? b["throw"] || ((d = b["return"]) && d.call(b), 0) : b.next) && !(d = d.call(b, g[1])).done) return d;
@@ -90,9 +90,9 @@ __generator = this && this.__generator || function(f, h) {
                         continue
                     }
             }
-            g = h.call(f, c)
-        } catch (l) {
-            g = [6, l], b = 0
+            g = f.call(e, c)
+        } catch (k) {
+            g = [6, k], b = 0
         } finally {
             a = d = 0
         }
@@ -114,16 +114,16 @@ __generator = this && this.__generator || function(f, h) {
         },
         a, b, d, g;
     return g = {
-        next: m(0),
-        "throw": m(1),
-        "return": m(2)
+        next: l(0),
+        "throw": l(1),
+        "return": l(2)
     }, "function" === typeof Symbol && (g[Symbol.iterator] = function() {
         return this
     }), g
 },
 Example;
-(function(f) {
-var h = function(e) {
+(function(e) {
+var f = function(e) {
     function c(a, b, d, g) {
         var c = e.call(this) || this;
         c._leaderLine = new Communicator.Markup.Shape.Line;
@@ -188,8 +188,8 @@ var h = function(e) {
     };
     return c
 }(Communicator.Markup.MarkupItem);
-f.AnnotationMarkup = h;
-var m = function() {
+e.AnnotationMarkup = f;
+var l = function() {
     function e(c, a) {
         this._annotationMap = {};
         this._viewer = c;
@@ -272,8 +272,8 @@ var m = function() {
     };
     return e
 }();
-f.AnnotationRegistry = m;
-m = function() {
+e.AnnotationRegistry = l;
+l = function() {
     function e(c, a) {
         this._previousNodeId = this._activeMarkup = this._previousAnchorPlaneDragPoint = null;
         this._viewer = c;
@@ -281,7 +281,7 @@ m = function() {
     }
     e.prototype.onMouseDown = function(c) {
         return __awaiter(this, void 0, void 0, function() {
-            var a, b, d, g, k, l;
+            var a, b, d, g, m, k;
             return __generator(this, function(e) {
                 switch (e.label) {
                     case 0:
@@ -291,7 +291,7 @@ m = function() {
                             e.sent();
                         if (null !== a && 0 !== a.overlayIndex()) return [2];
                         b = c.getPosition();
-                        this._selectAnnotation(b) ? c.setHandled(!0) : null !== a && a.isNodeEntitySelection() && (d = a.getNodeId(), g = a.getPosition(), k = new h(this._viewer, d, g, this._viewer.model.getNodeName(d) + " Connector"), l = this._viewer.markupManager.registerMarkup(k), this._annotationRegistry.addAnnotation(l, k), this._startDraggingAnnotation(k, b), c.setHandled(!0));
+                        this._selectAnnotation(b) ? c.setHandled(!0) : null !== a && a.isNodeEntitySelection() && (d = a.getNodeId(), g = a.getPosition(), m = new f(this._viewer, d, g, this._viewer.model.getNodeName(d) + " Connector"), k = this._viewer.markupManager.registerMarkup(m), this._annotationRegistry.addAnnotation(k, m), this._startDraggingAnnotation(m, b), c.setHandled(!0));
                         return [2]
                 }
             })
@@ -300,9 +300,9 @@ m = function() {
     e.prototype.onMouseMove = function(c) {
         return __awaiter(this, void 0, void 0, function() {
             var a,
-                b, d, g, k;
-            return __generator(this, function(l) {
-                switch (l.label) {
+                b, d, g, m;
+            return __generator(this, function(k) {
+                switch (k.label) {
                     case 0:
                         if (null === this._activeMarkup) return [3, 1];
                         a = this._getDragPointOnAnchorPlane(c.getPosition());
@@ -319,7 +319,7 @@ m = function() {
                     case 1:
                         return [4, this._viewer.view.pickFromPoint(c.getPosition(), new Communicator.PickConfig)];
                     case 2:
-                        g = l.sent(), k = g.getNodeId(), k !== this._previousNodeId && (null != this._previousNodeId && this._viewer.model.setNodesHighlighted([this._previousNodeId], !1), null != k && this._viewer.model.setNodesHighlighted([k], !0)), this._previousNodeId = k, l.label = 3;
+                        g = k.sent(), m = g.getNodeId(), m !== this._previousNodeId && (null != this._previousNodeId && this._viewer.model.setNodesHighlighted([this._previousNodeId], !1), null != m && this._viewer.model.setNodesHighlighted([m], !0)), this._previousNodeId = m, k.label = 3;
                     case 3:
                         return [2]
                 }
@@ -356,13 +356,13 @@ m = function() {
     };
     return e
 }();
-f.AnnotationOperator = m
+e.AnnotationOperator = l
 })(Example || (Example = {}));
 var Communicator;
+(function(e) {
 (function(f) {
-(function(h) {
-    (function(m) {
-        var e = function() {
+    (function(l) {
+        var h = function() {
             function a(b, d) {
                 this.action = b;
                 this.element = d
@@ -381,19 +381,19 @@ var Communicator;
             };
             return a
         }();
-        m.ContextMenuItem = e;
+        l.ContextMenuItem = h;
         var c = function() {
-            function a(b, d, a, c, l) {
+            function a(b, d, a, c, k) {
                 var g = this;
                 this._activeType = this._activeLayerName = this._activeItemId =
                     null;
                 this._separatorCount = 0;
                 this._position = null;
-                this._modifiers = f.KeyModifiers.None;
+                this._modifiers = e.KeyModifiers.None;
                 this._viewer = a;
                 this._containerId = d;
                 this._isolateZoomHelper = c;
-                this._colorPicker = l;
+                this._colorPicker = k;
                 this._menuElement = this._createMenuElement(b);
                 this._contextLayer = this._createContextLayer();
                 this._initElements();
@@ -427,18 +427,18 @@ var Communicator;
             };
             a.prototype._isColorSet = function(b) {
                 return __awaiter(this, void 0, void 0, function() {
-                    var d, a, c, l;
+                    var d, a, c, k;
                     return __generator(this, function(g) {
                         switch (g.label) {
                             case 0:
                                 d = this._colorPicker.getColor(), a = !0, c =
                                     0, g.label = 1;
                             case 1:
-                                return c < b.length ? [4, this._viewer.model.getNodeColorMap(b[c], f.ElementType.Faces)] : [3, 4];
+                                return c < b.length ? [4, this._viewer.model.getNodeColorMap(b[c], e.ElementType.Faces)] : [3, 4];
                             case 2:
-                                l = g.sent();
-                                if (0 === l.size) return [2, !1];
-                                l.forEach(function(b) {
+                                k = g.sent();
+                                if (0 === k.size) return [2, !1];
+                                k.forEach(function(b) {
                                     b.equals(d) || (a = !1)
                                 });
                                 g.label = 3;
@@ -452,14 +452,14 @@ var Communicator;
             };
             a.prototype._updateMenuItems = function() {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, d, a, c, l, e, h;
+                    var b, d, a, c, k, h, f;
                     return __generator(this, function(g) {
                         switch (g.label) {
                             case 0:
                                 return b = this.getContextItemIds(!0, !0, !1), d = this._isMenuItemEnabled(), a = this._isMenuItemVisible(),
-                                    this._contextItemMap.visibility.setText(a ? "Hide" : "Show"), this._contextItemMap.visibility.setEnabled(d), this._contextItemMap.isolate.setEnabled(d), this._contextItemMap.zoom.setEnabled(d), this._contextItemMap.transparent.setEnabled(d), l = (c = this._contextItemMap.setColor).setText, [4, this._isColorSet(b)];
+                                    this._contextItemMap.visibility.setText(a ? "Hide" : "Show"), this._contextItemMap.visibility.setEnabled(d), this._contextItemMap.isolate.setEnabled(d), this._contextItemMap.zoom.setEnabled(d), this._contextItemMap.transparent.setEnabled(d), k = (c = this._contextItemMap.setColor).setText, [4, this._isColorSet(b)];
                             case 1:
-                                return l.apply(c, [(g.sent() ? "Uns" : "S") + "et Color"]), (e = this._viewer.operatorManager.getOperator(f.OperatorId.Handle)) && e.isEnabled && d ? (h = 0 < b.length && e.isEnabled(), this._contextItemMap.handles.setEnabled(h)) :
+                                return k.apply(c, [(g.sent() ? "Uns" : "S") + "et Color"]), (h = this._viewer.operatorManager.getOperator(e.OperatorId.Handle)) && h.isEnabled && d ? (f = 0 < b.length && h.isEnabled(), this._contextItemMap.handles.setEnabled(f)) :
                                     this._contextItemMap.handles.setEnabled(!1), void 0 !== this._contextItemMap.meshlevel0 && this._contextItemMap.meshlevel0.setEnabled(d), void 0 !== this._contextItemMap.meshlevel1 && this._contextItemMap.meshlevel1.setEnabled(d), void 0 !== this._contextItemMap.meshlevel2 && this._contextItemMap.meshlevel2.setEnabled(d), [2]
                         }
                     })
@@ -470,7 +470,7 @@ var Communicator;
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return this._activeLayerName = h.LayersTree.getLayerName(b),
+                                return this._activeLayerName = f.LayersTree.getLayerName(b),
                                     [4, this._updateMenuItems()];
                             case 1:
                                 return d.sent(), [2]
@@ -503,13 +503,13 @@ var Communicator;
                     })
                 })
             };
-            a.prototype.showElements = function(b,fromModelBrowser) {
+            a.prototype.showElements = function(b,fromModelBrowser) {  //3DSANDBOX CHANGES
                 this._viewer.setContextMenuStatus(!0);
                 var d = this._viewer.view.getCanvasSize(),
                     a = $(this._menuElement),
                     c = a.outerWidth(),
-                    l = a.outerHeight();
-
+                    k = a.outerHeight();
+                    
                     var off;
                     if (fromModelBrowser != undefined)
                         var off = $("#content").offset();
@@ -518,7 +518,7 @@ var Communicator;
                         off = {left:0,top:0};
                     }
 
-                void 0 !== l && void 0 !== c && (l > d.y && a.addClass("small"), a = b.y, b = b.x, a + l > d.y && (a = d.y - l - 1), b + c > d.x && (b = d.x - c - 1), $(this._menuElement).css({
+                void 0 !== k && void 0 !== c && (k > d.y && a.addClass("small"), a = b.y, b = b.x, a + k > d.y && (a = d.y - k - 1), b + c > d.x && (b = d.x - c - 1), $(this._menuElement).css({
                     left: (b-off.left) + "px",
                     top: (a-off.top) + "px",
                     display: "block"
@@ -613,7 +613,7 @@ var Communicator;
                 this._contextItemMap = {};
                 var c = function(b) {
                     return b.every(function(b) {
-                        return d.hasEffectiveGenericType(b, f.StaticGenericType.IfcSpace)
+                        return d.hasEffectiveGenericType(b, e.StaticGenericType.IfcSpace)
                     })
                 };
                 this.appendItem("isolate", "Isolate", function() {
@@ -723,9 +723,9 @@ var Communicator;
                                 switch (g.label) {
                                     case 0:
                                         if (!this._isMenuItemExecutable()) return [3, 2];
-                                        d = a.getOperator(f.OperatorId.Handle);
+                                        d = a.getOperator(e.OperatorId.Handle);
                                         b = this.getContextItemIds(!0, !0, !1);
-                                        return 0 < b.length ? [4, d.addHandles(b, this._modifiers === f.KeyModifiers.Shift ? null : this._position)] : [3, 2];
+                                        return 0 < b.length ? [4, d.addHandles(b, this._modifiers === e.KeyModifiers.Shift ? null : this._position)] : [3, 2];
                                     case 1:
                                         g.sent(), g.label = 2;
                                     case 2:
@@ -741,7 +741,7 @@ var Communicator;
                             switch (g.label) {
                                 case 0:
                                     return b =
-                                        a.getOperator(f.OperatorId.Handle), [4, b.removeHandles()];
+                                        a.getOperator(e.OperatorId.Handle), [4, b.removeHandles()];
                                 case 1:
                                     return g.sent(), [4, d.reset()];
                                 case 2:
@@ -752,8 +752,8 @@ var Communicator;
                 });
                 if (this._viewer.getCreationParameters().hasOwnProperty("model")) {
                     this.appendSeparator();
-                    for (var l = function(a) {
-                            e.appendItem("meshlevel" + a, "Mesh Level " + a, function() {
+                    for (var k = function(a) {
+                            h.appendItem("meshlevel" + a, "Mesh Level " + a, function() {
                                 return __awaiter(b, void 0, void 0, function() {
                                     return __generator(this, function(g) {
                                         b._isMenuItemExecutable() && d.setMeshLevel(b.getContextItemIds(!0,
@@ -762,7 +762,7 @@ var Communicator;
                                     })
                                 })
                             })
-                        }, e = this, h = 0; 3 > h; ++h) l(h)
+                        }, h = this, f = 0; 3 > f; ++f) k(f)
                 }
                 this.appendSeparator();
                 this.appendItem("showall", "Show all", function() {
@@ -782,30 +782,30 @@ var Communicator;
                 void 0 === a && (a = !0);
                 var g = this._viewer.selectionManager,
                     c = this._viewer.model,
-                    e = c.getAbsoluteRootNode(),
-                    h = [];
+                    h = c.getAbsoluteRootNode(),
+                    f = [];
                 if (b) {
                     b = 0;
-                    for (var q = g.getResults(); b < q.length; b++) {
-                        var m =
-                            q[b].getNodeId();
-                        c.isNodeLoaded(m) && (a || !a && m !== e) && h.push(m)
+                    for (var l = g.getResults(); b < l.length; b++) {
+                        var n =
+                            l[b].getNodeId();
+                        c.isNodeLoaded(n) && (a || !a && n !== h) && f.push(n)
                     }
                 }
                 if (null !== this._activeLayerName && (c = this._viewer.model.getLayerIdsFromName(this._activeLayerName), null !== c))
                     for (b = 0; b < c.length; b++)
-                        if (m = this._viewer.model.getNodesFromLayer(c[b]), null !== m)
-                            for (q = 0; q < m.length; q++) {
-                                var p = m[q],
-                                    r = f.Selection.SelectionItem.create(p);
-                                g.contains(r) || h.push(p)
+                        if (n = this._viewer.model.getNodesFromLayer(c[b]), null !== n)
+                            for (l = 0; l < n.length; l++) {
+                                var q = n[l],
+                                    t = e.Selection.SelectionItem.create(q);
+                                g.contains(t) || f.push(q)
                             }
-                null !== this._activeType && (m = this._viewer.model.getNodesByGenericType(this._activeType), null !== m && m.forEach(function(d) {
-                    var b = f.Selection.SelectionItem.create(d);
-                    g.contains(b) || h.push(d)
+                null !== this._activeType && (n = this._viewer.model.getNodesByGenericType(this._activeType), null !== n && n.forEach(function(d) {
+                    var b = e.Selection.SelectionItem.create(d);
+                    g.contains(b) || f.push(d)
                 }));
-                null !== this._activeItemId && (r = f.Selection.SelectionItem.create(this._activeItemId), c = null !== g.containsParent(r), b = -1 !== h.indexOf(this._activeItemId), !d || !a && (a || this._activeItemId === e || 0 !== h.length && (b || c)) || h.push(this._activeItemId));
-                return h
+                null !== this._activeItemId && (t = e.Selection.SelectionItem.create(this._activeItemId), c = null !== g.containsParent(t), b = -1 !== f.indexOf(this._activeItemId), !d || !a && (a || this._activeItemId === h || 0 !== f.length && (b || c)) || f.push(this._activeItemId));
+                return f
             };
             a.prototype.appendItem = function(b, d, a) {
                 var g = document.createElement("div");
@@ -813,7 +813,7 @@ var Communicator;
                 g.innerHTML = d;
                 g.id = b;
                 this._menuElement.appendChild(g);
-                d = new e(a, g);
+                d = new h(a, g);
                 return this._contextItemMap[b] = d
             };
             a.prototype.appendSeparator =
@@ -854,236 +854,713 @@ var Communicator;
             };
             return a
         }();
-        m.ContextMenu = c
-    })(h.Context || (h.Context = {}))
-})(f.Ui || (f.Ui = {}))
+        l.ContextMenu = c
+    })(f.Context || (f.Context = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
+(function(e) {
+    (function(e) {
+        var f = function() {
+            return function() {
+                this.referenceGeometry = this.plane = null;
+                this.status = 0;
+                this.updateReferenceGeometry = !1
+            }
+        }();
+        e.Info = f
+    })(e.CuttingPlane || (e.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
+(function(e) {
+    (function(e) {
+        (function(f) {
+            var c = function() {
+                function a() {
+                    this._planeInfoMap = new Map
+                }
+                Object.defineProperty(a.prototype, "X", {
+                    get: function() {
+                        return this.get(0)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "Y", {
+                    get: function() {
+                        return this.get(1)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "Z", {
+                    get: function() {
+                        return this.get(2)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "Face", {
+                    get: function() {
+                        return this.get(3)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                a.prototype.isHidden = function(b) {
+                    return 0 === this.get(b).status
+                };
+                a.prototype.get = function(b) {
+                    var d = this._planeInfoMap.get(b);
+                    void 0 === d && (d = new e.Info, this._planeInfoMap.set(b, d));
+                    return d
+                };
+                a.prototype.reset = function(b) {
+                    b = this.get(b);
+                    b.plane = null;
+                    b.referenceGeometry = null
+                };
+                a.prototype.delete = function(b) {
+                    this._planeInfoMap.delete(b)
+                };
+                a.prototype.clear = function() {
+                    this._planeInfoMap.clear()
+                };
+                a.prototype.update = function() {
+                    this._planeInfoMap.forEach(function(b) {
+                        b.updateReferenceGeometry = !0
+                    })
+                };
+                a.getCuttingStatus = function(b, d) {
+                    return 0 <= d.normal.x && 0 <= d.normal.y && 0 <= d.normal.z || 3 === b ? 1 : 2
+                };
+                a.getPlaneSectionIndex = function(b) {
+                    var d = Math.abs(b.normal.x),
+                        a = Math.abs(b.normal.y);
+                    b = Math.abs(b.normal.z);
+                    return 1 === d && 0 === a && 0 === b ? 0 : 0 === d && 1 === a && 0 === b ? 1 : 0 === d && 0 === a && 1 === b ? 2 : 3
+                };
+                return a
+            }();
+            f.PlaneInfoManager = c
+        })(e.ControllerUtils || (e.ControllerUtils = {}))
+    })(e.CuttingPlane || (e.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function() {
-        return function() {
-            this.referenceGeometry = this.plane = null;
-            this.status = 0;
-            this.updateReferenceGeometry = !1
-        }
-    }();
-    h.CuttingPlaneInfo = m;
-    var e = function() {
-        function c(a) {
-            var b = this;
-            this._cuttingSections = [];
-            this._modelBounding = new f.Box;
-            this._planeInfo = new Map;
-            this._useIndividualCuttingSections = this._showReferenceGeometry = !0;
-            this._boundingBoxUpdate = !1;
-            this._faceSelection = null;
-            this._initSectionCalled = !1;
-            this._pendingFuncs = {};
-            this._viewer = a;
-            a = function() {
-                return __awaiter(b,
-                    void 0, void 0,
-                    function() {
-                        return __generator(this, function(d) {
-                            switch (d.label) {
+    (function(f) {
+        (function(f) {
+            var c = function() {
+                function a() {
+                    this._useIndividualCuttingSections = !0;
+                    this._cuttingManager = null
+                }
+                Object.defineProperty(a.prototype, "useIndividualCuttingSections", {
+                    get: function() {
+                        return this._useIndividualCuttingSections
+                    },
+                    set: function(b) {
+                        this._useIndividualCuttingSections = b
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "X", {
+                    get: function() {
+                        if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                        return this._cuttingManager.getCuttingSection(0)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "Y", {
+                    get: function() {
+                        if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                        return this._cuttingManager.getCuttingSection(1)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "Z", {
+                    get: function() {
+                        if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                        return this._cuttingManager.getCuttingSection(2)
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype,
+                    "Face", {
+                        get: function() {
+                            if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                            return this._cuttingManager.getCuttingSection(3)
+                        },
+                        enumerable: !0,
+                        configurable: !0
+                    });
+                Object.defineProperty(a.prototype, "activeStates", {
+                    get: function() {
+                        return [this.isActive(0), this.isActive(1), this.isActive(2), this.isActive(3)]
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "planes", {
+                    get: function() {
+                        var b = this;
+                        return 1 < this.X.getCount() ? Array(4).slice().map(function(d, a) {
+                            return b.X.getPlane(a)
+                        }) : [this.X, this.Y, this.Z, this.Face].map(function(d) {
+                            return d.getPlane(0)
+                        })
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "referenceGeometry", {
+                    get: function() {
+                        var b = this;
+                        return 1 < this.X.getCount() ? Array(4).slice().map(function(d, a) {
+                            return b.X.getReferenceGeometry(a)
+                        }) : [this.X, this.Y, this.Z, this.Face].map(function(d) {
+                            return d.getReferenceGeometry(0)
+                        })
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                a.prototype.get = function(b) {
+                    if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                    return this._cuttingManager.getCuttingSection(b)
+                };
+                a.prototype.getCount = function() {
+                    return [this.X, this.Y, this.Z, this.Face].reduce(function(b, d) {
+                        return b + d.getCount()
+                    }, 0)
+                };
+                a.prototype.init = function(b) {
+                    this._cuttingManager = b.cuttingManager
+                };
+                a.prototype.isActive = function(b) {
+                    if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                    return this.get(b).isActive()
+                };
+                a.prototype.activate = function(b) {
+                    return __awaiter(this, void 0, void 0, function() {
+                        var d;
+                        return __generator(this, function(a) {
+                            d =
+                                this.get(b);
+                            return 0 < d.getCount() ? [2, d.activate()] : [2]
+                        })
+                    })
+                };
+                a.prototype.activateAll = function(b) {
+                    return __awaiter(this, void 0, void 0, function() {
+                        var d = this;
+                        return __generator(this, function(a) {
+                            switch (a.label) {
                                 case 0:
-                                    return [4, this._updateBoundingBox()];
+                                    return [4, Promise.all([0, 1, 2, 3].map(function(a, g) {
+                                        return !b || b[g] ? d.activate(a) : null
+                                    }).filter(Boolean))];
                                 case 1:
-                                    return d.sent(), [4, this.resetCuttingPlanes()];
-                                case 2:
-                                    return d.sent(), [2]
+                                    return a.sent(), [2]
                             }
                         })
                     })
-            };
-            this._viewer.setCallbacks({
-                assemblyTreeReady: function() {
-                    return __awaiter(b, void 0, void 0, function() {
+                };
+                a.prototype.deactivate = function(b) {
+                    return this.get(this.getCuttingSectionIndex(b)).deactivate()
+                };
+                a.prototype.reset = function() {
+                    this._useIndividualCuttingSections = !0
+                };
+                a.prototype.getCuttingSectionIndex = function(b) {
+                    return this.useIndividualCuttingSections ? b : 0
+                };
+                a.prototype.clear = function(b) {
+                    return __awaiter(this, void 0, void 0, function() {
                         return __generator(this, function(d) {
-                            switch (d.label) {
+                            return [2, this.get(b).clear()]
+                        })
+                    })
+                };
+                a.prototype.clearAll = function() {
+                    return __awaiter(this, void 0, void 0, function() {
+                        var b, d = this;
+                        return __generator(this, function(a) {
+                            switch (a.label) {
                                 case 0:
-                                    return [4, this._initSection()];
+                                    return b = [0, 1, 2, 3].map(function(b) {
+                                        return __awaiter(d, void 0, void 0, function() {
+                                            return __generator(this, function(d) {
+                                                return [2,
+                                                    this.clear(b)
+                                                ]
+                                            })
+                                        })
+                                    }), [4, Promise.all(b)];
                                 case 1:
-                                    return d.sent(), [4, this._updateBoundingBox()];
-                                case 2:
-                                    return d.sent(), [2]
+                                    return a.sent(), [2]
                             }
                         })
                     })
-                },
-                visibilityChanged: function() {
-                    return __awaiter(b,
+                };
+                a.prototype.getPlaneIndex = function(b, d) {
+                    if (this._useIndividualCuttingSections) {
+                        var a = this.get(this.getCuttingSectionIndex(b));
+                        if (a.getPlane(0)) return 0
+                    } else {
+                        a = this.get(0);
+                        for (var c = a.getCount(), k = 0; k < c; k++) {
+                            var e = a.getPlane(k);
+                            if (e && (e.normal.x && 0 === b || e.normal.y && 1 === b || e.normal.z && 2 === b || 3 === b && d && e.normal.equals(d))) return k
+                        }
+                    }
+                    return -1
+                };
+                a.prototype.getPlaneAndGeometry = function(b, d) {
+                    var a = this.get(this.getCuttingSectionIndex(b));
+                    if (0 >= a.getCount()) return {
+                        plane: null,
+                        referenceGeometry: null
+                    };
+                    d = this.getPlaneIndex(b, d);
+                    b = a.getPlane(d);
+                    a = a.getReferenceGeometry(d);
+                    return {
+                        plane: b,
+                        referenceGeometry: a
+                    }
+                };
+                a.prototype.getReferenceGeometry = function(b, d) {
+                    if (!this._cuttingManager) throw Error("Ui.CuttingSectionManager as not been initialized");
+                    switch (b) {
+                        case 0:
+                            var a = e.Axis.X;
+                            break;
+                        case 1:
+                            a = e.Axis.Y;
+                            break;
+                        case 2:
+                            a = e.Axis.Z
+                    }
+                    return void 0 !== a ? this._cuttingManager.createReferenceGeometryFromAxis(a, d) : []
+                };
+                a.prototype.addPlane = function(b, d, a) {
+                    return __awaiter(this,
                         void 0, void 0,
                         function() {
-                            return __generator(this, function(d) {
-                                switch (d.label) {
+                            return __generator(this, function(g) {
+                                switch (g.label) {
                                     case 0:
-                                        return [4, this._updateBoundingBox()];
+                                        return [4, this.get(b).addPlane(d, a)];
                                     case 1:
-                                        return d.sent(), [2]
+                                        return g.sent(), [2]
                                 }
                             })
                         })
-                },
-                hwfParseComplete: function() {
-                    return __awaiter(b, void 0, void 0, function() {
-                        return __generator(this, function(d) {
-                            switch (d.label) {
-                                case 0:
-                                    return [4, this._updateBoundingBox()];
-                                case 1:
-                                    return d.sent(), [2]
-                            }
-                        })
-                    })
-                },
-                firstModelLoaded: a,
-                modelSwitched: a,
-                modelSwitchStart: function() {
-                    return __awaiter(b, void 0, void 0, function() {
-                        return __generator(this, function(d) {
-                            switch (d.label) {
-                                case 0:
-                                    return [4,
-                                        this._clearCuttingSections()
-                                    ];
-                                case 1:
-                                    return d.sent(), [2]
-                            }
-                        })
-                    })
+                };
+                return a
+            }();
+            f.CuttingSectionManager = c
+        })(f.ControllerUtils || (f.ControllerUtils = {}))
+    })(f.CuttingPlane || (f.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
+(function(f) {
+    (function(f) {
+        (function(f) {
+            var c = function() {
+                function a() {
+                    this._modelBounding = new e.Box
                 }
-            })
-        }
-        c.prototype._getCuttingStatus = function(a, b) {
-            return 0 <= b.normal.x && 0 <= b.normal.y && 0 <= b.normal.z || 3 === a ? 1 : 2
-        };
-        c.prototype.onSectionsChanged = function() {
-            return __awaiter(this, void 0, void 0, function() {
-                var a, b, d, g, c, l, e, f, h, m, p, r, v;
-                return __generator(this, function(k) {
-                    switch (k.label) {
-                        case 0:
-                            a = [];
-                            b = [];
-                            d = !0;
-                            g = !1;
-                            c = this._cuttingSections[0];
-                            l = this._cuttingSections[1];
-                            e = this._cuttingSections[2];
-                            f = this._cuttingSections[3];
-                            1 < c.getCount() ? (a[0] = c.getPlane(0),
-                                a[1] = c.getPlane(1), a[2] = c.getPlane(2), a[3] = c.getPlane(3), b[0] = c.getReferenceGeometry(0), b[1] = c.getReferenceGeometry(1), b[2] = c.getReferenceGeometry(2), b[3] = c.getReferenceGeometry(3)) : (g = !0, a[0] = c.getPlane(0), a[1] = l.getPlane(0), a[2] = e.getPlane(0), a[3] = f.getPlane(0), b[0] = c.getReferenceGeometry(0), b[1] = l.getReferenceGeometry(0), b[2] = e.getReferenceGeometry(0), b[3] = f.getReferenceGeometry(0));
-                            (h = null !== a[0] || null !== a[1] || null !== a[2] || null !== a[3]) && null === b[0] && null === b[1] && null === b[2] && null === b[3] && (d = !1);
-                            this._resetCuttingData();
-                            this._showReferenceGeometry = d;
-                            this._useIndividualCuttingSections = g;
-                            for (m = 0; m < a.length; ++m) p = a[m], null !== p && (r = this._getPlaneSectionIndex(p), v = this._ensurePlaneInfo(r), 0 === v.status && (v.status = this._getCuttingStatus(r, p), v.plane = p, v.referenceGeometry = b[m]));
-                            this._viewer.pauseRendering();
-                            return [4, this._clearCuttingSections()];
-                        case 1:
-                            return k.sent(), [4, this._restorePlanes()];
-                        case 2:
-                            return k.sent(), this._viewer.resumeRendering(), [2]
+                Object.defineProperty(a.prototype, "box", {
+                    get: function() {
+                        return this._modelBounding
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                a.prototype.init = function(b) {
+                    return __awaiter(this, void 0, void 0, function() {
+                        var d;
+                        return __generator(this, function(a) {
+                            switch (a.label) {
+                                case 0:
+                                    return d = this, [4, b.model.getModelBounding(!0, !1)];
+                                case 1:
+                                    return d._modelBounding = a.sent(), [2]
+                            }
+                        })
+                    })
+                };
+                a.prototype.update = function(b) {
+                    return __awaiter(this,
+                        void 0, void 0,
+                        function() {
+                            var d, a, c;
+                            return __generator(this, function(g) {
+                                switch (g.label) {
+                                    case 0:
+                                        return [4, b.model.getModelBounding(!0, !1)];
+                                    case 1:
+                                        return d = g.sent(), a = this._modelBounding.min.equalsWithTolerance(d.min, .01), c = this._modelBounding.max.equalsWithTolerance(d.max, .01), a && c ? [2, !1] : (this._modelBounding = d, [2, !0])
+                                }
+                            })
+                        })
+                };
+                return a
+            }();
+            f.BoundingManager = c
+        })(f.ControllerUtils || (f.ControllerUtils = {}))
+    })(f.CuttingPlane || (f.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
+(function(e) {
+    (function(e) {
+        (function(e) {
+            var c = function() {
+                function a() {
+                    this._faceSelection = null
+                }
+                a.prototype.reset = function(b) {
+                    void 0 === b && (b = null);
+                    this._faceSelection = b
+                };
+                Object.defineProperty(a.prototype, "isSet", {
+                    get: function() {
+                        return null !== this._faceSelection
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype, "normal", {
+                    get: function() {
+                        return this._faceSelection ? this._faceSelection.getFaceEntity().getNormal() : void 0
+                    },
+                    enumerable: !0,
+                    configurable: !0
+                });
+                Object.defineProperty(a.prototype,
+                    "position", {
+                        get: function() {
+                            return this._faceSelection ? this._faceSelection.getPosition() : void 0
+                        },
+                        enumerable: !0,
+                        configurable: !0
+                    });
+                a.prototype.getReferenceGeometry = function(b, d) {
+                    return this.isSet ? b.cuttingManager.createReferenceGeometryFromFaceNormal(this.normal, this.position, d) : []
+                };
+                return a
+            }();
+            e.FaceSelectionManager = c
+        })(e.ControllerUtils || (e.ControllerUtils = {}))
+    })(e.CuttingPlane || (e.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
+(function(f) {
+    (function(f) {
+        (function(f) {
+            function c(b, d) {
+                var a = this,
+                    m = d.payload,
+                    k = function(d) {
+                        return "update triggered" === d.name
+                    };
+                switch (d.name) {
+                    case "init":
+                        e.Util.delayCall(function() {
+                            return __awaiter(a, void 0, void 0, function() {
+                                return __generator(this, function(d) {
+                                    switch (d.label) {
+                                        case 0:
+                                            return b.name = "updating", [4, b.controller.init()];
+                                        case 1:
+                                            d.sent();
+                                            if (k(b)) return c(b, {
+                                                name: "update",
+                                                payload: m
+                                            }), [2];
+                                            b.name = "outdated";
+                                            return [2]
+                                    }
+                                })
+                            })
+                        });
+                        break;
+                    case "update":
+                        if ("not initialized" === b.name) throw Error("CuttingPlane.Controller.StateMachine has not been initialized");
+                        if (k(b)) break;
+                        else if ("updating" === b.name) {
+                            b.name = "update triggered";
+                            break
+                        }
+                        e.Util.delayCall(function() {
+                            return __awaiter(a, void 0, void 0, function() {
+                                return __generator(this, function(d) {
+                                    switch (d.label) {
+                                        case 0:
+                                            return b.name = "updating", [4, b.controller.update()];
+                                        case 1:
+                                            d.sent();
+                                            if (k(b)) return c(b, {
+                                                name: "update",
+                                                payload: m
+                                            }), [2];
+                                            b.name = "up to date";
+                                            return [2]
+                                    }
+                                })
+                            })
+                        });
+                        break;
+                    case "refresh":
+                        if ("not initialized" === b.name) throw Error("CuttingPlane.Controller.StateMachine has not been initialized");
+                        e.Util.delayCall(function() {
+                            return __awaiter(a,
+                                void 0, void 0,
+                                function() {
+                                    return __generator(this, function(d) {
+                                        switch (d.label) {
+                                            case 0:
+                                                return b.name = "updating", [4, b.controller.refresh()];
+                                            case 1:
+                                                d.sent();
+                                                if (k(b)) return c(b, {
+                                                    name: "update",
+                                                    payload: m
+                                                }), [2];
+                                                b.name = "up to date";
+                                                return [2]
+                                        }
+                                    })
+                                })
+                        });
+                        break;
+                    case "clear":
+                        if ("not initialized" === b.name) throw Error("CuttingPlane.Controller.StateMachine has not been initialized");
+                        e.Util.delayCall(function() {
+                            return __awaiter(a, void 0, void 0, function() {
+                                return __generator(this, function(d) {
+                                    switch (d.label) {
+                                        case 0:
+                                            return b.name =
+                                                "updating", [4, b.controller.clear()];
+                                        case 1:
+                                            d.sent();
+                                            if (k(b)) return c(b, {
+                                                name: "update",
+                                                payload: m
+                                            }), [2];
+                                            b.name = "up to date";
+                                            return [2]
+                                    }
+                                })
+                            })
+                        })
+                }
+                return b
+            }
+            var a = function(b) {
+                function d(d) {
+                    return b.call(this, {
+                        name: "not initialized",
+                        controller: d
+                    }, c) || this
+                }
+                __extends(d, b);
+                return d
+            }(e.Util.StateMachine);
+            f.StateMachine = a;
+            f.defaultReducer = c
+        })(f.ControllerUtils || (f.ControllerUtils = {}))
+    })(f.CuttingPlane || (f.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
+(function(f) {
+    (function(f) {
+        var h = function() {
+            function c(a) {
+                var b = this;
+                this._planeInfoMgr = new f.ControllerUtils.PlaneInfoManager;
+                this._cuttingSectionsMgr = new f.ControllerUtils.CuttingSectionManager;
+                this._modelBoundingMgr = new f.ControllerUtils.BoundingManager;
+                this._faceSelectionMgr = new f.ControllerUtils.FaceSelectionManager;
+                this._showReferenceGeometry = !0;
+                this._pendingFuncs = {};
+                this._viewer = a;
+                this._stateMachine = new f.ControllerUtils.StateMachine(this);
+                this._viewer.setCallbacks({
+                    assemblyTreeReady: function() {
+                        return b._stateMachine.handle("init")
+                    },
+                    visibilityChanged: function() {
+                        return b._stateMachine.handle("update")
+                    },
+                    hwfParseComplete: function() {
+                        return b._stateMachine.handle("update")
+                    },
+                    firstModelLoaded: function() {
+                        return b._stateMachine.handle("refresh")
+                    },
+                    modelSwitched: function() {
+                        return b._stateMachine.handle("refresh")
+                    },
+                    modelSwitchStart: function() {
+                        return b._stateMachine.handle("clear")
                     }
                 })
-            })
-        };
-        c.prototype._getPlaneSectionIndex = function(a) {
-            var b =
-                Math.abs(a.normal.x),
-                d = Math.abs(a.normal.y);
-            a = Math.abs(a.normal.z);
-            return 1 === b && 0 === d && 0 === a ? 0 : 0 === b && 1 === d && 0 === a ? 1 : 0 === b && 0 === d && 1 === a ? 2 : 3
-        };
-        c.prototype.getReferenceGeometryEnabled = function() {
-            return this._showReferenceGeometry
-        };
-        c.prototype.getIndividualCuttingSectionEnabled = function() {
-            return this._useIndividualCuttingSections
-        };
-        c.prototype.getPlaneInfo = function(a) {
-            return this._planeInfo.get(a)
-        };
-        c.prototype._ensurePlaneInfo = function(a) {
-            var b = this._planeInfo.get(a);
-            void 0 === b && (b = new m, this._planeInfo.set(a,
-                b));
-            return b
-        };
-        c.prototype._setStatus = function(a, b) {
-            this._ensurePlaneInfo(a).status = b
-        };
-        c.prototype._updateBoundingBox = function() {
-            return __awaiter(this, void 0, void 0, function() {
-                var a, b, d, g;
-                return __generator(this, function(c) {
-                    switch (c.label) {
-                        case 0:
-                            if (this._boundingBoxUpdate || !this._initSectionCalled) return [3, 5];
-                            this._boundingBoxUpdate = !0;
-                            return [4, this._viewer.model.getModelBounding(!0, !1)];
-                        case 1:
-                            a = c.sent();
-                            b = this._modelBounding.min.equalsWithTolerance(a.min, .01);
-                            d = this._modelBounding.max.equalsWithTolerance(a.max,
-                                .01);
-                            if (b && d) return [3, 4];
-                            this._modelBounding = a;
-                            this._ensurePlaneInfo(0).updateReferenceGeometry = !0;
-                            this._ensurePlaneInfo(1).updateReferenceGeometry = !0;
-                            this._ensurePlaneInfo(2).updateReferenceGeometry = !0;
-                            this._ensurePlaneInfo(3).updateReferenceGeometry = !0;
-                            g = [this._isActive(0), this._isActive(1), this._isActive(2), this._isActive(3)];
-                            this._storePlanes();
-                            return [4, this._clearCuttingSections()];
-                        case 2:
-                            return c.sent(), [4, this._restorePlanes(g)];
-                        case 3:
-                            c.sent(), c.label = 4;
-                        case 4:
-                            this._boundingBoxUpdate = !1, c.label =
-                                5;
-                        case 5:
-                            return [2]
-                    }
+            }
+            c.prototype.init = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return [4, this._initSection()];
+                            case 1:
+                                return a.sent(), [4, this._updateBoundingBox()];
+                            case 2:
+                                return a.sent(), [2]
+                        }
+                    })
                 })
-            })
-        };
-        c.prototype._resetAxis = function(a) {
-            this._planeInfo.delete(a);
-            3 === a && (this._faceSelection = null)
-        };
-        c.prototype._resetCuttingData = function() {
-            this._resetAxis(0);
-            this._resetAxis(1);
-            this._resetAxis(2);
-            this._resetAxis(3);
-            this._showReferenceGeometry = this._useIndividualCuttingSections = !0;
-            this._faceSelection = null
-        };
-        c.prototype.resetCuttingPlanes = function() {
-            this._resetCuttingData();
-            return this._clearCuttingSections()
-        };
-        c.prototype._initSection = function() {
-            return __awaiter(this, void 0, void 0,
-                function() {
+            };
+            c.prototype.update = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return [4, this._updateBoundingBox()];
+                            case 1:
+                                return a.sent(), [2]
+                        }
+                    })
+                })
+            };
+            c.prototype.refresh = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return [4, this._updateBoundingBox()];
+                            case 1:
+                                return a.sent(), [4, this.resetCuttingPlanes()];
+                            case 2:
+                                return a.sent(), [2]
+                        }
+                    })
+                })
+            };
+            c.prototype.clear = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return [4, this._cuttingSectionsMgr.clearAll()];
+                            case 1:
+                                return a.sent(), [2]
+                        }
+                    })
+                })
+            };
+            Object.defineProperty(c.prototype, "individualCuttingSectionEnabled", {
+                get: function() {
+                    return this._cuttingSectionsMgr.useIndividualCuttingSections
+                },
+                enumerable: !0,
+                configurable: !0
+            });
+            c.prototype.getPlaneStatus = function(a) {
+                return this._planeInfoMgr.get(a).status
+            };
+            c.prototype.onSectionsChanged = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    var a, b, d, g, c, k, e, h;
+                    return __generator(this, function(m) {
+                        switch (m.label) {
+                            case 0:
+                                a = this._cuttingSectionsMgr.planes;
+                                b = this._cuttingSectionsMgr.referenceGeometry;
+                                d = 0 === a.filter(function(d) {
+                                    return null === d
+                                }).length;
+                                g = 0 === b.filter(function(d) {
+                                    return null !== d
+                                }).length;
+                                this._showReferenceGeometry = !d || !g;
+                                this._cuttingSectionsMgr.useIndividualCuttingSections = 1 >= this._cuttingSectionsMgr.X.getCount();
+                                this._resetCuttingData();
+                                for (c = 0; c < a.length; ++c) k = a[c], null !== k && (e = f.ControllerUtils.PlaneInfoManager.getPlaneSectionIndex(k), h = this._planeInfoMgr.get(e), 0 === h.status && (h.status = f.ControllerUtils.PlaneInfoManager.getCuttingStatus(e, k), h.plane = k, h.referenceGeometry = b[c]));
+                                this._viewer.pauseRendering();
+                                return [4, this._cuttingSectionsMgr.clearAll()];
+                            case 1:
+                                return m.sent(), [4, this._restorePlanes()];
+                            case 2:
+                                return m.sent(), this._viewer.resumeRendering(), [2]
+                        }
+                    })
+                })
+            };
+            c.prototype.getReferenceGeometryEnabled = function() {
+                return this._showReferenceGeometry
+            };
+            c.prototype._updateBoundingBox = function() {
+                return __awaiter(this, void 0, void 0, function() {
                     var a, b;
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return [4, this._viewer.model.getModelBounding(!0, !1)];
+                                return [4, this._modelBoundingMgr.update(this._viewer)];
                             case 1:
-                                return a = d.sent(), this._modelBounding = a.copy(), b = this._viewer.cuttingManager, this._cuttingSections[0] = b.getCuttingSection(0), this._cuttingSections[1] = b.getCuttingSection(1), this._cuttingSections[2] = b.getCuttingSection(2), this._cuttingSections[3] = b.getCuttingSection(3), [4, this._triggerPendingFuncs()];
+                                a = d.sent();
+                                if (!a) return [3, 4];
+                                this._planeInfoMgr.update();
+                                b = this._cuttingSectionsMgr.activeStates;
+                                this._storePlanes();
+                                return [4, this._cuttingSectionsMgr.clearAll()];
                             case 2:
-                                return d.sent(), this._initSectionCalled = !0, [2]
+                                return d.sent(), [4, this._restorePlanes(b)];
+                            case 3:
+                                d.sent(), d.label = 4;
+                            case 4:
+                                return [2]
                         }
                     })
                 })
-        };
-        c.prototype._triggerPendingFuncs =
-            function() {
+            };
+            c.prototype._resetCuttingData =
+                function() {
+                    this._planeInfoMgr.clear();
+                    this._cuttingSectionsMgr.reset();
+                    this._faceSelectionMgr.reset()
+                };
+            c.prototype.resetCuttingPlanes = function() {
+                this._resetCuttingData();
+                this._showReferenceGeometry = !0;
+                return this._cuttingSectionsMgr.clearAll()
+            };
+            c.prototype._initSection = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return [4, Promise.all([this._modelBoundingMgr.init(this._viewer), this._cuttingSectionsMgr.init(this._viewer), this._triggerPendingFuncs()])];
+                            case 1:
+                                return a.sent(), [2]
+                        }
+                    })
+                })
+            };
+            c.prototype._triggerPendingFuncs = function() {
                 return __awaiter(this, void 0, void 0, function() {
                     var a;
                     return __generator(this, function(b) {
@@ -1108,16 +1585,15 @@ var Communicator;
                     })
                 })
             };
-        c.prototype.toggle = function(a) {
-            return __awaiter(this,
-                void 0, void 0,
-                function() {
-                    var b, d;
-                    return __generator(this, function(g) {
-                        switch (g.label) {
+            c.prototype.toggle = function(a) {
+                return __awaiter(this, void 0, void 0, function() {
+                    var b, d, g;
+                    return __generator(this, function(c) {
+                        switch (c.label) {
                             case 0:
-                                b = this._ensurePlaneInfo(a).status;
-                                switch (b) {
+                                b = this._planeInfoMgr.get(a);
+                                d = b.status;
+                                switch (d) {
                                     case 0:
                                         return [3, 1];
                                     case 1:
@@ -1128,96 +1604,94 @@ var Communicator;
                                 return [3, 12];
                             case 1:
                                 if (3 !== a) return [3, 5];
-                                d = this._viewer.selectionManager.getLast();
-                                if (null === d || !d.isFaceSelection()) return [3, 4];
-                                this._faceSelection = d;
-                                return [4, this._cuttingSections[a].clear()];
+                                g = this._viewer.selectionManager.getLast();
+                                if (null === g || !g.isFaceSelection()) return [3, 4];
+                                this._faceSelectionMgr.reset(g);
+                                return [4, this._cuttingSectionsMgr.Face.clear()];
                             case 2:
-                                return g.sent(), this._setStatus(a, 1), [4, this.setCuttingPlaneVisibility(!0, a)];
+                                return c.sent(), b.status = 1, [4, this.setCuttingPlaneVisibility(!0,
+                                    a)];
                             case 3:
-                                g.sent(), g.label = 4;
+                                c.sent(), c.label = 4;
                             case 4:
-                                return [3,
-                                    7
-                                ];
+                                return [3, 7];
                             case 5:
-                                return this._setStatus(a, 1), [4, this.setCuttingPlaneVisibility(!0, a)];
+                                return b.status = 1, [4, this.setCuttingPlaneVisibility(!0, a)];
                             case 6:
-                                g.sent(), g.label = 7;
+                                c.sent(), c.label = 7;
                             case 7:
                                 return [3, 12];
                             case 8:
-                                return this._setStatus(a, 2), [4, this.setCuttingPlaneInverted(a)];
+                                return b.status = 2, [4, this.setCuttingPlaneInverted(a)];
                             case 9:
-                                return g.sent(), [3, 12];
+                                return c.sent(), [3, 12];
                             case 10:
-                                return this._setStatus(a, 0), [4, this.setCuttingPlaneVisibility(!1, a)];
+                                return b.status = 0, [4, this.setCuttingPlaneVisibility(!1, a)];
                             case 11:
-                                return g.sent(), [3, 12];
+                                return c.sent(), [3, 12];
                             case 12:
                                 return [2]
                         }
                     })
                 })
-        };
-        c.prototype.getCount = function() {
-            for (var a = 0, b = 0, d = this._cuttingSections; b < d.length; b++) a += d[b].getCount();
-            return a
-        };
-        c.prototype.setCuttingPlaneVisibility =
-            function(a, b) {
-                return __awaiter(this, void 0, void 0, function() {
-                    var d, g, c, l, e, f = this;
-                    return __generator(this, function(k) {
-                        switch (k.label) {
-                            case 0:
-                                d = this._getCuttingSectionIndex(b);
-                                g = this._cuttingSections[d];
-                                if (void 0 === g) return this._pendingFuncs.visibility = function() {
-                                    return __awaiter(f, void 0, void 0, function() {
-                                        return __generator(this, function(d) {
-                                            switch (d.label) {
-                                                case 0:
-                                                    return [4, this.setCuttingPlaneVisibility(a, b)];
-                                                case 1:
-                                                    return d.sent(), [2]
-                                            }
-                                        })
-                                    })
-                                }, [2];
-                                this._viewer.delayCapping();
-                                if (!a) return [3, 2];
-                                c = this._ensurePlaneInfo(b);
-                                null === c.plane && (c.plane = this._generateCuttingPlane(b), c.referenceGeometry = this._generateReferenceGeometry(b));
-                                return [4, this._setSection(b)];
-                            case 1:
-                                return k.sent(), [3, 4];
-                            case 2:
-                                return [4, this.refreshPlaneGeometry()];
-                            case 3:
-                                k.sent(), k.label = 4;
-                            case 4:
-                                return l = this.getCount(), e = this._isActive(b), 0 < l && !e ? [4, this._activatePlanes()] : [3, 6];
-                            case 5:
-                                return k.sent(), [3, 8];
-                            case 6:
-                                return e && 0 === l ? [4, this._deactivateAxis(b)] : [3, 8];
-                            case 7:
-                                k.sent(), k.label = 8;
-                            case 8:
-                                return [2]
-                        }
-                    })
-                })
             };
-        c.prototype.setCuttingPlaneInverted =
-            function(a) {
+            c.prototype.getCount = function() {
+                return this._cuttingSectionsMgr.getCount()
+            };
+            c.prototype.setCuttingPlaneVisibility = function(a, b) {
+                return __awaiter(this,
+                    void 0, void 0,
+                    function() {
+                        var d, g, c, k, e, f = this;
+                        return __generator(this, function(m) {
+                            switch (m.label) {
+                                case 0:
+                                    d = this._cuttingSectionsMgr.getCuttingSectionIndex(b);
+                                    g = this._cuttingSectionsMgr.get(d);
+                                    if (void 0 === g) return this._pendingFuncs.visibility = function() {
+                                        return __awaiter(f, void 0, void 0, function() {
+                                            return __generator(this, function(d) {
+                                                switch (d.label) {
+                                                    case 0:
+                                                        return [4, this.setCuttingPlaneVisibility(a, b)];
+                                                    case 1:
+                                                        return d.sent(), [2]
+                                                }
+                                            })
+                                        })
+                                    }, [2];
+                                    this._viewer.delayCapping();
+                                    if (!a) return [3, 2];
+                                    c = this._planeInfoMgr.get(b);
+                                    null === c.plane && (c.plane = this._generateCuttingPlane(b), c.referenceGeometry = this._generateReferenceGeometry(b));
+                                    return [4, this._setSection(b)];
+                                case 1:
+                                    return m.sent(), [3, 4];
+                                case 2:
+                                    return [4, this.refreshPlaneGeometry()];
+                                case 3:
+                                    m.sent(), m.label = 4;
+                                case 4:
+                                    return k = this.getCount(), e = this._cuttingSectionsMgr.isActive(b), 0 < k && !e ? [4, this._cuttingSectionsMgr.activateAll()] : [3, 6];
+                                case 5:
+                                    return m.sent(), [3, 8];
+                                case 6:
+                                    return e && 0 === k ? [4, this._cuttingSectionsMgr.deactivate(b)] : [3, 8];
+                                case 7:
+                                    m.sent(), m.label = 8;
+                                case 8:
+                                    return [2]
+                            }
+                        })
+                    })
+            };
+            c.prototype.setCuttingPlaneInverted = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
                     var b, d, g, c = this;
-                    return __generator(this, function(k) {
-                        switch (k.label) {
+                    return __generator(this, function(m) {
+                        switch (m.label) {
                             case 0:
-                                b = this._cuttingSections[this._getCuttingSectionIndex(a)];
+                                b = this._cuttingSectionsMgr.get(this._cuttingSectionsMgr.getCuttingSectionIndex(a));
                                 if (void 0 === b) return this._pendingFuncs.inverted = function() {
                                     return __awaiter(c, void 0, void 0, function() {
                                         return __generator(this, function(d) {
@@ -1231,43 +1705,42 @@ var Communicator;
                                     })
                                 }, [2];
                                 this._viewer.delayCapping();
-                                d = this._getPlaneIndex(a);
+                                d = this._cuttingSectionsMgr.getPlaneIndex(a, this._faceSelectionMgr.normal);
                                 g = b.getPlane(d);
                                 if (!g) return [3, 2];
                                 g.normal.negate();
                                 g.d *= -1;
-                                return [4, b.updatePlane(d, g, new f.Matrix, !1, !1)];
+                                return [4, b.updatePlane(d, g, new e.Matrix, !1, !1)];
                             case 1:
-                                k.sent(), k.label = 2;
+                                m.sent(), m.label = 2;
                             case 2:
                                 return [2]
                         }
                     })
                 })
             };
-        c.prototype.toggleReferenceGeometry = function() {
-            return __awaiter(this, void 0, void 0, function() {
-                return __generator(this, function(a) {
-                    switch (a.label) {
-                        case 0:
-                            if (!(0 < this.getCount())) return [3, 2];
-                            this._showReferenceGeometry = !this._showReferenceGeometry;
-                            return [4, this.refreshPlaneGeometry()];
-                        case 1:
-                            a.sent(), a.label = 2;
-                        case 2:
-                            return [2]
-                    }
-                })
-            })
-        };
-        c.prototype.refreshPlaneGeometry =
-            function() {
+            c.prototype.toggleReferenceGeometry = function() {
                 return __awaiter(this, void 0, void 0, function() {
                     return __generator(this, function(a) {
                         switch (a.label) {
                             case 0:
-                                return this._storePlanes(), [4, this._clearCuttingSections()];
+                                if (!(0 < this.getCount())) return [3, 2];
+                                this._showReferenceGeometry = !this._showReferenceGeometry;
+                                return [4, this.refreshPlaneGeometry()];
+                            case 1:
+                                a.sent(), a.label = 2;
+                            case 2:
+                                return [2]
+                        }
+                    })
+                })
+            };
+            c.prototype.refreshPlaneGeometry = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return this._storePlanes(), [4, this._cuttingSectionsMgr.clearAll()];
                             case 1:
                                 return a.sent(), [4, this._restorePlanes()];
                             case 2:
@@ -1276,41 +1749,47 @@ var Communicator;
                     })
                 })
             };
-        c.prototype.toggleCuttingMode = function() {
-            return __awaiter(this, void 0, void 0, function() {
-                return __generator(this, function(a) {
-                    switch (a.label) {
-                        case 0:
-                            if (!(1 < this.getCount())) return [3, 3];
-                            this._storePlanes();
-                            return [4, this._clearCuttingSections()];
-                        case 1:
-                            return a.sent(), this._useIndividualCuttingSections = !this._useIndividualCuttingSections, [4, this._restorePlanes()];
-                        case 2:
-                            a.sent(), a.label = 3;
-                        case 3:
-                            return [2]
-                    }
+            c.prototype.toggleCuttingMode = function() {
+                return __awaiter(this, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                if (!(1 <
+                                        this.getCount())) return [3, 3];
+                                this._storePlanes();
+                                return [4, this._cuttingSectionsMgr.clearAll()];
+                            case 1:
+                                return a.sent(), this._cuttingSectionsMgr.useIndividualCuttingSections = !this._cuttingSectionsMgr.useIndividualCuttingSections, [4, this._restorePlanes()];
+                            case 2:
+                                a.sent(), a.label = 3;
+                            case 3:
+                                return [2]
+                        }
+                    })
                 })
-            })
-        };
-        c.prototype._isActive = function(a) {
-            return this._cuttingSections[this._getCuttingSectionIndex(a)].isActive()
-        };
-        c.prototype._deactivateAxis = function(a) {
-            return this._cuttingSections[this._getCuttingSectionIndex(a)].deactivate()
-        };
-        c.prototype._getCuttingSectionIndex = function(a) {
-            return this._useIndividualCuttingSections ? a : 0
-        };
-        c.prototype._clearCuttingSection =
-            function(a) {
+            };
+            c.prototype._setSection = function(a) {
+                return __awaiter(this, void 0, void 0, function() {
+                    var b, d, g;
+                    return __generator(this, function(c) {
+                        b = this._planeInfoMgr.get(a);
+                        d = b.plane;
+                        g = b.referenceGeometry;
+                        return null ===
+                            d ? [2] : [2, this._cuttingSectionsMgr.addPlane(a, d, g)]
+                    })
+                })
+            };
+            c.prototype._restorePlane = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
                     var b;
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return b = this._cuttingSections[a], void 0 === b ? [3, 2] : [4, b.clear()];
+                                b = this._planeInfoMgr.get(a);
+                                if (void 0 === b || null === b.plane || 0 === b.status) return [3, 2];
+                                if (null === b.referenceGeometry || b.updateReferenceGeometry) b.referenceGeometry = this._generateReferenceGeometry(a);
+                                return [4, this._setSection(a)];
                             case 1:
                                 d.sent(), d.label = 2;
                             case 2:
@@ -1319,197 +1798,115 @@ var Communicator;
                     })
                 })
             };
-        c.prototype._clearCuttingSections = function() {
-            var a = [];
-            a.push(this._clearCuttingSection(0));
-            a.push(this._clearCuttingSection(1));
-            a.push(this._clearCuttingSection(2));
-            a.push(this._clearCuttingSection(3));
-            return f.Util.waitForAll(a)
-        };
-        c.prototype._activateSection = function(a) {
-            return __awaiter(this,
-                void 0, void 0,
-                function() {
-                    var b;
-                    return __generator(this, function(d) {
-                        switch (d.label) {
-                            case 0:
-                                return b = this._cuttingSections[a], void 0 !== b && 0 < b.getCount() ? [4, b.activate()] : [3, 2];
-                            case 1:
-                                d.sent(), d.label = 2;
-                            case 2:
-                                return [2]
-                        }
+            c.prototype._restorePlanes =
+                function(a) {
+                    return __awaiter(this, void 0, void 0, function() {
+                        return __generator(this, function(b) {
+                            switch (b.label) {
+                                case 0:
+                                    return [4, Promise.all([this._restorePlane(0), this._restorePlane(1), this._restorePlane(2), this._restorePlane(3)])];
+                                case 1:
+                                    return b.sent(), [4, this._cuttingSectionsMgr.activateAll(a)];
+                                case 2:
+                                    return b.sent(), [2]
+                            }
+                        })
                     })
+                };
+            c.prototype._storePlanes = function() {
+                var a = this,
+                    b = new Map([0, 1, 2, 3].map(function(d) {
+                        a._planeInfoMgr.reset(d);
+                        return [d, a._planeInfoMgr.get(d)]
+                    }).filter(function(d) {
+                        return !a._planeInfoMgr.isHidden(d[0])
+                    })),
+                    d = this._faceSelectionMgr.normal;
+                b.forEach(function(b, c) {
+                    c = a._cuttingSectionsMgr.getPlaneAndGeometry(c, d);
+                    var g = c.referenceGeometry;
+                    b.plane = c.plane;
+                    b.referenceGeometry = g
                 })
-        };
-        c.prototype._activatePlanes = function(a) {
-            var b = [];
-            a && !a[0] || b.push(this._activateSection(0));
-            a && !a[1] || b.push(this._activateSection(1));
-            a && !a[2] || b.push(this._activateSection(2));
-            a && !a[3] || b.push(this._activateSection(3));
-            return f.Util.waitForAll(b)
-        };
-        c.prototype._getPlaneIndex = function(a) {
-            if (this._useIndividualCuttingSections) {
-                a =
-                    this._getCuttingSectionIndex(a);
-                var b = this._cuttingSections[a];
-                if (b.getPlane(0)) return 0
-            } else {
-                b = this._cuttingSections[0];
-                for (var d = b.getCount(), g = 0; g < d; g++) {
-                    var c = b.getPlane(g),
-                        l = void 0;
-                    this._faceSelection && (l = this._faceSelection.getFaceEntity().getNormal());
-                    if (c && (c.normal.x && 0 === a || c.normal.y && 1 === a || c.normal.z && 2 === a || 3 === a && l && c.normal.equals(l))) return g
-                }
-            }
-            return -1
-        };
-        c.prototype._setSection = function(a) {
-            return __awaiter(this, void 0, void 0, function() {
-                var b, d, g;
-                return __generator(this, function(c) {
-                    switch (c.label) {
-                        case 0:
-                            b =
-                                this._planeInfo.get(a);
-                            if (void 0 === b || null === b.plane) return [3, 2];
-                            d = this._cuttingSections[this._getCuttingSectionIndex(a)];
-                            g = this._showReferenceGeometry ? b.referenceGeometry : null;
-                            return [4, d.addPlane(b.plane, g)];
-                        case 1:
-                            c.sent(), c.label = 2;
-                        case 2:
-                            return [2]
-                    }
-                })
-            })
-        };
-        c.prototype._restorePlane = function(a) {
-            return __awaiter(this, void 0, void 0, function() {
-                var b;
-                return __generator(this, function(d) {
-                    switch (d.label) {
-                        case 0:
-                            b = this._planeInfo.get(a);
-                            if (void 0 === b || null === b.plane || 0 === b.status) return [3, 2];
-                            if (null === b.referenceGeometry ||
-                                b.updateReferenceGeometry) b.referenceGeometry = this._generateReferenceGeometry(a);
-                            return [4, this._setSection(a)];
-                        case 1:
-                            d.sent(), d.label = 2;
-                        case 2:
-                            return [2]
-                    }
-                })
-            })
-        };
-        c.prototype._restorePlanes = function(a) {
-            return __awaiter(this, void 0, void 0, function() {
-                return __generator(this, function(b) {
-                    switch (b.label) {
-                        case 0:
-                            return [4, Promise.all([this._restorePlane(0), this._restorePlane(1), this._restorePlane(2), this._restorePlane(3)])];
-                        case 1:
-                            return b.sent(), [4, this._activatePlanes(a)];
-                        case 2:
-                            return b.sent(), [2]
-                    }
-                })
-            })
-        };
-        c.prototype._storePlane = function(a) {
-            var b = this._cuttingSections[this._getCuttingSectionIndex(a)],
-                d = this._ensurePlaneInfo(a);
-            d.plane = null;
-            d.referenceGeometry = null;
-            if (0 < b.getCount() && 0 !== d.status) {
-                var g = this._getPlaneIndex(a);
-                a = b.getPlane(g);
-                b = b.getReferenceGeometry(g);
-                d.plane = a;
-                d.referenceGeometry = b
-            }
-        };
-        c.prototype._storePlanes = function() {
-            this._storePlane(0);
-            this._storePlane(1);
-            this._storePlane(2);
-            this._storePlane(3)
-        };
-        c.prototype._generateReferenceGeometry = function(a) {
-            var b = this._viewer.cuttingManager,
-                d = [];
-            if (3 === a) this._faceSelection && (a = this._faceSelection.getFaceEntity().getNormal(), d = this._faceSelection.getPosition(), d = b.createReferenceGeometryFromFaceNormal(a, d, this._modelBounding));
-            else {
-                var g = void 0;
+            };
+            c.prototype._generateReferenceGeometry = function(a) {
+                return 3 === a ? this._faceSelectionMgr.getReferenceGeometry(this._viewer, this._modelBoundingMgr.box) : this._cuttingSectionsMgr.getReferenceGeometry(a, this._modelBoundingMgr.box)
+            };
+            c.prototype._generateCuttingPlane = function(a) {
+                var b = new e.Plane,
+                    d = this._modelBoundingMgr.box;
                 switch (a) {
                     case 0:
-                        g = f.Axis.X;
+                        b.normal.set(1,
+                            0, 0);
+                        b.d = -d.max.x;
                         break;
                     case 1:
-                        g = f.Axis.Y;
+                        b.normal.set(0, 1, 0);
+                        b.d = -d.max.y;
                         break;
                     case 2:
-                        g = f.Axis.Z
+                        b.normal.set(0, 0, 1);
+                        b.d = -d.max.z;
+                        break;
+                    case 3:
+                        if (this._faceSelectionMgr.isSet) b.setFromPointAndNormal(this._faceSelectionMgr.position, this._faceSelectionMgr.normal);
+                        else return null
                 }
-                void 0 !== g && (d = b.createReferenceGeometryFromAxis(g, this._modelBounding))
-            }
-            return d
+                return b
+            };
+            return c
+        }();
+        f.Controller = h
+    })(f.CuttingPlane || (f.CuttingPlane = {}))
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
+(function(e) {
+    var f = function(e) {
+        function c() {
+            return null !== e && e.apply(this, arguments) || this
+        }
+        __extends(c, e);
+        return c
+    }(e.CuttingPlane.Info);
+    e.CuttingPlaneInfo = f;
+    f = function(e) {
+        function c() {
+            return null !== e && e.apply(this, arguments) || this
+        }
+        __extends(c, e);
+        c.prototype.getIndividualCuttingSectionEnabled = function() {
+            return this.individualCuttingSectionEnabled
         };
-        c.prototype._generateCuttingPlane = function(a) {
-            var b = new f.Plane;
-            switch (a) {
-                case 0:
-                    b.normal.set(1, 0, 0);
-                    b.d = -this._modelBounding.max.x;
-                    break;
-                case 1:
-                    b.normal.set(0, 1, 0);
-                    b.d = -this._modelBounding.max.y;
-                    break;
-                case 2:
-                    b.normal.set(0, 0, 1);
-                    b.d = -this._modelBounding.max.z;
-                    break;
-                case 3:
-                    if (this._faceSelection) {
-                        this._faceSelection = this._faceSelection;
-                        a = this._faceSelection.getFaceEntity().getNormal();
-                        var d = this._faceSelection.getPosition();
-                        b.setFromPointAndNormal(d, a)
-                    } else return null
-            }
-            return b
+        c.prototype.getPlaneInfo = function(a) {
+            return this._planeInfoMgr.get(a)
         };
         return c
-    }();
-    h.CuttingPlaneController = e
-})(f.Ui || (f.Ui = {}))
+    }(e.CuttingPlane.Controller);
+    e.CuttingPlaneController = f
+})(e.Ui ||
+    (e.Ui = {}))
 })(Communicator || (Communicator = {}));
-(function(f) {
-function h(e, c) {
-    var a = e.model,
-        b = e.sheetManager.getActiveSheetId();
+(function(e) {
+function f(f, c) {
+    var a = f.model,
+        b = f.sheetManager.getActiveSheetId();
     if (null !== b) {
         var d = a.getNodeParent(b),
             g = a.getNodeChildren(d);
-        f.Util.filterInPlace(c, function(d) {
+        e.Util.filterInPlace(c, function(d) {
             for (; null !== d && d !== b;) {
                 if (-1 !== g.indexOf(d)) return !1;
-                d = e.model.getNodeParent(d)
+                d = f.model.getNodeParent(d)
             }
             return !0
         })
     }
 }
-f._filterActiveSheetNodeIds = h;
-var m = function() {
-    function e(c) {
+e._filterActiveSheetNodeIds = f;
+var l = function() {
+    function h(c) {
         var a = this;
         this._camera = null;
         this._deselectOnZoom = this._deselectOnIsolate = !0;
@@ -1523,33 +1920,33 @@ var m = function() {
             }
         })
     }
-    e.prototype._setCamera = function(c) {
+    h.prototype._setCamera = function(c) {
         null === this._camera && (this._camera = c)
     };
-    e.prototype.setDeselectOnIsolate = function(c) {
+    h.prototype.setDeselectOnIsolate = function(c) {
         this._deselectOnIsolate = c
     };
-    e.prototype.getIsolateStatus = function() {
+    h.prototype.getIsolateStatus = function() {
         return this._isolateStatus
     };
-    e.prototype.isolateNodes = function(c, a) {
+    h.prototype.isolateNodes = function(c, a) {
         void 0 === a && (a = null);
         var b = this._viewer.view;
         this._setCamera(b.getCamera());
-        h(this._viewer, c);
-        c = b.isolateNodes(c, f.DefaultTransitionDuration, !this._viewer.sheetManager.isDrawingSheetActive(), a);
+        f(this._viewer, c);
+        c = b.isolateNodes(c, e.DefaultTransitionDuration, !this._viewer.sheetManager.isDrawingSheetActive(), a);
         this._deselectOnIsolate && this._viewer.selectionManager.clear();
         this._isolateStatus = !0;
         return c
     };
-    e.prototype.fitNodes = function(c) {
+    h.prototype.fitNodes = function(c) {
         var a = this._viewer.view;
         this._setCamera(a.getCamera());
         c = a.fitNodes(c);
         this._deselectOnZoom && this._viewer.selectionManager.clear();
         return c
     };
-    e.prototype.showAll = function() {
+    h.prototype.showAll = function() {
         var c = this._viewer.model;
         if (this._viewer.sheetManager.isDrawingSheetActive()) {
             var a = this._viewer.sheetManager.getActiveSheetId();
@@ -1558,21 +1955,21 @@ var m = function() {
         a = [];
         c.isDrawing() ? (c = this._viewer.sheetManager.get3DNodes(), a.push(this.isolateNodes(c))) :
             a.push(c.resetNodesVisibility());
-        null !== this._camera && (this._viewer.view.setCamera(this._camera, f.DefaultTransitionDuration), this._camera = null);
+        null !== this._camera && (this._viewer.view.setCamera(this._camera, e.DefaultTransitionDuration), this._camera = null);
         this._isolateStatus = !1;
         a.push(this._updatePinVisibility());
-        return f.Util.waitForAll(a)
+        return e.Util.waitForAll(a)
     };
-    e.prototype._updatePinVisibility = function() {
+    h.prototype._updatePinVisibility = function() {
         this._noteTextManager.setIsolateActive(this._isolateStatus);
         return this._noteTextManager.updatePinVisibility()
     };
-    return e
+    return h
 }();
-f.IsolateZoomHelper = m
+e.IsolateZoomHelper = l
 })(Communicator || (Communicator = {}));
-(function(f) {
-var h = function() {
+(function(e) {
+var f = function() {
         return function(e, c, a, b) {
             this.progress = this.direction = 0;
             this.id = e;
@@ -1581,7 +1978,7 @@ var h = function() {
             this.duration = b
         }
     }(),
-    m = function() {
+    l = function() {
         function e(c) {
             this._pulseInfoMap = {};
             this._defaultColor1 = Communicator.Color.red();
@@ -1601,24 +1998,24 @@ var h = function() {
         };
         e.prototype.add = function(c, a, b, d) {
             this.deletePulse(c);
-            a = new h(c, a, b, d);
+            a = new f(c, a, b, d);
             this._pulseInfoMap[c] = a
         };
         e.prototype.update = function() {
             null == this._previousTime && (this._previousTime = Date.now());
-            for (var c = Date.now(), a = c - this._previousTime, b = {}, d = !1, g = 0, k = Object.keys(this._pulseInfoMap); g < k.length; g++) {
-                var l = this._pulseInfoMap[k[g]];
+            for (var c = Date.now(), a = c - this._previousTime, b = {}, d = !1, g = 0, m = Object.keys(this._pulseInfoMap); g < m.length; g++) {
+                var k = this._pulseInfoMap[m[g]];
                 d = !0;
-                l.progress = Math.min(l.progress + a, l.duration);
-                var e = l.progress / l.duration;
-                if (0 === l.direction) {
+                k.progress = Math.min(k.progress + a, k.duration);
+                var e = k.progress / k.duration;
+                if (0 === k.direction) {
                     var f =
-                        l.color1;
-                    var h = l.color2
-                } else f = l.color2, h = l.color1;
+                        k.color1;
+                    var h = k.color2
+                } else f = k.color2, h = k.color1;
                 e = new Communicator.Color(f.r + (h.r - f.r) * e, f.g + (h.g - f.g) * e, f.b + (h.b - f.b) * e);
-                b[l.id] = e;
-                l.progress >= l.duration && (l.direction = 0 === l.direction ? 1 : 0, l.progress = 0)
+                b[k.id] = e;
+                k.progress >= k.duration && (k.direction = 0 === k.direction ? 1 : 0, k.progress = 0)
             }
             d && (this._viewer.model.setNodesColors(b), this._viewer.redraw());
             this._previousTime = c;
@@ -1635,17 +2032,17 @@ var h = function() {
         };
         return e
     }();
-f.PulseManager = m
+e.PulseManager = l
 })(Example || (Example = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(f) {
         function c(a, b, d, g) {
-            a = e.call(this, "rightclick", a, b, d, g) || this;
+            a = f.call(this, "rightclick", a, b, d, g) || this;
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, f);
         c.prototype._initEvents = function() {
             var a = this;
             this._viewer.setCallbacks({
@@ -1670,9 +2067,9 @@ f.PulseManager = m
                     return __generator(this, function(c) {
                         switch (c.label) {
                             case 0:
-                                return b = new f.PickConfig(f.SelectionMask.All), [4, this._viewer.view.pickFromPoint(a, b)];
+                                return b = new e.PickConfig(e.SelectionMask.All), [4, this._viewer.view.pickFromPoint(a, b)];
                             case 1:
-                                return d = c.sent(), d.isNodeSelection() && (g = this._viewer.model.getNodeType(d.getNodeId())), void 0 !== g && g !== f.NodeType.Pmi && g !== f.NodeType.PmiBody && 1 !== d.overlayIndex() ? [3, 3] : [4, this.setActiveItemId(null)];
+                                return d = c.sent(), d.isNodeSelection() && (g = this._viewer.model.getNodeType(d.getNodeId())), void 0 !== g && g !== e.NodeType.Pmi && g !== e.NodeType.PmiBody && 1 !== d.overlayIndex() ? [3, 3] : [4, this.setActiveItemId(null)];
                             case 2:
                                 return c.sent(), [3, 5];
                             case 3:
@@ -1691,11 +2088,11 @@ f.PulseManager = m
                 return __generator(this, function(b) {
                     switch (b.label) {
                         case 0:
-                            return 2 !== a.button ? [3, 2] : [4, this.doContext(new f.Point2(a.pageX, a.pageY))];
+                            return 2 !== a.button ? [3, 2] : [4, this.doContext(new e.Point2(a.pageX, a.pageY))];
                         case 1:
                             return b.sent(), [3, 3];
                         case 2:
-                            e.prototype._onContextLayerClick.call(this, a), b.label = 3;
+                            f.prototype._onContextLayerClick.call(this, a), b.label = 3;
                         case 3:
                             return [2]
                     }
@@ -1703,19 +2100,19 @@ f.PulseManager = m
             })
         };
         return c
-    }(h.Context.ContextMenu);
-    h.RightClickContextMenu = m
-})(f.Ui || (f.Ui = {}))
+    }(f.Context.ContextMenu);
+    f.RightClickContextMenu = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function() {
-        function e(c, a) {
+    var l = function() {
+        function f(c, a) {
             var b = this;
-            this._bottomLeftOffset = new f.Point2(10, 10);
+            this._bottomLeftOffset = new e.Point2(10, 10);
             this._opacity = .5;
             this._spinnerImageUrl = "css/images/spinner.gif";
-            this._spinnerSize = new f.Point2(31, 31);
+            this._spinnerSize = new e.Point2(31, 31);
             this._viewer = a;
             this._container = document.getElementById(c);
             this._initContainer();
@@ -1731,22 +2128,22 @@ f.PulseManager = m
                 }
             })
         }
-        e.prototype.show =
+        f.prototype.show =
             function() {
                 this._container.style.display = "block"
             };
-        e.prototype.hide = function() {
+        f.prototype.hide = function() {
             this._container.style.display = "none"
         };
-        e.prototype.setBottomLeftOffset = function(c) {
+        f.prototype.setBottomLeftOffset = function(c) {
             this._bottomLeftOffset.assign(c);
             this._container.style.left = this._bottomLeftOffset.x + "px";
             this._container.style.bottom = this._bottomLeftOffset.y + "px"
         };
-        e.prototype.getBottomLeftOffset = function() {
+        f.prototype.getBottomLeftOffset = function() {
             return this._bottomLeftOffset.copy()
         };
-        e.prototype.setSpinnerImage = function(c, a) {
+        f.prototype.setSpinnerImage = function(c, a) {
             this._spinnerImageUrl = c;
             this._spinnerSize.assign(a);
             this._container.style.backgroundImage =
@@ -1754,7 +2151,7 @@ f.PulseManager = m
             this._container.style.width = this._spinnerSize.x + "px";
             this._container.style.height = this._spinnerSize.y + '"px'
         };
-        e.prototype._initContainer = function() {
+        f.prototype._initContainer = function() {
             this._container.style.position = "absolute";
             this._container.style.width = this._spinnerSize.x + "px";
             this._container.style.height = this._spinnerSize.y + "px";
@@ -1764,20 +2161,20 @@ f.PulseManager = m
                 ")";
             this._container.style.opacity = "" + this._opacity
         };
-        e.prototype._onStreamingActivated = function() {
+        f.prototype._onStreamingActivated = function() {
             this.show()
         };
-        e.prototype._onStreamingDeactivated = function() {
+        f.prototype._onStreamingDeactivated = function() {
             this.hide()
         };
-        return e
+        return f
     }();
-    h.StreamingIndicator = m
-})(f.Ui || (f.Ui = {}))
+    f.StreamingIndicator = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
-(function(f) {
-(function(f) {
-    var h = function() {
+(function(e) {
+(function(e) {
+    var f = function() {
         function e(c) {
             this._containerId = c;
             this._textDiv = e._createTextDiv();
@@ -1838,12 +2235,12 @@ f.PulseManager = m
         };
         return e
     }();
-    f.UiDialog = h
-})(f.Ui || (f.Ui = {}))
+    e.UiDialog = f
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
-(function(f) {
-(function(f) {
-    var h = function(e) {
+(function(e) {
+(function(e) {
+    var f = function(e) {
         function c(a, b) {
             var d = e.call(this, a) || this;
             d._viewer = b;
@@ -1872,16 +2269,16 @@ f.PulseManager = m
             this.show()
         };
         return c
-    }(f.UiDialog);
-    f.TimeoutWarningDialog = h
-})(f.Ui || (f.Ui = {}))
+    }(e.UiDialog);
+    e.TimeoutWarningDialog = f
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function() {
-        function e(c, a, b) {
+    var l = function() {
+        function h(c, a, b) {
             var d = this;
-            void 0 === b && (b = f.ScreenConfiguration.Desktop);
+            void 0 === b && (b = e.ScreenConfiguration.Desktop);
             this._toolbarSelector = "#toolBar";
             this._screenElementSelector = "#content";
             this._cuttingPlaneXSelector = "#cuttingplane-x";
@@ -1905,7 +2302,7 @@ f.PulseManager = m
             this._noteTextManager = this._viewer.noteTextManager;
             this._screenConfiguration = b;
             this._cuttingPlaneController = a;
-            this._viewerSettings = new h.Desktop.ViewerSettings(c);
+            this._viewerSettings = new f.Desktop.ViewerSettings(c);
             this._viewer.setCallbacks({
                 selectionArray: function(b) {
                     0 <
@@ -1918,7 +2315,7 @@ f.PulseManager = m
                 }
             })
         }
-        e.prototype.init = function() {
+        h.prototype.init = function() {
             var c = this;
             this._isInitialized || (this._initIcons(),
                 this._removeNonApplicableIcons(), $(".hoops-tool").on("click", function(a) {
@@ -1962,40 +2359,40 @@ f.PulseManager = m
                 }),
                 this._initSliders(), this._initActions(), this._initSnapshot(), this.updateEdgeFaceButton(), this.reposition(), this.show(), this._isInitialized = !0)
         };
-        e.prototype._getViewerSettings = function() {
+        h.prototype._getViewerSettings = function() {
             return this._viewerSettings
         };
-        e.prototype.disableSubmenuItem = function(c) {
+        h.prototype.disableSubmenuItem = function(c) {
             var a = this;
             "string" === typeof c ? $("#submenus .toolbar-" + c).addClass(this._disabledClass) : "object" === typeof c && $.each(c, function(b, d) {
                 $("#submenus .toolbar-" + d).addClass(a._disabledClass)
             })
         };
-        e.prototype.enableSubmenuItem = function(c) {
+        h.prototype.enableSubmenuItem = function(c) {
             var a = this;
             "string" ===
             typeof c ? $("#submenus .toolbar-" + c).removeClass(this._disabledClass) : "object" === typeof c && $.each(c, function(b, d) {
                 $("#submenus .toolbar-" + d).removeClass(a._disabledClass)
             })
         };
-        e.prototype.setCorrespondingButtonForSubmenuItem = function(c) {
+        h.prototype.setCorrespondingButtonForSubmenuItem = function(c) {
             c = $("#submenus .toolbar-" + c);
             this._activateSubmenuItem(c)
         };
-        e.prototype._mouseEnterItem = function(c) {
+        h.prototype._mouseEnterItem = function(c) {
             c = $(c.target);
             c.hasClass(this._disabledClass) || c.addClass("hover")
         };
-        e.prototype._mouseLeaveItem = function(c) {
+        h.prototype._mouseLeaveItem = function(c) {
             $(c.target).removeClass("hover")
         };
-        e.prototype.show = function() {
+        h.prototype.show = function() {
             $(this._toolbarSelector).show()
         };
-        e.prototype.hide = function() {
+        h.prototype.hide = function() {
             $(this._toolbarSelector).hide()
         };
-        e.prototype._initSliders = function() {
+        h.prototype._initSliders = function() {
             var c = this;
             $("#explosion-slider").slider({
                 orientation: "vertical",
@@ -2016,7 +2413,7 @@ f.PulseManager = m
                 }
             })
         };
-        e.prototype._mouseEnter = function() {
+        h.prototype._mouseEnter = function() {
             if (null === this._activeSubmenu) {
                 var c = $(this._toolbarSelector).find(".toolbar-tools");
                 c.stop();
@@ -2025,12 +2422,12 @@ f.PulseManager = m
                 })
             }
         };
-        e.prototype._mouseLeave = function() {
+        h.prototype._mouseLeave = function() {
             null === this._activeSubmenu && $(".toolbar-tools").animate({
                 opacity: .6
             }, 500, function() {})
         };
-        e.prototype.reposition = function() {
+        h.prototype.reposition = function() {
             var c = $(this._toolbarSelector),
                 a = $(this._screenElementSelector);
             if (void 0 !== c && void 0 !== a) {
@@ -2042,7 +2439,7 @@ f.PulseManager = m
                 })
             }
         };
-        e.prototype._processButtonClick = function(c) {
+        h.prototype._processButtonClick = function(c) {
             if (null !== this._activeSubmenu) this._hideActiveSubmenu();
             else if (null !== c) {
                 c = c.target;
@@ -2050,21 +2447,21 @@ f.PulseManager = m
                 a.hasClass("toolbar-radio") ? a.hasClass("active-tool") ? this._showSubmenu(c) : ($(this._toolbarSelector).find(".active-tool").removeClass("active-tool"), a.addClass("active-tool"), this._performNullaryAction(a.data("operatorclass"))) : a.hasClass("toolbar-menu") ? this._showSubmenu(c) : a.hasClass("toolbar-menu-toggle") ? this._toggleMenuTool(a) : this._performNullaryAction(a.data("operatorclass"))
             }
         };
-        e.prototype._toggleMenuTool = function(c) {
+        h.prototype._toggleMenuTool = function(c) {
             var a = $("#" + c.data("submenu"));
             a.is(":visible") ?
                 (a.hide(), this._performBooleanAction(c.data("operatorclass"), !1)) : (this._alignMenuToTool(a, c), this._performBooleanAction(c.data("operatorclass"), !0))
         };
-        e.prototype._startModal = function() {
+        h.prototype._startModal = function() {
             var c = this;
             $("body").append("<div id='toolbar-modal' class='toolbar-modal-overlay'></div>");
             $("#toolbar-modal").on("click", function() {
                 c._hideActiveSubmenu()
             })
         };
-        e.prototype._alignMenuToTool = function(c, a) {
+        h.prototype._alignMenuToTool = function(c, a) {
             a = a.position().left;
-            this._screenConfiguration === f.ScreenConfiguration.Mobile && (a /= 1.74);
+            this._screenConfiguration === e.ScreenConfiguration.Mobile && (a /= 1.74);
             var b = c.width(),
                 d = c.height();
             void 0 !== b && void 0 !== d && c.css({
@@ -2073,7 +2470,7 @@ f.PulseManager = m
                 top: -(this._submenuHeightOffset + d) + "px"
             })
         };
-        e.prototype._showSubmenu = function(c) {
+        h.prototype._showSubmenu = function(c) {
             this._hideActiveSubmenu();
             c = $(c).closest(".hoops-tool");
             var a = c.data("submenu");
@@ -2081,28 +2478,28 @@ f.PulseManager = m
                 opacity: .3
             })))
         };
-        e.prototype._hideActiveSubmenu = function() {
+        h.prototype._hideActiveSubmenu = function() {
             $("#toolbar-modal").remove();
             null !== this._activeSubmenu && ($(this._activeSubmenu).hide(), $(this._toolbarSelector).find(".toolbar-tools").css({
                 opacity: 1
             }));
             this._activeSubmenu = null
         };
-        e.prototype._activateSubmenuItem = function(c) {
+        h.prototype._activateSubmenuItem = function(c) {
             var a = c.closest(".toolbar-submenu"),
                 b = c.data("operatorclass");
-            if ("string" !== typeof b) throw new f.CommunicatorError("Invalid submenuItem.");
+            if ("string" !== typeof b) throw new e.CommunicatorError("Invalid submenuItem.");
             a = $("#" + a.data("button"));
             var d = a.find(".tool-icon");
             d.length && (d.removeClass(a.data("operatorclass").toString()), d.addClass(b), a.data("operatorclass", b), c = c.attr("title"),
                 void 0 !== c && a.attr("title", c));
             return b
         };
-        e.prototype._submenuIconClick = function(c) {
+        h.prototype._submenuIconClick = function(c) {
             c = $(c);
             c.hasClass(this._disabledClass) || (c = this._activateSubmenuItem(c), this._hideActiveSubmenu(), this._performNullaryAction(c))
         };
-        e.prototype._initIcons = function() {
+        h.prototype._initIcons = function() {
             $(this._toolbarSelector).find(".hoops-tool").each(function() {
                 var c = $(this);
                 c.find(".tool-icon").addClass(c.data("operatorclass").toString())
@@ -2112,82 +2509,82 @@ f.PulseManager = m
                 c.addClass(c.data("operatorclass").toString())
             })
         };
-        e.prototype._removeNonApplicableIcons = function() {
-            this._screenConfiguration === f.ScreenConfiguration.Mobile && $("#snapshot-button").remove()
+        h.prototype._removeNonApplicableIcons = function() {
+            this._screenConfiguration === e.ScreenConfiguration.Mobile && $("#snapshot-button").remove()
         };
-        e.prototype.setSubmenuEnabled = function(c, a) {
+        h.prototype.setSubmenuEnabled = function(c, a) {
             c = $("#" + c);
             var b = $("#" + c.data("submenu"));
             a ? (c.find(".smarrow").show(), b.removeClass(this._disabledClass)) : (c.find(".smarrow").hide(), b.addClass(this._disabledClass))
         };
-        e.prototype._performNullaryAction = function(c) {
+        h.prototype._performNullaryAction = function(c) {
             (c = this._actionsNullary.get(c)) && c()
         };
-        e.prototype._performBooleanAction = function(c, a) {
+        h.prototype._performBooleanAction = function(c, a) {
             (c = this._actionsBoolean.get(c)) &&
             c(a)
         };
-        e.prototype._renderModeClick = function(c) {
+        h.prototype._renderModeClick = function(c) {
             var a = this._viewer.view;
             switch (c) {
                 case "toolbar-shaded":
-                    a.setDrawMode(f.DrawMode.Shaded);
+                    a.setDrawMode(e.DrawMode.Shaded);
                     break;
                 case "toolbar-wireframe":
-                    a.setDrawMode(f.DrawMode.Wireframe);
+                    a.setDrawMode(e.DrawMode.Wireframe);
                     break;
                 case "toolbar-hidden-line":
-                    a.setDrawMode(f.DrawMode.HiddenLine);
+                    a.setDrawMode(e.DrawMode.HiddenLine);
                     break;
                 case "toolbar-xray":
-                    a.setDrawMode(f.DrawMode.XRay);
+                    a.setDrawMode(e.DrawMode.XRay);
                     break;
                 default:
                 case "toolbar-wireframeshaded":
-                    a.setDrawMode(f.DrawMode.WireframeOnShaded)
+                    a.setDrawMode(e.DrawMode.WireframeOnShaded)
             }
         };
-        e.prototype._initSnapshot = function() {
+        h.prototype._initSnapshot = function() {
             $("#snapshot-dialog-cancel-button").button().on("click",
                 function() {
                     $("#snapshot-dialog").hide()
                 })
         };
-        e.prototype._doSnapshot = function() {
+        h.prototype._doSnapshot = function() {
             return __awaiter(this, void 0, void 0, function() {
-                var c, a, b, d, g, k, l, e, h, m, n, p;
-                return __generator(this, function(u) {
-                    switch (u.label) {
+                var c, a, b, d, g, m, k, f, h, l, n, q;
+                return __generator(this, function(w) {
+                    switch (w.label) {
                         case 0:
                             c = this._viewer.view.getCanvasSize();
                             a = c.x / c.y;
                             b = 480;
                             d = a * b;
                             g = $("#content");
-                            k = g.width();
-                            l = g.height();
-                            if (void 0 === l || void 0 === k) return [3, 2];
-                            b = .7 * l;
-                            d = .7 * k;
-                            e = d + 40;
-                            h = new f.SnapshotConfig(c.x, c.y);
+                            m = g.width();
+                            k = g.height();
+                            if (void 0 === k || void 0 === m) return [3, 2];
+                            b = .7 * k;
+                            d = .7 * m;
+                            f = d + 40;
+                            h = new e.SnapshotConfig(c.x, c.y);
                             return [4, this._viewer.takeSnapshot(h)];
                         case 1:
-                            m = u.sent(), n = (k - d) / 2, p = $("#snapshot-dialog"), $("#snapshot-dialog-image").attr("src",
-                                m.src).attr("width", e).attr("height", b + 40), p.css({
+                            l = w.sent(), n = (m - d) / 2, q = $("#snapshot-dialog"), $("#snapshot-dialog-image").attr("src",
+                                l.src).attr("width", f).attr("height", b + 40), q.css({
                                 top: "45px",
                                 left: n + "px"
-                            }), p.show(), u.label = 2;
+                            }), q.show(), w.label = 2;
                         case 2:
                             return [2]
                     }
                 })
             })
         };
-        e.prototype._setRedlineOperator = function(c) {
+        h.prototype._setRedlineOperator = function(c) {
             this._viewer.operatorManager.set(c, 1)
         };
-        e.prototype._initActions = function() {
+        h.prototype._initActions = function() {
             var c = this,
                 a = this._viewer.view,
                 b = this._viewer.operatorManager;
@@ -2197,39 +2594,39 @@ f.PulseManager = m
                     c._noteTextManager.setIsolateActive(!1);
                     c._noteTextManager.updatePinVisibility();
                     var d =
-                        b.getOperator(f.OperatorId.Handle);
+                        b.getOperator(e.OperatorId.Handle);
                     null !== d && d.removeHandles && d.removeHandles()
                 }
             });
             this._actionsNullary.set("toolbar-redline-circle", function() {
-                c._setRedlineOperator(f.OperatorId.RedlineCircle)
+                c._setRedlineOperator(e.OperatorId.RedlineCircle)
             });
             this._actionsNullary.set("toolbar-redline-freehand", function() {
-                c._setRedlineOperator(f.OperatorId.RedlinePolyline)
+                c._setRedlineOperator(e.OperatorId.RedlinePolyline)
             });
             this._actionsNullary.set("toolbar-redline-rectangle", function() {
-                c._setRedlineOperator(f.OperatorId.RedlineRectangle)
+                c._setRedlineOperator(e.OperatorId.RedlineRectangle)
             });
             this._actionsNullary.set("toolbar-redline-note", function() {
-                c._setRedlineOperator(f.OperatorId.RedlineText)
+                c._setRedlineOperator(e.OperatorId.RedlineText)
             });
             this._actionsNullary.set("toolbar-note", function() {
-                b.set(f.OperatorId.Note, 1)
+                b.set(e.OperatorId.Note, 1)
             });
             this._actionsNullary.set("toolbar-select", function() {
-                b.set(f.OperatorId.Select, 1)
+                b.set(e.OperatorId.Select, 1)
             });
             this._actionsNullary.set("toolbar-area-select", function() {
-                b.set(f.OperatorId.AreaSelect, 1)
+                b.set(e.OperatorId.AreaSelect, 1)
             });
             this._actionsNullary.set("toolbar-orbit", function() {
-                b.set(f.OperatorId.Navigate, 0)
+                b.set(e.OperatorId.Navigate, 0)
             });
             this._actionsNullary.set("toolbar-turntable", function() {
-                b.set(f.OperatorId.Turntable, 0)
+                b.set(e.OperatorId.Turntable, 0)
             });
             this._actionsNullary.set("toolbar-walk", function() {
-                b.set(f.OperatorId.WalkMode,
+                b.set(e.OperatorId.WalkMode,
                     0)
             });
             this._actionsNullary.set("toolbar-face", function() {
@@ -2245,17 +2642,17 @@ f.PulseManager = m
                 })
             });
             this._actionsNullary.set("toolbar-measure-point", function() {
-                b.set(f.OperatorId.MeasurePointPointDistance, 1)
+                b.set(e.OperatorId.MeasurePointPointDistance, 1)
             });
             this._actionsNullary.set("toolbar-measure-edge", function() {
-                b.set(f.OperatorId.MeasureEdgeLength, 1)
+                b.set(e.OperatorId.MeasureEdgeLength, 1)
             });
             this._actionsNullary.set("toolbar-measure-distance", function() {
-                b.set(f.OperatorId.MeasureFaceFaceDistance,
+                b.set(e.OperatorId.MeasureFaceFaceDistance,
                     1)
             });
             this._actionsNullary.set("toolbar-measure-angle", function() {
-                b.set(f.OperatorId.MeasureFaceFaceAngle, 1)
+                b.set(e.OperatorId.MeasureFaceFaceAngle, 1)
             });
             this._actionsNullary.set("toolbar-cuttingplane", function() {});
             this._actionsBoolean.set("toolbar-explode", function(d) {
@@ -2303,7 +2700,7 @@ f.PulseManager = m
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return [4, a.setViewOrientation(f.ViewOrientation.Front, this._viewOrientationDuration)];
+                                return [4, a.setViewOrientation(e.ViewOrientation.Front, this._viewOrientationDuration)];
                             case 1:
                                 return d.sent(), [2]
                         }
@@ -2316,7 +2713,7 @@ f.PulseManager = m
                         switch (d.label) {
                             case 0:
                                 return [4,
-                                    a.setViewOrientation(f.ViewOrientation.Back, this._viewOrientationDuration)
+                                    a.setViewOrientation(e.ViewOrientation.Back, this._viewOrientationDuration)
                                 ];
                             case 1:
                                 return d.sent(), [2]
@@ -2329,7 +2726,7 @@ f.PulseManager = m
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return [4, a.setViewOrientation(f.ViewOrientation.Left, this._viewOrientationDuration)];
+                                return [4, a.setViewOrientation(e.ViewOrientation.Left, this._viewOrientationDuration)];
                             case 1:
                                 return d.sent(), [2]
                         }
@@ -2342,7 +2739,7 @@ f.PulseManager = m
                         function(d) {
                             switch (d.label) {
                                 case 0:
-                                    return [4, a.setViewOrientation(f.ViewOrientation.Right, this._viewOrientationDuration)];
+                                    return [4, a.setViewOrientation(e.ViewOrientation.Right, this._viewOrientationDuration)];
                                 case 1:
                                     return d.sent(), [2]
                             }
@@ -2354,7 +2751,7 @@ f.PulseManager = m
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return [4, a.setViewOrientation(f.ViewOrientation.Bottom, this._viewOrientationDuration)];
+                                return [4, a.setViewOrientation(e.ViewOrientation.Bottom, this._viewOrientationDuration)];
                             case 1:
                                 return d.sent(), [2]
                         }
@@ -2368,7 +2765,7 @@ f.PulseManager = m
                         return __generator(this, function(d) {
                             switch (d.label) {
                                 case 0:
-                                    return [4, a.setViewOrientation(f.ViewOrientation.Top, this._viewOrientationDuration)];
+                                    return [4, a.setViewOrientation(e.ViewOrientation.Top, this._viewOrientationDuration)];
                                 case 1:
                                     return d.sent(), [2]
                             }
@@ -2380,7 +2777,7 @@ f.PulseManager = m
                     return __generator(this, function(d) {
                         switch (d.label) {
                             case 0:
-                                return [4, a.setViewOrientation(f.ViewOrientation.Iso, this._viewOrientationDuration)];
+                                return [4, a.setViewOrientation(e.ViewOrientation.Iso, this._viewOrientationDuration)];
                             case 1:
                                 return d.sent(), [2]
                         }
@@ -2389,10 +2786,10 @@ f.PulseManager = m
             });
             this._actionsNullary.set("toolbar-ortho",
                 function() {
-                    a.setProjectionMode(f.Projection.Orthographic)
+                    a.setProjectionMode(e.Projection.Orthographic)
                 });
             this._actionsNullary.set("toolbar-persp", function() {
-                a.setProjectionMode(f.Projection.Perspective)
+                a.setProjectionMode(e.Projection.Perspective)
             });
             this._actionsNullary.set("toolbar-snapshot", function() {
                 return __awaiter(c, void 0, void 0, function() {
@@ -2407,24 +2804,24 @@ f.PulseManager = m
                 })
             })
         };
-        e.prototype._onExplosionSlider = function(c) {
+        h.prototype._onExplosionSlider = function(c) {
             return this._viewer.explodeManager.setMagnitude(c)
         };
-        e.prototype._explosionButtonClick =
+        h.prototype._explosionButtonClick =
             function(c) {
                 var a = this._viewer.explodeManager;
                 return c && !a.getActive() ? a.start() : Promise.resolve()
             };
-        e.prototype._settingsButtonClick = function() {
+        h.prototype._settingsButtonClick = function() {
             return this._viewerSettings.show()
         };
-        e.prototype.updateEdgeFaceButton = function() {
+        h.prototype.updateEdgeFaceButton = function() {
             var c = this._viewer.view,
                 a = c.getLineVisibility();
             c = c.getFaceVisibility();
             a && c ? this.setCorrespondingButtonForSubmenuItem("wireframeshaded") : !a && c ? this.setCorrespondingButtonForSubmenuItem("shaded") : this.setCorrespondingButtonForSubmenuItem("wireframe")
         };
-        e.prototype._cuttingPlaneButtonClick =
+        h.prototype._cuttingPlaneButtonClick =
             function(c) {
                 var a = this;
                 c = $(c.target).closest(".toolbar-cp-plane").data("plane");
@@ -2433,7 +2830,7 @@ f.PulseManager = m
                     a._updateCuttingPlaneIcons()
                 })
             };
-        e.prototype._getAxis = function(c) {
+        h.prototype._getAxis = function(c) {
             switch (c) {
                 case "x":
                     return 0;
@@ -2447,9 +2844,9 @@ f.PulseManager = m
                     return null
             }
         };
-        e.prototype._updateCuttingPlaneIcons = function() {
+        h.prototype._updateCuttingPlaneIcons = function() {
             var c = this._cuttingPlaneController.getReferenceGeometryEnabled(),
-                a = this._cuttingPlaneController.getIndividualCuttingSectionEnabled(),
+                a = this._cuttingPlaneController.individualCuttingSectionEnabled,
                 b = this._cuttingPlaneController.getCount();
             this._updateCuttingPlaneIcon(0, this._cuttingPlaneXSelector);
             this._updateCuttingPlaneIcon(1, this._cuttingPlaneYSelector);
@@ -2459,41 +2856,40 @@ f.PulseManager = m
             0 < b ? (c ? $(this._cuttingPlaneVisibilitySelector).removeClass(this._selectedClass) : $(this._cuttingPlaneVisibilitySelector).addClass(this._selectedClass), $(this._cuttingPlaneVisibilitySelector).removeClass(this._disabledClass), $(this._cuttingPlaneResetSelector).removeClass(this._disabledClass)) : ($(this._cuttingPlaneVisibilitySelector).addClass(this._disabledClass), $(this._cuttingPlaneResetSelector).addClass(this._disabledClass));
             1 < b ? $(this._cuttingPlaneGroupToggle).removeClass(this._disabledClass) : $(this._cuttingPlaneGroupToggle).addClass(this._disabledClass)
         };
-        e.prototype._updateCuttingPlaneIcon = function(c, a) {
+        h.prototype._updateCuttingPlaneIcon = function(c, a) {
             a = $(a);
             a.removeClass(this._selectedClass);
             a.removeClass(this._invertedClass);
-            c = this._cuttingPlaneController.getPlaneInfo(c);
-            void 0 !== c && (1 === c.status ? a.addClass(this._selectedClass) : 2 === c.status && a.addClass(this._invertedClass))
+            c = this._cuttingPlaneController.getPlaneStatus(c);
+            1 === c ? a.addClass(this._selectedClass) : 2 === c && a.addClass(this._invertedClass)
         };
-        e.prototype._orientToFace = function() {
+        h.prototype._orientToFace = function() {
             var c = this._viewer.selectionManager.getLast();
-            if (null !==
-                c && c.isFaceSelection()) {
-                var a = this._viewer.view,
+            if (null !== c && c.isFaceSelection()) {
+                var a =
+                    this._viewer.view,
                     b = c.getFaceEntity().getNormal(),
                     d = c.getPosition(),
                     g = a.getCamera(),
-                    k = f.Point3.cross(b, new f.Point3(0, 1, 0));
-                .001 > k.length() && (k = f.Point3.cross(b, new f.Point3(1, 0, 0)));
-                var l = g.getPosition().subtract(g.getTarget()).length();
+                    m = e.Point3.cross(b, new e.Point3(0, 1, 0));
+                .001 > m.length() && (m = e.Point3.cross(b, new e.Point3(1, 0, 0)));
+                var k = g.getPosition().subtract(g.getTarget()).length();
                 g.setTarget(d);
-                g.setPosition(f.Point3.add(d, f.Point3.scale(b, l)));
-                g.setUp(k);
-                return a.fitBounding(c.getFaceEntity().getBounding(), f.DefaultTransitionDuration, g)
+                g.setPosition(e.Point3.add(d, e.Point3.scale(b, k)));
+                g.setUp(m);
+                return a.fitBounding(c.getFaceEntity().getBounding(), e.DefaultTransitionDuration, g)
             }
             return Promise.resolve()
         };
-        return e
+        return h
     }();
-    h.Toolbar = m
-})(f.Ui || (f.Ui = {}))
-})(Communicator ||
-(Communicator = {}));
+    f.Toolbar = l
+})(e.Ui || (e.Ui = {}))
+})(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function() {
-        function e(c, a) {
+    var l = function() {
+        function h(c, a) {
             this._colorPickerId = "colorPicker";
             this._colorPickerHeaderId = "colorPickerHeader";
             this._colorPickerFooterId = "colorPickerFooter";
@@ -2503,13 +2899,14 @@ f.PulseManager = m
             this._colorPickerInputId = "colorPickerInput";
             this._colorPickerActiveColorId = "colorPickerActiveColor";
             this._colorPickerActiveColorLabelId = "colorPickerActiveColorLabel";
-            this._colorPickerActiveColorSwatchId = "colorPickerActiveColorSwatch";
-            this._color = f.Color.black();
+            this._colorPickerActiveColorSwatchId =
+                "colorPickerActiveColorSwatch";
+            this._color = e.Color.black();
             this._viewer = c;
             this._colorPicker = this._createColorPickerWindow(a);
             this._initElements()
         }
-        e.prototype._createColorPickerWindow = function(c) {
+        h.prototype._createColorPickerWindow = function(c) {
             var a = document.createElement("div");
             a.id = this._colorPickerId;
             a.classList.add("desktop-ui-window");
@@ -2522,48 +2919,48 @@ f.PulseManager = m
             var g = document.createElement("div");
             g.id = this._colorPickerActiveColorId;
             d.appendChild(g);
-            var k = document.createElement("span");
-            k.id = this._colorPickerActiveColorLabelId;
-            k.innerHTML = "Active Color:";
-            g.appendChild(k);
-            k = document.createElement("span");
-            k.id = this._colorPickerActiveColorSwatchId;
-            k.style.backgroundColor = h.cssHexStringFromColor(this._color);
-            g.appendChild(k);
+            var m = document.createElement("span");
+            m.id = this._colorPickerActiveColorLabelId;
+            m.innerHTML = "Active Color:";
+            g.appendChild(m);
+            m = document.createElement("span");
+            m.id = this._colorPickerActiveColorSwatchId;
+            m.style.backgroundColor = f.cssHexStringFromColor(this._color);
+            g.appendChild(m);
             g = document.createElement("input");
             g.id = this._colorPickerInputId;
             g.type = "text";
             g.classList.add("color-picker");
             d.appendChild(g);
-            k = document.createElement("div");
-            k.id = this._colorPickerFooterId;
-            k.classList.add("desktop-ui-window-footer");
-            var l = document.createElement("button");
-            l.id = this._colorPickerOkId;
-            l.innerHTML = "Ok";
-            k.appendChild(l);
-            l = document.createElement("button");
-            l.id = this._colorPickerCancelId;
-            l.innerHTML = "Cancel";
-            k.appendChild(l);
-            l = document.createElement("button");
-            l.id = this._colorPickerApplyId;
-            l.innerHTML = "Apply";
-            k.appendChild(l);
+            m = document.createElement("div");
+            m.id = this._colorPickerFooterId;
+            m.classList.add("desktop-ui-window-footer");
+            var k = document.createElement("button");
+            k.id = this._colorPickerOkId;
+            k.innerHTML = "Ok";
+            m.appendChild(k);
+            k = document.createElement("button");
+            k.id = this._colorPickerCancelId;
+            k.innerHTML = "Cancel";
+            m.appendChild(k);
+            k = document.createElement("button");
+            k.id = this._colorPickerApplyId;
+            k.innerHTML = "Apply";
+            m.appendChild(k);
             a.appendChild(b);
             a.appendChild(d);
-            a.appendChild(k);
+            a.appendChild(m);
             $("#" + c).append(a);
             $(g).minicolors({
                 position: "bottom left",
                 format: "rgb",
                 control: "hue",
-                defaultValue: h.rgbStringFromColor(this._color),
+                defaultValue: f.rgbStringFromColor(this._color),
                 inline: !0
             });
             return $(a)
         };
-        e.prototype._initElements = function() {
+        h.prototype._initElements = function() {
             var c = this;
             this._colorPicker.draggable({
                 handle: "#" + this._colorPickerHeaderId
@@ -2579,30 +2976,30 @@ f.PulseManager = m
                 c._updateColor()
             })
         };
-        e.prototype._updateColor = function() {
-            this._color.assign(h.colorFromRgbString(h.getValueAsString("#" + this._colorPickerInputId)));
-            $("#" + this._colorPickerActiveColorSwatchId).css("background",
-                h.cssHexStringFromColor(this._color))
+        h.prototype._updateColor = function() {
+            this._color.assign(f.colorFromRgbString(f.getValueAsString("#" +
+                this._colorPickerInputId)));
+            $("#" + this._colorPickerActiveColorSwatchId).css("background", f.cssHexStringFromColor(this._color))
         };
-        e.prototype.show = function() {
-            h.centerWindow(this._colorPickerId, this._viewer.view.getCanvasSize());
+        h.prototype.show = function() {
+            f.centerWindow(this._colorPickerId, this._viewer.view.getCanvasSize());
             this._colorPicker.show()
         };
-        e.prototype.hide = function() {
+        h.prototype.hide = function() {
             this._colorPicker.hide()
         };
-        e.prototype.getColor = function() {
+        h.prototype.getColor = function() {
             return this._color.copy()
         };
-        return e
+        return h
     }();
-    h.ColorPicker = m
-})(f.Ui || (f.Ui = {}))
+    f.ColorPicker = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    (function(m) {
-        var e;
+    (function(l) {
+        var h;
         (function(a) {
             a[a.Model = 0] = "Model";
             a[a.CadView = 1] = "CadView";
@@ -2613,15 +3010,15 @@ f.PulseManager = m
             a[a.Types = 6] = "Types";
             a[a.BCF = 7] = "BCF";
             a[a.Relationships = 8] = "Relationships"
-        })(e = m.Tree || (m.Tree = {}));
+        })(h = l.Tree || (l.Tree = {}));
         var c = function() {
-            function a(b, d, a, c, l) {
+            function a(b, d, a, c, k) {
                 var g = this;
                 this._treeMap = new Map;
                 this._scrollTreeMap = new Map;
                 this._elementIdMap = new Map;
                 this._browserWindowMargin = 3;
-                this._scrollRefreshTimer = new f.Util.Timer;
+                this._scrollRefreshTimer = new e.Util.Timer;
                 this._scrollRefreshTimestamp = 0;
                 this._scrollRefreshInterval = 300;
                 this._minimized = !0;
@@ -2630,7 +3027,7 @@ f.PulseManager = m
                 this._containerId = d;
                 this._viewer = a;
                 this._isolateZoomHelper = c;
-                this._colorPicker = l;
+                this._colorPicker = k;
                 this._canvasSize = this._viewer.view.getCanvasSize();
                 this._header = this._createHeader();
                 this._browserWindow = this._createBrowserWindow();
@@ -2643,19 +3040,19 @@ f.PulseManager = m
                     minHeight: 37,
                     handles: "e"
                 });
-                this._elementIdMap.set(e.Model,
+                this._elementIdMap.set(h.Model,
                     "modelTree");
-                this._elementIdMap.set(e.CadView, "cadViewTree");
-                this._elementIdMap.set(e.Sheets, "sheetsTree");
-                this._elementIdMap.set(e.Configurations, "configurationsTree");
-                this._elementIdMap.set(e.Layers, "layersTree");
-                this._elementIdMap.set(e.Filters, "filtersTree");
-                this._elementIdMap.set(e.Types, "typesTree");
-                this._elementIdMap.set(e.BCF, "bcfTree");
+                this._elementIdMap.set(h.CadView, "cadViewTree");
+                this._elementIdMap.set(h.Sheets, "sheetsTree");
+                this._elementIdMap.set(h.Configurations, "configurationsTree");
+                this._elementIdMap.set(h.Layers, "layersTree");
+                this._elementIdMap.set(h.Filters, "filtersTree");
+                this._elementIdMap.set(h.Types, "typesTree");
+                this._elementIdMap.set(h.BCF, "bcfTree");
                 this._elementIdMap.forEach(function(d, b) {
                     g._addTree(d, b)
                 });
-                this._contextMenu = new m.ModelBrowserContextMenu(this._containerId, this._viewer, this._treeMap, this._isolateZoomHelper,
+                this._contextMenu = new l.ModelBrowserContextMenu(this._containerId, this._viewer, this._treeMap, this._isolateZoomHelper,
                     this._colorPicker);
                 this._initEvents();
                 this._minimizeModelBrowser()
@@ -2674,7 +3071,7 @@ f.PulseManager = m
             a.prototype._initEvents = function() {
                 var b = this,
                     d = function(d) {
-                        b._showTree(e.Model);
+                        b._showTree(h.Model);
                         b._computeRelationshipTreeVisibility(d)
                     };
                 this._viewer.setCallbacks({
@@ -2701,14 +3098,14 @@ f.PulseManager = m
                 });
                 this._registerScrollRefreshCallbacks();
                 $("#contextMenuButton").on("click", function(d) {
-                    d = new f.Point2(d.clientX, d.clientY);
-                    b._viewer.trigger("contextMenu", d, f.KeyModifiers.None)
+                    d = new e.Point2(d.clientX, d.clientY);
+                    b._viewer.trigger("contextMenu", d, e.KeyModifiers.None)
                 })
             };
             a.prototype._registerScrollRefreshCallbacks = function() {
                 var b = this;
                 this._treeMap.forEach(function(d) {
-                    d instanceof h.ViewTree && (d.registerCallback("expand", function() {
+                    d instanceof f.ViewTree && (d.registerCallback("expand", function() {
                         b._refreshBrowserScroll()
                     }), d.registerCallback("collapse", function() {
                         b._refreshBrowserScroll()
@@ -2752,7 +3149,7 @@ f.PulseManager = m
                     c = $("#" + a + "ScrollContainer");
                 a = $("#" + a +
                     "Tab");
-                d ? (c.show(), a.addClass("browser-tab-selected"), b instanceof h.BCFTree ? (this._setPropertyWindowVisibility(!1), this._setRelationshipsWindowVisibility(!1)) : (this._setPropertyWindowVisibility(!0), this._updateRelationshipsTreeVisibility())) : (c.hide(), a && a.removeClass("browser-tab-selected"))
+                d ? (c.show(), a.addClass("browser-tab-selected"), b instanceof f.BCFTree ? (this._setPropertyWindowVisibility(!1), this._setRelationshipsWindowVisibility(!1)) : (this._setPropertyWindowVisibility(!0), this._updateRelationshipsTreeVisibility())) : (c.hide(), a && a.removeClass("browser-tab-selected"))
             };
             a.prototype._showTree = function(b) {
                 var d = this;
@@ -2768,8 +3165,8 @@ f.PulseManager = m
                 var a = this._initializeIScroll(b);
                 this._scrollTreeMap.set(d, a);
                 var c;
-                d === e.Model ? c = new h.ModelTree(this._viewer, b, a) : d === e.CadView ? c = new h.CadViewTree(this._viewer, b, a) : d === e.Sheets ? c = new h.SheetsTree(this._viewer, b, a) : d === e.Configurations ? c = new h.ConfigurationsTree(this._viewer, b, a) : d === e.Layers ? c = new h.LayersTree(this._viewer, b, a) : d === e.Filters ? c = new h.FiltersTree(this._viewer, b, a) : d === e.Types ? c = new h.TypesTree(this._viewer, b, a) : d === e.BCF ? c = new h.BCFTree(this._viewer,
-                    b, a) : d === e.Relationships ? c = new h.RelationshipsTree(this._viewer, b, a) : f.Util.TypeAssertNever(d);
+                d === h.Model ? c = new f.ModelTree(this._viewer, b, a) : d === h.CadView ? c = new f.CadViewTree(this._viewer, b, a) : d === h.Sheets ? c = new f.SheetsTree(this._viewer, b, a) : d === h.Configurations ? c = new f.ConfigurationsTree(this._viewer, b, a) : d === h.Layers ? c = new f.LayersTree(this._viewer, b, a) : d === h.Filters ? c = new f.FiltersTree(this._viewer, b, a) : d === h.Types ? c = new f.TypesTree(this._viewer, b, a) : d === h.BCF ? c = new f.BCFTree(this._viewer,
+                    b, a) : d === h.Relationships ? c = new f.RelationshipsTree(this._viewer, b, a) : e.Util.TypeAssertNever(d);
                 this._treeMap.set(d, c)
             };
             a.prototype._createBrowserWindow = function() {
@@ -2801,20 +3198,20 @@ f.PulseManager = m
                     a = document.createElement("table"),
                     c = document.createElement("tr");
                 a.appendChild(c);
-                var l = document.createElement("td");
-                l.classList.add("ui-modelbrowser-minimizetd");
+                var k = document.createElement("td");
+                k.classList.add("ui-modelbrowser-minimizetd");
                 this._minimizeButton = this._createDiv("ui-modelbrowser-minimizebutton", ["ui-modelbrowser-minimizebutton", "minimized"]);
                 this._minimizeButton.onclick = function() {
                     b._onMinimizeButtonClick()
                 };
-                l.appendChild(this._minimizeButton);
-                c.appendChild(l);
-                l = document.createElement("td");
-                l.id = "modelBrowserLabel";
-                l.innerHTML = "";
-                c.appendChild(l);
-                l = this._createDiv("contextMenuButton", ["ui-modeltree-icon", "menu"]);
-                c.appendChild(l);
+                k.appendChild(this._minimizeButton);
+                c.appendChild(k);
+                k = document.createElement("td");
+                k.id = "modelBrowserLabel";
+                k.innerHTML = "";
+                c.appendChild(k);
+                k = this._createDiv("contextMenuButton", ["ui-modeltree-icon", "menu"]);
+                c.appendChild(k);
                 d.appendChild(a);
                 this._content = this._createDiv("modelTreeContainer", ["ui-modelbrowser-content", "desktop-ui-window-content"]);
                 this._content.style.overflow = "auto";
@@ -2831,15 +3228,15 @@ f.PulseManager = m
                 this._createIScrollWrapper(this._content, "typesTree");
                 this._createIScrollWrapper(this._content, "bcfTree");
                 this._modelBrowserTabs = this._createDiv("modelBrowserTabs", []);
-                this._createBrowserTab("modelTreeTab", "Model Tree", !0, e.Model);
-                this._createBrowserTab("cadViewTreeTab", "Views", !1, e.CadView);
-                this._createBrowserTab("sheetsTreeTab", "Sheets", !1, e.Sheets);
-                this._createBrowserTab("configurationsTreeTab", "Configurations", !1, e.Configurations);
-                this._createBrowserTab("layersTreeTab", "Layers", !1, e.Layers);
-                this._createBrowserTab("relationTreeTab", "Relations", !1, e.Relationships);
-                this._createBrowserTab("filtersTreeTab", "Filters", !1, e.Filters);
-                this._createBrowserTab("typesTreeTab", "Types", !1, e.Types);
-                this._createBrowserTab("bcfTreeTab", "BCF", !1, e.BCF);
+                this._createBrowserTab("modelTreeTab", "Model Tree", !0, h.Model);
+                this._createBrowserTab("cadViewTreeTab", "Views", !1, h.CadView);
+                this._createBrowserTab("sheetsTreeTab", "Sheets", !1, h.Sheets);
+                this._createBrowserTab("configurationsTreeTab", "Configurations", !1, h.Configurations);
+                this._createBrowserTab("layersTreeTab", "Layers", !1, h.Layers);
+                this._createBrowserTab("relationTreeTab", "Relations", !1, h.Relationships);
+                this._createBrowserTab("filtersTreeTab", "Filters", !1, h.Filters);
+                this._createBrowserTab("typesTreeTab", "Types", !1, h.Types);
+                this._createBrowserTab("bcfTreeTab", "BCF", !1, h.BCF);
                 d.appendChild(this._modelBrowserTabs);
                 return d
             };
@@ -2852,17 +3249,17 @@ f.PulseManager = m
             };
             a.prototype._createBrowserTab = function(b, d, a, c) {
                 var g = this,
-                    k = document.createElement("label");
-                k.id = b;
-                k.textContent = d;
-                k.classList.add("ui-modelbrowser-tab");
-                k.classList.add("hidden");
-                a && k.classList.add("browser-tab-selected");
-                k.onclick = function(d) {
+                    m = document.createElement("label");
+                m.id = b;
+                m.textContent = d;
+                m.classList.add("ui-modelbrowser-tab");
+                m.classList.add("hidden");
+                a && m.classList.add("browser-tab-selected");
+                m.onclick = function(d) {
                     g._showTree(c)
                 };
-                this._modelBrowserTabs.appendChild(k);
-                return k
+                this._modelBrowserTabs.appendChild(m);
+                return m
             };
             a.prototype._initializeIScroll = function(b) {
                 b = $("#" + b + "ScrollContainer").get(0);
@@ -2876,8 +3273,8 @@ f.PulseManager = m
             a.prototype._createRelationshipTree = function(b) {
                 this._createIScrollWrapper(b, "relationshipsTree");
                 b = this._initializeIScroll("relationshipsTree");
-                this._scrollTreeMap.set(e.Relationships, b);
-                b = new h.RelationshipsTree(this._viewer, "relationshipsTree", b);
+                this._scrollTreeMap.set(h.Relationships, b);
+                b = new f.RelationshipsTree(this._viewer, "relationshipsTree", b);
                 this._setTreeVisibility(b, !0);
                 return b
             };
@@ -2931,7 +3328,7 @@ f.PulseManager = m
                     complete: function() {
                         $(b._browserWindow).children(".ui-resizable-handle").show()
                     },
-                    duration: h.DefaultUiTransitionDuration
+                    duration: f.DefaultUiTransitionDuration
                 });
                 this._refreshBrowserScroll()
             };
@@ -2951,7 +3348,7 @@ f.PulseManager = m
                         complete: function() {
                             $(b._browserWindow).children(".ui-resizable-handle").hide()
                         },
-                        duration: h.DefaultUiTransitionDuration
+                        duration: f.DefaultUiTransitionDuration
                     });
                     this._refreshBrowserScroll()
                 };
@@ -2964,12 +3361,12 @@ f.PulseManager = m
             a.prototype.onResizeElement = function(b, d) {
                 var a = $(this._header).outerHeight(),
                     c = $(this._content).outerHeight(),
-                    l = $(this._propertyWindow).outerHeight(),
+                    k = $(this._propertyWindow).outerHeight(),
                     e = $(this._relationshipsWindow).outerHeight();
                 $(d).hasClass("hidden") && (d = this._content);
                 var f = $(d).outerHeight(),
                     h = $(d).height();
-                void 0 !== a && void 0 !== l && void 0 !== e && void 0 !== c && void 0 !== f && void 0 !== h && (this._treePropertyContainer.style.height = b - a - 2 * this._browserWindowMargin + "px", a = b - a - l - e - c + f - 2 * this._browserWindowMargin - (f - h), 0 > a && (a = 0), this._browserWindow.style.height = b - 2 * this._browserWindowMargin + "px", d.style.height = a + "px", this._refreshBrowserScroll())
+                void 0 !== a && void 0 !== k && void 0 !== e && void 0 !== c && void 0 !== f && void 0 !== h && (this._treePropertyContainer.style.height = b - a - 2 * this._browserWindowMargin + "px", a = b - a - k - e - c + f - 2 * this._browserWindowMargin - (f - h), 0 > a && (a = 0), this._browserWindow.style.height = b - 2 * this._browserWindowMargin + "px", d.style.height = a + "px", this._refreshBrowserScroll())
             };
             a.prototype._onSlide = function() {
                 var b = $(this._header).outerHeight(),
@@ -2986,86 +3383,86 @@ f.PulseManager = m
             };
             a.prototype._onAssemblyTreeReady = function() {
                 $("#modelBrowserLoadingDiv").remove();
-                this._showTree(e.Model);
+                this._showTree(h.Model);
                 var b = $(this._elementId).height();
                 if (void 0 !== b) this.onResize(b)
             };
             a.prototype.freeze = function(b) {
-                this._getTree(e.Model).freezeExpansion(b)
+                this._getTree(h.Model).freezeExpansion(b)
             };
             a.prototype.enablePartSelection = function(b) {
-                this._getTree(e.Model).enablePartSelection(b)
+                this._getTree(h.Model).enablePartSelection(b)
             };
             a.prototype.updateSelection = function(b) {
-                this._getTree(e.Model).updateSelection(b)
+                this._getTree(h.Model).updateSelection(b)
             };
             a.prototype._getTree = function(b) {
                 return this._treeMap.get(b)
             };
             return a
         }();
-        m.ModelBrowser = c
-    })(h.Desktop || (h.Desktop = {}))
-})(f.Ui || (f.Ui = {}))
+        l.ModelBrowser = c
+    })(f.Desktop || (f.Desktop = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
 var __assign = this && this.__assign || function() {
-__assign = Object.assign || function(f) {
-    for (var h, m = 1, e = arguments.length; m < e; m++) {
-        h = arguments[m];
-        for (var c in h) Object.prototype.hasOwnProperty.call(h, c) && (f[c] = h[c])
+__assign = Object.assign || function(e) {
+    for (var f, l = 1, h = arguments.length; l < h; l++) {
+        f = arguments[l];
+        for (var c in f) Object.prototype.hasOwnProperty.call(f, c) && (e[c] = f[c])
     }
-    return f
+    return e
 };
 return __assign.apply(this, arguments)
 };
+(function(e) {
 (function(f) {
-(function(h) {
-    (function(m) {
-        var e;
+    (function(l) {
+        var h;
         (function(a) {
             a[a.Generic = 0] = "Generic";
             a[a.Bim = 1] = "Bim";
             a[a.Drawing = 2] = "Drawing"
-        })(e || (e = {}));
+        })(h || (h = {}));
         var c = function() {
             function a(b, d) {
                 var a = this;
                 this._toolbar = this._modelBrowser = null;
-                this._modelType = e.Generic;
+                this._modelType = h.Generic;
                 this._uiModelType = null;
                 this._suppressMissingModelDialog = !1;
                 this._viewer = b;
                 this._params = __assign({}, d);
-                if (void 0 === this._params.containerId) throw new f.ParseError("Must supply 'containerId'.");
-                this._colorPicker = new h.ColorPicker(this._viewer, this._params.containerId);
-                d = this._getWithDefault(this._params.screenConfiguration, f.ScreenConfiguration.Desktop);
+                if (void 0 === this._params.containerId) throw new e.ParseError("Must supply 'containerId'.");
+                this._colorPicker = new f.ColorPicker(this._viewer, this._params.containerId);
+                d = this._getWithDefault(this._params.screenConfiguration, e.ScreenConfiguration.Desktop);
                 b = this._getWithDefault(this._params.showModelBrowser, !0);
                 var c = this._getWithDefault(this._params.showToolbar, !0);
-                if (d === f.ScreenConfiguration.Mobile) {
-                    var l = this._viewer.view,
-                        u = l.getAxisTriad();
-                    l = l.getNavCube();
-                    u.setAnchor(f.OverlayAnchor.UpperRightCorner);
-                    l.setAnchor(f.OverlayAnchor.UpperLeftCorner);
+                if (d === e.ScreenConfiguration.Mobile) {
+                    var k = this._viewer.view,
+                        w = k.getAxisTriad();
+                    k = k.getNavCube();
+                    w.setAnchor(e.OverlayAnchor.UpperRightCorner);
+                    k.setAnchor(e.OverlayAnchor.UpperLeftCorner);
                     $("body").addClass("mobile");
-                    (u = this._viewer.operatorManager.getOperator(f.OperatorId.Handle)) && u.setHandleSize(3)
+                    (w = this._viewer.operatorManager.getOperator(e.OperatorId.Handle)) && w.setHandleSize(3)
                 }
                 this._cuttingPlaneController =
-                    new h.CuttingPlaneController(this._viewer);
-                this._isolateZoomHelper = new f.IsolateZoomHelper(this._viewer);
-                c && (this._toolbar = new h.Toolbar(this._viewer, this._cuttingPlaneController, d), this._toolbar.init());
+                    new f.CuttingPlane.Controller(this._viewer);
+                this._isolateZoomHelper = new e.IsolateZoomHelper(this._viewer);
+                c && (this._toolbar = new f.Toolbar(this._viewer, this._cuttingPlaneController, d), this._toolbar.init());
                 d = document.getElementById("content");
                 d.oncontextmenu = function() {
                     return !1
                 };
-                b && (b = document.createElement("div"), b.id = "modelBrowserWindow", d.appendChild(b), this._modelBrowser = new m.ModelBrowser(b.id, d.id, this._viewer, this._isolateZoomHelper, this._colorPicker));
-                new m.PropertyWindow(this._viewer);
+                b && (b = document.createElement("div"), b.id = "modelBrowserWindow", d.appendChild(b), this._modelBrowser = new l.ModelBrowser(b.id, d.id, this._viewer, this._isolateZoomHelper, this._colorPicker));
+                new l.PropertyWindow(this._viewer);
                 b = document.createElement("div");
                 b.id = "streamingIndicator";
                 d.appendChild(b);
-                this._viewer.getRendererType() === f.RendererType.Client && new h.StreamingIndicator(b.id, this._viewer);
-                this._contextMenu = new h.RightClickContextMenu(d.id, this._viewer, this._isolateZoomHelper, this._colorPicker);
-                new h.TimeoutWarningDialog(d.id, this._viewer);
+                this._viewer.getRendererType() === e.RendererType.Client && new f.StreamingIndicator(b.id, this._viewer);
+                this._contextMenu = new f.RightClickContextMenu(d.id, this._viewer, this._isolateZoomHelper, this._colorPicker);
+                new f.TimeoutWarningDialog(d.id, this._viewer);
                 this._viewer.setCallbacks({
                     sceneReady: function() {
                         a._onSceneReady()
@@ -3076,17 +3473,17 @@ return __assign.apply(this, arguments)
                     },
                     modelSwitched: function(d) {
                         d && (a._modelType =
-                            e.Generic, a._configureUi(a._modelType))
+                            h.Generic, a._configureUi(a._modelType))
                     },
                     sheetActivated: function() {
-                        a._configureUi(e.Drawing)
+                        a._configureUi(h.Drawing)
                     },
                     sheetDeactivated: function() {
                         a._configureUi(a._modelType)
                     },
                     modelLoadFailure: function(d, b) {
                         if (!a._suppressMissingModelDialog) {
-                            var c = new h.UiDialog("content");
+                            var c = new f.UiDialog("content");
                             c.setTitle("Model Load Error");
                             var g = "Unable to load ";
                             c.setText((d ? g + ("'" + d + "'") : g + "model") + (": " + b));
@@ -3099,20 +3496,20 @@ return __assign.apply(this, arguments)
                     missingModel: function(d) {
                         if (!a._suppressMissingModelDialog) {
                             a._suppressMissingModelDialog = !0;
-                            var b = new h.UiDialog("content");
+                            var b = new f.UiDialog("content");
                             b.setTitle("Missing Model Error");
                             b.setText("Unable to load '" + (d + "'"));
                             b.show()
                         }
                     },
                     webGlContextLost: function() {
-                        var d = new h.UiDialog("content");
+                        var d = new f.UiDialog("content");
                         d.setTitle("Fatal Error");
                         d.setText("WebGL context lost. Rendering cannot continue.");
                         d.show()
                     },
-                    XHRonloadend: function(d, a, b) {
-                        404 === a && (d = new h.UiDialog("content"), d.setTitle("404 Error"), d.setText("Unable to load " + b), d.show())
+                    XHRonloadend: function(d, b, a) {
+                        404 === b && (d = new f.UiDialog("content"), d.setTitle("404 Error"), d.setText("Unable to load " + a), d.show())
                     },
                     incrementalSelectionBatchBegin: function() {
                         a.freezeModelBrowser(!0);
@@ -3127,35 +3524,35 @@ return __assign.apply(this, arguments)
                     }
                 })
             }
-            a.prototype._getWithDefault = function(a, d) {
-                return void 0 === a ? d : a
+            a.prototype._getWithDefault = function(b, d) {
+                return void 0 === b ? d : b
             };
-            a.prototype._determineModelType = function(a) {
-                var d = e.Generic;
-                this._viewer.sheetManager.isDrawingSheetActive() ? d = e.Drawing : this._isBim(a) && (d = e.Bim);
+            a.prototype._determineModelType = function(b) {
+                var d = h.Generic;
+                this._viewer.sheetManager.isDrawingSheetActive() ? d = h.Drawing : this._isBim(b) && (d = h.Bim);
                 return d
             };
-            a.prototype._isBim = function(a) {
-                return 0 < a.length && (a = this._viewer.model.getModelFileTypeFromNode(a[0]),
-                    a === f.FileType.Ifc || a === f.FileType.Revit) ? !0 : !1
+            a.prototype._isBim = function(b) {
+                return 0 < b.length && (b = this._viewer.model.getModelFileTypeFromNode(b[0]),
+                    b === e.FileType.Ifc || b === e.FileType.Revit) ? !0 : !1
             };
-            a.prototype._configureUi = function(a) {
-                if (this._uiModelType !== a) {
-                    this._uiModelType = a;
+            a.prototype._configureUi = function(b) {
+                if (this._uiModelType !== b) {
+                    this._uiModelType = b;
                     var d = this._viewer.view.getAxisTriad(),
-                        b = this._viewer.view.getNavCube();
-                    a === e.Drawing ? (d.disable(), b.disable(), this._viewer.view.setDrawMode(f.DrawMode.WireframeOnShaded)) : (d.enable(), a === e.Bim ? this._viewer.view.setBackfacesVisible(!0) : b.enable());
-                    this._configureToolbar(a);
-                    this._configureModelBrowser(a)
+                        a = this._viewer.view.getNavCube();
+                    b === h.Drawing ? (d.disable(), a.disable(), this._viewer.view.setDrawMode(e.DrawMode.WireframeOnShaded)) : (d.enable(), b === h.Bim ? this._viewer.view.setBackfacesVisible(!0) : a.enable());
+                    this._configureToolbar(b);
+                    this._configureModelBrowser(b)
                 }
             };
-            a.prototype._configureToolbar = function(a) {
+            a.prototype._configureToolbar = function(b) {
                 null !== this._toolbar &&
-                    (a === e.Drawing ? ($("#cuttingplane-button").hide(), $("#cuttingplane-submenu").hide(), $("#explode-button").hide(), $("#explode-slider").hide(), $("#explode-submenu").hide(), $("#view-button").hide(), $("#view-submenu").hide(), $("#camera-button").hide(), $("#camera-submenu").hide(), $("#tool_separator_4").hide(), $("#tool_separator_1").hide(), $("#edgeface-button").hide(), $("#edgeface-submenu").hide()) : ($("#cuttingplane-button").show(), $("#explode-button").show(), $("#view-button").show(), $("#camera-button").show(),
+                    (b === h.Drawing ? ($("#cuttingplane-button").hide(), $("#cuttingplane-submenu").hide(), $("#explode-button").hide(), $("#explode-slider").hide(), $("#explode-submenu").hide(), $("#view-button").hide(), $("#view-submenu").hide(), $("#camera-button").hide(), $("#camera-submenu").hide(), $("#tool_separator_4").hide(), $("#tool_separator_1").hide(), $("#edgeface-button").hide(), $("#edgeface-submenu").hide()) : ($("#cuttingplane-button").show(), $("#explode-button").show(), $("#view-button").show(), $("#camera-button").show(),
                         $("#tool_separator_4").show(), $("#tool_separator_1").show(), $("#edgeface-button").show()), this._toolbar.reposition())
             };
-            a.prototype._configureModelBrowser = function(a) {
-                null !== this._modelBrowser && (a === e.Drawing ? $(".ui-modeltree").addClass("drawing") : $(".ui-modeltree").removeClass("drawing"))
+            a.prototype._configureModelBrowser = function(b) {
+                null !== this._modelBrowser && (b === h.Drawing ? $(".ui-modeltree").addClass("drawing") : $(".ui-modeltree").removeClass("drawing"))
             };
             a.prototype._onSceneReady = function() {
                 var b = this;
@@ -3164,23 +3561,23 @@ return __assign.apply(this, arguments)
                 d.setNodeSelectionColor(a._defaultPartSelectionColor);
                 d.setNodeSelectionOutlineColor(a._defaultPartSelectionOutlineColor);
                 d = this._viewer.view;
-                d.setXRayColor(f.ElementType.Faces, a._defaultXRayColor);
-                d.setXRayColor(f.ElementType.Lines, a._defaultXRayColor);
-                d.setXRayColor(f.ElementType.Points, a._defaultXRayColor);
+                d.setXRayColor(e.ElementType.Faces, a._defaultXRayColor);
+                d.setXRayColor(e.ElementType.Lines, a._defaultXRayColor);
+                d.setXRayColor(e.ElementType.Points, a._defaultXRayColor);
                 d.setBackgroundColor(a._defaultBackgroundColor, a._defaultBackgroundColor);
                 this._viewer.getViewElement().addEventListener("mouseenter", function() {
                     b._viewer.focusInput(!0)
                 })
             };
-            a.prototype.setDeselectOnIsolate = function(a) {
-                this._isolateZoomHelper.setDeselectOnIsolate(a)
+            a.prototype.setDeselectOnIsolate = function(b) {
+                this._isolateZoomHelper.setDeselectOnIsolate(b)
             };
-            a.prototype.freezeModelBrowser = function(a) {
+            a.prototype.freezeModelBrowser = function(b) {
                 null !==
-                    this._modelBrowser && this._modelBrowser.freeze(a)
+                    this._modelBrowser && this._modelBrowser.freeze(b)
             };
-            a.prototype.enableModelBrowserPartSelection = function(a) {
-                null !== this._modelBrowser && this._modelBrowser.enablePartSelection(a)
+            a.prototype.enableModelBrowserPartSelection = function(b) {
+                null !== this._modelBrowser && this._modelBrowser.enablePartSelection(b)
             };
             a.prototype._getContextMenu = function() {
                 return this._contextMenu
@@ -3191,41 +3588,41 @@ return __assign.apply(this, arguments)
             a.prototype._getToolbar = function() {
                 return this._toolbar
             };
-            a._defaultBackgroundColor = f.Color.white();
-            a._defaultPartSelectionColor = f.Color.createFromFloat(0, .8, 0);
+            a._defaultBackgroundColor = e.Color.white();
+            a._defaultPartSelectionColor = e.Color.createFromFloat(0, .8, 0);
             a._defaultPartSelectionOutlineColor =
-                f.Color.createFromFloat(0, .8, 0);
-            a._defaultXRayColor = f.Color.createFromFloat(0, .9, 0);
+                e.Color.createFromFloat(0, .8, 0);
+            a._defaultXRayColor = e.Color.createFromFloat(0, .9, 0);
             return a
         }();
-        m.DesktopUi = c
-    })(h.Desktop || (h.Desktop = {}))
-})(f.Ui || (f.Ui = {}))
+        l.DesktopUi = c
+    })(f.Desktop || (f.Desktop = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    (function(m) {
-        var e = function(c) {
-            function a(a, d, g, k, l) {
-                a = c.call(this, "modelbrowser", a, d, k, l) || this;
-                a._treeMap = g;
-                a._initEvents();
-                return a
+    (function(l) {
+        var h = function(c) {
+            function a(b, d, a, m, e) {
+                b = c.call(this, "modelbrowser", b, d, m, e) || this;
+                b._treeMap = a;
+                b._initEvents();
+                return b
             }
             __extends(a, c);
             a.prototype._initEvents = function() {
                 return __awaiter(this, void 0, void 0, function() {
-                    var a, d = this;
-                    return __generator(this, function(b) {
-                        switch (b.label) {
+                    var b, d = this;
+                    return __generator(this, function(a) {
+                        switch (a.label) {
                             case 0:
-                                return [4, this._registerContextMenuCallback(m.Tree.Model)];
+                                return [4, this._registerContextMenuCallback(l.Tree.Model)];
                             case 1:
-                                return b.sent(), [4, this._registerContextMenuCallback(m.Tree.Layers)];
+                                return a.sent(), [4, this._registerContextMenuCallback(l.Tree.Layers)];
                             case 2:
-                                return b.sent(), [4, this._registerContextMenuCallback(m.Tree.Types)];
+                                return a.sent(), [4, this._registerContextMenuCallback(l.Tree.Types)];
                             case 3:
-                                return b.sent(), this._viewer.getStreamingMode() === f.StreamingMode.OnDemand && (a = function() {
+                                return a.sent(), this._viewer.getStreamingMode() === e.StreamingMode.OnDemand && (b = function() {
                                     return __awaiter(d, void 0, void 0, function() {
                                         return __generator(this, function(d) {
                                             switch (d.label) {
@@ -3236,7 +3633,7 @@ return __assign.apply(this, arguments)
                                             }
                                         })
                                     })
-                                }, this.appendSeparator(), this.appendItem("request", "Request", a)), [2]
+                                }, this.appendSeparator(), this.appendItem("request", "Request", b)), [2]
                         }
                     })
                 })
@@ -3247,7 +3644,7 @@ return __assign.apply(this, arguments)
                     return __generator(this,
                         function(c) {
                             d = this._treeMap.get(a);
-                            void 0 !== d && d instanceof h.ViewTree && d.registerCallback("context", function(d, a) {
+                            void 0 !== d && d instanceof f.ViewTree && d.registerCallback("context", function(d, a) {
                                 return __awaiter(b, void 0, void 0, function() {
                                     return __generator(this, function(b) {
                                         switch (b.label) {
@@ -3265,11 +3662,11 @@ return __assign.apply(this, arguments)
             };
             a.prototype._onTreeContext = function(a, d) {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, c, l;
+                    var b, c, e;
                     return __generator(this, function(g) {
                         switch (g.label) {
                             case 0:
-                                b = a.split(h.ModelTree.separator);
+                                b = a.split(f.ModelTree.separator);
                                 c = b[0];
                                 switch (c) {
                                     case "layer":
@@ -3295,13 +3692,13 @@ return __assign.apply(this, arguments)
                             case 4:
                                 return g.sent(), [3, 8];
                             case 5:
-                                return l = parseInt(b[1], 10), [4, this.setActiveItemId(l)];
+                                return e = parseInt(b[1], 10), [4, this.setActiveItemId(e)];
                             case 6:
                                 return g.sent(), [3, 8];
                             case 7:
                                 return [2];
                             case 8:
-                                return this._position = null, this.showElements(d,true), [2]
+                                return this._position = null, this.showElements(d,true), [2] //3DSANDBOX CHANGES
                         }
                     })
                 })
@@ -3310,15 +3707,15 @@ return __assign.apply(this, arguments)
                 this.hide()
             };
             return a
-        }(h.Context.ContextMenu);
-        m.ModelBrowserContextMenu = e
-    })(h.Desktop || (h.Desktop = {}))
-})(f.Ui || (f.Ui = {}))
+        }(f.Context.ContextMenu);
+        l.ModelBrowserContextMenu = h
+    })(f.Desktop || (f.Desktop = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
-(function(f) {
-(function(f) {
-    (function(f) {
-        function e(a) {
+(function(e) {
+(function(e) {
+    (function(e) {
+        function f(a) {
             return a.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
         }
         var c = function() {
@@ -3390,7 +3787,7 @@ return __assign.apply(this, arguments)
                 return __awaiter(this,
                     void 0, void 0,
                     function() {
-                        var d, b, c, l, f, h, m, n, p, r, v, w, t, x, z, y, B;
+                        var d, b, c, e, h, l, p, n, q, t, u, v, r, x, z, y, B;
                         return __generator(this, function(g) {
                             switch (g.label) {
                                 case 0:
@@ -3400,22 +3797,22 @@ return __assign.apply(this, arguments)
                                     b = a.getSelection().getNodeId();
                                     if (null === b || !d.isNodeLoaded(b)) return [2];
                                     c = d.getNodeName(b);
-                                    f = l = null;
+                                    h = e = null;
                                     return [4, d.getNodeProperties(b)];
                                 case 1:
-                                    h = g.sent();
-                                    m = [];
-                                    if (null !== h && (m = Object.keys(h), 0 < m.length))
-                                        for (l = document.createElement("table"), l.id = "propertyTable", l.appendChild(this._createRow("Property",
-                                                "Value", "headerRow")), l.appendChild(this._createRow("Name", null !== c ? c : "unnamed")), n = 0, p = m; n < p.length; n++) r = p[n], v = e(r), w = e(h[r]), l.appendChild(this._createRow(v, w));
-                                    t = d.getNodeUserDataIndices(b);
-                                    if (0 < t.length)
-                                        for (f = document.createElement("table"), f.id = "propertyTable", f.appendChild(this._createRow("User Data Index", "User Data Size", "headerRow")), x = 0, z = t; x < z.length; x++) y = z[x], B = d.getNodeUserData(b, y), v = "number" === typeof y ? "0x" + y.toString(16).toUpperCase() : "0x" + y, w = "" + B.length, f.appendChild(this._createRow(v,
-                                            w));
-                                    if (null === l && null === f) return [2];
+                                    l = g.sent();
+                                    p = [];
+                                    if (null !== l && (p = Object.keys(l), 0 < p.length))
+                                        for (e = document.createElement("table"), e.id = "propertyTable", e.appendChild(this._createRow("Property",
+                                                "Value", "headerRow")), e.appendChild(this._createRow("Name", null !== c ? c : "unnamed")), n = 0, q = p; n < q.length; n++) t = q[n], u = f(t), v = f(l[t]), e.appendChild(this._createRow(u, v));
+                                    r = d.getNodeUserDataIndices(b);
+                                    if (0 < r.length)
+                                        for (h = document.createElement("table"), h.id = "propertyTable", h.appendChild(this._createRow("User Data Index", "User Data Size", "headerRow")), x = 0, z = r; x < z.length; x++) y = z[x], B = d.getNodeUserData(b, y), u = "number" === typeof y ? "0x" + y.toString(16).toUpperCase() : "0x" + y, v = "" + B.length, h.appendChild(this._createRow(u,
+                                            v));
+                                    if (null === e && null === h) return [2];
                                     this._update("");
-                                    null !== l && this._propertyWindow.append(l);
-                                    null !== f && this._propertyWindow.append(f);
+                                    null !== e && this._propertyWindow.append(e);
+                                    null !== h && this._propertyWindow.append(h);
                                     return [2]
                             }
                         })
@@ -3423,59 +3820,59 @@ return __assign.apply(this, arguments)
             };
             return a
         }();
-        f.PropertyWindow = c
-    })(f.Desktop || (f.Desktop = {}))
-})(f.Ui || (f.Ui = {}))
+        e.PropertyWindow = c
+    })(e.Desktop || (e.Desktop = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    h.DefaultUiTransitionDuration = 400;
-    h.colorFromRgbString = function(h) {
-        h = h.replace(/[^\d,]/g, "").split(",");
-        return new f.Color(Number(h[0]), Number(h[1]), Number(h[2]))
+    f.DefaultUiTransitionDuration = 400;
+    f.colorFromRgbString = function(f) {
+        f = f.replace(/[^\d,]/g, "").split(",");
+        return new e.Color(Number(f[0]), Number(f[1]), Number(f[2]))
     };
-    h.rgbStringFromColor = function(f) {
-        return f ? "rgb(" + Math.round(f.r) + "," + Math.round(f.g) + "," + Math.round(f.b) + ")" : ""
+    f.rgbStringFromColor = function(e) {
+        return e ? "rgb(" + Math.round(e.r) + "," + Math.round(e.g) + "," + Math.round(e.b) + ")" : ""
     };
-    h.cssHexStringFromColor = function(f) {
-        var e = function(c) {
+    f.cssHexStringFromColor = function(e) {
+        var f = function(c) {
             c = c.toString(16);
             return 1 === c.length ? "0" + c : c
         };
-        return "#" + e(f.r) + e(f.g) + e(f.b)
+        return "#" + f(e.r) + f(e.g) + f(e.b)
     };
-    h.getValueAsString = function(f) {
-        f = $(f).val();
-        return "string" === typeof f ?
-            f : ""
+    f.getValueAsString = function(e) {
+        e = $(e).val();
+        return "string" === typeof e ?
+            e : ""
     };
-    h.centerWindow = function(f, e) {
-        f = $("#" + f);
-        var c = f.width(),
-            a = f.height();
-        void 0 !== c && void 0 !== a && f.css({
-            left: (e.x - c) / 2 + "px",
-            top: (e.y - a) / 2 + "px"
+    f.centerWindow = function(e, f) {
+        e = $("#" + e);
+        var c = e.width(),
+            a = e.height();
+        void 0 !== c && void 0 !== a && e.css({
+            left: (f.x - c) / 2 + "px",
+            top: (f.y - a) / 2 + "px"
         })
     }
-})(f.Ui || (f.Ui = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    (function(m) {
-        var e;
+    (function(l) {
+        var h;
         (function(a) {
             a[a.General = 0] = "General";
             a[a.Walk = 1] = "Walk";
             a[a.Drawing = 2] = "Drawing";
             a[a.Floorplan = 3] = "Floorplan"
-        })(e = m.SettingTab || (m.SettingTab = {}));
+        })(h = l.SettingTab || (l.SettingTab = {}));
         var c = function() {
             function a(a) {
                 this._versionInfo = !0;
                 this._splatRenderingEnabled = !1;
                 this._splatRenderingSize = .003;
-                this._splatRenderingPointSizeUnit = f.PointSizeUnit.ProportionOfBoundingDiagonal;
+                this._splatRenderingPointSizeUnit = e.PointSizeUnit.ProportionOfBoundingDiagonal;
                 this._floorplanActive = !1;
                 this._honorSceneVisibility = !0;
                 this._walkSpeedUnits = 1;
@@ -3498,7 +3895,7 @@ return __assign.apply(this, arguments)
             a.prototype.show = function() {
                 var a = this._updateSettings();
                 document.body.classList.contains("mobile") && this._scaleForMobile();
-                h.centerWindow(this._viewerSettingsSelector, this._viewer.view.getCanvasSize());
+                f.centerWindow(this._viewerSettingsSelector, this._viewer.view.getCanvasSize());
                 $("#" + this._viewerSettingsSelector).show();
                 return a
             };
@@ -3509,30 +3906,30 @@ return __assign.apply(this, arguments)
                 var a = $("#" + this._viewerSettingsSelector),
                     d = $("#" + this._viewerSettingsSelector + " .hoops-ui-window-body"),
                     c = this._viewer.view.getCanvasSize(),
-                    k = a.width();
-                void 0 !== k && 1.8 * k > c.x && d.css("width", c.x / 1.8);
-                k = a.height();
-                if (void 0 !== k && 1.8 * k > c.y) {
+                    m = a.width();
+                void 0 !== m && 1.8 * m > c.x && d.css("width", c.x / 1.8);
+                m = a.height();
+                if (void 0 !== m && 1.8 * m > c.y) {
                     a.show();
-                    k = $("#" + this._viewerSettingsSelector + " .hoops-ui-window-header").get(0).offsetHeight;
-                    var l = $("#" + this._viewerSettingsSelector + " .hoops-ui-window-footer").get(0).offsetHeight;
+                    m = $("#" + this._viewerSettingsSelector + " .hoops-ui-window-header").get(0).offsetHeight;
+                    var e = $("#" + this._viewerSettingsSelector + " .hoops-ui-window-footer").get(0).offsetHeight;
                     a.hide();
-                    d.css("height", c.y / 1.8 - 1.4 * (k + l))
+                    d.css("height", c.y / 1.8 - 1.4 * (m + e))
                 }
             };
             a.prototype._initElements = function() {
                 var a = this;
-                this._walkKeyIdsMap.set(f.WalkDirection.Up, "walk-key-up");
-                this._walkKeyIdsMap.set(f.WalkDirection.Down, "walk-key-down");
-                this._walkKeyIdsMap.set(f.WalkDirection.Left,
+                this._walkKeyIdsMap.set(e.WalkDirection.Up, "walk-key-up");
+                this._walkKeyIdsMap.set(e.WalkDirection.Down, "walk-key-down");
+                this._walkKeyIdsMap.set(e.WalkDirection.Left,
                     "walk-key-left");
-                this._walkKeyIdsMap.set(f.WalkDirection.Right, "walk-key-right");
-                this._walkKeyIdsMap.set(f.WalkDirection.Forward, "walk-key-forward");
-                this._walkKeyIdsMap.set(f.WalkDirection.Backward, "walk-key-backward");
-                this._walkKeyIdsMap.set(f.WalkDirection.TiltUp, "walk-key-tilt-up");
-                this._walkKeyIdsMap.set(f.WalkDirection.TiltDown, "walk-key-tilt-down");
-                this._walkKeyIdsMap.set(f.WalkDirection.RotateLeft, "walk-key-rotate-left");
-                this._walkKeyIdsMap.set(f.WalkDirection.RotateRight, "walk-key-rotate-right");
+                this._walkKeyIdsMap.set(e.WalkDirection.Right, "walk-key-right");
+                this._walkKeyIdsMap.set(e.WalkDirection.Forward, "walk-key-forward");
+                this._walkKeyIdsMap.set(e.WalkDirection.Backward, "walk-key-backward");
+                this._walkKeyIdsMap.set(e.WalkDirection.TiltUp, "walk-key-tilt-up");
+                this._walkKeyIdsMap.set(e.WalkDirection.TiltDown, "walk-key-tilt-down");
+                this._walkKeyIdsMap.set(e.WalkDirection.RotateLeft, "walk-key-rotate-left");
+                this._walkKeyIdsMap.set(e.WalkDirection.RotateRight, "walk-key-rotate-right");
                 $("#viewer-settings-dialog").draggable({
                     handle: ".hoops-ui-window-header"
                 });
@@ -3545,12 +3942,12 @@ return __assign.apply(this, arguments)
                 });
                 $("#viewer-settings-ok-button").on("click", function() {
                     return __awaiter(a, void 0, void 0, function() {
-                        return __generator(this, function(a) {
-                            switch (a.label) {
+                        return __generator(this, function(d) {
+                            switch (d.label) {
                                 case 0:
                                     return [4, this._applySettings()];
                                 case 1:
-                                    return a.sent(), this.hide(), [2]
+                                    return d.sent(), this.hide(), [2]
                             }
                         })
                     })
@@ -3561,12 +3958,12 @@ return __assign.apply(this, arguments)
                     });
                 $("#viewer-settings-apply-button").on("click", function() {
                     return __awaiter(a, void 0, void 0, function() {
-                        return __generator(this, function(a) {
-                            switch (a.label) {
+                        return __generator(this, function(d) {
+                            switch (d.label) {
                                 case 0:
                                     return [4, this._applySettings()];
                                 case 1:
-                                    return a.sent(), [2]
+                                    return d.sent(), [2]
                             }
                         })
                     })
@@ -3597,13 +3994,13 @@ return __assign.apply(this, arguments)
                 this._viewer.setCallbacks({
                     firstModelLoaded: function() {
                         return __awaiter(a, void 0, void 0, function() {
-                            var a, b, c;
-                            return __generator(this, function(d) {
-                                switch (d.label) {
+                            var d, a, b;
+                            return __generator(this, function(c) {
+                                switch (c.label) {
                                     case 0:
-                                        return a = this._viewer.operatorManager, b = a.getOperator(f.OperatorId.KeyboardWalk), c = b.getWalkSpeed(), 0 >= c ? [4, b.resetDefaultWalkSpeeds()] : [3, 2];
+                                        return d = this._viewer.operatorManager, a = d.getOperator(e.OperatorId.KeyboardWalk), b = a.getWalkSpeed(), 0 >= b ? [4, a.resetDefaultWalkSpeeds()] : [3, 2];
                                     case 1:
-                                        d.sent(), this._updateWalkSettingsHelper(), d.label = 2;
+                                        c.sent(), this._updateWalkSettingsHelper(), c.label = 2;
                                     case 2:
                                         return [2]
                                 }
@@ -3615,83 +4012,83 @@ return __assign.apply(this, arguments)
                     }
                 });
                 $("#settings-walk-mode").on("change", function() {
-                    var d = parseInt(h.getValueAsString("#settings-walk-mode"), 10);
+                    var d = parseInt(f.getValueAsString("#settings-walk-mode"), 10);
                     a._updateKeyboardWalkModeStyle(d)
                 });
                 $(this._generalTabLabelId).on("click", function() {
-                    a._switchTab(e.General)
+                    a._switchTab(h.General)
                 });
                 $(this._walkTabLabelId).on("click", function() {
-                    a._switchTab(e.Walk)
+                    a._switchTab(h.Walk)
                 });
                 $(this._drawingTabLabelId).on("click", function() {
-                    a._switchTab(e.Drawing)
+                    a._switchTab(h.Drawing)
                 });
                 $(this._floorplanTabLabelId).on("click", function() {
-                    a._switchTab(e.Floorplan)
+                    a._switchTab(h.Floorplan)
                 })
             };
             a.prototype._switchTab = function(a) {
                 var d = $(this._generalTabLabelId),
                     b = $(this._walkTabLabelId),
                     c = $(this._drawingTabLabelId),
-                    l = $(this._floorplanTabLabelId),
+                    e = $(this._floorplanTabLabelId),
                     f = $(this._generalTabId),
-                    h = $(this._walkTabId),
-                    m = $(this._drawingTabId),
+                    l = $(this._walkTabId),
+                    p = $(this._drawingTabId),
                     n = $(this._floorplanTabId);
                 d.removeClass("selected");
                 f.removeClass("selected");
-                h.removeClass("selected");
+                l.removeClass("selected");
                 b.removeClass("selected");
-                m.removeClass("selected");
+                p.removeClass("selected");
                 c.removeClass("selected");
                 n.removeClass("selected");
-                l.removeClass("selected");
+                e.removeClass("selected");
                 switch (a) {
-                    case e.General:
+                    case h.General:
                         d.addClass("selected");
                         f.addClass("selected");
                         break;
-                    case e.Walk:
-                        h.addClass("selected");
+                    case h.Walk:
+                        l.addClass("selected");
                         b.addClass("selected");
                         break;
-                    case e.Drawing:
-                        m.addClass("selected");
+                    case h.Drawing:
+                        p.addClass("selected");
                         c.addClass("selected");
                         break;
-                    case e.Floorplan:
-                        n.addClass("selected"), l.addClass("selected")
+                    case h.Floorplan:
+                        n.addClass("selected"), e.addClass("selected")
                 }
             };
             a.prototype._updateSettings = function() {
                 var a = this,
                     d = this._viewer.view,
                     c = this._viewer.model,
-                    k = this._viewer.selectionManager,
-                    l = this._viewer.cuttingManager,
-                    e = this._viewer.measureManager,
-                    m = this._viewer.operatorManager;
+                    m = this._viewer.selectionManager,
+                    k = this._viewer.cuttingManager,
+                    h = this._viewer.measureManager,
+                    l = this._viewer.operatorManager;
                 this._versionInfo && ($("#settings-format-version").html(this._viewer.getFormatVersionString()),
                     $("#settings-viewer-version").html(this._viewer.getViewerVersionString()), this._versionInfo = !1);
-                var q = d.getBackgroundColor();
-                var n = null === q.top ? h.colorFromRgbString("rgb(192,220,248)") : q.top;
-                q = null === q.bottom ? h.colorFromRgbString("rgb(192,220,248)") : q.bottom;
-                var p = k.getNodeSelectionColor(),
-                    r = k.getNodeElementSelectionColor();
-                e = e.getMeasurementColor();
-                var v = d.getProjectionMode(),
-                    w = d.getBackfacesVisible(),
-                    t = d.getHiddenLineSettings().getObscuredLineOpacity(),
-                    x = l.getCappingGeometryVisibility();
-                k = k.getHighlightFaceElementSelection() &&
-                    k.getHighlightLineElementSelection();
-                var z = l.getCappingFaceColor();
-                l = l.getCappingLineColor();
+                var p = d.getBackgroundColor();
+                var n = null === p.top ? f.colorFromRgbString("rgb(192,220,248)") : p.top;
+                p = null === p.bottom ? f.colorFromRgbString("rgb(192,220,248)") : p.bottom;
+                var q = m.getNodeSelectionColor(),
+                    t = m.getNodeElementSelectionColor();
+                h = h.getMeasurementColor();
+                var u = d.getProjectionMode(),
+                    v = d.getBackfacesVisible(),
+                    r = d.getHiddenLineSettings().getObscuredLineOpacity(),
+                    x = k.getCappingGeometryVisibility();
+                m = m.getHighlightFaceElementSelection() &&
+                    m.getHighlightLineElementSelection();
+                var z = k.getCappingFaceColor();
+                k = k.getCappingLineColor();
                 var y = d.getAmbientOcclusionEnabled(),
                     B = d.getAmbientOcclusionRadius(),
-                    D = d.getAntiAliasingMode() === f.AntiAliasingMode.SMAA,
+                    D = d.getAntiAliasingMode() === e.AntiAliasingMode.SMAA,
                     E = d.getBloomEnabled(),
                     F = d.getBloomIntensityScale(),
                     G = d.getBloomThreshold(),
@@ -3702,26 +4099,26 @@ return __assign.apply(this, arguments)
                     L = d.getSimpleShadowBlurSamples(),
                     M = c.getPmiColor();
                 c = c.getPmiColorOverride();
-                m = m.getOperator(f.OperatorId.Orbit).getOrbitFallbackMode() === f.OrbitFallbackMode.CameraTarget ? !0 : !1;
+                l = l.getOperator(e.OperatorId.Orbit).getOrbitFallbackMode() === e.OrbitFallbackMode.CameraTarget ? !0 : !1;
                 var N = this._axisTriad.getEnabled(),
                     O = this._navCube.getEnabled(),
                     A = [];
                 A.push(this._updateWalkSettings());
                 this._updateDrawingSettings();
                 this._updateFloorplanSettings();
-                $("#settings-selection-color-body").minicolors("value", h.rgbStringFromColor(p));
-                $("#settings-selection-color-face-line").minicolors("value", h.rgbStringFromColor(r));
-                $("#settings-background-top").minicolors("value", h.rgbStringFromColor(n));
-                $("#settings-background-bottom").minicolors("value", h.rgbStringFromColor(q));
-                $("#settings-measurement-color").minicolors("value", h.rgbStringFromColor(e));
-                $("#settings-capping-face-color").minicolors("value", h.rgbStringFromColor(z));
-                $("#settings-capping-line-color").minicolors("value", h.rgbStringFromColor(l));
-                $("#settings-projection-mode").val("" + v);
-                $("#settings-show-backfaces").prop("checked", w);
+                $("#settings-selection-color-body").minicolors("value", f.rgbStringFromColor(q));
+                $("#settings-selection-color-face-line").minicolors("value", f.rgbStringFromColor(t));
+                $("#settings-background-top").minicolors("value", f.rgbStringFromColor(n));
+                $("#settings-background-bottom").minicolors("value", f.rgbStringFromColor(p));
+                $("#settings-measurement-color").minicolors("value", f.rgbStringFromColor(h));
+                $("#settings-capping-face-color").minicolors("value", f.rgbStringFromColor(z));
+                $("#settings-capping-line-color").minicolors("value", f.rgbStringFromColor(k));
+                $("#settings-projection-mode").val("" + u);
+                $("#settings-show-backfaces").prop("checked", v);
                 $("#settings-show-capping-geometry").prop("checked", x);
                 $("#settings-enable-face-line-selection").prop("checked",
-                    k);
-                $("#settings-orbit-mode").prop("checked", m);
+                    m);
+                $("#settings-orbit-mode").prop("checked", l);
                 $("#settings-select-scene-invisible").prop("checked", this._honorSceneVisibility);
                 $("#settings-ambient-occlusion").prop("checked", y);
                 $("#settings-ambient-occlusion-radius").val("" + B);
@@ -3735,19 +4132,19 @@ return __assign.apply(this, arguments)
                     I);
                 $("#settings-shadow-interactive").prop("checked", K);
                 $("#settings-shadow-blur-samples").val(L);
-                $("#settings-pmi-color").minicolors("value", h.rgbStringFromColor(M));
+                $("#settings-pmi-color").minicolors("value", f.rgbStringFromColor(M));
                 c !== $("#settings-pmi-enabled").prop("checked") && $("#settings-pmi-enabled").trigger("click");
                 A.push(this._viewer.getMinimumFramerate().then(function(a) {
                     $("#settings-framerate").val("" + a)
                 }));
-                void 0 !== t ? $("#settings-hidden-line-opacity").val("" + t) : $("#settings-hidden-line-opacity").val("");
+                void 0 !== r ? $("#settings-hidden-line-opacity").val("" + r) : $("#settings-hidden-line-opacity").val("");
                 E !== $("#settings-bloom-enabled").prop("checked") &&
                     $("#settings-bloom-enabled").trigger("click");
                 J !== $("#settings-shadow-enabled").prop("checked") && $("#settings-shadow-enabled").trigger("click");
                 A.push(d.getPointSize().then(function(d) {
                     var b = d[0];
                     d = d[1];
-                    a._splatRenderingEnabled = 1 !== b || d !== f.PointSizeUnit.ScreenPixels;
+                    a._splatRenderingEnabled = 1 !== b || d !== e.PointSizeUnit.ScreenPixels;
                     a._splatRenderingEnabled !== $("#settings-splat-rendering-enabled").prop("checked") && $("#settings-splat-rendering-enabled").trigger("click");
                     a._splatRenderingEnabled && (a._splatRenderingSize = b, a._splatRenderingPointSizeUnit = d);
                     b = $("#settings-splat-rendering-size");
@@ -3758,96 +4155,96 @@ return __assign.apply(this, arguments)
                 A.push(d.getEyeDomeLightingEnabled().then(function(a) {
                     $("#settings-eye-dome-lighting-enabled").prop("checked", a)
                 }));
-                return f.Util.waitForAll(A)
+                return e.Util.waitForAll(A)
             };
             a.prototype._applySettings = function() {
                 var a = [],
                     d = this._viewer.view,
                     c = this._viewer.model,
-                    k = this._viewer.cuttingManager,
-                    l = this._viewer.selectionManager;
+                    m = this._viewer.cuttingManager,
+                    k = this._viewer.selectionManager;
                 a.push(this._applyWalkSettings());
-                var e = h.colorFromRgbString(h.getValueAsString("#settings-background-top")),
-                    m = h.colorFromRgbString(h.getValueAsString("#settings-background-bottom"));
-                this._viewer.view.setBackgroundColor(e, m);
-                e = h.colorFromRgbString(h.getValueAsString("#settings-selection-color-body"));
-                l.setNodeSelectionColor(e);
-                l.setNodeSelectionOutlineColor(e);
-                e = h.colorFromRgbString(h.getValueAsString("#settings-selection-color-face-line"));
-                l.setNodeElementSelectionColor(e);
-                l.setNodeElementSelectionOutlineColor(e);
-                e = $("#settings-enable-face-line-selection").prop("checked");
-                l.setHighlightFaceElementSelection(e);
-                l.setHighlightLineElementSelection(e);
-                this._viewer.measureManager.setMeasurementColor(h.colorFromRgbString(h.getValueAsString("#settings-measurement-color")));
-                l = h.colorFromRgbString(h.getValueAsString("#settings-pmi-color"));
-                e = $("#settings-pmi-enabled").prop("checked");
-                l && e ? (c.setPmiColor(l), c.setPmiColorOverride(!0)) : c.setPmiColorOverride(!1);
-                a.push(k.setCappingFaceColor(h.colorFromRgbString(h.getValueAsString("#settings-capping-face-color"))));
-                a.push(k.setCappingLineColor(h.colorFromRgbString(h.getValueAsString("#settings-capping-line-color"))));
-                d.setProjectionMode(parseInt(h.getValueAsString("#settings-projection-mode"), 10));
+                var h = f.colorFromRgbString(f.getValueAsString("#settings-background-top")),
+                    l = f.colorFromRgbString(f.getValueAsString("#settings-background-bottom"));
+                this._viewer.view.setBackgroundColor(h, l);
+                h = f.colorFromRgbString(f.getValueAsString("#settings-selection-color-body"));
+                k.setNodeSelectionColor(h);
+                k.setNodeSelectionOutlineColor(h);
+                h = f.colorFromRgbString(f.getValueAsString("#settings-selection-color-face-line"));
+                k.setNodeElementSelectionColor(h);
+                k.setNodeElementSelectionOutlineColor(h);
+                h = $("#settings-enable-face-line-selection").prop("checked");
+                k.setHighlightFaceElementSelection(h);
+                k.setHighlightLineElementSelection(h);
+                this._viewer.measureManager.setMeasurementColor(f.colorFromRgbString(f.getValueAsString("#settings-measurement-color")));
+                k = f.colorFromRgbString(f.getValueAsString("#settings-pmi-color"));
+                h = $("#settings-pmi-enabled").prop("checked");
+                k && h ? (c.setPmiColor(k), c.setPmiColorOverride(!0)) : c.setPmiColorOverride(!1);
+                a.push(m.setCappingFaceColor(f.colorFromRgbString(f.getValueAsString("#settings-capping-face-color"))));
+                a.push(m.setCappingLineColor(f.colorFromRgbString(f.getValueAsString("#settings-capping-line-color"))));
+                d.setProjectionMode(parseInt(f.getValueAsString("#settings-projection-mode"), 10));
                 c = $("#settings-show-backfaces").prop("checked");
                 d.setBackfacesVisible(c);
                 c = $("#settings-show-capping-geometry").prop("checked");
-                a.push(k.setCappingGeometryVisibility(c));
-                (k = parseInt(h.getValueAsString("#settings-framerate"), 10)) && 0 < k && this._viewer.setMinimumFramerate(k);
-                k = parseFloat(h.getValueAsString("#settings-hidden-line-opacity"));
-                d.getHiddenLineSettings().setObscuredLineOpacity(k);
-                d.getDrawMode() === f.DrawMode.HiddenLine && d.setDrawMode(f.DrawMode.HiddenLine);
-                k = this._viewer.operatorManager.getOperator(f.OperatorId.Orbit);
+                a.push(m.setCappingGeometryVisibility(c));
+                (m = parseInt(f.getValueAsString("#settings-framerate"), 10)) && 0 < m && this._viewer.setMinimumFramerate(m);
+                m = parseFloat(f.getValueAsString("#settings-hidden-line-opacity"));
+                d.getHiddenLineSettings().setObscuredLineOpacity(m);
+                d.getDrawMode() === e.DrawMode.HiddenLine && d.setDrawMode(e.DrawMode.HiddenLine);
+                m = this._viewer.operatorManager.getOperator(e.OperatorId.Orbit);
                 c = $("#settings-orbit-mode").prop("checked");
-                k.setOrbitFallbackMode(c ? f.OrbitFallbackMode.CameraTarget : f.OrbitFallbackMode.ModelCenter);
-                k = (this._honorSceneVisibility = $("#settings-select-scene-invisible").prop("checked")) ? f.SelectionMask.None : f.SelectionMask.All;
-                c = this._viewer.operatorManager.getOperator(f.OperatorId.Select);
-                l = c.getPickConfig();
-                l.forceEffectiveSceneVisibilityMask = k;
-                c.setPickConfig(l);
-                this._viewer.operatorManager.getOperator(f.OperatorId.AreaSelect).setForceEffectiveSceneVisibilityMask(k);
-                this._viewer.operatorManager.getOperator(f.OperatorId.RayDrillSelect).setForceEffectiveSceneVisibilityMask(k);
+                m.setOrbitFallbackMode(c ? e.OrbitFallbackMode.CameraTarget : e.OrbitFallbackMode.ModelCenter);
+                m = (this._honorSceneVisibility = $("#settings-select-scene-invisible").prop("checked")) ? e.SelectionMask.None : e.SelectionMask.All;
+                c = this._viewer.operatorManager.getOperator(e.OperatorId.Select);
+                k = c.getPickConfig();
+                k.forceEffectiveSceneVisibilityMask = m;
+                c.setPickConfig(k);
+                this._viewer.operatorManager.getOperator(e.OperatorId.AreaSelect).setForceEffectiveSceneVisibilityMask(m);
+                this._viewer.operatorManager.getOperator(e.OperatorId.RayDrillSelect).setForceEffectiveSceneVisibilityMask(m);
                 d.setAmbientOcclusionEnabled($("#settings-ambient-occlusion").prop("checked"));
-                d.setAmbientOcclusionRadius(parseFloat(h.getValueAsString("#settings-ambient-occlusion-radius")));
+                d.setAmbientOcclusionRadius(parseFloat(f.getValueAsString("#settings-ambient-occlusion-radius")));
                 $("#settings-anti-aliasing").prop("checked") ?
-                    d.setAntiAliasingMode(f.AntiAliasingMode.SMAA) : d.setAntiAliasingMode(f.AntiAliasingMode.None);
+                    d.setAntiAliasingMode(e.AntiAliasingMode.SMAA) : d.setAntiAliasingMode(e.AntiAliasingMode.None);
                 d.setBloomEnabled($("#settings-bloom-enabled").prop("checked"));
-                d.setBloomIntensityScale(parseFloat(h.getValueAsString("#settings-bloom-intensity")));
-                d.setBloomThreshold(parseFloat(h.getValueAsString("#settings-bloom-threshold")));
+                d.setBloomIntensityScale(parseFloat(f.getValueAsString("#settings-bloom-intensity")));
+                d.setBloomThreshold(parseFloat(f.getValueAsString("#settings-bloom-threshold")));
                 d.setSilhouetteEnabled($("#settings-silhouette-enabled").prop("checked"));
                 d.setSimpleReflectionEnabled($("#settings-reflection-enabled").prop("checked"));
                 d.setSimpleShadowEnabled($("#settings-shadow-enabled").prop("checked"));
                 d.setSimpleShadowInteractiveUpdateEnabled($("#settings-shadow-interactive").prop("checked"));
-                d.setSimpleShadowBlurSamples(parseInt(h.getValueAsString("#settings-shadow-blur-samples"), 10));
+                d.setSimpleShadowBlurSamples(parseInt(f.getValueAsString("#settings-shadow-blur-samples"), 10));
                 $("#settings-axis-triad").prop("checked") ? this._axisTriad.enable() : this._axisTriad.disable();
                 $("#settings-nav-cube").prop("checked") ? this._navCube.enable() : this._navCube.disable();
-                $("#settings-splat-rendering-enabled").prop("checked") ? (this._splatRenderingEnabled = !0, this._splatRenderingSize = parseFloat(h.getValueAsString("#settings-splat-rendering-size")),
-                    this._splatRenderingPointSizeUnit = parseInt(h.getValueAsString("#settings-splat-rendering-point-size-unit"), 10), d.setPointSize(this._splatRenderingSize, this._splatRenderingPointSizeUnit)) : (this._splatRenderingEnabled = !1, d.setPointSize(1, f.PointSizeUnit.ScreenPixels));
+                $("#settings-splat-rendering-enabled").prop("checked") ? (this._splatRenderingEnabled = !0, this._splatRenderingSize = parseFloat(f.getValueAsString("#settings-splat-rendering-size")),
+                    this._splatRenderingPointSizeUnit = parseInt(f.getValueAsString("#settings-splat-rendering-point-size-unit"), 10), d.setPointSize(this._splatRenderingSize, this._splatRenderingPointSizeUnit)) : (this._splatRenderingEnabled = !1, d.setPointSize(1, e.PointSizeUnit.ScreenPixels));
                 d.setEyeDomeLightingEnabled($("#settings-eye-dome-lighting-enabled").prop("checked"));
                 a.push(this._applyDrawingSettings());
                 a.push(this._applyFloorplanSettings());
-                return f.Util.waitForAll(a)
+                return e.Util.waitForAll(a)
             };
             a.prototype._applyWalkKeyText = function(a, d) {
                 d <
-                    f.KeyCode.a || d > f.KeyCode.z || (a = this._walkKeyIdsMap.get(a), d = f.KeyCode[d].toUpperCase(), $("#" + a).html(d))
+                    e.KeyCode.a || d > e.KeyCode.z || (a = this._walkKeyIdsMap.get(a), d = e.KeyCode[d].toUpperCase(), $("#" + a).html(d))
             };
             a.prototype._applyWalkSettings = function() {
                 return __awaiter(this, void 0, void 0, function() {
-                    var a, d, c, k, l, e, m, q, n, p, r, v, w = this;
+                    var a, d, c, m, k, h, l, p, n, q, t, u, v = this;
                     return __generator(this, function(b) {
                         switch (b.label) {
                             case 0:
-                                return a = this._viewer.operatorManager, d = a.getOperator(f.OperatorId.KeyboardWalk), c = a.getOperator(f.OperatorId.WalkMode), k = parseInt(h.getValueAsString("#settings-walk-mode"), 10), [4, c.setWalkMode(k)];
+                                return a = this._viewer.operatorManager, d = a.getOperator(e.OperatorId.KeyboardWalk), c = a.getOperator(e.OperatorId.WalkMode), m = parseInt(f.getValueAsString("#settings-walk-mode"), 10), [4, c.setWalkMode(m)];
                             case 1:
                                 return b.sent(),
-                                    l = parseInt(h.getValueAsString("#settings-walk-rotation"), 10), e = parseFloat(h.getValueAsString("#settings-walk-speed")) * this._walkSpeedUnits, m = parseFloat(h.getValueAsString("#settings-walk-elevation")) * this._walkSpeedUnits, q = parseInt(h.getValueAsString("#settings-walk-view-angle"), 10), n = $("#settings-mouse-look-enabled").prop("checked"), p = parseInt(h.getValueAsString("#settings-mouse-look-speed"), 10), r = $("#settings-bim-mode-enabled").prop("checked"), $("#walk-navigation-keys .walk-key").html(""), v = d.getKeyMapping(),
-                                    v.forEach(function(a, d) {
-                                        w._applyWalkKeyText(a, d)
-                                    }), 0 !== e ? [3, 3] : [4, c.resetDefaultWalkSpeeds()];
+                                    k = parseInt(f.getValueAsString("#settings-walk-rotation"), 10), h = parseFloat(f.getValueAsString("#settings-walk-speed")) * this._walkSpeedUnits, l = parseFloat(f.getValueAsString("#settings-walk-elevation")) * this._walkSpeedUnits, p = parseInt(f.getValueAsString("#settings-walk-view-angle"), 10), n = $("#settings-mouse-look-enabled").prop("checked"), q = parseInt(f.getValueAsString("#settings-mouse-look-speed"), 10), t = $("#settings-bim-mode-enabled").prop("checked"), $("#walk-navigation-keys .walk-key").html(""), u = d.getKeyMapping(),
+                                    u.forEach(function(a, d) {
+                                        v._applyWalkKeyText(a, d)
+                                    }), 0 !== h ? [3, 3] : [4, c.resetDefaultWalkSpeeds()];
                             case 2:
                                 return b.sent(), this._updateWalkSettingsHelper(), [3, 4];
                             case 3:
-                                c.setRotationSpeed(l), c.setWalkSpeed(e), c.setElevationSpeed(m), c.setViewAngle(q), k === f.WalkMode.Keyboard && (d.setMouseLookEnabled(n), d.setMouseLookSpeed(p)), b.label = 4;
+                                c.setRotationSpeed(k), c.setWalkSpeed(h), c.setElevationSpeed(l), c.setViewAngle(p), m === e.WalkMode.Keyboard && (d.setMouseLookEnabled(n), d.setMouseLookSpeed(q)), b.label = 4;
                             case 4:
-                                return r ? [4, this._viewer.model.registerIfcNodes(this._viewer.model.getAbsoluteRootNode())] : [3, 7];
+                                return t ? [4, this._viewer.model.registerIfcNodes(this._viewer.model.getAbsoluteRootNode())] : [3, 7];
                             case 5:
                                 return b.sent(), [4, c.setBimModeEnabled(!0)];
                             case 6:
@@ -3864,7 +4261,7 @@ return __assign.apply(this, arguments)
                 })
             };
             a.prototype._updateKeyboardWalkModeStyle = function(a) {
-                this._updateEnabledStyle(null, ["walk-mouse-look-text", "settings-mouse-look-style", "walk-navigation-keys"], ["settings-mouse-look-enabled", "settings-mouse-look-speed"], a === f.WalkMode.Keyboard)
+                this._updateEnabledStyle(null, ["walk-mouse-look-text", "settings-mouse-look-style", "walk-navigation-keys"], ["settings-mouse-look-enabled", "settings-mouse-look-speed"], a === e.WalkMode.Keyboard)
             };
             a.prototype._updateWalkSpeedUnits = function(a) {
                 this._walkSpeedUnits = Math.pow(10, Math.floor(Math.log(a) / Math.LN10));
@@ -3876,23 +4273,23 @@ return __assign.apply(this, arguments)
             };
             a.prototype._updateWalkSettingsHelper = function() {
                 var a = this._viewer.operatorManager,
-                    d = a.getOperator(f.OperatorId.KeyboardWalk),
-                    c = a.getOperator(f.OperatorId.WalkMode);
+                    d = a.getOperator(e.OperatorId.KeyboardWalk),
+                    c = a.getOperator(e.OperatorId.WalkMode);
                 a = d.getRotationSpeed();
-                var k = d.getWalkSpeed(),
-                    l = d.getElevationSpeed(),
-                    e = d.getViewAngle(),
+                var m = d.getWalkSpeed(),
+                    k = d.getElevationSpeed(),
+                    f = d.getViewAngle(),
                     h = d.getMouseLookEnabled(),
-                    m = d.getMouseLookSpeed();
+                    l = d.getMouseLookSpeed();
                 d = d.isBimModeEnabled();
                 c = c.getWalkMode();
-                this._updateWalkSpeedUnits(k);
+                this._updateWalkSpeedUnits(m);
                 $("#settings-walk-mode").val("" + c);
                 $("#settings-walk-rotation").val("" + a);
-                $("#settings-walk-speed").val((k / this._walkSpeedUnits).toFixed(1));
-                $("#settings-walk-elevation").val((l / this._walkSpeedUnits).toFixed(1));
-                $("#settings-walk-view-angle").val("" + e);
-                $("#settings-mouse-look-speed").val("" + m);
+                $("#settings-walk-speed").val((m / this._walkSpeedUnits).toFixed(1));
+                $("#settings-walk-elevation").val((k / this._walkSpeedUnits).toFixed(1));
+                $("#settings-walk-view-angle").val("" + f);
+                $("#settings-mouse-look-speed").val("" + l);
                 this._updateEnabledStyle("settings-mouse-look-enabled", ["settings-mouse-look-style"], ["settings-mouse-look-speed"], h);
                 this._updateEnabledStyle("settings-bim-mode-enabled", [], [],
                     d);
@@ -3904,7 +4301,7 @@ return __assign.apply(this, arguments)
                     return __generator(this, function(b) {
                         switch (b.label) {
                             case 0:
-                                return a = this._viewer.operatorManager, d = a.getOperator(f.OperatorId.KeyboardWalk), c = d.getWalkSpeed(), 0 !== c ? [3, 2] : [4, d.resetDefaultWalkSpeeds()];
+                                return a = this._viewer.operatorManager, d = a.getOperator(e.OperatorId.KeyboardWalk), c = d.getWalkSpeed(), 0 !== c ? [3, 2] : [4, d.resetDefaultWalkSpeeds()];
                             case 1:
                                 b.sent(), b.label = 2;
                             case 2:
@@ -3917,21 +4314,21 @@ return __assign.apply(this, arguments)
                 var a = this._viewer.sheetManager.getSheetBackgroundColor(),
                     d = this._viewer.sheetManager.getSheetColor(),
                     c = this._viewer.sheetManager.getSheetShadowColor(),
-                    k = this._viewer.sheetManager.getBackgroundSheetEnabled();
-                $("#settings-drawing-background").minicolors("value", h.rgbStringFromColor(a));
-                $("#settings-drawing-sheet").minicolors("value", h.rgbStringFromColor(d));
-                $("#settings-drawing-sheet-shadow").minicolors("value", h.rgbStringFromColor(c));
-                $("#settings-drawing-background-enabled").prop("checked", k)
+                    e = this._viewer.sheetManager.getBackgroundSheetEnabled();
+                $("#settings-drawing-background").minicolors("value", f.rgbStringFromColor(a));
+                $("#settings-drawing-sheet").minicolors("value", f.rgbStringFromColor(d));
+                $("#settings-drawing-sheet-shadow").minicolors("value", f.rgbStringFromColor(c));
+                $("#settings-drawing-background-enabled").prop("checked", e)
             };
             a.prototype._applyDrawingSettings = function() {
                 return __awaiter(this,
                     void 0, void 0,
                     function() {
-                        var a, d, c, k;
+                        var a, d, c, e;
                         return __generator(this, function(b) {
                             switch (b.label) {
                                 case 0:
-                                    return a = h.colorFromRgbString(h.getValueAsString("#settings-drawing-background")), d = h.colorFromRgbString(h.getValueAsString("#settings-drawing-sheet")), c = h.colorFromRgbString(h.getValueAsString("#settings-drawing-sheet-shadow")), k = $("#settings-drawing-background-enabled").prop("checked"), [4, this._viewer.sheetManager.setBackgroundSheetEnabled(k)];
+                                    return a = f.colorFromRgbString(f.getValueAsString("#settings-drawing-background")), d = f.colorFromRgbString(f.getValueAsString("#settings-drawing-sheet")), c = f.colorFromRgbString(f.getValueAsString("#settings-drawing-sheet-shadow")), e = $("#settings-drawing-background-enabled").prop("checked"), [4, this._viewer.sheetManager.setBackgroundSheetEnabled(e)];
                                 case 1:
                                     return b.sent(), [4, this._viewer.sheetManager.setSheetColors(a,
                                         d, c)];
@@ -3948,20 +4345,20 @@ return __assign.apply(this, arguments)
                 $("#settings-floorplan-active").prop("checked", a);
                 $("#settings-floorplan-track-camera").prop("checked", d.trackCameraEnabled);
                 switch (d.floorplanOrientation) {
-                    case f.FloorplanOrientation.NorthUp:
+                    case e.FloorplanOrientation.NorthUp:
                         $("#settings-floorplan-orientation").val("0");
                         break;
-                    case f.FloorplanOrientation.AvatarUp:
+                    case e.FloorplanOrientation.AvatarUp:
                         $("#settings-floorplan-orientation").val("1")
                 }
                 switch (d.autoActivate) {
-                    case f.FloorplanAutoActivation.Bim:
+                    case e.FloorplanAutoActivation.Bim:
                         $("#settings-floorplan-auto-activate").val("0");
                         break;
-                    case f.FloorplanAutoActivation.BimWalk:
+                    case e.FloorplanAutoActivation.BimWalk:
                         $("#settings-floorplan-auto-activate").val("1");
                         break;
-                    case f.FloorplanAutoActivation.Never:
+                    case e.FloorplanAutoActivation.Never:
                         $("#settings-floorplan-auto-activate").val("2")
                 }
                 $("#settings-floorplan-feet-per-pixel").val("" + d.overlayFeetPerPixel);
@@ -3969,16 +4366,16 @@ return __assign.apply(this, arguments)
                 $("#settings-floorplan-background-opacity").val("" + d.backgroundOpacity);
                 $("#settings-floorplan-border-opacity").val("" + d.borderOpacity);
                 $("#settings-floorplan-avatar-opacity").val("" + d.avatarOpacity);
-                $("#settings-floorplan-background-color").minicolors("value", h.rgbStringFromColor(d.backgroundColor));
-                $("#settings-floorplan-border-color").minicolors("value", h.rgbStringFromColor(d.borderColor));
-                $("#settings-floorplan-avatar-color").minicolors("value", h.rgbStringFromColor(d.avatarColor));
-                $("#settings-floorplan-avatar-outline-color").minicolors("value", h.rgbStringFromColor(d.avatarOutlineColor));
+                $("#settings-floorplan-background-color").minicolors("value", f.rgbStringFromColor(d.backgroundColor));
+                $("#settings-floorplan-border-color").minicolors("value", f.rgbStringFromColor(d.borderColor));
+                $("#settings-floorplan-avatar-color").minicolors("value", f.rgbStringFromColor(d.avatarColor));
+                $("#settings-floorplan-avatar-outline-color").minicolors("value", f.rgbStringFromColor(d.avatarOutlineColor));
                 this._updateEnabledStyle(null, ["settings-floorplan-zoom-style"], ["settings-floorplan-zoom"], d.trackCameraEnabled);
                 this._updateEnabledStyle(null, ["settings-floorplan-feet-per-pixel-style"], ["settings-floorplan-feet-per-pixel"], d.trackCameraEnabled)
             };
             a.prototype._applyFloorplanSettings = function() {
                 return __awaiter(this, void 0, void 0, function() {
-                    var a, d, c, k, l, e, m, q, n, p, r, v, w, t, x;
+                    var a, d, c, m, k, h, l, p, n, q, t, u, v, r, x;
                     return __generator(this, function(b) {
                         switch (b.label) {
                             case 0:
@@ -3986,52 +4383,52 @@ return __assign.apply(this, arguments)
                                 d = $("#settings-floorplan-track-camera").prop("checked");
                                 switch ($("#settings-floorplan-orientation").val()) {
                                     case "0":
-                                        c = f.FloorplanOrientation.NorthUp;
+                                        c = e.FloorplanOrientation.NorthUp;
                                         break;
                                     case "1":
-                                        c = f.FloorplanOrientation.AvatarUp;
+                                        c = e.FloorplanOrientation.AvatarUp;
                                         break;
                                     default:
-                                        c = f.FloorplanOrientation.NorthUp
+                                        c = e.FloorplanOrientation.NorthUp
                                 }
                                 switch ($("#settings-floorplan-auto-activate").val()) {
                                     case "0":
-                                        k = f.FloorplanAutoActivation.Bim;
+                                        m = e.FloorplanAutoActivation.Bim;
                                         break;
                                     case "1":
-                                        k = f.FloorplanAutoActivation.BimWalk;
+                                        m = e.FloorplanAutoActivation.BimWalk;
                                         break;
                                     case "2":
-                                        k = f.FloorplanAutoActivation.Never;
+                                        m = e.FloorplanAutoActivation.Never;
                                         break;
                                     default:
-                                        k = f.FloorplanAutoActivation.BimWalk
+                                        m = e.FloorplanAutoActivation.BimWalk
                                 }
-                                l = parseFloat(h.getValueAsString("#settings-floorplan-feet-per-pixel"));
-                                e = parseFloat(h.getValueAsString("#settings-floorplan-zoom"));
-                                m = parseFloat(h.getValueAsString("#settings-floorplan-background-opacity"));
-                                q = parseFloat(h.getValueAsString("#settings-floorplan-border-opacity"));
-                                n = parseFloat(h.getValueAsString("#settings-floorplan-avatar-opacity"));
-                                p = h.colorFromRgbString(h.getValueAsString("#settings-floorplan-background-color"));
-                                r = h.colorFromRgbString(h.getValueAsString("#settings-floorplan-border-color"));
-                                v = h.colorFromRgbString(h.getValueAsString("#settings-floorplan-avatar-color"));
-                                w = h.colorFromRgbString(h.getValueAsString("#settings-floorplan-avatar-outline-color"));
-                                t = this._viewer.floorplanManager.getConfiguration();
-                                t.trackCameraEnabled = d;
-                                t.floorplanOrientation = c;
-                                t.autoActivate = k;
-                                t.overlayFeetPerPixel = l;
-                                t.zoomLevel = e;
-                                t.backgroundOpacity = m;
-                                t.borderOpacity = q;
-                                t.avatarOpacity = n;
-                                t.backgroundColor = p;
-                                t.borderColor = r;
-                                t.avatarColor = v;
-                                t.avatarOutlineColor = w;
+                                k = parseFloat(f.getValueAsString("#settings-floorplan-feet-per-pixel"));
+                                h = parseFloat(f.getValueAsString("#settings-floorplan-zoom"));
+                                l = parseFloat(f.getValueAsString("#settings-floorplan-background-opacity"));
+                                p = parseFloat(f.getValueAsString("#settings-floorplan-border-opacity"));
+                                n = parseFloat(f.getValueAsString("#settings-floorplan-avatar-opacity"));
+                                q = f.colorFromRgbString(f.getValueAsString("#settings-floorplan-background-color"));
+                                t = f.colorFromRgbString(f.getValueAsString("#settings-floorplan-border-color"));
+                                u = f.colorFromRgbString(f.getValueAsString("#settings-floorplan-avatar-color"));
+                                v = f.colorFromRgbString(f.getValueAsString("#settings-floorplan-avatar-outline-color"));
+                                r = this._viewer.floorplanManager.getConfiguration();
+                                r.trackCameraEnabled = d;
+                                r.floorplanOrientation = c;
+                                r.autoActivate = m;
+                                r.overlayFeetPerPixel = k;
+                                r.zoomLevel = h;
+                                r.backgroundOpacity = l;
+                                r.borderOpacity = p;
+                                r.avatarOpacity = n;
+                                r.backgroundColor = q;
+                                r.borderColor = t;
+                                r.avatarColor = u;
+                                r.avatarOutlineColor = v;
                                 this._updateEnabledStyle(null, ["settings-floorplan-zoom-style"], ["settings-floorplan-zoom"], d);
                                 this._updateEnabledStyle(null, ["settings-floorplan-feet-per-pixel-style"], ["settings-floorplan-feet-per-pixel"], d);
-                                return [4, this._viewer.floorplanManager.setConfiguration(t)];
+                                return [4, this._viewer.floorplanManager.setConfiguration(r)];
                             case 1:
                                 b.sent();
                                 if (!a || this._floorplanActive) return [3, 3];
@@ -4051,63 +4448,63 @@ return __assign.apply(this, arguments)
                     })
                 })
             };
-            a.prototype._updateEnabledStyle = function(a, d, c, k) {
+            a.prototype._updateEnabledStyle = function(a, d, c, e) {
                 null !== a && $("#" + a).prop("checked",
-                    k);
-                if (k)
+                    e);
+                if (e)
                     for (var b = 0; b < d.length; b++) a = d[b], $("#" + a).removeClass("grayed-out");
                 else
                     for (b = 0; b < d.length; b++) a = d[b], $("#" + a).addClass("grayed-out");
-                for (d = 0; d < c.length; d++) $("#" + c[d]).prop("disabled", !k)
+                for (d = 0; d < c.length; d++) $("#" + c[d]).prop("disabled", !e)
             };
             return a
         }();
-        m.ViewerSettings = c
-    })(h.Desktop || (h.Desktop = {}))
-})(f.Ui || (f.Ui = {}))
+        l.ViewerSettings = c
+    })(f.Desktop || (f.Desktop = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
-(function(f) {
-(function(f) {
-    var h = function() {
-        function e(c, a, b) {
+(function(e) {
+(function(e) {
+    var f = function() {
+        function f(c, a, b) {
             this._maxNodeChildrenSize = 300;
-            this._tree = new f.Control.TreeControl(a, c, e.separator, b);
+            this._tree = new e.Control.TreeControl(a, c, f.separator, b);
             this._internalId = a + "Id";
             this._viewer = c
         }
-        e.prototype.getElementId = function() {
+        f.prototype.getElementId = function() {
             return this._tree.getElementId()
         };
-        e.prototype.registerCallback = function(c, a) {
+        f.prototype.registerCallback = function(c, a) {
             this._tree.registerCallback(c, a)
         };
-        e.prototype._splitHtmlId = function(c) {
-            return this._splitHtmlIdParts(c, e.separator)
+        f.prototype._splitHtmlId = function(c) {
+            return this._splitHtmlIdParts(c, f.separator)
         };
-        e.prototype._splitHtmlIdParts = function(c, a) {
+        f.prototype._splitHtmlIdParts = function(c, a) {
             var b = c.lastIndexOf(a);
             return -1 === b ? ["", c] : [c.substring(0, b), c.substring(b + a.length)]
         };
-        e.prototype.hideTab = function() {
+        f.prototype.hideTab = function() {
             $("#" + this.getElementId() + "Tab").hide()
         };
-        e.prototype.showTab = function() {
+        f.prototype.showTab = function() {
             $("#" + this.getElementId() + "Tab").show()
         };
-        e.prototype._getTreeControl = function() {
+        f.prototype._getTreeControl = function() {
             return this._tree
         };
-        e.separator = "_";
-        e.visibilityPrefix = "visibility";
-        return e
+        f.separator = "_";
+        f.visibilityPrefix = "visibility";
+        return f
     }();
-    f.ViewTree = h
-})(f.Ui || (f.Ui = {}))
+    e.ViewTree = f
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function() {
-        function e(c, a, b) {
+    var l = function() {
+        function f(c, a, b) {
             this._idCount = 0;
             this._viewpointIdMap = new Map;
             this._bcfIdMap = new Map;
@@ -4122,27 +4519,27 @@ return __assign.apply(this, arguments)
             this._bcfDataList = document.createElement("select");
             this._initEvents()
         }
-        e.prototype.hideTab = function() {
+        f.prototype.hideTab = function() {
             $("#" + this._elementId + "Tab").hide()
         };
-        e.prototype.showTab =
+        f.prototype.showTab =
             function() {
                 $("#" + this._elementId + "Tab").show()
             };
-        e.prototype.getElementId = function() {
+        f.prototype.getElementId = function() {
             return this._elementId
         };
-        e.prototype._refreshScroll = function() {
+        f.prototype._refreshScroll = function() {
             this._scroll && this._scroll.refresh()
         };
-        e.prototype._showBCFData = function(c) {
+        f.prototype._showBCFData = function(c) {
             jQuery("#" + c).show();
             this._bcfIdMap.forEach(function(a, b) {
                 b !== c && jQuery("#" + b).hide()
             });
             this._refreshScroll()
         };
-        e.prototype._events = function(c) {
+        f.prototype._events = function(c) {
             var a = this;
             $(c).on("click", ".ui-bcf-topic", function(b) {
                 return __awaiter(a, void 0, void 0, function() {
@@ -4164,23 +4561,23 @@ return __assign.apply(this, arguments)
                 (b = jQuery(b.target).closest("select").get(0)) && a._showBCFData(b.value)
             })
         };
-        e.prototype._addBCFComment = function(c, a, b) {
+        f.prototype._addBCFComment = function(c, a, b) {
             return __awaiter(this, void 0, void 0, function() {
-                var d, g, k, l, e, h, m;
-                return __generator(this, function(u) {
-                    switch (u.label) {
+                var d, g, m, f, h, l, p;
+                return __generator(this, function(k) {
+                    switch (k.label) {
                         case 0:
-                            return d = c.getMarkup(), g = new Date, k = "", l = f.UUID.create(), e = l + ".bcfv",
-                                [4, f.BCFViewpoint.createViewpoint(this._viewer, e, b)];
+                            return d = c.getMarkup(), g = new Date, m = "", f = e.UUID.create(), h = f + ".bcfv",
+                                [4, e.BCFViewpoint.createViewpoint(this._viewer, h, b)];
                         case 1:
-                            return h = u.sent(), c.setViewpoint(e, h), m = l + ".png", [4, this._addSnapshot(c, m)];
+                            return l = k.sent(), c.setViewpoint(h, l), p = f + ".png", [4, this._addSnapshot(c, p)];
                         case 2:
-                            return u.sent(), d.addViewpoint(l, e, m), [2, d.addComment(g, k, a, l)]
+                            return k.sent(), d.addViewpoint(f, h, p), [2, d.addComment(g, m, a, f)]
                     }
                 })
             })
         };
-        e.prototype._addSnapshot = function(c, a) {
+        f.prototype._addSnapshot = function(c, a) {
             return __awaiter(this, void 0, void 0, function() {
                 var b;
                 return __generator(this, function(d) {
@@ -4188,16 +4585,16 @@ return __assign.apply(this, arguments)
                         case 0:
                             return [4, this._viewer.takeSnapshot()];
                         case 1:
-                            return b = d.sent(), c.addSnapshot(a, f.BCFSnapshot.snapshotDataFromImage(b)), [2]
+                            return b = d.sent(), c.addSnapshot(a, e.BCFSnapshot.snapshotDataFromImage(b)), [2]
                     }
                 })
             })
         };
-        e.prototype._removeBcf =
+        f.prototype._removeBcf =
             function(c) {
                 this._viewer.BCFManager.removeBCFData(c)
             };
-        e.prototype._buildRemoveBCF = function(c) {
+        f.prototype._buildRemoveBCF = function(c) {
             var a = this,
                 b = document.createElement("div");
             b.classList.add("ui-bcf-input");
@@ -4214,7 +4611,7 @@ return __assign.apply(this, arguments)
             };
             return b
         };
-        e.prototype._addBcf = function(c) {
+        f.prototype._addBcf = function(c) {
             return __awaiter(this, void 0, void 0, function() {
                 var a, b, d;
                 return __generator(this,
@@ -4228,7 +4625,7 @@ return __assign.apply(this, arguments)
                     })
             })
         };
-        e.prototype._buildAddBCF = function() {
+        f.prototype._buildAddBCF = function() {
             var c = this,
                 a = document.createElement("div");
             a.classList.add("ui-bcf-input");
@@ -4263,7 +4660,7 @@ return __assign.apply(this, arguments)
             };
             return a
         };
-        e.prototype._buildOpenBCF = function() {
+        f.prototype._buildOpenBCF = function() {
             var c = this,
                 a = document.createElement("div");
             a.classList.add("ui-bcf-input");
@@ -4274,7 +4671,7 @@ return __assign.apply(this, arguments)
             a.appendChild(b);
             b.onchange = function() {
                 return __awaiter(c, void 0, void 0, function() {
-                    var a, c, k, l = this;
+                    var a, c, e, f = this;
                     return __generator(this, function(d) {
                         a = b.files;
                         if (null !== a)
@@ -4282,7 +4679,7 @@ return __assign.apply(this, arguments)
                                     var b = a[d],
                                         c = new FileReader;
                                     c.onload = function() {
-                                        return __awaiter(l, void 0, void 0, function() {
+                                        return __awaiter(f, void 0, void 0, function() {
                                             var a;
                                             return __generator(this, function(d) {
                                                 switch (d.label) {
@@ -4297,7 +4694,7 @@ return __assign.apply(this, arguments)
                                         })
                                     };
                                     c.readAsArrayBuffer(b)
-                                }, k = 0; k < a.length; ++k) c(k);
+                                }, e = 0; e < a.length; ++e) c(e);
                         b.value = "";
                         return [2]
                     })
@@ -4305,21 +4702,21 @@ return __assign.apply(this, arguments)
             };
             return a
         };
-        e.prototype._addTopic = function(c, a) {
+        f.prototype._addTopic = function(c, a) {
             return __awaiter(this, void 0, void 0, function() {
-                var b, d, g, k, l;
-                return __generator(this, function(e) {
-                    switch (e.label) {
+                var b, d, g, m, f;
+                return __generator(this, function(k) {
+                    switch (k.label) {
                         case 0:
-                            return b = this._viewer.markupManager.getActiveMarkupView(), [4, f.BCFTopic.createTopic(this._viewer, c.getId(), c.getFilename(), a, b)];
+                            return b = this._viewer.markupManager.getActiveMarkupView(), [4, e.BCFTopic.createTopic(this._viewer, c.getId(), c.getFilename(), a, b)];
                         case 1:
-                            return d = e.sent(), c.addTopic(d.getTopicId(), d), g = this._buildTopic(c, d), k = this._getBcfHtmlId(c.getId()), null !== k && (l = document.getElementById(k),
-                                null !== l && l.appendChild(g)), [2, d]
+                            return d = k.sent(), c.addTopic(d.getTopicId(), d), g = this._buildTopic(c, d), m = this._getBcfHtmlId(c.getId()), null !== m && (f = document.getElementById(m),
+                                null !== f && f.appendChild(g)), [2, d]
                     }
                 })
             })
         };
-        e.prototype._buildAddTopic = function(c) {
+        f.prototype._buildAddTopic = function(c) {
             var a = this,
                 b = document.createElement("div");
             b.classList.add("ui-bcf-input");
@@ -4329,12 +4726,12 @@ return __assign.apply(this, arguments)
             var g = document.createElement("input");
             g.id = "topic_title";
             g.placeholder = "Topic Title...";
-            var k = document.createElement("button");
-            k.textContent = "Add Topic";
+            var e = document.createElement("button");
+            e.textContent = "Add Topic";
             b.appendChild(d);
             b.appendChild(g);
-            b.appendChild(k);
-            k.onclick = function() {
+            b.appendChild(e);
+            e.onclick = function() {
                 return __awaiter(a, void 0, void 0,
                     function() {
                         var a;
@@ -4355,10 +4752,10 @@ return __assign.apply(this, arguments)
             };
             return b
         };
-        e.prototype._initEvents = function() {
+        f.prototype._initEvents = function() {
             var c = this,
                 a = document.getElementById(this._elementId);
-            if (null === a) throw new f.CommunicatorError("container is null");
+            if (null === a) throw new e.CommunicatorError("container is null");
             this._events(a);
             a.appendChild(this._buildAddBCF());
             a.appendChild(this._buildOpenBCF());
@@ -4370,7 +4767,7 @@ return __assign.apply(this, arguments)
                 firstModelLoaded: function(a) {
                     var d = c._viewer.model;
                     a.forEach(function(a) {
-                        d.getModelFileTypeFromNode(a) === f.FileType.Ifc && c.showTab()
+                        d.getModelFileTypeFromNode(a) === e.FileType.Ifc && c.showTab()
                     })
                 },
                 bcfLoaded: function(a, d) {
@@ -4382,38 +4779,38 @@ return __assign.apply(this, arguments)
                 }
             })
         };
-        e.prototype._buildBCFNode = function(c) {
+        f.prototype._buildBCFNode = function(c) {
             var a = document.createElement("li");
             a.classList.add("ui-modeltree-item");
             a.id = c;
             return a
         };
-        e.prototype._buildDiv = function(c, a, b) {
+        f.prototype._buildDiv = function(c, a, b) {
             var d = document.createElement("div");
             void 0 !== b && d.classList.add(b);
             d.id = c;
             d.innerHTML = a;
             return d
         };
-        e.prototype._buildEditDiv = function(c, a, b, d, g) {
-            var k = document.createElement("input");
-            k.classList.add("ui-bcf-edit");
-            void 0 !== g && k.classList.add(g);
-            k.id = c;
-            k.value = a;
-            k.placeholder = b;
-            k.onblur = function() {
-                void 0 !== d && null !== k.textContent && d(k.textContent)
+        f.prototype._buildEditDiv = function(c, a, b, d, g) {
+            var e = document.createElement("input");
+            e.classList.add("ui-bcf-edit");
+            void 0 !== g && e.classList.add(g);
+            e.id = c;
+            e.value = a;
+            e.placeholder = b;
+            e.onblur = function() {
+                void 0 !== d && null !== e.textContent && d(e.textContent)
             };
-            return k
+            return e
         };
-        e.prototype._buildImage = function(c) {
+        f.prototype._buildImage = function(c) {
             var a = document.createElement("img");
             a.id = this._getId();
             a.src = c;
             return a
         };
-        e.prototype._buildDeleteComment = function(c, a, b) {
+        f.prototype._buildDeleteComment = function(c, a, b) {
             var d = this,
                 g = document.createElement("button");
             g.classList.add("ui-bcf-comment-delete");
@@ -4423,7 +4820,7 @@ return __assign.apply(this, arguments)
             };
             return g
         };
-        e.prototype._buildEditComment = function(c, a) {
+        f.prototype._buildEditComment = function(c, a) {
             var b = this,
                 d = document.createElement("button");
             d.textContent = "Edit";
@@ -4437,50 +4834,50 @@ return __assign.apply(this, arguments)
             };
             return d
         };
-        e.prototype._buildComment = function(c, a) {
+        f.prototype._buildComment = function(c, a) {
             var b = this._getId(),
                 d = this._getViewpointFromComment(c, a);
             null !== d && this._viewpointIdMap.set(b, d);
             d = this._buildDiv(b, "", "comment");
             var g = "Created by " + a.getAuthor(),
-                k = this._formatDate(a.getDate()),
-                l = a.getText();
+                e = this._formatDate(a.getDate()),
+                f = a.getText();
             d.appendChild(this._buildDiv(this._getId(), g));
-            d.appendChild(this._buildDiv(this._getId(), k));
+            d.appendChild(this._buildDiv(this._getId(), e));
             g = a.getViewpointGuid();
             null !== g && (g = c.getMarkup().getViewpoints().get(g), void 0 !== g && (g = g.getSnapshotFilename(), null !== g && (g = c.getSnapshot(g), null !== g && d.appendChild(this._buildImage(g.getUrl())))));
             g = this._getId();
             this._commentGuidMap.set(a.getId(),
                 g);
-            l = this._buildDiv(g, l);
-            d.appendChild(l);
-            d.appendChild(this._buildEditComment(l, a));
+            f = this._buildDiv(g, f);
+            d.appendChild(f);
+            d.appendChild(this._buildEditComment(f, a));
             d.appendChild(this._buildDeleteComment(c, a, b));
             return d
         };
-        e.prototype._addComment = function(c, a) {
+        f.prototype._addComment = function(c, a) {
             return __awaiter(this, void 0, void 0, function() {
-                var b, d, g, k, l;
-                return __generator(this, function(e) {
-                    switch (e.label) {
+                var b, d, g, e, f;
+                return __generator(this, function(m) {
+                    switch (m.label) {
                         case 0:
                             return b = this._viewer.markupManager.getActiveMarkupView(), [4, this._addBCFComment(c, a, b)];
                         case 1:
-                            return d = e.sent(), g = this._buildComment(c, d), k = this._topicCommentsGuidMap.get(c.getTopicId()), void 0 !== k &&
-                                (l = document.getElementById(k), null !== l && l.appendChild(g)), [2, d]
+                            return d = m.sent(), g = this._buildComment(c, d), e = this._topicCommentsGuidMap.get(c.getTopicId()), void 0 !== e &&
+                                (f = document.getElementById(e), null !== f && f.appendChild(g)), [2, d]
                     }
                 })
             })
         };
-        e.prototype._deleteComment = function(c, a, b) {
+        f.prototype._deleteComment = function(c, a, b) {
             b = document.getElementById(b);
             null !== b && null !== b.parentElement && (b.parentElement.removeChild(b), c.getMarkup().deleteComment(a.getId()), this._refreshScroll())
         };
-        e.prototype._setCommentText = function(c, a) {
+        f.prototype._setCommentText = function(c, a) {
             var b = this._commentGuidMap.get(c.getId());
             void 0 !== b && (b = document.getElementById(b), null !== b && (c.setText(a), b.textContent = a, this._refreshScroll()))
         };
-        e.prototype._buildAddComment = function(c) {
+        f.prototype._buildAddComment = function(c) {
             var a =
                 this,
                 b = this._buildDiv(this._getId(), ""),
@@ -4507,22 +4904,22 @@ return __assign.apply(this, arguments)
             };
             return b
         };
-        e.prototype._buildTopicData = function(c, a) {
+        f.prototype._buildTopicData = function(c, a) {
             var b =
                 document.createElement("div");
             b.classList.add("topic-data");
             b.innerHTML = void 0 !== a && null !== a ? "<b>" + c + "</b>: " + a : "<b>" + c + "</b>: -";
             return b
         };
-        e.prototype._formatDate = function(c) {
+        f.prototype._formatDate = function(c) {
             return void 0 === c ? "-" : c.toDateString()
         };
-        e.prototype._deleteTopic = function(c, a) {
+        f.prototype._deleteTopic = function(c, a) {
             var b = this._topicGuidMap.get(a.getTopicId());
             void 0 !== b && (b = document.getElementById(b), null !== b && null !== b.parentElement && b.parentElement.removeChild(b));
             return c.getTopics().delete(a.getTopicId())
         };
-        e.prototype._buildDeleteTopic = function(c, a) {
+        f.prototype._buildDeleteTopic = function(c, a) {
             var b =
                 this,
                 d = document.createElement("button");
@@ -4538,52 +4935,52 @@ return __assign.apply(this, arguments)
             };
             return d
         };
-        e.prototype._setTopicTitle = function(c, a) {
+        f.prototype._setTopicTitle = function(c, a) {
             var b = this._topicTitleGuidMap.get(c.getTopicId());
             void 0 !== b && (b = document.getElementById(b), null !== b && (b.textContent = a));
             c.getMarkup().setTopicTitle(a)
         };
-        e.prototype._buildTopic = function(c, a) {
+        f.prototype._buildTopic = function(c, a) {
             var b = this,
                 d = this._getId(),
                 g = a.getTopicId();
             this._topicGuidMap.set(g, d);
             d = this._buildDiv(d, "", "ui-bcf-topic");
-            var k = a.getMarkup(),
-                l = k.getTopicTitle(),
-                e = d.appendChild(this._buildDiv(this._getId(), "", "index-and-title")),
-                f = k.getTopicIndex();
-            null !== f && (f = "<b>Index</b>: " + f, e.appendChild(this._buildDiv(this._getId(), f, "index")));
-            f = this._getId();
-            this._topicTitleGuidMap.set(g, f);
-            e.appendChild(this._buildEditDiv(f, l, "Topic Title", function(d) {
+            var e = a.getMarkup(),
+                f = e.getTopicTitle(),
+                h = d.appendChild(this._buildDiv(this._getId(), "", "index-and-title")),
+                l = e.getTopicIndex();
+            null !== l && (l = "<b>Index</b>: " + l, h.appendChild(this._buildDiv(this._getId(), l, "index")));
+            l = this._getId();
+            this._topicTitleGuidMap.set(g, l);
+            h.appendChild(this._buildEditDiv(l, f, "Topic Title", function(d) {
                 b._setTopicTitle(a, d)
             }, "title"));
-            l = a.getViewpoint("viewpoint.bcfv");
-            null !== l && (e = this._getId(),
-                this._viewpointIdMap.set(e, l), e = this._buildDiv(e, "", "viewpoint"), l = a.getSnapshot(l.getFilename()), null !== l && e.appendChild(this._buildImage(l.getUrl())), d.appendChild(e));
-            l = this._buildDiv(this._getId(), "");
-            l.appendChild(this._buildTopicData("Author", k.getTopicCreationAuthor()));
-            l.appendChild(this._buildTopicData("Description", k.getTopicDescription()));
-            l.appendChild(this._buildTopicData("Created", this._formatDate(k.getTopicCreationDate())));
-            l.appendChild(this._buildTopicData("Type", k.getTopicType()));
-            l.appendChild(this._buildTopicData("Priority", k.getTopicPriority()));
-            l.appendChild(this._buildTopicData("Stage", k.getTopicStage()));
-            l.appendChild(this._buildTopicData("TopicId", a.getTopicId()));
-            d.appendChild(l);
-            k = this._getId();
-            var h = this._buildDiv(k, "");
-            this._topicCommentsGuidMap.set(g, k);
+            f = a.getViewpoint("viewpoint.bcfv");
+            null !== f && (h = this._getId(),
+                this._viewpointIdMap.set(h, f), h = this._buildDiv(h, "", "viewpoint"), f = a.getSnapshot(f.getFilename()), null !== f && h.appendChild(this._buildImage(f.getUrl())), d.appendChild(h));
+            f = this._buildDiv(this._getId(), "");
+            f.appendChild(this._buildTopicData("Author", e.getTopicCreationAuthor()));
+            f.appendChild(this._buildTopicData("Description", e.getTopicDescription()));
+            f.appendChild(this._buildTopicData("Created", this._formatDate(e.getTopicCreationDate())));
+            f.appendChild(this._buildTopicData("Type", e.getTopicType()));
+            f.appendChild(this._buildTopicData("Priority", e.getTopicPriority()));
+            f.appendChild(this._buildTopicData("Stage", e.getTopicStage()));
+            f.appendChild(this._buildTopicData("TopicId", a.getTopicId()));
+            d.appendChild(f);
+            e = this._getId();
+            var p = this._buildDiv(e, "");
+            this._topicCommentsGuidMap.set(g, e);
             a.getMarkup().getComments().forEach(function(d) {
-                h.appendChild(b._buildComment(a, d))
+                p.appendChild(b._buildComment(a, d))
             });
-            d.appendChild(h);
+            d.appendChild(p);
             g = this._buildAddComment(a);
             g.appendChild(this._buildDeleteTopic(c, a));
             d.appendChild(g);
             return d
         };
-        e.prototype._buildSelectOption =
+        f.prototype._buildSelectOption =
             function(c, a) {
                 var b = document.createElement("option");
                 b.id = this._getSelectId(a);
@@ -4591,7 +4988,7 @@ return __assign.apply(this, arguments)
                 b.textContent = c;
                 return b
             };
-        e.prototype._appendBCF = function(c, a) {
+        f.prototype._appendBCF = function(c, a) {
             var b = this,
                 d = this._viewer.BCFManager.getBCFData(c);
             if (null !== d) {
@@ -4600,40 +4997,40 @@ return __assign.apply(this, arguments)
                 this._bcfIdMap.set(g, c);
                 this._bcfDataList.appendChild(this._buildSelectOption(c + ". " + a, g));
                 this._bcfDataList.value = g;
-                var k = this._buildBCFNode(g);
-                this._listRoot.appendChild(k);
-                k.appendChild(this._buildRemoveBCF(d.getId()));
-                k.appendChild(this._buildAddTopic(d));
+                var e = this._buildBCFNode(g);
+                this._listRoot.appendChild(e);
+                e.appendChild(this._buildRemoveBCF(d.getId()));
+                e.appendChild(this._buildAddTopic(d));
                 d.getTopics().forEach(function(a) {
                     a = b._buildTopic(d, a);
-                    k.appendChild(a)
+                    e.appendChild(a)
                 });
                 this._refreshScroll()
             }
         };
-        e.prototype._getBcfHtmlId = function(c) {
+        f.prototype._getBcfHtmlId = function(c) {
             var a = null;
             this._bcfIdMap.forEach(function(b, d) {
                 c === b && (a = d)
             });
             return a
         };
-        e.prototype._removeBCF = function(c) {
+        f.prototype._removeBCF = function(c) {
             c = this._getBcfHtmlId(c);
             null !== c && (this._bcfIdMap.delete(c), $("#" + c).remove(), $("#" + this._getSelectId(c)).remove(), c = this._bcfDataList.value, 0 < c.length && this._showBCFData(c))
         };
-        e.prototype._getViewpointFromComment = function(c, a) {
+        f.prototype._getViewpointFromComment = function(c, a) {
             a = a.getViewpointGuid();
             return null !==
                 a && (a = c.getMarkup().getViewpoints().get(a), void 0 !== a && (a = a.getViewpointFilename(), null !== a)) ? c.getViewpoint(a) : null
         };
-        e.prototype._getId = function() {
+        f.prototype._getId = function() {
             return "bcf_" + ++this._idCount
         };
-        e.prototype._getSelectId = function(c) {
+        f.prototype._getSelectId = function(c) {
             return "select_" + c
         };
-        e.prototype._onTreeSelectItem = function(c) {
+        f.prototype._onTreeSelectItem = function(c) {
             return __awaiter(this, void 0, void 0, function() {
                 var a;
                 return __generator(this, function(b) {
@@ -4648,19 +5045,19 @@ return __assign.apply(this, arguments)
                 })
             })
         };
-        e.prototype._getViewpoint = function(c) {
+        f.prototype._getViewpoint = function(c) {
             return this._viewpointIdMap.get(c) || null
         };
-        return e
+        return f
     }();
-    h.BCFTree = m
-})(f.Ui || (f.Ui = {}))
+    f.BCFTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(h) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = h.call(this, a, b, d) || this;
             a._annotationViewsString = "annotationViews";
             a._annotationViewsLabel = "Annotation Views";
             a._viewFolderCreated = !1;
@@ -4670,7 +5067,7 @@ return __assign.apply(this, arguments)
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, h);
         c.prototype._initEvents = function() {
             var a = this;
             this._viewer.setCallbacks({
@@ -4755,18 +5152,18 @@ return __assign.apply(this, arguments)
                     (this._tree.appendTopLevelElement("Views", this._internalId, "viewfolder", !0), this._viewFolderCreated = !0);
                 var d = this._viewer.model,
                     c = !0 === this._viewer.getCreationParameters().enableShatteredModelUiViews,
-                    k = function(a) {
+                    e = function(a) {
                         return b._allowView(a) && (c || !d.isWithinExternalModel(a))
                     };
                 a.forEach(function(a, c) {
-                    b._cadViewIds.has(c) || !k(c) || d.isAnnotationView(c) || (b._cadViewIds.add(c), b._tree.addChild(a, b._cadViewId(c), b._internalId, "view", !1, h.Desktop.Tree.CadView))
+                    b._cadViewIds.has(c) || !e(c) || d.isAnnotationView(c) || (b._cadViewIds.add(c), b._tree.addChild(a, b._cadViewId(c), b._internalId, "view", !1, f.Desktop.Tree.CadView))
                 });
                 a.forEach(function(a, c) {
                     !b._cadViewIds.has(c) &&
-                        k(c) && d.isAnnotationView(c) && null === document.getElementById(b._internalId + b._annotationViewsString) && b._tree.addChild(b._annotationViewsLabel, b._internalId + b._annotationViewsString, b._internalId, "viewfolder", !0, h.Desktop.Tree.CadView)
+                        e(c) && d.isAnnotationView(c) && null === document.getElementById(b._internalId + b._annotationViewsString) && b._tree.addChild(b._annotationViewsLabel, b._internalId + b._annotationViewsString, b._internalId, "viewfolder", !0, f.Desktop.Tree.CadView)
                 });
                 a.forEach(function(a, c) {
-                    !b._cadViewIds.has(c) && k(c) && d.isAnnotationView(c) && (b._cadViewIds.add(c), a = a.split("# Annotation View")[0], b._tree.addChild(a, b._cadViewId(c), b._internalId + b._annotationViewsString, "view", !1, h.Desktop.Tree.CadView))
+                    !b._cadViewIds.has(c) && e(c) && d.isAnnotationView(c) && (b._cadViewIds.add(c), a = a.split("# Annotation View")[0], b._tree.addChild(a, b._cadViewId(c), b._internalId + b._annotationViewsString, "view", !1, f.Desktop.Tree.CadView))
                 })
             }
         };
@@ -4779,7 +5176,7 @@ return __assign.apply(this, arguments)
                             case 0:
                                 b = this._splitHtmlId(a);
                                 if (b[0] !== this._internalId) return [3, 3];
-                                d = this._viewer.operatorManager.getOperator(f.OperatorId.Handle);
+                                d = this._viewer.operatorManager.getOperator(e.OperatorId.Handle);
                                 return [4, d.removeHandles()];
                             case 1:
                                 return g.sent(), [4, this._viewer.model.activateCadView(parseInt(b[1], 10))];
@@ -4793,24 +5190,24 @@ return __assign.apply(this, arguments)
                 })
             };
         c.prototype._cadViewId = function(a) {
-            return this._internalId + h.ViewTree.separator + a
+            return this._internalId + f.ViewTree.separator + a
         };
         return c
-    }(h.ViewTree);
-    h.CadViewTree = m;
-    h.CADViewTree = m
-})(f.Ui || (f.Ui = {}))
+    }(f.ViewTree);
+    f.CadViewTree = l;
+    f.CADViewTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(h) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = h.call(this, a, b, d) || this;
             a._tree.setCreateVisibilityItems(!1);
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, h);
         c.prototype._initEvents = function() {
             var a = this;
             this._viewer.setCallbacks({
@@ -4895,7 +5292,7 @@ return __assign.apply(this, arguments)
                     this._tree.appendTopLevelElement("Configurations", this._internalId, "configurations", !0);
                     for (var d = 0; d < b.length; d++) {
                         var c = parseInt(b[d], 10);
-                        this._tree.addChild(a[c], this._configurationsId(c), this._internalId, "view", !1, h.Desktop.Tree.Configurations)
+                        this._tree.addChild(a[c], this._configurationsId(c), this._internalId, "view", !1, f.Desktop.Tree.Configurations)
                     }
                     this._tree.expandInitialNodes(this._internalId);
                     return !0
@@ -4908,7 +5305,7 @@ return __assign.apply(this, arguments)
                 return __generator(this, function(d) {
                     switch (d.label) {
                         case 0:
-                            return b = this._splitHtmlId(a), this._internalId !== b[0] ? [3, 3] : [4, this._viewer.operatorManager.getOperator(f.OperatorId.Handle).removeHandles()];
+                            return b = this._splitHtmlId(a), this._internalId !== b[0] ? [3, 3] : [4, this._viewer.operatorManager.getOperator(e.OperatorId.Handle).removeHandles()];
                         case 1:
                             return d.sent(), [4, this._viewer.model.activateCadConfiguration(parseInt(b[1], 10))];
                         case 2:
@@ -4920,24 +5317,24 @@ return __assign.apply(this, arguments)
             })
         };
         c.prototype._configurationsId = function(a) {
-            return this._internalId + h.ViewTree.separator + a
+            return this._internalId + f.ViewTree.separator + a
         };
         return c
-    }(h.ViewTree);
-    h.ConfigurationsTree = m
-})(f.Ui || (f.Ui = {}))
+    }(f.ViewTree);
+    f.ConfigurationsTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator ||
 (Communicator = {}));
-(function(f) {
-(function(f) {
-    var h = function(e) {
+(function(e) {
+(function(e) {
+    var f = function(f) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = f.call(this, a, b, d) || this;
             a._tree.setCreateVisibilityItems(!1);
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, f);
         c.prototype._initEvents = function() {
             var a = this,
                 b = function() {
@@ -5030,24 +5427,24 @@ return __assign.apply(this, arguments)
             0 < b.size ? this.showTab() : this.hideTab()
         };
         c.prototype.getFilterId = function(a) {
-            return this._internalId + f.ViewTree.separator + a
+            return this._internalId + e.ViewTree.separator + a
         };
         return c
-    }(f.ViewTree);
-    f.FiltersTree = h
-})(f.Ui || (f.Ui = {}))
+    }(e.ViewTree);
+    e.FiltersTree = f
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(h) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = h.call(this, a, b, d) || this;
             a._layerNames = [];
             a._layerParts = new Set;
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, h);
         c.prototype._initEvents = function() {
             var a = this,
                 b = function() {
@@ -5058,12 +5455,15 @@ return __assign.apply(this, arguments)
                 modelSwitched: b,
                 subtreeLoaded: b,
                 selectionArray: function(d) {
-                    a._tree.updateSelection(d);
-                    for (var b = 0; b < d.length; b++) {
-                        var c = d[b].getSelection().getNodeId();
-                        if (null !== c) {
-                            for (var l = 0, e = a._viewer.model.getNodeChildren(c); l < e.length; l++) a._expandPart(e[l]);
-                            a._expandPart(c)
+                    if (0 !== a._layerNames.length) {
+                        a._tree.updateSelection(d);
+                        for (var b = 0; b < d.length; b++) {
+                            var c = d[b].getSelection().getNodeId();
+                            if (null !== c) {
+                                for (var e = 0, f = a._viewer.model.getNodeChildren(c); e <
+                                    f.length; e++) a._expandPart(f[e]);
+                                a._expandPart(c)
+                            }
                         }
                     }
                 },
@@ -5079,20 +5479,20 @@ return __assign.apply(this, arguments)
             })
         };
         c.prototype._onTreeSelectItem = function(a, b) {
-            void 0 === b && (b = f.SelectionMode.Set);
+            void 0 === b && (b = e.SelectionMode.Set);
             if (null !== document.getElementById(a)) switch (this._splitHtmlId(a)[0]) {
                 case "layerpart":
                     this._selectLayerPart(a, b);
                     break;
                 case "layer":
-                    this._selectLayer(a, b)
+                    this._selectLayer(a,
+                        b)
             }
         };
-        c.prototype._selectLayerPart =
-            function(a, b) {
-                a = c.getPartId(a);
-                null !== a && this._viewer.selectPart(a, b)
-            };
+        c.prototype._selectLayerPart = function(a, b) {
+            a = c.getPartId(a);
+            null !== a && this._viewer.selectPart(a, b)
+        };
         c.prototype._selectLayer = function(a, b) {
             a = c.getLayerName(a);
             null !== a && this._viewer.selectionManager.selectLayer(a, b)
@@ -5107,9 +5507,8 @@ return __assign.apply(this, arguments)
                 var g = c._createLayerId();
                 c._layerIdMap.set(g, d);
                 c._idLayerMap.set(d, g);
-                var k = b.getLayerIdsFromName(d);
-                return null !== k &&
-                    0 < k.length ? (a._tree.appendTopLevelElement(d, g, "assembly", !0, !1), !0) : !1
+                var e = b.getLayerIdsFromName(d);
+                return null !== e && 0 < e.length ? (a._tree.appendTopLevelElement(d, g, "assembly", !0, !1), !0) : !1
             });
             0 < this._layerNames.length ? this.showTab() : this.hideTab()
         };
@@ -5120,29 +5519,29 @@ return __assign.apply(this, arguments)
         c.prototype._addLayerParts = function(a, b) {
             var d = this,
                 g = this._viewer.model,
-                k = g.isDrawing();
+                m = g.isDrawing();
             b.forEach(function(b) {
-                var e =
+                var k =
                     g.getNodeType(b),
-                    l = g.getModelFileTypeFromNode(b);
-                k || l === f.FileType.Dwg || e !== f.NodeType.BodyInstance || (e = g.getNodeParent(b), null !== e && (b = e));
-                e = g.getNodeName(b);
-                l = c._createPartId(b);
-                c._layerPartIdMap.set(l, b);
-                c._idLayerPartMap.set(b, l);
-                d._layerParts.has(b) || (d._layerParts.add(b), d._tree.addChild(e, l, a, "assembly", !1, h.Desktop.Tree.Layers))
+                    h = g.getModelFileTypeFromNode(b);
+                m || h === e.FileType.Dwg || k !== e.NodeType.BodyInstance || (k = g.getNodeParent(b), null !== k && (b = k));
+                k = g.getNodeName(b);
+                h = c._createPartId(b);
+                c._layerPartIdMap.set(h, b);
+                c._idLayerPartMap.set(b, h);
+                d._layerParts.has(b) || (d._layerParts.add(b), d._tree.addChild(k, h, a, "assembly", !1, f.Desktop.Tree.Layers))
             })
         };
         c.prototype._addLayerPartContainers = function(a, b) {
-            for (var d = Math.ceil(b.length / this._maxNodeChildrenSize), g = [], k = 0; k < d; ++k) {
-                var e = k * this._maxNodeChildrenSize,
-                    f =
-                    Math.min(e + this._maxNodeChildrenSize, b.length),
-                    m = "Child Nodes " + e + " - " + f,
-                    q = c._createContainerId();
-                g.push(q);
-                this._tree.addChild(m, q, a, "container", !0, h.Desktop.Tree.Layers);
-                this._addLayerParts(q, b.slice(e, f))
+            for (var d = Math.ceil(b.length / this._maxNodeChildrenSize), g = [], e = 0; e < d; ++e) {
+                var k = e * this._maxNodeChildrenSize,
+                    h =
+                    Math.min(k + this._maxNodeChildrenSize, b.length),
+                    l = "Child Nodes " + k + " - " + h,
+                    p = c._createContainerId();
+                g.push(p);
+                this._tree.addChild(l, p, a, "container", !0, f.Desktop.Tree.Layers);
+                this._addLayerParts(p, b.slice(k, h))
             }
             c._layerContainersMap.set(a, g)
         };
@@ -5191,26 +5590,25 @@ return __assign.apply(this, arguments)
         c._idLayerPartMap = new Map;
         c._layerContainersMap = new Map;
         return c
-    }(h.ViewTree);
-    h.LayersTree = m
-})(f.Ui || (f.Ui = {}))
+    }(f.ViewTree);
+    f.LayersTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(h) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = h.call(this, a, b, d) || this;
             a._lastModelRoot = null;
             a._startedWithoutModelStructure = !1;
             a._partSelectionEnabled = !0;
             a._currentSheetId = null;
             a._measurementFolderId = "measurementitems";
-            a._updateVisibilityStateTimer = new f.Util.Timer;
-            a._updateSelectionTimer = new f.Util.Timer;
+            a._updateVisibilityStateTimer = new e.Util.Timer;
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, h);
         c.prototype.freezeExpansion = function(a) {
             this._tree.freezeExpansion(a)
         };
@@ -5235,11 +5633,6 @@ return __assign.apply(this, arguments)
                 modelSwitched: b,
                 selectionArray: function(d) {
                     a._onPartSelection(d)
-                },
-                incrementalSelectionBatchEnd: function() {
-                    a._updateSelectionTimer.set(50, function() {
-                        a.updateSelection(null)
-                    })
                 },
                 visibilityChanged: function() {
                     a._tree.getVisibilityControl().updateModelTreeVisibilityState()
@@ -5276,7 +5669,8 @@ return __assign.apply(this, arguments)
                     a._tree.updateMeasurementVisibilityIcons()
                 },
                 sheetActivated: function(d) {
-                    d !== a._currentSheetId && (a._currentSheetId = d, a._refreshModelTree(d))
+                    d !==
+                        a._currentSheetId && (a._currentSheetId = d, a._refreshModelTree(d))
                 },
                 sheetDeactivated: function() {
                     a._reset()
@@ -5289,37 +5683,37 @@ return __assign.apply(this, arguments)
                 a._loadNodeChildren(d)
             });
             this._tree.registerCallback("selectItem", function(d, b) {
-                return __awaiter(a, void 0,
-                    void 0,
-                    function() {
-                        return __generator(this, function(a) {
-                            switch (a.label) {
-                                case 0:
-                                    return [4, this._onTreeSelectItem(d, b)];
-                                case 1:
-                                    return a.sent(), [2]
-                            }
-                        })
+                return __awaiter(a, void 0, void 0, function() {
+                    return __generator(this, function(a) {
+                        switch (a.label) {
+                            case 0:
+                                return [4, this._onTreeSelectItem(d, b)];
+                            case 1:
+                                return a.sent(), [2]
+                        }
                     })
+                })
             })
         };
-        c.prototype._refreshModelTree = function(a) {
-            this._tree.clear();
-            var b = this._viewer.model,
-                d = b.getAbsoluteRootNode(),
-                c = b.getNodeName(d);
-            this._tree.appendTopLevelElement(c, this._partId(d), "modelroot", 0 < b.getNodeChildren(d).length, !1, !0);
-            this._tree.addChild(b.getNodeName(a), this._partId(a), this._partId(d), "part", !0, h.Desktop.Tree.Model);
-            this._tree.expandInitialNodes(this._partId(d));
-            this._refreshMarkupViews()
-        };
+        c.prototype._refreshModelTree =
+            function(a) {
+                this._tree.clear();
+                var b = this._viewer.model,
+                    d = b.getAbsoluteRootNode(),
+                    c = b.getNodeName(d);
+                this._tree.appendTopLevelElement(c, this._partId(d), "modelroot", 0 < b.getNodeChildren(d).length, !1, !0);
+                this._tree.addChild(b.getNodeName(a), this._partId(a), this._partId(d), "part", !0, f.Desktop.Tree.Model);
+                this._tree.expandInitialNodes(this._partId(d));
+                this._refreshMarkupViews()
+            };
         c.prototype._reset = function() {
             this._tree.clear();
             this._currentSheetId = null;
             this._onNewModel()
         };
         c.prototype._onNewModel = function() {
-            var a = this._viewer.model,
+            var a =
+                this._viewer.model,
                 b = a.getAbsoluteRootNode(),
                 d = a.getNodeName(b);
             this.showTab();
@@ -5329,7 +5723,8 @@ return __assign.apply(this, arguments)
             this._refreshMarkupViews()
         };
         c.prototype._createMarkupViewFolderIfNecessary = function() {
-            0 === $("#markupviews").length && this._tree.appendTopLevelElement("Markup Views", "markupviews", "viewfolder", !1)
+            0 === $("#markupviews").length && this._tree.appendTopLevelElement("Markup Views",
+                "markupviews", "viewfolder", !1)
         };
         c.prototype._createMeasurementFolderIfNecessary = function() {
             0 === $("#" + this._measurementFolderId).length && this._tree.appendTopLevelElement("Measurements", this._measurementFolderId, "measurement", !1)
@@ -5338,43 +5733,44 @@ return __assign.apply(this, arguments)
             a = this._partId(a);
             return this._tree.childrenAreLoaded(a)
         };
-        c.prototype._onSubtreeLoaded =
-            function(a) {
-                for (var b = this._viewer.model, d = 0; d < a.length; d++) {
-                    var c = a[d];
-                    if (!b.getOutOfHierarchy(c)) {
-                        var k = b.getNodeParent(c);
-                        if (null === k) console.assert(null !== this._lastModelRoot), this._lastModelRoot = this._tree._insertNodeAfter(b.getNodeName(c), this._partId(c), "modelroot", this._lastModelRoot, !0);
-                        else {
-                            var e = k;
-                            do {
-                                if (this._parentChildrenLoaded(k)) {
-                                    e === k && this._tree.addChild(b.getNodeName(c), this._partId(c), this._partId(k), "assembly", !0, h.Desktop.Tree.Model);
-                                    this._tree.preloadChildrenIfNecessary(this._partId(c));
-                                    break
-                                }
-                                c = k;
-                                k = b.getNodeParent(c)
-                            } while (null !== k)
-                        }
+        c.prototype._onSubtreeLoaded = function(a) {
+            for (var b = this._viewer.model, d = 0; d < a.length; d++) {
+                var c = a[d];
+                if (!b.getOutOfHierarchy(c)) {
+                    var e = b.getNodeParent(c);
+                    if (null === e) console.assert(null !==
+                        this._lastModelRoot), this._lastModelRoot = this._tree._insertNodeAfter(b.getNodeName(c), this._partId(c), "modelroot", this._lastModelRoot, !0);
+                    else {
+                        var k = e;
+                        do {
+                            if (this._parentChildrenLoaded(e)) {
+                                k === e && this._tree.addChild(b.getNodeName(c), this._partId(c), this._partId(e), "assembly", !0, f.Desktop.Tree.Model);
+                                this._tree.preloadChildrenIfNecessary(this._partId(c));
+                                break
+                            }
+                            c = e;
+                            e = b.getNodeParent(c)
+                        } while (null !== e)
                     }
                 }
-                this._startedWithoutModelStructure && (a = this._tree.getRoot(), null !== a.firstChild && a.removeChild(a.firstChild), a = this._tree.getPartVisibilityRoot(), null !== a.firstChild && a.removeChild(a.firstChild))
-            };
+            }
+            this._startedWithoutModelStructure && (a = this._tree.getRoot(), null !== a.firstChild && a.removeChild(a.firstChild),
+                a = this._tree.getPartVisibilityRoot(), null !== a.firstChild && a.removeChild(a.firstChild))
+        };
         c.prototype._onSubtreeDeleted = function(a) {
             for (var b = 0; b < a.length; b++) this._tree.deleteNode(this._partId(a[b]))
         };
         c.prototype._buildTreePathForNode = function(a) {
-            for (var b = this._viewer.model, d = [], c = b.getNodeParent(a); null !== c && (!this._viewer.sheetManager.isDrawingSheetActive() ||
-                    null === this._currentSheetId || c !== this._currentSheetId && a !== this._currentSheetId);) d.push(c), c = b.getNodeParent(c);
+            for (var b = this._viewer.model, d = [], c = b.getNodeParent(a); null !== c && (!this._viewer.sheetManager.isDrawingSheetActive() || null === this._currentSheetId || c !== this._currentSheetId && a !== this._currentSheetId);) d.push(c), c = b.getNodeParent(c);
             d.reverse();
             return d
         };
-        c.prototype._expandCorrectContainerForNodeId = function(a) {
-            var b = this._viewer.model,
-                d = b.getNodeParent(a);
-            null !== d && (a = b.getNodeChildren(d).indexOf(a), 0 <= a && this._tree.expandChildren(this._containerId(d, Math.floor(a / this._maxNodeChildrenSize))))
-        };
+        c.prototype._expandCorrectContainerForNodeId =
+            function(a) {
+                var b = this._viewer.model,
+                    d = b.getNodeParent(a);
+                null !== d && (a = b.getNodeChildren(d).indexOf(a), 0 <= a && this._tree.expandChildren(this._containerId(d, Math.floor(a / this._maxNodeChildrenSize))))
+            };
         c.prototype._expandPmiFolder = function(a) {
             a = this._viewer.model.getNodeParent(a);
             null !== a && this._tree.expandChildren(this._pmiFolderId(a))
@@ -5385,12 +5781,13 @@ return __assign.apply(this, arguments)
             a = this._containerId(a, 0);
             return 0 < $("#" + a).length
         };
-        c.prototype._isInsidePmiFolder = function(a) {
-            a = this._viewer.model.getNodeParent(a);
-            if (null === a) return !1;
-            a = this._pmiFolderId(a);
-            return 0 < $("#" + a).length
-        };
+        c.prototype._isInsidePmiFolder =
+            function(a) {
+                a = this._viewer.model.getNodeParent(a);
+                if (null === a) return !1;
+                a = this._pmiFolderId(a);
+                return 0 < $("#" + a).length
+            };
         c.prototype._expandPart = function(a) {
             if (this._viewer.model.isNodeLoaded(a)) {
                 for (var b = 0, d = this._buildTreePathForNode(a); b < d.length; b++) {
@@ -5400,7 +5797,8 @@ return __assign.apply(this, arguments)
                     void 0 !== c && this._tree.expandChildren(c)
                 }
                 this._isInsideContainer(a) && this._expandCorrectContainerForNodeId(a);
-                this._isInsidePmiFolder(a) && this._expandPmiFolder(a);
+                this._isInsidePmiFolder(a) &&
+                    this._expandPmiFolder(a);
                 this._tree.selectItem(this._partId(a), !1)
             }
         };
@@ -5413,47 +5811,48 @@ return __assign.apply(this, arguments)
                 0 === a.length && this._tree.updateSelection(null)
             }
         };
-        c.prototype._createContainerNodes =
-            function(a, b) {
-                for (var d = 1, c = this._maxNodeChildrenSize, k = 0; !(this._tree.addChild("Child Nodes " + d + " - " + Math.min(c, b.length), this._containerId(a, k), this._partId(a), "container", !0, h.Desktop.Tree.Model), d += this._maxNodeChildrenSize, ++k, c >= b.length);) c += this._maxNodeChildrenSize
-            };
+        c.prototype._createContainerNodes = function(a, b) {
+            for (var d = 1, c = this._maxNodeChildrenSize, e = 0; !(this._tree.addChild("Child Nodes " + d + " - " + Math.min(c, b.length), this._containerId(a, e), this._partId(a),
+                    "container", !0, f.Desktop.Tree.Model), d += this._maxNodeChildrenSize, ++e, c >= b.length);) c += this._maxNodeChildrenSize
+        };
         c.prototype._loadAssemblyNodeChildren = function(a) {
             var b = this._viewer.model.getNodeChildren(a);
             b.length > this._maxNodeChildrenSize ? this._createContainerNodes(a, b) : (a = this._partId(a), this._processNodeChildren(b, a))
         };
-        c.prototype._loadContainerChildren =
-            function(a) {
-                var b = this._viewer.model,
-                    d = this._splitHtmlId(a);
-                d = this._splitContainerId(d[1]);
-                b = b.getNodeChildren(parseInt(d[0], 10));
-                d = this._maxNodeChildrenSize * parseInt(d[1], 10);
-                b = b.slice(d, d + this._maxNodeChildrenSize);
-                this._processNodeChildren(b, a)
-            };
+        c.prototype._loadContainerChildren = function(a) {
+            var b = this._viewer.model,
+                d = this._splitHtmlId(a);
+            d = this._splitContainerId(d[1]);
+            b = b.getNodeChildren(parseInt(d[0], 10));
+            d = this._maxNodeChildrenSize *
+                parseInt(d[1], 10);
+            b = b.slice(d, d + this._maxNodeChildrenSize);
+            this._processNodeChildren(b, a)
+        };
         c.prototype._processNodeChildren = function(a, b) {
-            for (var d = this, c = this._viewer.model, k = null, e = 0; e < a.length; e++) {
-                var u = a[e],
-                    m = c.getNodeName(u),
-                    q = b,
+            for (var d = this, c = this._viewer.model, m = null, k = 0; k < a.length; k++) {
+                var h = a[k],
+                    l = c.getNodeName(h),
+                    p = b,
                     n = "assembly",
-                    p = !1;
-                switch (c.getNodeType(u)) {
-                    case f.NodeType.Body:
-                    case f.NodeType.BodyInstance:
+                    q = !1;
+                switch (c.getNodeType(h)) {
+                    case e.NodeType.Body:
+                    case e.NodeType.BodyInstance:
                         n = "body";
                         break;
-                    case f.NodeType.Pmi:
-                        if (null === k) {
-                            var r = this._viewer.model.getNodeParent(u);
-                            null !== r && (k = this._tree.addChild("PMI", this._pmiFolderId(r), b, "modelroot", !0, h.Desktop.Tree.Model, !0, !0))
+                    case e.NodeType.Pmi:
+                        if (null === m) {
+                            var t = this._viewer.model.getNodeParent(h);
+                            null !== t && (m = this._tree.addChild("PMI", this._pmiFolderId(t), b, "modelroot", !0, f.Desktop.Tree.Model,
+                                !0, !0))
                         }
-                        null !== k && (q = k.id, n = "assembly");
+                        null !== m && (p = m.id, n = "assembly");
                         break;
-                    case f.NodeType.DrawingSheet:
-                        this._viewer.sheetManager.isDrawingSheetActive() || (p = !0)
+                    case e.NodeType.DrawingSheet:
+                        this._viewer.sheetManager.isDrawingSheetActive() || (q = !0)
                 }
-                p || this._tree.addChild(m, this._partId(u), q, n, 0 < c.getNodeChildren(u).length, h.Desktop.Tree.Model)
+                q || this._tree.addChild(l, this._partId(h), p, n, 0 < c.getNodeChildren(h).length, f.Desktop.Tree.Model)
             }
             0 < a.length && this._updateVisibilityStateTimer.set(50, function() {
                 d._tree.getVisibilityControl().updateModelTreeVisibilityState()
@@ -5478,20 +5877,20 @@ return __assign.apply(this, arguments)
             }
         };
         c.prototype._onTreeSelectItem = function(a, b) {
-            void 0 === b && (b = f.SelectionMode.Set);
+            void 0 === b && (b = e.SelectionMode.Set);
             return __awaiter(this, void 0, void 0, function() {
-                var d, c, k, e;
+                var d, c, e, f;
                 return __generator(this, function(g) {
                     switch (g.label) {
                         case 0:
-                            d =
-                                document.getElementById(a);
+                            d = document.getElementById(a);
                             if (null === d) return [2];
-                            "LI" === d.tagName && "markupviews" !== a ? d.classList.add("selected") : (c = document.getElementById("markupviews"), null !== c && c.classList.remove("selected"));
+                            "LI" === d.tagName && "markupviews" !== a ? d.classList.add("selected") : (c = document.getElementById("markupviews"),
+                                null !== c && c.classList.remove("selected"));
                             0 === a.lastIndexOf("pmi", 0) && d.classList.contains("ui-modeltree-item") && d.classList.remove("selected");
-                            k = this._splitHtmlId(a);
-                            e = k[0];
-                            switch (e) {
+                            e = this._splitHtmlId(a);
+                            f = e[0];
+                            switch (f) {
                                 case "part":
                                     return [3, 1];
                                 case "markupview":
@@ -5501,15 +5900,13 @@ return __assign.apply(this, arguments)
                             }
                             return [3, 5];
                         case 1:
-                            return this._viewer.selectPart(parseInt(k[1], 10), b), [3, 5];
+                            return this._viewer.selectPart(parseInt(e[1], 10), b), [3, 5];
                         case 2:
-                            return [4,
-                                this._viewer.markupManager.activateMarkupViewWithPromise(k[1])
-                            ];
+                            return [4, this._viewer.markupManager.activateMarkupViewWithPromise(e[1])];
                         case 3:
                             return g.sent(), [3, 5];
                         case 4:
-                            return this._onContainerClick(k[1]), [3, 5];
+                            return this._onContainerClick(e[1]), [3, 5];
                         case 5:
                             return [2]
                     }
@@ -5527,39 +5924,39 @@ return __assign.apply(this, arguments)
                 null !== c && this._addMarkupView(c)
             }
         };
-        c.prototype._addMarkupView =
-            function(a) {
-                this._createMarkupViewFolderIfNecessary();
-                var b = this._viewId(a.getUniqueId());
-                this._tree.addChild(a.getName(), b, "markupviews", "view", !1, h.Desktop.Tree.Model)
-            };
+        c.prototype._addMarkupView = function(a) {
+            this._createMarkupViewFolderIfNecessary();
+            var b = this._viewId(a.getUniqueId());
+            this._tree.addChild(a.getName(),
+                b, "markupviews", "view", !1, f.Desktop.Tree.Model)
+        };
         c.prototype._onNewMeasurement = function(a) {
             this._createMeasurementFolderIfNecessary();
             var b = this._measurementId(a._getId());
-            this._tree.addChild(a.getName(), b, this._measurementFolderId, "measurement", !1, h.Desktop.Tree.Model);
+            this._tree.addChild(a.getName(), b, this._measurementFolderId, "measurement", !1, f.Desktop.Tree.Model);
             this._updateMeasurementsFolderVisibility();
             this._tree.updateMeasurementVisibilityIcons()
         };
-        c.prototype._onDeleteMeasurement =
-            function(a) {
-                a = this._measurementId(a._getId());
-                this._tree.deleteNode(a);
-                this._tree.deleteNode("visibility" + c.separator + a);
-                this._updateMeasurementsFolderVisibility()
-            };
+        c.prototype._onDeleteMeasurement = function(a) {
+            a = this._measurementId(a._getId());
+            this._tree.deleteNode(a);
+            this._tree.deleteNode("visibility" + c.separator +
+                a);
+            this._updateMeasurementsFolderVisibility()
+        };
         c.prototype._updateMeasurementsFolderVisibility = function() {
             var a = this._viewer.measureManager.getAllMeasurements(),
                 b = document.getElementById(this._measurementFolderId);
             null !== b && (b.style.display = a.length ? "inherit" : "none");
             b = document.getElementById("visibility" + c.separator + this._measurementFolderId);
-            null !== b && (b.style.display = a.length ? "inherit" :
-                "none")
+            null !== b && (b.style.display = a.length ? "inherit" : "none")
         };
         c.prototype._measurementId = function(a) {
             return "measurement" + c.separator + a
         };
         c.prototype._partId = function(a) {
-            return "part" + c.separator + a
+            return "part" +
+                c.separator + a
         };
         c.prototype._pmiFolderId = function(a) {
             return "pmipartfolder" + c.separator + a
@@ -5578,22 +5975,22 @@ return __assign.apply(this, arguments)
             this._tree.updateSelection(a)
         };
         return c
-    }(h.ViewTree);
-    h.ModelTree = m
-})(f.Ui || (f.Ui = {}))
+    }(f.ViewTree);
+    f.ModelTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(h) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = h.call(this, a, b, d) || this;
             a._currentNodeId = 0;
             a._currentBimNodeId = "0";
             a._tree.setCreateVisibilityItems(!1);
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, h);
         c.prototype._initEvents = function() {
             var a = this,
                 b = function() {
@@ -5650,10 +6047,10 @@ return __assign.apply(this, arguments)
         };
         c.prototype._onTreeSelectItem = function(a) {
             return __awaiter(this, void 0, void 0, function() {
-                var b, d, c, k, e;
+                var b, d, c, e, f;
                 return __generator(this, function(g) {
                     b = 0;
-                    for (d = a; b < d.length; b++) c = d[b], k = c.getSelection().getNodeId(), null === k ? this._tree.selectItem(null, !1) : (e = this._viewer.model.getBimIdFromNode(k), null !== e && (this._currentNodeId = k, this._currentBimNodeId = e, this._update()));
+                    for (d = a; b < d.length; b++) c = d[b], e = c.getSelection().getNodeId(), null === e ? this._tree.selectItem(null, !1) : (f = this._viewer.model.getBimIdFromNode(e), null !== f && (this._currentNodeId = e, this._currentBimNodeId = f, this._update()));
                     return [2]
                 })
             })
@@ -5661,32 +6058,32 @@ return __assign.apply(this, arguments)
         c.prototype._translateTypeRelationshipToString = function(a) {
             var b =
                 "Type Unknown";
-            a !== f.RelationshipType.Undefined && (b = f.RelationshipType[a]);
+            a !== e.RelationshipType.Undefined && (b = e.RelationshipType[a]);
             return b
         };
         c.prototype._translateStringTypeToRelationshipType = function(a) {
             switch (a) {
                 case "ContainedInSpatialStructure":
-                    a = f.RelationshipType.ContainedInSpatialStructure;
+                    a = e.RelationshipType.ContainedInSpatialStructure;
                     break;
                 case "FillsElement":
-                    a = f.RelationshipType.FillsElement;
+                    a = e.RelationshipType.FillsElement;
                     break;
                 case "Aggregates":
-                    a = f.RelationshipType.Aggregates;
+                    a = e.RelationshipType.Aggregates;
                     break;
                 case "VoidsElement":
-                    a = f.RelationshipType.VoidsElement;
+                    a = e.RelationshipType.VoidsElement;
                     break;
                 case "SpaceBoundary":
-                    a = f.RelationshipType.SpaceBoundary;
+                    a = e.RelationshipType.SpaceBoundary;
                     break;
                 case "ConnectsPathElements":
                     a =
-                        f.RelationshipType.ConnectsPathElements;
+                        e.RelationshipType.ConnectsPathElements;
                     break;
                 default:
-                    a = f.RelationshipType.Undefined
+                    a = e.RelationshipType.Undefined
             }
             return a
         };
@@ -5728,32 +6125,32 @@ return __assign.apply(this, arguments)
         };
         c.prototype._addRelationships = function(a, b) {
             b = this._translateStringTypeToRelationshipType(b);
-            for (var d = this._viewer.model.getBimIdConnectedElements(this._currentNodeId, this._currentBimNodeId, b), g = 0, k = d.relatings; g < k.length; g++) {
-                var e = k[g],
-                    f = e;
+            for (var d = this._viewer.model.getBimIdConnectedElements(this._currentNodeId, this._currentBimNodeId, b), g = 0, e = d.relatings; g < e.length; g++) {
+                var k = e[g],
+                    h = k;
                 b = '<button class="ui-model-tree-relationships-button" type="button" id="buttonRight"><b>\u2190</b></button>';
-                e = c._createIdNode(e);
-                f = this._viewer.model.getBimInfoFromBimId(this._currentNodeId,
-                    f);
-                c._idNameMap.set(e, f.name);
-                c._idNameMap.set(f.name, e);
+                k = c._createIdNode(k);
+                h = this._viewer.model.getBimInfoFromBimId(this._currentNodeId,
+                    h);
+                c._idNameMap.set(k, h.name);
+                c._idNameMap.set(h.name, k);
                 b = b.concat(" ");
-                b = b.concat(f.name);
-                this._tree.addChild(b, e, a, "assembly", !1, h.Desktop.Tree.Relationships, f.connected)
+                b = b.concat(h.name);
+                this._tree.addChild(b, k, a, "assembly", !1, f.Desktop.Tree.Relationships, h.connected)
             }
             g = 0;
-            for (d = d.relateds; g < d.length; g++) f = e = d[g], b = '<button class="ui-model-tree-relationships-button" type="button" id="buttonRight"><b>\u2192</b> </button>', e = c._createIdNode(e), f = this._viewer.model.getBimInfoFromBimId(this._currentNodeId, f), c._idNameMap.set(e, f.name), c._idNameMap.set(f.name, e), b = b.concat(" "), b = b.concat(f.name),
-                this._tree.addChild(b, e, a, "assembly", !1, h.Desktop.Tree.Relationships, f.connected)
+            for (d = d.relateds; g < d.length; g++) h = k = d[g], b = '<button class="ui-model-tree-relationships-button" type="button" id="buttonRight"><b>\u2192</b> </button>', k = c._createIdNode(k), h = this._viewer.model.getBimInfoFromBimId(this._currentNodeId, h), c._idNameMap.set(k, h.name), c._idNameMap.set(h.name, k), b = b.concat(" "), b = b.concat(h.name),
+                this._tree.addChild(b, k, a, "assembly", !1, f.Desktop.Tree.Relationships, h.connected)
         };
         c.prototype._onclickItemButton = function(a) {
             return __awaiter(this, void 0, void 0, function() {
-                var b, d, g, k;
-                return __generator(this, function(e) {
+                var b, d, g, e;
+                return __generator(this, function(f) {
                     b = document.getElementById(a);
                     if (null === b) return [2];
                     d = this._splitHtmlId(a);
-                    0 < d.length && (g = this._splitHtmlIdParts(d[0], c.separator), g[0] === c.RelationshipPartPrefix && (k = this._viewer.model.getNodeIdFromBimId(this._currentNodeId, g[1]), null !== k && (this._viewer.model.resetModelHighlight(),
-                        this._viewer.model.setNodesHighlighted([k], !0))));
+                    0 < d.length && (g = this._splitHtmlIdParts(d[0], c.separator), g[0] === c.RelationshipPartPrefix && (e = this._viewer.model.getNodeIdFromBimId(this._currentNodeId, g[1]), null !== e && (this._viewer.model.resetModelHighlight(),
+                        this._viewer.model.setNodesHighlighted([e], !0))));
                     return [2]
                 })
             })
@@ -5761,9 +6158,9 @@ return __assign.apply(this, arguments)
         c.prototype._onSelectRelationships = function(a) {
             return __awaiter(this, void 0, void 0, function() {
                 var b, d, g;
-                return __generator(this, function(k) {
+                return __generator(this, function(f) {
                     b = this._splitHtmlId(a);
-                    0 < b.length && (d = this._splitHtmlIdParts(b[0], c.separator), d[0] === c.RelationshipPartPrefix && (g = this._viewer.model.getNodeIdFromBimId(this._currentNodeId, d[1]), this._viewer.selectPart(g, f.SelectionMode.Set)));
+                    0 < b.length && (d = this._splitHtmlIdParts(b[0], c.separator), d[0] === c.RelationshipPartPrefix && (g = this._viewer.model.getNodeIdFromBimId(this._currentNodeId, d[1]), this._viewer.selectPart(g, e.SelectionMode.Set)));
                     return [2]
                 })
             })
@@ -5776,22 +6173,22 @@ return __assign.apply(this, arguments)
         c._nameIdMap = new Map;
         c._idNameMap = new Map;
         return c
-    }(h.ViewTree);
-    h.RelationshipsTree = m
-})(f.Ui || (f.Ui = {}))
+    }(f.ViewTree);
+    f.RelationshipsTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function(e) {
+    var l = function(h) {
         function c(a, b, d) {
-            a = e.call(this, a, b, d) || this;
+            a = h.call(this, a, b, d) || this;
             a._currentSheetId = null;
-            a._3dSheetId = "" + a._internalId + h.ViewTree.separator + "3D";
+            a._3dSheetId = "" + a._internalId + f.ViewTree.separator + "3D";
             a._tree.setCreateVisibilityItems(!1);
             a._initEvents();
             return a
         }
-        __extends(c, e);
+        __extends(c, h);
         c.prototype._initEvents = function() {
             var a = this,
                 b = function() {
@@ -5834,9 +6231,9 @@ return __assign.apply(this, arguments)
                 for (var a =
                         this._viewer.model, b = 0, d = this._viewer.sheetManager.getSheetIds(); b < d.length; b++) {
                     var c = d[b],
-                        k = a.getNodeName(c);
+                        e = a.getNodeName(c);
                     c = this._sheetTreeId(c);
-                    this._tree.appendTopLevelElement(k, c, "sheet", !1)
+                    this._tree.appendTopLevelElement(e, c, "sheet", !1)
                 }
                 0 < this._viewer.sheetManager.get3DNodes().length && (this._tree.appendTopLevelElement("3D Model", this._3dSheetId, "sheet", !1, !1, !1), this._currentSheetId = this._3dSheetId);
                 this.showTab()
@@ -5860,8 +6257,8 @@ return __assign.apply(this, arguments)
                             b = this._splitHtmlId(a);
                             d = parseInt(b[1], 10);
                             if (this._currentSheetId !== this._3dSheetId) return [3, 3];
-                            this._viewer.model.setViewAxes(new f.Point3(0, 0, 1), new f.Point3(0, 1, 0));
-                            return [4, this._viewer.setViewOrientation(f.ViewOrientation.Front,
+                            this._viewer.model.setViewAxes(new e.Point3(0, 0, 1), new e.Point3(0, 1, 0));
+                            return [4, this._viewer.setViewOrientation(e.ViewOrientation.Front,
                                 0)];
                         case 2:
                             c.sent(), c.label = 3;
@@ -5872,17 +6269,17 @@ return __assign.apply(this, arguments)
             })
         };
         c.prototype._sheetTreeId = function(a) {
-            return "" + this._internalId + h.ViewTree.separator + a
+            return "" + this._internalId + f.ViewTree.separator + a
         };
         return c
-    }(h.ViewTree);
-    h.SheetsTree = m
-})(f.Ui || (f.Ui = {}))
+    }(f.ViewTree);
+    f.SheetsTree = l
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    (function(m) {
-        var e = function() {
+    (function(l) {
+        var h = function() {
                 return function(a) {
                     this.guid = this.nodeId = null;
                     "number" === typeof a ? this.nodeId = a : this.guid = a
@@ -5929,17 +6326,17 @@ return __assign.apply(this, arguments)
                     if (this._assemblyTreeReadyOccurred) {
                         this._clearStyles();
                         for (var a = this._viewer.model, b = [a.getAbsoluteRootNode()], c = 0; c < b.length; c++) {
-                            var e = b[c],
-                                h = a.getBranchVisibility(e);
-                            if (h === f.BranchVisibility.Hidden) this._fullHiddenParentIds.push(e);
-                            else if (h === f.BranchVisibility.Mixed)
-                                for (this._partialHiddenParentIds.push(e), h = 0, e = a.getNodeChildren(e); h < e.length; h++) b.push(e[h])
+                            var f = b[c],
+                                h = a.getBranchVisibility(f);
+                            if (h === e.BranchVisibility.Hidden) this._fullHiddenParentIds.push(f);
+                            else if (h === e.BranchVisibility.Mixed)
+                                for (this._partialHiddenParentIds.push(f), h = 0, f = a.getNodeChildren(f); h < f.length; h++) b.push(f[h])
                         }
                         this._applyStyles()
                     }
                 };
                 a.prototype._getVisibilityItem = function(a) {
-                    return $("#visibility" + h.ViewTree.separator + "part" + h.ViewTree.separator + a)
+                    return $("#visibility" + f.ViewTree.separator + "part" + f.ViewTree.separator + a)
                 };
                 a.prototype._addVisibilityHiddenClass = function(a, b) {
                     this._getVisibilityItem(a).addClass(b)
@@ -5949,9 +6346,9 @@ return __assign.apply(this, arguments)
                 };
                 return a
             }();
-        m.VisibilityControl = c;
+        l.VisibilityControl = c;
         var a = function() {
-            function a(a, b, e, l) {
+            function a(a, b, f, k) {
                 this._lastItemId = null;
                 this._selectedPartItems = [];
                 this._futureHighlightIds = new Set;
@@ -5965,15 +6362,15 @@ return __assign.apply(this, arguments)
                 this._callbacks = new Map;
                 this._childrenLoaded = new Set;
                 this._loadedNodes = new Set;
-                this._touchTimer = new f.Util.Timer;
+                this._touchTimer = new e.Util.Timer;
                 this._freezeExpansion = !1;
-                this._scrollTimer = new f.Util.Timer;
-                this._selectionLabelHighlightTimer = new f.Util.Timer;
+                this._scrollTimer = new e.Util.Timer;
+                this._selectionLabelHighlightTimer = new e.Util.Timer;
                 this._createVisibilityItems = !0;
                 this._elementId = a;
                 this._viewer = b;
-                this._treeScroll = l;
-                this._separator = e;
+                this._treeScroll = k;
+                this._separator = f;
                 this._visibilityControl = new c(b);
                 this._partVisibilityRoot =
                     document.createElement("ul");
@@ -6011,15 +6408,15 @@ return __assign.apply(this, arguments)
                 jQuery("#visibility" + this._separator + a).remove()
             };
             a.prototype._getTaggedId = function(a, b, c) {
-                return null !== c && "Annotation Views" === c && b === h.Desktop.Tree.CadView ? new e("Annotation Views") :
+                return null !== c && "Annotation Views" === c && b === f.Desktop.Tree.CadView ? new h("Annotation Views") :
                     this._parseTaggedId(a)
             };
-            a.prototype.addChild = function(a, b, c, e, f, m, q, n) {
-                void 0 === q && (q = !0);
+            a.prototype.addChild = function(a, b, c, e, h, l, p, n) {
+                void 0 === p && (p = !0);
                 void 0 === n && (n = !1);
-                var d = this._getTaggedId(b, m, a);
+                var d = this._getTaggedId(b, l, a);
                 if (null === d) return null;
-                if (m === h.Desktop.Tree.Model && "container" !== e && null !== d.nodeId) {
+                if (l === f.Desktop.Tree.Model && "container" !== e && null !== d.nodeId) {
                     if (this._loadedNodes.has(d.nodeId) && !n) return null;
                     this._loadedNodes.add(d.nodeId)
                 }
@@ -6028,9 +6425,9 @@ return __assign.apply(this, arguments)
                 c = jQuery("#" + c);
                 c.children(".ui-modeltree-container").children(".ui-modeltree-expandNode").css("visibility", "visible");
                 var g = c.children("ul"),
-                    k = n = !1;
-                null !== d.nodeId && (n = this._futureHighlightIds.has(d.nodeId), k = this._futureMixedIds.has(d.nodeId), n && this._futureHighlightIds.delete(d.nodeId), k && this._futureMixedIds.delete(d.nodeId));
-                a = this._buildNode(a, b, e, f, n, k, q, m === h.Desktop.Tree.Relationships);
+                    m = n = !1;
+                null !== d.nodeId && (n = this._futureHighlightIds.has(d.nodeId), m = this._futureMixedIds.has(d.nodeId), n && this._futureHighlightIds.delete(d.nodeId), m && this._futureMixedIds.delete(d.nodeId));
+                a = this._buildNode(a, b, e, h, n, m, p, l === f.Desktop.Tree.Relationships);
                 0 === g.length ? (e = document.createElement("ul"), e.classList.add("ui-modeltree-children"), c.append(e), e.appendChild(a)) : g.get(0).appendChild(a);
                 n && (b = this._getListItem(b), null !== b && this._selectedPartItems.push(b));
                 this._triggerCallback("addChild");
@@ -6051,7 +6448,7 @@ return __assign.apply(this, arguments)
                 var c = document.createElement("li");
                 c.classList.add("ui-modeltree-item");
                 c.classList.add("visibility");
-                c.id = "" + h.ViewTree.visibilityPrefix + h.ViewTree.separator + a;
+                c.id = "" + f.ViewTree.visibilityPrefix + f.ViewTree.separator + a;
                 c.appendChild(d);
                 if ("measurement" !== b) {
                     b = void 0;
@@ -6059,7 +6456,7 @@ return __assign.apply(this, arguments)
                     void 0 !== a && (b = parseInt(a, 10));
                     if (void 0 === b || isNaN(b)) return c;
                     a = this._viewer.model.getNodeType(b);
-                    if (a === f.NodeType.Pmi || a === f.NodeType.PmiBody) c.style.visibility = "hidden"
+                    if (a === e.NodeType.Pmi || a === e.NodeType.PmiBody) c.style.visibility = "hidden"
                 }
                 return c
             };
@@ -6070,7 +6467,7 @@ return __assign.apply(this, arguments)
             a.prototype.updateSelection = function(a) {
                 null === a && (a = this._viewer.selectionManager.getResults());
                 a = a.map(function(a) {
-                    return a instanceof f.Event.NodeSelectionEvent && (a = a.getSelection(), !a.isNodeSelection()) ? (console.assert(!1), f.InvalidNodeId) : a.getNodeId()
+                    return a instanceof e.Event.NodeSelectionEvent && (a = a.getSelection(), !a.isNodeSelection()) ? (console.assert(!1), e.InvalidNodeId) : a.getNodeId()
                 });
                 this._updateTreeSelectionHighlight(a);
                 this._doUnfreezeSelection(a)
@@ -6101,11 +6498,11 @@ return __assign.apply(this, arguments)
                 a = $("#visibility" + this._separator + a);
                 0 < a.length && a.children(".ui-modeltree-visibility-children").hide()
             };
-            a.prototype._buildNode = function(a, b, c, e, f, h, m, n) {
+            a.prototype._buildNode = function(a, b, c, e, f, h, l, n) {
                 void 0 === f && (f = !1);
                 void 0 === h && (h = !1);
-                void 0 === m &&
-                    (m = !0);
+                void 0 === l &&
+                    (l = !0);
                 void 0 === n && (n = !1);
                 var d = document.createElement("li");
                 d.classList.add("ui-modeltree-item");
@@ -6124,8 +6521,8 @@ return __assign.apply(this, arguments)
                 e.classList.add(c);
                 b.appendChild(e);
                 c = document.createElement("div");
-                !1 === n ? m && c.classList.add("ui-modeltree-label") : m ? c.classList.add("ui-modeltree-relationships-label") : c.classList.add("ui-modeltree-relationships-label_unaccess");
-                c.innerHTML = a;
+                !1 === n ? l && c.classList.add("ui-modeltree-label") : l ? c.classList.add("ui-modeltree-relationships-label") : c.classList.add("ui-modeltree-relationships-label_unaccess");
+                c.innerHTML = $("<div>").text(a).html();
                 c.title = a;
                 b.appendChild(c);
                 a = document.createElement("div");
@@ -6138,8 +6535,8 @@ return __assign.apply(this, arguments)
                 return this._childrenLoaded.has(a)
             };
             a.prototype.preloadChildrenIfNecessary = function(a) {
-                null === a || this._childrenLoaded.has(a) || (this._triggerCallback("loadChildren",
-                    a), this._childrenLoaded.add(a))
+                null === a || this._childrenLoaded.has(a) ||
+                    (this._triggerCallback("loadChildren", a), this._childrenLoaded.add(a))
             };
             a.prototype._processExpandClick = function(a) {
                 a = jQuery(a.target);
@@ -6153,7 +6550,8 @@ return __assign.apply(this, arguments)
             };
             a.prototype._expandListItem = function(a) {
                 this.expandChildren(a);
-                $("#" + a).find(".ui-modeltree-expandNode").first().addClass("expanded");
+                $("#" +
+                    a).find(".ui-modeltree-expandNode").first().addClass("expanded");
                 this._triggerCallback("expand", a)
             };
             a.prototype.selectItem = function(a, b) {
@@ -6173,47 +6571,45 @@ return __assign.apply(this, arguments)
                 a.addClass("selected");
                 this._$lastNonSelectionItem = a
             };
-            a.prototype._doUnfreezeSelection =
-                function(a) {
-                    for (var d = 0; d < a.length; d++) {
-                        var b = a[d],
-                            c = this._viewer.model.getNodeParent(b),
-                            e = this._getListItem("part" + h.ViewTree.separator + b);
-                        null === e || e.hasClass("selected") ? null === e && this._futureHighlightIds.add(b) : (e.addClass("selected"), this._selectedPartItems.push(e));
-                        null !== c && (e = h.LayersTree.getLayerPartId(c), null !== e && (e = this._getListItem(e), null === e || e.hasClass("selected") ? null === e && this._futureHighlightIds.add(c) : (e.addClass("selected"), this._selectedPartItems.push(e))), c = this._getListItem(h.TypesTree.getComponentPartId(c)),
-                            null === c || c.hasClass("selected") || (c.addClass("selected"), this._selectedPartItems.push(c)));
-                        b = this._getListItem(h.TypesTree.getComponentPartId(b));
-                        null === b || b.hasClass("selected") || (b.addClass("selected"), this._selectedPartItems.push(b))
-                    }
-                };
+            a.prototype._doUnfreezeSelection = function(a) {
+                for (var d = 0; d < a.length; d++) {
+                    var b = a[d],
+                        c = this._viewer.model.getNodeParent(b),
+                        e = this._getListItem("part" + f.ViewTree.separator + b);
+                    null === e || e.hasClass("selected") ? null === e && this._futureHighlightIds.add(b) : (e.addClass("selected"), this._selectedPartItems.push(e));
+                    null !== c && (e = f.LayersTree.getLayerPartId(c), null !== e && (e = this._getListItem(e), null === e || e.hasClass("selected") ? null === e && this._futureHighlightIds.add(c) :
+                        (e.addClass("selected"), this._selectedPartItems.push(e))), c = this._getListItem(f.TypesTree.getComponentPartId(c)), null === c || c.hasClass("selected") || (c.addClass("selected"), this._selectedPartItems.push(c)));
+                    b = this._getListItem(f.TypesTree.getComponentPartId(b));
+                    null === b || b.hasClass("selected") || (b.addClass("selected"), this._selectedPartItems.push(b))
+                }
+            };
             a.prototype._doSelection = function(a, b) {
                 var d = this;
                 void 0 === b && (b = !0);
                 if (null !== a) {
                     var c = a.split(this._separator),
                         g = "part" === c[0],
-                        e = "layerpart" === c[0],
-                        m = "typespart" === c[0],
+                        h = "layerpart" === c[0],
+                        l = "typespart" === c[0],
                         n = $("#" + a),
-                        p = !1;
-                    if (g || e || m) {
+                        q = !1;
+                    if (g || h || l) {
                         n.addClass("selected");
                         c = 0;
                         for (g = this._selectedPartItems; c < g.length; c++)
-                            if (e =
-                                g[c].get(0), void 0 !== e && a === e.id) {
-                                p = !0;
+                            if (h = g[c].get(0), void 0 !== h && a === h.id) {
+                                q = !0;
                                 break
-                            } p || this._selectedPartItems.push(n)
+                            } q || this._selectedPartItems.push(n)
                     } else if (0 !== a.lastIndexOf("sheet", 0)) {
-                        if (0 === a.lastIndexOf("container", 0) || c[0] === h.LayersTree.layerPartContainerPrefix) return;
+                        if (0 === a.lastIndexOf("container", 0) || c[0] === f.LayersTree.layerPartContainerPrefix) return;
                         this._updateNonSelectionHighlight(n)
                     }
-                    b && (this._lastItemId = a, p = p && 1 === this._selectedPartItems.length, this._triggerCallback("selectItem", a, "undefined" !== typeof key && (key.ctrl || key.command) || p ? f.SelectionMode.Toggle : f.SelectionMode.Set));
+                    b && (this._lastItemId = a, q = q && 1 === this._selectedPartItems.length, this._triggerCallback("selectItem", a, "undefined" !== typeof key && (key.ctrl ||
+                        key.command) || q ? e.SelectionMode.Toggle : e.SelectionMode.Set));
                     this._lastItemId === a || this._freezeExpansion || b || this._scrollToItem(n)
                 }
-                this._lastItemId =
-                    a;
+                this._lastItemId = a;
                 this._selectionLabelHighlightTimer.set(30, function() {
                     var a = d._viewer.selectionManager.getResults().map(function(a) {
                         return a.getNodeId()
@@ -6225,28 +6621,28 @@ return __assign.apply(this, arguments)
                 void 0 === b && (b = !0);
                 var d = $("#" + a);
                 this._updateNonSelectionHighlight(d);
-                b && null !== a && this._triggerCallback("selectItem", a, f.SelectionMode.Set)
+                b && null !== a && this._triggerCallback("selectItem", a, e.SelectionMode.Set)
             };
             a.prototype._doSelectIfcItem = function(a, b) {
                 void 0 === b && (b = !0);
                 var d = $("#" + a);
                 this._updateNonSelectionHighlight(d);
-                b && null !== a && this._triggerCallback("clickItemButton",
-                    a)
+                b && null !== a && this._triggerCallback("clickItemButton", a)
             };
-            a.prototype._scrollToItem = function(d) {
-                var b = this;
+            a.prototype._scrollToItem = function(b) {
+                var d = this;
                 this._scrollTimer.set(a._ScrollToItemDelayMs, function() {
-                    var a = d.offset(),
+                    var a = b.offset(),
                         c = $("#modelTreeContainer").innerHeight();
-                    void 0 !== a && void 0 !== c && (a = a.top, 6 > a || a > c) && (b._scrollTimer.clear(), b._treeScroll && (b._treeScroll.refresh(), b._treeScroll.scrollToElement(d.get(0), h.DefaultUiTransitionDuration, !0, !0)))
+                    void 0 !== a && void 0 !== c && (a = a.top, 6 > a || a > c) && (d._scrollTimer.clear(), d._treeScroll && (d._treeScroll.refresh(), d._treeScroll.scrollToElement(b.get(0), f.DefaultUiTransitionDuration,
+                        !0, !0)))
                 })
             };
             a.prototype._parseTaggedId = function(a) {
-                var d = this._parseUuid(a);
-                if (null !== d) return new e(d);
+                var b = this._parseUuid(a);
+                if (null !== b) return new h(b);
                 a = this._parseNodeId(a);
-                return null !== a ? new e(a) : null
+                return null !== a ? new h(a) : null
             };
             a.prototype._parseNodeId = function(a) {
                 a = a.split(this._separator);
@@ -6258,48 +6654,48 @@ return __assign.apply(this, arguments)
                 a = a.split(this._separator).pop();
                 return void 0 !== a && 36 === a.length ? a : null
             };
-            a.prototype._parseMeasurementId = function(a) {
-                return a.split(this._separator).pop()
-            };
+            a.prototype._parseMeasurementId =
+                function(a) {
+                    return a.split(this._separator).pop()
+                };
             a.prototype._parseVisibilityLayerName = function(a) {
-                a = a.split("" + h.ViewTree.visibilityPrefix + h.ViewTree.separator);
-                return 2 !== a.length ? null : h.LayersTree.getLayerName(a[1])
+                a = a.split("" + f.ViewTree.visibilityPrefix + f.ViewTree.separator);
+                return 2 !== a.length ? null : f.LayersTree.getLayerName(a[1])
             };
             a.prototype._parseVisibilityLayerNodeId = function(a) {
-                a = a.split("" + h.ViewTree.visibilityPrefix + h.ViewTree.separator);
-                return 2 !== a.length ? null : h.LayersTree.getPartId(a[1])
+                a = a.split("" + f.ViewTree.visibilityPrefix + f.ViewTree.separator);
+                return 2 !== a.length ? null : f.LayersTree.getPartId(a[1])
             };
             a.prototype._updateLayerTreeSelectionHighlight = function(a) {
                 for (var b = this, d = 0, c = this._selectedLayers; d < c.length; d++) {
-                    var e = c[d];
-                    $("#" + h.LayersTree.getLayerId(e)).removeClass("selected")
+                    var e =
+                        c[d];
+                    $("#" + f.LayersTree.getLayerId(e)).removeClass("selected")
                 }
                 this._mixedItemsLayer.forEach(function(a) {
                     a = b._viewer.model.getLayerName(a);
-                    null !== a && $("#" +
-                        h.LayersTree.getLayerId(a)).addClass("mixed")
+                    null !== a && $("#" + f.LayersTree.getLayerId(a)).addClass("mixed")
                 });
                 this._selectedLayers = this._viewer.selectionManager.getSelectedLayers();
                 d = 0;
-                for (c = this._selectedLayers; d < c.length; d++) e = c[d], $("#" + h.LayersTree.getLayerId(e)).addClass("selected"), $("#" + h.LayersTree.getLayerId(e)).removeClass("mixed");
-                for (e = 0; e < a.length; e++) $("#" + h.LayersTree.getLayerPartId(a[e])).addClass("selected")
+                for (c = this._selectedLayers; d < c.length; d++) e = c[d], $("#" + f.LayersTree.getLayerId(e)).addClass("selected"), $("#" + f.LayersTree.getLayerId(e)).removeClass("mixed");
+                for (e = 0; e < a.length; e++) $("#" + f.LayersTree.getLayerPartId(a[e])).addClass("selected")
             };
             a.prototype._addMixedTypeClass = function(a) {
                 a = this._viewer.model.getNodeGenericType(a);
-                return null === a || this._mixedTypes.has(a) ? !1 : ($("#" +
-                    h.TypesTree.getGenericTypeId(a)).addClass("mixed"), this._mixedTypes.add(a), !0)
+                return null === a || this._mixedTypes.has(a) ? !1 : ($("#" + f.TypesTree.getGenericTypeId(a)).addClass("mixed"), this._mixedTypes.add(a), !0)
             };
             a.prototype._updateTypesTreeSelectionHighlight = function() {
                 for (var a = 0, b = this._selectedTypes; a < b.length; a++) {
                     var c = b[a];
-                    $("#" + h.TypesTree.getGenericTypeId(c)).removeClass("selected")
+                    $("#" + f.TypesTree.getGenericTypeId(c)).removeClass("selected")
                 }
                 c = 0;
-                for (a = this._futureMixedTypesIds; c < a.length; c++) b = a[c], this._addMixedTypeClass(b) || (b = this._viewer.model.getNodeParent(b), null !== b && this._addMixedTypeClass(b));
+                for (a = this._futureMixedTypesIds; c < a.length; c++) b = a[c], this._addMixedTypeClass(b) || (b = this._viewer.model.getNodeParent(b),
+                    null !== b && this._addMixedTypeClass(b));
                 this._selectedTypes = this._viewer.selectionManager.getSelectedTypes();
                 a = 0;
-                for (b =
-                    this._selectedTypes; a < b.length; a++) c = b[a], c = $("#" + h.TypesTree.getGenericTypeId(c)), c.addClass("selected"), c.removeClass("mixed")
+                for (b = this._selectedTypes; a < b.length; a++) c = b[a], c = $("#" + f.TypesTree.getGenericTypeId(c)), c.addClass("selected"), c.removeClass("mixed")
             };
             a.prototype._updateTreeSelectionHighlight = function(a) {
                 var b = this;
@@ -6307,38 +6703,39 @@ return __assign.apply(this, arguments)
                     0 <= a.indexOf(d) && b._futureHighlightIds.delete(d)
                 });
                 for (var d = 0, c = this._selectedItemsParentIds; d < c.length; d++) {
-                    var e = c[d];
-                    $("#part" + h.ViewTree.separator + e).removeClass("mixed")
+                    var h = c[d];
+                    $("#part" + f.ViewTree.separator +
+                        h).removeClass("mixed")
                 }
                 this._selectedItemsParentIds.length = 0;
                 this._futureMixedIds.clear();
                 this._mixedItemsLayer.forEach(function(a) {
-                    a =
-                        b._viewer.model.getLayerName(a);
-                    null !== a && $("#" + h.LayersTree.getLayerId(a)).removeClass("mixed")
+                    a = b._viewer.model.getLayerName(a);
+                    null !== a && $("#" + f.LayersTree.getLayerId(a)).removeClass("mixed")
                 });
                 this._mixedItemsLayer.clear();
                 this._mixedTypes.forEach(function(a) {
-                    $("#" + h.TypesTree.getGenericTypeId(a)).removeClass("mixed")
+                    $("#" + f.TypesTree.getGenericTypeId(a)).removeClass("mixed")
                 });
                 this._mixedTypes.clear();
                 this._futureMixedTypesIds = [];
-                f.Util.filterInPlace(this._selectedPartItems, function(d) {
+                e.Util.filterInPlace(this._selectedPartItems, function(d) {
                     d = d.get(0);
                     if (void 0 !== d) {
-                        d = b._parseNodeId(d.id);
+                        d =
+                            b._parseNodeId(d.id);
                         if (null === d) return !1;
-                        if (0 > a.indexOf(d)) return $("#part" + h.ViewTree.separator + d).removeClass("selected"), $("#typespart" +
-                            h.ViewTree.separator + d).removeClass("selected"), (d = h.LayersTree.getLayerPartId(d)) && $("#" + d).removeClass("selected"), !1
+                        if (0 > a.indexOf(d)) return $("#part" + f.ViewTree.separator + d).removeClass("selected"), $("#typespart" + f.ViewTree.separator + d).removeClass("selected"), (d = f.LayersTree.getLayerPartId(d)) && $("#" + d).removeClass("selected"), !1
                     }
                     return !0
                 });
-                for (d = 0; d < a.length; d++) e = a[d], this._updateParentIdList(e), this._updateMixedLayers(e), this._updateMixedTypes(e);
+                for (d = 0; d < a.length; d++) h = a[d], this._updateParentIdList(h), this._updateMixedLayers(h), this._updateMixedTypes(h);
                 d = 0;
                 for (c = this._selectedItemsParentIds; d < c.length; d++) {
-                    e = c[d];
-                    var m = this._getListItem("part" + h.ViewTree.separator + e);
-                    null === m || m.hasClass("mixed") ? this._futureMixedIds.add(e) : m.addClass("mixed")
+                    h = c[d];
+                    var l = this._getListItem("part" + f.ViewTree.separator + h);
+                    null ===
+                        l || l.hasClass("mixed") ? this._futureMixedIds.add(h) : l.addClass("mixed")
                 }
                 this._updateLayerTreeSelectionHighlight(a);
                 this._updateTypesTreeSelectionHighlight()
@@ -6351,7 +6748,8 @@ return __assign.apply(this, arguments)
             a.prototype._updateMixedLayers = function(a) {
                 for (var b = this, d = function(a) {
                         a = b._viewer.model.getNodeLayerId(a);
-                        null !== a && b._mixedItemsLayer.add(a)
+                        null !==
+                            a && b._mixedItemsLayer.add(a)
                     }, c = 0, e = this._viewer.model.getNodeChildren(a); c < e.length; c++) d(e[c]);
                 d(a)
             };
@@ -6360,7 +6758,7 @@ return __assign.apply(this, arguments)
             };
             a.prototype._processLabelContext = function(a, b) {
                 var d = jQuery(a.target).closest(".ui-modeltree-item");
-                b || (b = new f.Point2(a.clientX, a.clientY));
+                b || (b = new e.Point2(a.clientX, a.clientY));
                 a = d.get(0).id;
                 this._triggerCallback("context", a, b)
             };
@@ -6368,13 +6766,13 @@ return __assign.apply(this, arguments)
                 a = jQuery(a.target).closest(".ui-modeltree-item");
                 this._doSelection(a.get(0).id, !0)
             };
-            a.prototype._processLabelRSClick = function(a) {
-                a = jQuery(a.target).closest(".ui-modeltree-item");
-                this._doHighlight(a.get(0).id, !0)
-            };
+            a.prototype._processLabelRSClick =
+                function(a) {
+                    a = jQuery(a.target).closest(".ui-modeltree-item");
+                    this._doHighlight(a.get(0).id, !0)
+                };
             a.prototype._processLabelRSClickButton = function(a) {
-                a =
-                    jQuery(a.target).closest(".ui-modeltree-item");
+                a = jQuery(a.target).closest(".ui-modeltree-item");
                 this._doSelectIfcItem(a.get(0).id, !0)
             };
             a.prototype.appendTopLevelElement = function(a, b, c, e, f, h) {
@@ -6392,11 +6790,11 @@ return __assign.apply(this, arguments)
             a.prototype.insertNodeAfter = function(a, b, c, e, f) {
                 return this._insertNodeAfter(a, b, c, e, f)
             };
-            a.prototype._insertNodeAfter = function(a, b, c, e, h) {
+            a.prototype._insertNodeAfter = function(a, b, c, f, h) {
                 null === a && (a = "unnamed");
-                if (null === e.parentNode) throw new f.CommunicatorError("element.parentNode is null");
+                if (null === f.parentNode) throw new e.CommunicatorError("element.parentNode is null");
                 a = this._buildNode(a, b, c, h);
-                e.nextSibling ? e.parentNode.insertBefore(a, e.nextSibling) : e.parentNode.appendChild(a);
+                f.nextSibling ? f.parentNode.insertBefore(a, f.nextSibling) : f.parentNode.appendChild(a);
                 this.preloadChildrenIfNecessary(b);
                 return a
             };
@@ -6411,61 +6809,61 @@ return __assign.apply(this, arguments)
                     b = this._getChildItemsFromModelTreeItem($("#" + a));
                     if (0 === b.length) break;
                     this._expandChildren(a, !0);
-                    a = b[0].id;
+                    a =
+                        b[0].id;
                     this.preloadChildrenIfNecessary(a)
                 }
             };
             a.prototype._processVisibilityClick = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
                     var b;
-                    return __generator(this,
-                        function(d) {
-                            b = a.split(this._separator)[1];
-                            switch (b) {
-                                case "part":
-                                    return [2, this._processPartVisibilityClick(a)];
-                                case "measurement":
-                                    return [2, this._processMeasurementVisibilityClick(a)];
-                                case "layer":
-                                    return [2, this._processLayerVisibilityClick(a)];
-                                case "layerpart":
-                                    return [2, this._processLayerPartVisibilityClick(a)];
-                                case "types":
-                                    return [2, this._processTypesVisibilityClick(a)];
-                                case "typespart":
-                                    return [2, this._processTypesPartVisibilityClick(a)]
-                            }
-                            return [2]
-                        })
+                    return __generator(this, function(d) {
+                        b = a.split(this._separator)[1];
+                        switch (b) {
+                            case "part":
+                                return [2, this._processPartVisibilityClick(a)];
+                            case "measurement":
+                                return [2, this._processMeasurementVisibilityClick(a)];
+                            case "layer":
+                                return [2, this._processLayerVisibilityClick(a)];
+                            case "layerpart":
+                                return [2, this._processLayerPartVisibilityClick(a)];
+                            case "types":
+                                return [2,
+                                    this._processTypesVisibilityClick(a)
+                                ];
+                            case "typespart":
+                                return [2, this._processTypesPartVisibilityClick(a)]
+                        }
+                        return [2]
+                    })
                 })
             };
             a.prototype._processPartVisibilityClick = function(a) {
-                return __awaiter(this,
-                    void 0, void 0,
-                    function() {
-                        var b;
-                        return __generator(this, function(d) {
-                            switch (d.label) {
-                                case 0:
-                                    return b = this._parseNodeId(a), null === b ? [3, 2] : [4, this._processPartVisibility(b)];
-                                case 1:
-                                    d.sent(), d.label = 2;
-                                case 2:
-                                    return [2]
-                            }
-                        })
+                return __awaiter(this, void 0, void 0, function() {
+                    var b;
+                    return __generator(this, function(d) {
+                        switch (d.label) {
+                            case 0:
+                                return b = this._parseNodeId(a), null === b ? [3, 2] : [4, this._processPartVisibility(b)];
+                            case 1:
+                                d.sent(), d.label = 2;
+                            case 2:
+                                return [2]
+                        }
                     })
+                })
             };
             a.prototype._processPartVisibility = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, d, c;
-                    return __generator(this, function(e) {
-                        switch (e.label) {
+                    var b,
+                        d, c;
+                    return __generator(this, function(f) {
+                        switch (f.label) {
                             case 0:
-                                return b = this._viewer.model, d = b.getNodeVisibility(a), c = b.hasEffectiveGenericType(a, f.StaticGenericType.IfcSpace), [4, b.setNodesVisibility([a],
-                                    !d, c ? !1 : null)];
+                                return b = this._viewer.model, d = b.getNodeVisibility(a), c = b.hasEffectiveGenericType(a, e.StaticGenericType.IfcSpace), [4, b.setNodesVisibility([a], !d, c ? !1 : null)];
                             case 1:
-                                return e.sent(), [2]
+                                return f.sent(), [2]
                         }
                     })
                 })
@@ -6482,109 +6880,110 @@ return __assign.apply(this, arguments)
                             break
                         }
                     }
-                    for (b = 0; b < a.length; b++) c = a[b], c.setVisibility(d)
+                    for (b =
+                        0; b < a.length; b++) c = a[b], c.setVisibility(d)
                 } else
                     for (var e = 0; e < a.length; e++) c = a[e], b === c._getId() && (d = c.getVisibility(), c.setVisibility(!d))
             };
             a.prototype._processTypesVisibilityClick = function(a) {
-                return __awaiter(this,
-                    void 0, void 0,
-                    function() {
-                        var b;
-                        return __generator(this, function(c) {
-                            switch (c.label) {
-                                case 0:
-                                    return b = a.split(this._separator).pop(), void 0 === b ? [2] : [4, this._processTypesVisibility(b)];
-                                case 1:
-                                    return c.sent(), [2]
-                            }
-                        })
-                    })
-            };
-            a.prototype._processTypesVisibility = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, c, d, e;
-                    return __generator(this, function(g) {
-                        switch (g.label) {
+                    var b;
+                    return __generator(this, function(d) {
+                        switch (d.label) {
                             case 0:
-                                b = this._viewer.model;
-                                c = !1;
-                                d = b.getNodesByGenericType(a);
-                                if (null === d) return [3, 2];
-                                e = [];
-                                d.forEach(function(a) {
-                                    c = c || b.getNodeVisibility(a);
-                                    e.push(a)
-                                });
-                                return [4, b.setNodesVisibility(e, !c, a === f.StaticGenericType.IfcSpace ? !1 : null)];
+                                return b = a.split(this._separator).pop(), void 0 === b ? [2] : [4, this._processTypesVisibility(b)];
                             case 1:
-                                g.sent(), this.updateTypesVisibilityIcons(), g.label = 2;
-                            case 2:
-                                return [2]
+                                return d.sent(), [2]
                         }
                     })
                 })
             };
+            a.prototype._processTypesVisibility = function(a) {
+                return __awaiter(this, void 0,
+                    void 0,
+                    function() {
+                        var b, d, c, f;
+                        return __generator(this, function(g) {
+                            switch (g.label) {
+                                case 0:
+                                    b = this._viewer.model;
+                                    d = !1;
+                                    c = b.getNodesByGenericType(a);
+                                    if (null === c) return [3, 2];
+                                    f = [];
+                                    c.forEach(function(a) {
+                                        d = d || b.getNodeVisibility(a);
+                                        f.push(a)
+                                    });
+                                    return [4, b.setNodesVisibility(f, !d, a === e.StaticGenericType.IfcSpace ? !1 : null)];
+                                case 1:
+                                    g.sent(), this.updateTypesVisibilityIcons(), g.label = 2;
+                                case 2:
+                                    return [2]
+                            }
+                        })
+                    })
+            };
             a.prototype._processTypesPartVisibilityClick = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
                     var b;
-                    return __generator(this, function(c) {
-                        switch (c.label) {
+                    return __generator(this, function(d) {
+                        switch (d.label) {
                             case 0:
                                 return b = this._parseNodeId(a), null === b ? [2] : [4, this._processTypesPartVisibility(b)];
                             case 1:
-                                return c.sent(), [2]
+                                return d.sent(), [2]
                         }
                     })
                 })
             };
             a.prototype._processTypesPartVisibility = function(a) {
-                return __awaiter(this,
-                    void 0, void 0,
-                    function() {
-                        var b, c, d;
-                        return __generator(this, function(e) {
-                            switch (e.label) {
-                                case 0:
-                                    return b = this._viewer.model, [4, b.getNodeVisibility(a)];
-                                case 1:
-                                    return c = e.sent(), d = b.hasEffectiveGenericType(a, f.StaticGenericType.IfcSpace), [4, b.setNodesVisibility([a], !c, d ? !1 : null)];
-                                case 2:
-                                    return e.sent(), [2]
-                            }
-                        })
+                return __awaiter(this, void 0, void 0, function() {
+                    var b, d, c;
+                    return __generator(this, function(f) {
+                        switch (f.label) {
+                            case 0:
+                                return b = this._viewer.model, [4, b.getNodeVisibility(a)];
+                            case 1:
+                                return d = f.sent(), c = b.hasEffectiveGenericType(a, e.StaticGenericType.IfcSpace), [4, b.setNodesVisibility([a],
+                                    !d, c ? !1 : null)];
+                            case 2:
+                                return f.sent(), [2]
+                        }
                     })
+                })
             };
             a.prototype.updateTypesVisibilityIcons = function() {
                 var a = this._viewer.model;
-                a.getGenericTypeIdMap().forEach(function(b, c) {
-                    var d = !1,
+                a.getGenericTypeIdMap().forEach(function(b, d) {
+                    var c = !1,
                         e = !1;
                     b.forEach(function(b) {
-                        var c = $("#visibility" + h.ViewTree.separator +
-                            h.TypesTree.getComponentPartId(b));
-                        c.removeClass("partHidden");
-                        a.getNodeVisibility(b) ? e = !0 : (d = !0, c.addClass("partHidden"))
+                        var d = $("#visibility" + f.ViewTree.separator + f.TypesTree.getComponentPartId(b));
+                        d.removeClass("partHidden");
+                        a.getNodeVisibility(b) ? e = !0 : (c = !0, d.addClass("partHidden"))
                     });
-                    b = $("#visibility" + h.ViewTree.separator + h.TypesTree.getGenericTypeId(c));
+                    b = $("#visibility" + f.ViewTree.separator + f.TypesTree.getGenericTypeId(d));
                     b.removeClass(["partHidden", "partialHidden"]);
-                    d && e ? b.addClass("partialHidden") : d && b.addClass("partHidden")
+                    c && e ? b.addClass("partialHidden") :
+                        c && b.addClass("partHidden")
                 })
             };
             a.prototype._processLayerVisibilityClick = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, c, d, e;
+                    var b, d, c, f;
                     return __generator(this, function(g) {
                         switch (g.label) {
                             case 0:
                                 b = this._parseVisibilityLayerName(a);
                                 if (!b) return [2];
-                                c = !1;
-                                d = this._viewer.model.getNodesFromLayerName(b, !0);
-                                if (null === d) return [3, 2];
-                                for (e = 0; e < d.length && !(c = c || this._viewer.model.getNodeVisibility(d[e])); ++e);
-                                f._filterActiveSheetNodeIds(this._viewer, d);
-                                return 0 < d.length ? [4, this._viewer.model.setNodesVisibility(d, !c, null)] : [3, 2];
+                                d = !1;
+                                c = this._viewer.model.getNodesFromLayerName(b, !0);
+                                if (null === c) return [3, 2];
+                                for (f = 0; f < c.length && !(d = d || this._viewer.model.getNodeVisibility(c[f])); ++f);
+                                e._filterActiveSheetNodeIds(this._viewer, c);
+                                return 0 < c.length ? [4, this._viewer.model.setNodesVisibility(c,
+                                    !d, null)] : [3, 2];
                             case 1:
                                 g.sent(), g.label = 2;
                             case 2:
@@ -6595,19 +6994,18 @@ return __assign.apply(this, arguments)
             };
             a.prototype._processLayerPartVisibilityClick = function(a) {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, c, d;
-                    return __generator(this, function(e) {
-                        switch (e.label) {
+                    var b, d, c;
+                    return __generator(this, function(f) {
+                        switch (f.label) {
                             case 0:
-                                b =
-                                    this._parseVisibilityLayerNodeId(a);
+                                b = this._parseVisibilityLayerNodeId(a);
                                 if (null === b) return [3, 2];
-                                c = this._viewer.model.getNodeVisibility(b);
-                                d = [b];
-                                f._filterActiveSheetNodeIds(this._viewer, d);
-                                return 0 < d.length ? [4, this._viewer.model.setNodesVisibility(d, !c, null)] : [3, 2];
+                                d = this._viewer.model.getNodeVisibility(b);
+                                c = [b];
+                                e._filterActiveSheetNodeIds(this._viewer, c);
+                                return 0 < c.length ? [4, this._viewer.model.setNodesVisibility(c, !d, null)] : [3, 2];
                             case 1:
-                                e.sent(), e.label = 2;
+                                f.sent(), f.label = 2;
                             case 2:
                                 return [2]
                         }
@@ -6617,36 +7015,36 @@ return __assign.apply(this, arguments)
             a.prototype.updateLayersVisibilityIcons = function() {
                 var a = this;
                 this._viewer.model.getUniqueLayerNames().forEach(function(b) {
-                    var c = a._viewer.model.getNodesFromLayerName(b, !0);
-                    if (null !== c) {
-                        for (var d = !1, e = !1, f = 0; f < c.length; ++f) {
-                            var g =
-                                c[f];
-                            a._viewer.model.isDrawing() || (g = a._viewer.model.getNodeParent(c[f]));
-                            null !== g && (g = $("#visibility" + h.ViewTree.separator + h.LayersTree.getLayerPartId(g)), g.removeClass("partHidden"), a._viewer.model.getNodeVisibility(c[f]) ? e = !0 : (d = !0, g.addClass("partHidden")))
+                    var d = a._viewer.model.getNodesFromLayerName(b, !0);
+                    if (null !== d) {
+                        for (var c = !1, e = !1, g = 0; g < d.length; ++g) {
+                            var h = d[g];
+                            a._viewer.model.isDrawing() || (h = a._viewer.model.getNodeParent(d[g]));
+                            null !== h && (h = $("#visibility" + f.ViewTree.separator + f.LayersTree.getLayerPartId(h)), h.removeClass("partHidden"), a._viewer.model.getNodeVisibility(d[g]) ? e = !0 : (c = !0, h.addClass("partHidden")))
                         }
-                        b = $("#visibility" + h.ViewTree.separator + h.LayersTree.getLayerId(b));
+                        b = $("#visibility" +
+                            f.ViewTree.separator + f.LayersTree.getLayerId(b));
                         b.removeClass(["partHidden", "partialHidden"]);
-                        d && e ? b.addClass("partialHidden") : d && b.addClass("partHidden")
+                        c && e ? b.addClass("partialHidden") : c && b.addClass("partHidden")
                     }
                 })
             };
             a.prototype.updateMeasurementVisibilityIcons = function() {
-                for (var a =
-                        this._viewer.measureManager.getAllMeasurements(), b = 0, c = 0; c < a.length; c++) {
+                for (var a = this._viewer.measureManager.getAllMeasurements(), b = 0, c = 0; c < a.length; c++) {
                     var e = a[c],
-                        f = e.getVisibility();
-                    e = $("#visibility" + h.ViewTree.separator + "measurement" + h.ViewTree.separator + e._getId());
-                    f ? e.removeClass("partHidden") : (b++, e.addClass("partHidden"))
+                        h = e.getVisibility();
+                    e = $("#visibility" + f.ViewTree.separator + "measurement" + f.ViewTree.separator + e._getId());
+                    h ? e.removeClass("partHidden") : (b++, e.addClass("partHidden"))
                 }
-                c = $("#visibility" + h.ViewTree.separator + "measurementitems");
+                c = $("#visibility" + f.ViewTree.separator +
+                    "measurementitems");
                 b === a.length ? (c.removeClass("partialHidden"), c.addClass("partHidden")) : 0 < b && b < a.length ? (c.removeClass("partHidden"), c.addClass("partialHidden")) : (c.removeClass("partialHidden"), c.removeClass("partHidden"));
                 this._viewer.markupManager.updateLater()
             };
             a.prototype._init = function() {
                 var a = this,
                     b = document.getElementById(this._elementId);
-                if (null === b) throw new f.CommunicatorError("container is null");
+                if (null === b) throw new e.CommunicatorError("container is null");
                 this._partVisibilityRoot.classList.add("ui-visibility-toggle");
                 b.appendChild(this._partVisibilityRoot);
                 this._listRoot.classList.add("ui-modeltree");
@@ -6655,31 +7053,29 @@ return __assign.apply(this, arguments)
                 $(b).on("click", ".ui-modeltree-label", function(b) {
                     a._processLabelClick(b)
                 });
-                $(b).on("click",
-                    ".ui-modeltree-relationships-label",
-                    function(b) {
-                        a._processLabelRSClick(b)
-                    });
+                $(b).on("click", ".ui-modeltree-relationships-label", function(b) {
+                    a._processLabelRSClick(b)
+                });
                 $(b).on("click", ".ui-model-tree-relationships-button", function(b) {
                     a._processLabelRSClickButton(b)
                 });
                 $(b).on("click", ".ui-modeltree-expandNode", function(b) {
                     a._processExpandClick(b)
                 });
-                $(b).on("click", ".ui-modeltree-partVisibility-icon", function(b) {
-                    return __awaiter(a, void 0, void 0, function() {
-                        var a, c, d;
-                        return __generator(this, function(e) {
-                            switch (e.label) {
-                                case 0:
-                                    return a = jQuery(b.target), c = a.closest(".ui-modeltree-item"), d = c[0].id,
-                                        [4, this._processVisibilityClick(d)];
-                                case 1:
-                                    return e.sent(), [2]
-                            }
+                $(b).on("click", ".ui-modeltree-partVisibility-icon",
+                    function(b) {
+                        return __awaiter(a, void 0, void 0, function() {
+                            var a, c, d;
+                            return __generator(this, function(e) {
+                                switch (e.label) {
+                                    case 0:
+                                        return a = jQuery(b.target), c = a.closest(".ui-modeltree-item"), d = c[0].id, [4, this._processVisibilityClick(d)];
+                                    case 1:
+                                        return e.sent(), [2]
+                                }
+                            })
                         })
-                    })
-                });
+                    });
                 $(b).on("click", "#contextMenuButton", function(b) {
                     a._processLabelContext(b)
                 });
@@ -6687,19 +7083,19 @@ return __assign.apply(this, arguments)
                     2 === b.button && a._processLabelContext(b)
                 });
                 $(b).on("touchstart", function(b) {
-                    a._touchTimer.set(1E3, function() {
-                        var c = b.originalEvent;
-                        c = new f.Point2(c.touches[0].pageX, c.touches[0].pageY);
-                        a._processLabelContext(b, c)
-                    })
+                    a._touchTimer.set(1E3,
+                        function() {
+                            var c = b.originalEvent;
+                            c = new e.Point2(c.touches[0].pageX, c.touches[0].pageY);
+                            a._processLabelContext(b, c)
+                        })
                 });
                 $(b).on("touchmove", function(b) {
                     a._touchTimer.clear()
                 });
-                $(b).on("touchend",
-                    function(b) {
-                        a._touchTimer.clear()
-                    });
+                $(b).on("touchend", function(b) {
+                    a._touchTimer.clear()
+                });
                 $(b).on("contextmenu", ".ui-modeltree-label", function(a) {
                     a.preventDefault()
                 })
@@ -6711,19 +7107,20 @@ return __assign.apply(this, arguments)
             a._ScrollToItemDelayMs = 10;
             return a
         }();
-        m.TreeControl = a
-    })(h.Control || (h.Control = {}))
-})(f.Ui || (f.Ui = {}))
+        l.TreeControl =
+            a
+    })(f.Control || (f.Control = {}))
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));
+(function(e) {
 (function(f) {
-(function(h) {
-    var m = function() {
+    var l = function() {
             return function(c, a) {
                 this.genericType = c;
                 this.index = a
             }
         }(),
-        e = function(c) {
+        h = function(c) {
             function a(a, d, e) {
                 a = c.call(this, a, d, e) || this;
                 a._containerMap = new Map;
@@ -6740,22 +7137,21 @@ return __assign.apply(this, arguments)
                     modelStructureReady: c,
                     modelLoaded: c,
                     selectionArray: function(b) {
-                        a._tree.updateSelection(b)
+                        0 < a._ifcNodesMap.size && a._tree.updateSelection(b)
                     },
                     visibilityChanged: function() {
                         a._tree.updateTypesVisibilityIcons()
                     }
                 });
-                this._tree.registerCallback("selectItem",
-                    function(b, c) {
-                        a._onTreeSelectItem(b, c)
-                    });
+                this._tree.registerCallback("selectItem", function(b, c) {
+                    a._onTreeSelectItem(b, c)
+                });
                 this._tree.registerCallback("loadChildren", function(b) {
                     a._loadNodeChildren(b)
                 })
             };
             a.prototype._onTreeSelectItem = function(a, c) {
-                void 0 === c && (c = f.SelectionMode.Set);
+                void 0 === c && (c = e.SelectionMode.Set);
                 null !== document.getElementById(a) && (a = this._splitHtmlId(a)[1], "IFC" === a.substr(0, 3) ? this._selectIfcComponent(a, c) : this._viewer.selectPart(parseInt(a, 10), c))
             };
             a.prototype._loadNodeChildren = function(a) {
@@ -6782,31 +7178,29 @@ return __assign.apply(this, arguments)
                     var c = b.index;
                     b = this._ifcNodesMap.get(b.genericType);
                     if (void 0 !== b) {
-                        var e = c * this._maxNodeChildrenSize,
-                            h = b.size - e < this._maxNodeChildrenSize ? b.size :
-                            e + this._maxNodeChildrenSize;
+                        var f = c * this._maxNodeChildrenSize,
+                            h = b.size - f < this._maxNodeChildrenSize ? b.size : f + this._maxNodeChildrenSize;
                         c = 0;
-                        for (b = f.Util.setToArray(b).slice(e, h); c < b.length; c++) this._addChildPart(b[c], a)
+                        for (b = e.Util.setToArray(b).slice(f, h); c < b.length; c++) this._addChildPart(b[c], a)
                     }
                 }
             };
             a.prototype._addChildPart = function(b, c) {
                 var d = a.getComponentPartId(b);
                 b = this._viewer.model.getNodeName(b);
-                this._tree.addChild(b, d, c, "part", !1, h.Desktop.Tree.Types)
+                this._tree.addChild(b, d, c, "part", !1, f.Desktop.Tree.Types)
             };
             a.prototype._createContainerNodes = function(b, c) {
                 var d = this._ifcNodesMap.get(c);
                 if (void 0 === d) console.assert(!1, "Tried to create a container for nodes of a non-existent GenericType");
                 else
-                    for (var e = 0; e < d.size; e += this._maxNodeChildrenSize) {
-                        var l =
-                            "Child nodes " + e + " - " + (e + this._maxNodeChildrenSize > d.size ? d.size - 1 : e + this._maxNodeChildrenSize - 1),
-                            u = e / this._maxNodeChildrenSize,
-                            C = f.UUID.create();
-                        this._tree.addChild(l, a.getContainerId(C), b, "container", !0, h.Desktop.Tree.Types);
-                        l = new m(c, u);
-                        this._containerMap.set(C, l)
+                    for (var h = 0; h < d.size; h += this._maxNodeChildrenSize) {
+                        var k = "Child nodes " + h + " - " + (h + this._maxNodeChildrenSize > d.size ? d.size - 1 : h + this._maxNodeChildrenSize - 1),
+                            w = h / this._maxNodeChildrenSize,
+                            C = e.UUID.create();
+                        this._tree.addChild(k, a.getContainerId(C), b, "container", !0, f.Desktop.Tree.Types);
+                        k = new l(c, w);
+                        this._containerMap.set(C, k)
                     }
             };
             a.prototype._selectIfcComponent = function(a, c) {
@@ -6814,7 +7208,8 @@ return __assign.apply(this, arguments)
             };
             a.prototype._onNewModel = function() {
                 return __awaiter(this, void 0, void 0, function() {
-                    var b, c = this;
+                    var b,
+                        c = this;
                     return __generator(this, function(d) {
                         b = this._viewer.model;
                         this._tree.clear();
@@ -6829,17 +7224,17 @@ return __assign.apply(this, arguments)
                 })
             };
             a.getComponentPartId = function(a) {
-                return "typespart" + h.ViewTree.separator + a
+                return "typespart" + f.ViewTree.separator + a
             };
             a.getGenericTypeId = function(a) {
-                return "types" + h.ViewTree.separator + a
+                return "types" + f.ViewTree.separator + a
             };
             a.getContainerId = function(a) {
-                return "container" + h.ModelTree.separator + a
+                return "container" +
+                    f.ModelTree.separator + a
             };
             return a
-        }(h.ViewTree);
-    h.TypesTree =
-        e
-})(f.Ui || (f.Ui = {}))
+        }(f.ViewTree);
+    f.TypesTree = h
+})(e.Ui || (e.Ui = {}))
 })(Communicator || (Communicator = {}));

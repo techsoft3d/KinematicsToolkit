@@ -794,7 +794,8 @@ function drawIKDiv() {
     html += '<button type="button" style="font-size:11px" class="btn btn-dark btn-sm ms-1"  onclick="newHierachy();">New</button>';
     html += '<button type="button" style="font-size:11px" class="btn btn-dark btn-sm ms-1"  onclick="updateTemplate();">Update</button>';
     html += '<button type="button" style="font-size:11px;" onclick="exportToFile()" class="btn btn-dark btn-sm ms-1">Export</button>';
-    html += '<button type="button" style="font-size:11px;position:absolute;right:0px" onclick="setIkUIValues()" class="btn btn-light btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#editIkSettingsModel">IK Settings</button>';
+    html += '<button id="kinematicsDefinitionImport" type="button" style="font-size:11px;" class="btn btn-dark btn-sm ms-1">Import</button><input style="display:none" type="file" id="inputupload">';
+    html += '<button  type="button" style="font-size:11px;position:absolute;right:0px" onclick="setIkUIValues()" class="btn btn-light btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#editIkSettingsModel">IK Settings</button>';
     html += '<br>';
     html += '<h2 style="margin-top:20px;"><span>Animation Group</span></h2>';
     html +=  generateAnimationGroupSelect();
@@ -817,6 +818,35 @@ function drawIKDiv() {
         html += '<input style="font-size:11px" type="checkbox"  onclick="updateEditMode()" id="iseditmode">';
 
     $("#KinematicsParameters").append(html);
+
+    $("#kinematicsDefinitionImport").click(function(e){
+        e.preventDefault();
+        $("#inputupload").trigger('click');
+     });
+
+
+     $("#inputupload").change(function () {
+
+        let files = $('#inputupload')[0].files;        
+        // Check file selected or not
+        if (files.length > 0) {
+
+            let reader = new FileReader();         
+            reader.onload = (function (theFile) {
+                return async function (e) {
+                    // Render thumbnail.
+                    let res = JSON.parse(e.target.result);
+                    KT.KinematicsManager.addTemplate(res);
+                    currentTemplate = res._templateId;
+                    drawIKDiv();
+                };
+            })(files[0]);
+    
+            // Read in the image file as a data URL.
+            reader.readAsText(files[0]);
+        }
+      });
+
 
 
     generateKinematicsTreeData();

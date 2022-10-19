@@ -16,6 +16,7 @@ export class KinematicsManager {
     static initialize(viewer) {
         KinematicsManager.viewer = viewer;
 
+        KinematicsManager._version = "1.0.1";
         KinematicsManager._hierachies = [];
         KinematicsManager._customTypeCallback = null;
         KinematicsManager._hierachyTemplates = [];
@@ -186,6 +187,18 @@ export class KinematicsManager {
         this._hierachies.push(hierachy);
         return hierachy;
 
+    }
+
+     /**
+    * Returns index of a given hierachy
+    * @return {KinematicsHierachy} Hierachy Index
+    */    
+      static getHierachyIndex(hierachy) {
+
+        for (let i = 0; i < KinematicsManager._hierachies.length; i++) {
+            if (KinematicsManager._hierachies[i] == hierachy)
+                return i;
+        }        
     }
 
   /**

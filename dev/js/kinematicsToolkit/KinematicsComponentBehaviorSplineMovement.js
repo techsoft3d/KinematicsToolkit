@@ -25,6 +25,7 @@ export class KinematicsComponentBehaviorSplineMovement {
         if (def.splineSegment) {
             this._splineSegment = new hcBspline.CurveSegments();
             this._splineSegment.fromJson(def.splineSegment);
+//            this._splineSegment.fromJson(sd);
             this._splineSegment.enableGeometry();
         }
     }

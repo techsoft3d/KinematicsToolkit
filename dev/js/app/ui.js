@@ -944,9 +944,6 @@ function updateComponent(j){
         myCurveSegments.fromJson(sd);
         component.getBehavior().setSplineSegment(myCurveSegments);
         myCurveSegments.enableGeometry();
-
-
-
     }
     
     if (component.getType() == KT.componentType.pivotSystem)

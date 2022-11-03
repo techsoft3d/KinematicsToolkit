@@ -11,6 +11,7 @@ import { KinematicsComponentBehaviorMapped } from './KinematicsComponentBehavior
 import { KinematicsComponentBehaviorHelical } from './KinematicsComponentBehaviorHelical.js';
 import { KinematicsComponentBehaviorPrismaticAggregate } from './KinematicsComponentBehaviorPrismaticAggregate.js';
 import { KinematicsComponentBehaviorRevoluteSlide } from './KinematicsComponentBehaviorRevoluteSlide.js';
+import { KinematicsComponentBehaviorSplineMovement } from './KinematicsComponentBehaviorSplineMovement.js';
 import { KinematicsComponentBehaviorMate } from './KinematicsComponentBehaviorMate.js';
 import { KinematicsComponentBehaviorPivotSystem } from './KinematicsComponentBehaviorPivotSystem.js';
 
@@ -71,6 +72,10 @@ const componentType = {
 /** Calculates component based on common pivot.
       */            
    pivotSystem:13,
+   /** Calculates component based on common pivot.
+      */            
+    splineMovement:14
+
 };
 
 export {componentType};
@@ -186,6 +191,9 @@ export class KinematicsComponent {
             }
             else if (this._type == componentType.pivotSystem) {
                 this._behavior = new KinematicsComponentBehaviorPivotSystem(this);
+            }
+            else if (this._type == componentType.splineMovement) {
+                this._behavior = new KinematicsComponentBehaviorSplineMovement(this);
             }
             else {
                 this._behavior = (KinematicsManager.getCustomTypeCallback())(this, type);

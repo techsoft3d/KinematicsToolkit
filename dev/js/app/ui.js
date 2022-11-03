@@ -121,6 +121,7 @@ function generateComponentTypeSelect(component) {
     html+=addComponentTypeToSelect(11,component);
     html+=addComponentTypeToSelect(12,component);
     html+=addComponentTypeToSelect(13,component);
+    html+=addComponentTypeToSelect(14,component);
         
     html += '</select>';
     return html;
@@ -933,6 +934,19 @@ function updateComponent(j){
         id = parseInt($("#variablecomponentselect")[0].value.split(":")[0]);
         let variablecomponent = currentHierachy.getComponentById(id);
         component.getBehavior().setExtraComponent2(variablecomponent);
+    }
+
+    if (component.getType() == KT.componentType.splineMovement) {
+
+
+        var sd = JSON.parse('{"curvearray":[{"arcLengthDivisions":200,"type":"CubicBezierCurve","v0":{"x":-16.15276671126484,"y":-68.1257499033216,"z":0},"v1":{"x":-16.15276671126484,"y":-68.1257499033216,"z":0},"v2":{"x":-18.137255379761815,"y":91.96702678174054,"z":0},"v3":{"x":-18.137255379761815,"y":91.96702678174054,"z":0}},{"arcLengthDivisions":200,"type":"CubicBezierCurve","v0":{"x":-18.137255379761815,"y":91.96702678174054,"z":0},"v1":{"x":0.5514679799104591,"y":156.09590924664326,"z":0},"v2":{"x":64.13608885581417,"y":190.98336174517306,"z":0},"v3":{"x":128.86744961989584,"y":186.75360847417764,"z":0}}]}');
+        myCurveSegments = new hcBspline.CurveSegments();
+        myCurveSegments.fromJson(sd);
+        component.getBehavior().setSplineSegment(myCurveSegments);
+        myCurveSegments.enableGeometry();
+
+
+
     }
     
     if (component.getType() == KT.componentType.pivotSystem)

@@ -75,6 +75,8 @@ function customTypeCallback(component, type) {
 
 async function msready() {
 
+    hcBspline.CurveManager.initialize(hwv);
+
     hwv.view.setAmbientOcclusionEnabled(true);
     hwv.view.setAmbientOcclusionRadius(0.025);
     $(document).on('keyup keydown', function (e) { shiftPressed = e.shiftKey; });

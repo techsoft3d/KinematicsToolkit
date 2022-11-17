@@ -306,6 +306,22 @@ export class KinematicsManager {
     }
 
 
+ /**
+    * Create new Animation from given animation definition
+    * @param  {KinematicsComponent} component - Component to animate
+    * @param  {object} anime - Animation Definition
+    */    
+  static startAnimationDirect(component, anime) {
+    component.setAnimationActive(true);
+    let animation = new KinematicsAnimation("test", component, anime);
+
+    KinematicsManager._animations.push(animation);
+    if (KinematicsManager._animations.length == 1)
+        window.requestAnimationFrame(KinematicsManager._doAnimation);
+}
+
+
+
       
  /**
     * Stop animation at given component
@@ -314,7 +330,9 @@ export class KinematicsManager {
     static stopAnimation(component) {
         for (let i = 0; i < KinematicsManager._animations.length; i++) {
             if (component == undefined || KinematicsManager._animations[i].getComponent() == component) {
-                KinematicsManager._animations[i].setDone(true);
+                KinematicsManager._animations[i].getComponent().setAnimationActive(false);
+                KinematicsManager._animations.splice(i, 1);
+                i--;
             }
         }
 
@@ -368,6 +386,21 @@ export class KinematicsManager {
     static startAnimationGroup(id) {
         KinematicsManager._animationGroups[id].play();
     }
+
+    /**
+    * Start animation group with given name and hierachy
+    * @param  {object} id - Animation Group Hierachy
+    * @param  {string} name - Animation Group name
+    */        
+
+     static startAnimationGroupByName(hierachy,name) {
+        for (let i=0;i<KinematicsManager._animationGroups.length;i++) {
+            if (KinematicsManager._animationGroups[i]._hierachy == hierachy && KinematicsManager._animationGroups[i].name == name) {
+                KinematicsManager._animationGroups[i].play();
+            }
+        }
+    }
+    
 
         
     /**

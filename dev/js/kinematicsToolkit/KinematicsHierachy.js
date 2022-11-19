@@ -329,7 +329,7 @@ export class KinematicsHierachy {
         if (!this._interval) {
             let _this = this;
             let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
-            this._interval = set_interval(async function () {
+            this._interval = setInterval(async function () {
                 let targetpoint = handleOperator.getPosition();
                 if (targetpoint || _this._targetAnchorPosition) {
                     if (_this._targetAnchorPosition) {
@@ -737,7 +737,7 @@ export class KinematicsHierachy {
         let component = this._rootComponent;
         while (true)
         {
-            if (component.getType() != componentType.fixed && component.fixedAxis == null && component.getType() != componentType.pistonController && component.getType() != componentType.prismaticAggregate)
+            if (component.getType() != componentType.fixed && !component.getBehavior()._fixedAxis && component.getType() != componentType.pistonController && component.getType() != componentType.prismaticAggregate)
             {
                 let gradient = await component.calculateGradient();
                 await component.update(gradient);       
@@ -753,7 +753,7 @@ export class KinematicsHierachy {
                 break;                
             component = component.getChildren()[0];
         } 
-        await this._rootComponent.updateComponentsFromReference();
+        await this.updateComponents();
 
     }
 

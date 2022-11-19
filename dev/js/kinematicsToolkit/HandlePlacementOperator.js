@@ -7,6 +7,8 @@ export class HandlePlacementOperator  {
         this._currentSelItem = null;
         this._axis = null;
         this._axis2 = null;
+        this._disabled = false;
+
         
     }
 
@@ -125,8 +127,22 @@ export class HandlePlacementOperator  {
     }
 
     
+    disable()
+    {
+        this._disabled = true;
+    }
+
+    enable()
+    {
+        this._disabled = false;
+    }
+
+
 
     onMouseDown(event) {
+
+        if (this._disabled)
+            return;
 
         if (!event.shiftDown())
             return;
@@ -143,6 +159,10 @@ export class HandlePlacementOperator  {
     }
 
     onMouseMove(event) {
+        if (this._disabled)
+            return;
+
+
         if (event.shiftDown()) {
             let position = event.getPosition();
 
@@ -184,6 +204,10 @@ export class HandlePlacementOperator  {
     }
 
     onMouseUp(event) {
+
+        if (this._disabled)
+        return;
+
 
         if (event.shiftDown())
             event.setHandled(true);

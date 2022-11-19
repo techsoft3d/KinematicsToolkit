@@ -341,6 +341,19 @@ function createUILayout() {
             name: 'Debug',
             subMenu: [
                 {
+                    name: 'IK Test',
+                    fun: function () {
+                        let n1 = hwv.model.createNode(hwv.model.getRootNode(),"Test1");
+                        let n2 = hwv.model.createNode(n1,"Test2");
+                        let mat2 = Communicator.Matrix.fromJson(JSON.parse("[0.65,0,0,0,0,0.65,0,0,0,0,0.65,0,0,0,0,1]"));
+                        let mat1 = Communicator.Matrix.fromJson(JSON.parse("[6.123233995736766e-17,1,0,0,-1,6.123233995736766e-17,0,0,0,0,1,0,851.0190302562357,171.46458728475648,16.66666716301961,1]"));
+                        hwv.model.setNodeMatrix(n1,mat1);
+                        hwv.model.setNodeMatrix(n2,mat2);
+                        hwv.model.loadSubtreeFromScsFile(n2,"modelsTemp/KR6.x_t.scs");
+
+                    }
+                },
+                {
                     name: 'Animate Sentry',
                     fun: function () {
                         sentryanim();

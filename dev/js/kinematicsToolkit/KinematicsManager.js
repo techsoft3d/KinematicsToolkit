@@ -60,11 +60,21 @@ export class KinematicsManager {
      * Initializes Handle Placement Operator
      */
     static setupHandleOperator() {
-        KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(KinematicsManager.viewer);
-        let myOperatorHandle = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
-        KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
+        if (!KinematicsManager.handlePlacementOperator) {
+            KinematicsManager.handlePlacementOperator = new HandlePlacementOperator(KinematicsManager.viewer);
+            let myOperatorHandle = KinematicsManager.viewer.operatorManager.registerCustomOperator(KinematicsManager.handlePlacementOperator);
+            KinematicsManager.viewer.operatorManager.push(myOperatorHandle);
+            KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.getRootNode(), "handlenode");
+        }
+        else {
+            KinematicsManager.handlePlacementOperator.enable();
+        }
+    }
 
-        KinematicsManager.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.getRootNode(), "handlenode");
+    
+    static disableHandleOperator() {
+        KinematicsManager.handlePlacementOperator.disable();
+
     }
 
     static setupComponentMoveOperator() {

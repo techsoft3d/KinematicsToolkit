@@ -329,16 +329,24 @@ export class KinematicsHierachy {
         if (!this._interval) {
             let _this = this;
             let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
+
+            let netmatrix  = KinematicsManager.viewer.model.getNodeNetMatrix(this._nodeid);
+            let netmatrixinv  = Communicator.Matrix.inverse(netmatrix);
+
+
+
             this._interval = setInterval(async function () {
                 let targetpoint = handleOperator.getPosition();
                 if (targetpoint || _this._targetAnchorPosition) {
                     if (_this._targetAnchorPosition) {
                         let m = KinematicsManager.viewer.model.getNodeNetMatrix(_this._targetAnchorNode);
-                        _this._targetPoint = m.transform(_this._targetAnchorPosition);
+                        let m2 = Communicator.Matrix.multiply(m,netmatrixinv);
+                        _this._targetPoint = m2.transform(_this._targetAnchorPosition);
                     }
                     else {
                         let m = KinematicsManager.viewer.model.getNodeMatrix(KinematicsManager.handleNode);
-                        _this._targetPoint = m.transform(new Communicator.Point3(0, 0, 0));
+                        let m2 = Communicator.Matrix.multiply(m,netmatrixinv);
+                        _this._targetPoint = m2.transform(new Communicator.Point3(0, 0, 0));
                     }
                     for (let i = 0; i < _this._ikSpeed; i++) {
                         let dis = _this.distanceFromIKTarget();
@@ -369,7 +377,10 @@ export class KinematicsHierachy {
      */  
     setIKHandleToTip(insertHandle)
     {
-        let mat = this.getReferenceNodeNetMatrix(this._tipComponent);
+        let netmatrix  = KinematicsManager.viewer.model.getNodeNetMatrix(this._nodeid);
+
+        let matRef = this.getReferenceNodeNetMatrix(this._tipComponent);
+        let mat = Communicator.Matrix.multiply(matRef,netmatrix);
         let _ikTip = mat.transform(this._ikTip);
 
         mat = new Communicator.Matrix();
@@ -615,6 +626,7 @@ export class KinematicsHierachy {
      */
     applyToModel(nodeid)
     {
+        this._nodeid = nodeid;
         this._componentNodeidHash = [];
         let childnode = KinematicsManager.viewer.model.getNodeChildren(nodeid)[0];
         let startmatrix;

@@ -316,7 +316,7 @@ export class KinematicsHierachy {
     stopIK()
     {
         if (this._interval) {
-            clear_interval(this._interval);
+            clearInterval(this._interval);
             this._interval = null;
         }
     }

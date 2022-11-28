@@ -351,6 +351,16 @@ function createUILayout() {
                         hwv.model.setNodeMatrix(n2,mat2);
                         hwv.model.loadSubtreeFromScsFile(n2,"modelsTemp/KR6.x_t.scs");
 
+                        n1 = hwv.model.createNode(hwv.model.getRootNode(),"Test3");
+                        n2 = hwv.model.createNode(n1,"Test4");
+                        mat2 = Communicator.Matrix.fromJson(JSON.parse("[0.65,0,0,0,0,0.65,0,0,0,0,0.65,0,0,0,0,1]"));
+                        mat1 = Communicator.Matrix.fromJson(JSON.parse("[6.123233995736766e-17,1,0,0,-1,6.123233995736766e-17,0,0,0,0,1,0,1251.0190302562357,171.46458728475648,16.66666716301961,1]"));
+                        hwv.model.setNodeMatrix(n1,mat1);
+                        hwv.model.setNodeMatrix(n2,mat2);
+                        hwv.model.loadSubtreeFromScsFile(n2,"modelsTemp/KR6.x_t.scs");
+
+
+
                     }
                 },
                 {

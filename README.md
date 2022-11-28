@@ -1,5 +1,9 @@
 # Kinematics Toolkit (BETA)
 
+## Version Update (1.1.0) 
+*  Various bugfixes to Inverse Kinematics
+*  Various other bugfixes and improvements to library and editor
+
 ## Kinematics Engine for HOOPS Communicator
 The purpose of this set of classes is to make it easy to add kinematics-based animations to CAD Models, in particular in the context of Digital Twin workflows.
 In a typical CAD model the product structure is often flat or unrelated to the kinematics/joint relationships of the assembly which is why the Kinematics Manager allows the user to define its own component hierachy independent of the CAD hierachy. Based on this relationship graph it is then straightforward to animate a specific component by setting a single value. 

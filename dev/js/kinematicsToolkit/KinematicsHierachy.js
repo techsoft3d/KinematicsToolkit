@@ -344,7 +344,7 @@ export class KinematicsHierachy {
                         _this._targetPoint = m2.transform(_this._targetAnchorPosition);
                     }
                     else {
-                        let m = KinematicsManager.viewer.model.getNodeMatrix(KinematicsManager.handleNode);
+                        let m = KinematicsManager.viewer.model.getNodeMatrix(_this.handleNode);
                         let m2 = Communicator.Matrix.multiply(m,netmatrixinv);
                         _this._targetPoint = m2.transform(new Communicator.Point3(0, 0, 0));
                     }
@@ -366,8 +366,8 @@ export class KinematicsHierachy {
     insertIKHandle() {
         let handleOperator = KinematicsManager.viewer.operatorManager.getOperator(Communicator.OperatorId.Handle);
         handleOperator.removeHandles();            
-        handleOperator.addHandles([KinematicsManager.handleNode], this._targetPoint);
-        KinematicsManager.viewer.model.setNodesVisibility([KinematicsManager.handleNode], true);
+        handleOperator.addHandles([this.handleNode], this._targetPoint);
+        KinematicsManager.viewer.model.setNodesVisibility([this.handleNode], true);
         handleOperator.showHandles();
     }
        
@@ -386,7 +386,11 @@ export class KinematicsHierachy {
         mat = new Communicator.Matrix();
         mat.setTranslationComponent(_ikTip.x, _ikTip.y, _ikTip.z);
         this._targetPoint = _ikTip.copy();
-        KinematicsManager.viewer.model.setNodeMatrix(KinematicsManager.handleNode, mat);
+        
+        if (!this.handleNode) {
+            this.handleNode = KinematicsManager.viewer.model.createNode(KinematicsManager.handleNode);
+        }
+        KinematicsManager.viewer.model.setNodeMatrix(this.handleNode, mat);
         if (insertHandle)
             this.insertIKHandle();
     }

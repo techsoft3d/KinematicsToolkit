@@ -16,7 +16,7 @@ export class KinematicsManager {
     static initialize(viewer) {
         KinematicsManager.viewer = viewer;
 
-        KinematicsManager._version = "1.0.1";
+        KinematicsManager._version = "1.1.0";
         KinematicsManager._hierachies = [];
         KinematicsManager._customTypeCallback = null;
         KinematicsManager._hierachyTemplates = [];

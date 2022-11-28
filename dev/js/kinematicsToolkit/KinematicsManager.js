@@ -73,7 +73,9 @@ export class KinematicsManager {
 
     
     static disableHandleOperator() {
-        KinematicsManager.handlePlacementOperator.disable();
+        if (KinematicsManager.handlePlacementOperator) {
+            KinematicsManager.handlePlacementOperator.disable();
+        }
 
     }
 
@@ -89,8 +91,9 @@ export class KinematicsManager {
     }
 
     static disableComponentMoveOperator() {
-        KinematicsManager.componentMoveOperator.disable();
-
+        if (KinematicsManager.componentMoveOperator) {
+            KinematicsManager.componentMoveOperator.disable();
+        }
     }
 
     /**
